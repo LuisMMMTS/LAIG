@@ -8,48 +8,35 @@
                         <!-- must be defined in one of the following NODE declarations -->
 </initials>
 
-<views default="ss" >
-
+<views default="defaultCamera">
     <!-- at least one of the following type of cameras must be declared -->
-
-    <perspective id="ss" near="ff" far="ff" angle="ff">
-
-        <from x="ff" y="ff" z="ff" />
-
-        <to x="ff" y="ff" z="ff" />
-
+    <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+        <from x="30" y="15" z="0" />
+        <to x="0" y="-2" z="0" />
     </perspective>
-
-    <ortho id="ss"  near="ff" far="ff" left="ff" right="ff" top="ff" bottom="ff" >
-
-        <from x="ff" y="ff" z="ff" />
-
-        <to x="ff" y="ff" z="ff" />
-
-        <up x="ff" y="ff" z="ff" /> <!-- optional, default 0,1,0 -->
-
+    <ortho id="demoOrtho" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
+        <from x="5" y="0" z="0" />
+        <to x="5" y="0" z="0" />
+        <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
     </ortho>
-
 </views>
 
 
 <illumination>
-   <ambient r="ff" g="ff" b="ff" a="ff" />              <!-- global ambient -->
-    <background r="ff" g="ff" b="ff" a="ff" />     <!-- background color -->
+    <ambient r="0.3" g="0.3" b="0.3" a="1.0" />           <!-- global ambient -->
+    <background r="0.1" g="0.7" b="1.0" a="1.0" />        <!-- background color -->
 </illumination>
 
 
 <lights>
     <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-   <light id="ss">                                    <!-- light identifier -->
-        <enable value ="tt" />                         <!-- enable/disable -->
-        <position x="ff" y="ff" z="ff" w="ff" />
-               <!-- light position; w=1: point light; w=0: directional light -->
-
-       <ambient r="ff" g="ff" b="ff" a="ff" />        <!-- ambient component -->
-        <diffuse r="ff" g="ff" b="ff" a="ff" />        <!-- diffuse component -->
-        <specular r="ff" g="ff" b="ff" a="ff" />       <!-- specular component -->
-   </light>  
+    <light id="Light1">            <!-- light identifier -->
+        <enable value="1" />        <!-- enable/disable -->
+        <position x="10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+        <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+    </light>
 </lights>
 
 
@@ -86,7 +73,7 @@
        <specular r="0.18" g="0.19" b="0.19" a="1" />        <!-- specular reflection -->
         <diffuse r="0.18" g="0.19" b="0.19" a="1" />         <!-- diffuse reflection -->
         <ambient r="0.18" g="0.19" b="0.19" a="1" />         <!-- ambient reflection -->
-        <emissive r="1" g="1" b="1" a="1" />        <!-- emissive component -->
+        <emissive r="0" g="0" b="0" a="1.0" />               <!-- emissive component -->
      </material>
         <material id="hoki">                                  
        <shininess value="1.0" />
@@ -115,9 +102,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="0" y="0" z="0" />
+            <rotation axis="xx" angle="Math.PI/2.0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -150,7 +137,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -202,9 +189,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="10" y="0" z="0" />
+            <rotation axis="xx" angle="Math.PI/2.0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -212,7 +199,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
                             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
 
             <noderef id="dangerSign" />   <!-- "ss" is the identifier of a node or of leaf; -->
@@ -242,9 +229,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="0" y="0" z="-10" />
+            <rotation axis="xx" angle="-Math.PI/2.0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -252,7 +239,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
                             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
 
         </descendants>
@@ -278,8 +265,8 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
+            <translation x="10" y="0" z="0" />
+            <rotation axis="yy" angle="Math.PI/2.0" />
             <scale sx="ff" sy="ff" sz="ff" />
 
         </transformations>
@@ -288,7 +275,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
                             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
 
         </descendants>
@@ -307,16 +294,17 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="20" aft="20" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="-10" y="0" z="0" />
+            <rotation axis="yy" angle="Math.PI/2.0" />
+            <rotation axis="xx" angle="Math.PI/2.0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -324,7 +312,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
                             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
 
         </descendants>
@@ -350,9 +338,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="0" y="0" z="0" />
+            <rotation axis="xx" angle="0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -360,7 +348,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
                             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            <leaf type="triangle" x1="-1" y1="-1" x2="0" y2="1" x3="1" y3="-1" />
                                  <!-- x y coordinates of each vertex; triangle on plane XY -->
 
         </descendants>
@@ -386,9 +374,9 @@
                 <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
                 <transformations>
-                    <translation x="ff" y="ff" z="ff" />
+                    <translation x="0" y="0" z="ff" />
                     <rotation axis="cc" angle="ff" />
-                    <scale sx="ff" sy="ff" sz="ff" />
+                    <scale sx="0.4" sy="1" sz="1" />
 
                 </transformations>
 
@@ -396,7 +384,7 @@
                     descendants may be mixed, nodes and leafs -->
                 <descendants>
                 
-                    <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
+                    <leaf type="torus" inner="12" outer="13" slices="ii" loops="ii" />
 
                         <!-- inner and outer radius, sections around the inner radius, sections around the outer radius  -->
             </descendants>
@@ -422,9 +410,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="0" y="0" z="0" />
+            <rotation axis="xx" angle="0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -434,6 +422,9 @@
            <noderef id="securityMat" />   <!-- "ss" is the identifier of a node or of leaf; -->
                                  <!-- may be repeated as necessary. It can refer an -->
                                  <!-- identifier of another node, before or later defined in the file. -->
+
+            <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
+                            <!-- inner and outer radius, sections around the inner radius, sections around the outer radius  -->
         </descendants>
 
     </node>
@@ -459,9 +450,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="0" y="5" z="0" />
+            <rotation axis="xx" angle="0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -513,7 +504,8 @@
                                  <!-- identifier of another node, before or later defined in the file. -->
             <noderef id="LeftMatRetangle" />
             <noderef id="LLCylinder" />
-            <noderef id="LRCylinder" />       
+            <noderef id="LRCylinder" />   
+            <noderef id="LeftBase" />    
         </descendants>
 
     </node>
@@ -552,10 +544,79 @@
                                  <!-- identifier of another node, before or later defined in the file. -->
             <noderef id="RightMatRetangle" />
             <noderef id="RLCylinder" />
-            <noderef id="RRCylinder" />       
+            <noderef id="RRCylinder" />  
+            <noderef id="RightBase" />       
         </descendants>
 
     </node>
+
+    <node id="LeftBase">       <!-- defines one intermediate node; may be repeated as necessary -->
+
+        <!-- next two lines are mandatory -->
+         <material id="black" />      <!-- this superimposes the material received from parent node
+                                       id="null" maintains material from parent node -->
+ 
+ 
+         <texture id="clear">         <!-- declared texture superimposes the texture received from parent node
+                                       id="null" maintains texture from parent node
+                                       id="clear" clears texture declaration received from parent node -->
+ 
+ 
+             <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+ 
+         </texture>
+ 
+         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+ 
+         <transformations>
+             <translation x="0" y="-2.5" z="-7" />
+             <rotation axis="xx" angle="Math.PI/2.0" />
+             <scale sx="1" sy="1" sz="1" />
+ 
+         </transformations>
+ 
+        <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+         <descendants>
+                 <leaf type="cylinder" height="5" topRadius="2.5" bottomRadius="2.5" stacks="ii" slices="ii"/>
+                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
+         </descendants>
+ 
+     </node>
+
+     <node id="RightBase">       <!-- defines one intermediate node; may be repeated as necessary -->
+
+        <!-- next two lines are mandatory -->
+         <material id="black" />      <!-- this superimposes the material received from parent node
+                                       id="null" maintains material from parent node -->
+ 
+ 
+         <texture id="clear">         <!-- declared texture superimposes the texture received from parent node
+                                       id="null" maintains texture from parent node
+                                       id="clear" clears texture declaration received from parent node -->
+ 
+ 
+             <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+ 
+         </texture>
+ 
+         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+ 
+         <transformations>
+            <translation x="0" y="-2.5" z="0" />
+            <rotation axis="xx" angle="Math.PI/2.0" />
+            <scale sx="1" sy="1" sz="1" />
+ 
+         </transformations>
+ 
+        <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+         <descendants>
+                 <leaf type="cylinder" height="5" topRadius="2.5" bottomRadius="2.5" stacks="ii" slices="ii"/>
+                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
+         </descendants>
+ 
+     </node>
 
     <node id="LeftxRayBox">       <!-- defines one intermediate node; may be repeated as necessary -->
 
@@ -576,7 +637,7 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
+            <translation x="ff" y="5" z="" />
             <rotation axis="cc" angle="ff" />
             <scale sx="ff" sy="ff" sz="ff" />
 
@@ -585,7 +646,7 @@
        <!-- declaring descendants, at least one node or one leaf must be present
             descendants may be mixed, nodes and leafs -->
         <descendants>
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+                <leaf type="cylinder" height="3" topRadius="5" bottomRadius="5" stacks="ii" slices="ii"/>
                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
         </descendants>
 
@@ -611,9 +672,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="-5" y="0" z="5" />
+            <rotation axis="xx" angle="-Math.PI/2.0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -621,7 +682,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            <leaf type="rectangle" x1="-2" y1="5" x2="2" y2="-5" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
         </descendants>
 
@@ -630,7 +691,7 @@
     <node id="LLCylinder">       <!-- defines one intermediate node; may be repeated as necessary -->
 
        <!-- next two lines are mandatory -->
-        <material id="black" />      <!-- this superimposes the material received from parent node
+        <material id="Off_white" />      <!-- this superimposes the material received from parent node
                                       id="null" maintains material from parent node -->
 
 
@@ -656,7 +717,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>    
+            <leaf type="cylinder" height="10" topRadius="0.25" bottomRadius="0.25" stacks="ii" slices="ii"/>    
                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
         </descendants>
 
@@ -665,7 +726,7 @@
     <node id="LRCylinder">       <!-- defines one intermediate node; may be repeated as necessary -->
 
        <!-- next two lines are mandatory -->
-        <material id="black" />      <!-- this superimposes the material received from parent node
+        <material id="Off_white" />      <!-- this superimposes the material received from parent node
                                       id="null" maintains material from parent node -->
 
 
@@ -691,7 +752,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>    
+            <leaf type="cylinder" height="10" topRadius="0.25" bottomRadius="0.25" stacks="ii" slices="ii"/>   
                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
         </descendants>
 
@@ -725,7 +786,7 @@
        <!-- declaring descendants, at least one node or one leaf must be present
             descendants may be mixed, nodes and leafs -->
         <descendants>
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+                <leaf type="cylinder" height="3" topRadius="5" bottomRadius="5" stacks="ii" slices="ii"/>
                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
         </descendants>
 
@@ -750,9 +811,9 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="5" y="0" z="5" />
+            <rotation axis="xx" angle="-Math.PI/2.0" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -760,7 +821,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            <leaf type="rectangle" x1="-2" y1="5" x2="2" y2="-5" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
         </descendants>
 
@@ -769,7 +830,7 @@
     <node id="RLCylinder">       <!-- defines one intermediate node; may be repeated as necessary -->
 
        <!-- next two lines are mandatory -->
-        <material id="black" />      <!-- this superimposes the material received from parent node
+        <material id="Off_white" />      <!-- this superimposes the material received from parent node
                                       id="null" maintains material from parent node -->
 
 
@@ -795,7 +856,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>    
+            <leaf type="cylinder" height="10" topRadius="0.25" bottomRadius="0.25" stacks="ii" slices="ii"/>    
                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
         </descendants>
 
@@ -804,7 +865,7 @@
    <node id="RRCylinder">       <!-- defines one intermediate node; may be repeated as necessary -->
 
        <!-- next two lines are mandatory -->
-        <material id="black" />      <!-- this superimposes the material received from parent node
+        <material id="Off_white" />      <!-- this superimposes the material received from parent node
                                       id="null" maintains material from parent node -->
 
 
@@ -830,7 +891,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>    
+            <leaf type="cylinder" height="10" topRadius="0.25" bottomRadius="0.25" stacks="ii" slices="ii"/>    
                   <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
         </descendants>
     </node>
