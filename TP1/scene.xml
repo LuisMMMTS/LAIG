@@ -18,7 +18,7 @@
         <from x="5" y="0" z="0" />
         <to x="5" y="0" z="0" />
         <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
-    </ortho>
+    </ortho>    
 </views>
 
 
@@ -85,6 +85,7 @@
 </materials>
 
 <nodes>
+
     <node id="root">
     <!-- next two lines are mandatory -->
         <material id="null" />      <!-- this superimposes the material received from parent node
@@ -146,7 +147,7 @@
         <transformations>
             <translation x="ff" y="ff" z="ff" />
             <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -190,7 +191,7 @@
 
         <transformations>
             <translation x="10" y="0" z="0" />
-            <rotation axis="xx" angle="Math.PI/2.0" />
+            <rotation axis="xx" angle="Math.PI/2.0" /> 
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -267,7 +268,7 @@
         <transformations>
             <translation x="10" y="0" z="0" />
             <rotation axis="yy" angle="Math.PI/2.0" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -848,7 +849,7 @@
         <transformations>
             <translation x="ff" y="ff" z="ff" />
             <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -883,7 +884,7 @@
         <transformations>
             <translation x="ff" y="ff" z="ff" />
             <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
