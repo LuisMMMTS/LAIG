@@ -1,16 +1,10 @@
-/*Esfera igual a CGRA, mas com o eixo central coincidente com o Z e raio variavel
-- polos na parte positiva e negativas dos zz
-- stacks: n de divisoes entre os polos
-- slices: n de divisoes ao longo do eixo
-*/
-/* Atençao: as mudanças ainda nao foram efetuadas*/
 class MySphere extends CGFobject {
     /**
      * @method constructor
      * @param  {CGFscene} scene - MyScene object
      * @param  {integer} radius - radius of the sphere
-     * @param  {integer} slices - number of slices around Y axis
-     * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
+     * @param  {integer} slices - number of "sides" around the Z axis
+     * @param  {integer} stacks - number of divisions along the Z axis, from the center to the poles (half of sphere)
      */
     constructor(scene, radius, slices, stacks) {
       super(scene);
@@ -55,9 +49,9 @@ class MySphere extends CGFobject {
         
         for (let longitude = 0; longitude <= this.longDivs; longitude++) {
           //--- Vertices coordinates
-          var x = Math.cos(theta) * sinPhi;
-          var y = cosPhi;
-          var z = Math.sin(-theta) * sinPhi;
+          var x = Math.cos(theta) * sinPhi * radius;
+          var y = Math.sin(-theta) * sinPhi * radius; 
+          var z = cosPhi * radius;
           this.vertices.push(x, y, z);
   
           //--- Indices
