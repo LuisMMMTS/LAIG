@@ -111,15 +111,12 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="0" y="0" z="0" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -160,9 +157,6 @@
 
         <transformations>
             <translation x="0" y="0" z="-10" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="1" sy="1" sz="1" />
-
         </transformations>
 
        <!-- declaring descendants, at least one node or one leaf must be present
@@ -197,7 +191,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -205,8 +199,7 @@
 
         <transformations>
             <translation x="-10" y="0" z="10" />
-            <rotation axis="yy" angle="-Math.PI/2.0" /> 
-            <scale sx="1" sy="1" sz="1" />
+            <rotation axis="y" angle="-90" /> 
 
         </transformations>
 
@@ -237,7 +230,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -245,7 +238,7 @@
 
         <transformations>
             <translation x="10" y="0" z="10" />
-            <rotation axis="yy" angle="-Math.PI/2.0" />
+            <rotation axis="y" angle="-90" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -273,7 +266,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -281,7 +274,7 @@
 
         <transformations>
             <translation x="0" y="0" z="20" />
-            <rotation axis="yy" angle="Math.PI" />
+            <rotation axis="y" angle="180" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -316,9 +309,6 @@
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="0" y="0" z="0" />
-            <rotation axis="xx" angle="0" />
-            <scale sx="1" sy="1" sz="1" />
 
         </transformations>
 
@@ -345,7 +335,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -353,7 +343,7 @@
 
         <transformations> <!-- Right now it's in the exact middle of the wall, change this later-->
             <translation x="0" y="0" z="0" />
-            <rotation axis="xx" angle="0" />
+            <rotation axis="x" angle="0" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -381,15 +371,13 @@
                                             id="clear" clears texture declaration received from parent node -->
 
 
-                    <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+                    <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
                 </texture>
 
                 <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
                 <transformations>
-                    <translation x="0" y="0" z="ff" />
-                    <rotation axis="cc" angle="ff" />
                     <scale sx="0.25" sy="1" sz="1" />
 
                 </transformations>
@@ -397,7 +385,7 @@
             <!-- declaring descendants, at least one node or one leaf must be present
                     descendants may be mixed, nodes and leafs -->
                 <descendants>
-                    <noderef id="leftSpehere"/>
+                    <noderef id="leftSphere"/>
                     <noderef id="rightSphere"/>
                 
                     <leaf type="torus" inner="1" outer="12" slices="16" loops="20" />
@@ -418,7 +406,7 @@
                                             id="clear" clears texture declaration received from parent node -->
 
 
-                    <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+                    <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
                 </texture>
 
@@ -426,7 +414,6 @@
 
                 <transformations>
                     <translation x="-2" y="0" z="-4.75" />
-                    <rotation axis="cc" angle="ff" />
                     <scale sx="0.4" sy="1" sz="1" />
 
                 </transformations>
@@ -451,7 +438,7 @@
                                             id="clear" clears texture declaration received from parent node -->
 
 
-                    <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+                    <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
                 </texture>
 
@@ -459,7 +446,6 @@
 
                 <transformations>
                     <translation x="2" y="0" z="-4.75" />
-                    <rotation axis="cc" angle="ff" />
                     <scale sx="0.4" sy="1" sz="1" />
 
                 </transformations>
@@ -485,16 +471,14 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="0" y="0" z="0" />
-            <rotation axis="xx" angle="0" />
-            <scale sx="1" sy="1" sz="1" />
+
 
         </transformations>
 
@@ -520,7 +504,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -528,7 +512,7 @@
 
         <transformations>
             <translation x="0" y="0" z="0" />
-            <rotation axis="xx" angle="Math.PI/2.0" />
+            <rotation axis="x" angle="90" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -555,7 +539,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -563,7 +547,7 @@
 
         <transformations>
             <translation x="0" y="5" z="0" />
-            <rotation axis="xx" angle="0" />
+            <rotation axis="x" angle="0" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -595,16 +579,13 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
 
         </transformations>
 
@@ -635,16 +616,14 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="ff" y="ff" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+ 
 
         </transformations>
 
@@ -674,7 +653,7 @@
                                        id="clear" clears texture declaration received from parent node -->
  
  
-             <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+             <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
  
          </texture>
  
@@ -682,7 +661,7 @@
  
          <transformations>
              <translation x="-7.5" y="-2.5" z="0" />
-             <rotation axis="xx" angle="Math.PI/2.0" />
+             <rotation axis="x" angle="90" />
              <scale sx="1" sy="1" sz="1" />
  
          </transformations>
@@ -708,7 +687,7 @@
                                        id="clear" clears texture declaration received from parent node -->
  
  
-             <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+             <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
  
          </texture>
  
@@ -716,7 +695,7 @@
  
          <transformations>
             <translation x="7.5" y="-2.5" z="0" />
-            <rotation axis="xx" angle="Math.PI/2.0" />
+            <rotation axis="x" angle="90" />
             <scale sx="1" sy="1" sz="1" />
  
          </transformations>
@@ -742,7 +721,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -750,8 +729,6 @@
 
         <transformations>
             <translation x="-5" y="5" z="0" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
 
         </transformations>
 
@@ -777,7 +754,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -785,7 +762,7 @@
 
         <transformations>
             <translation x="-5" y="0" z="0" />
-            <rotation axis="xx" angle="Math.PI/2.0" />
+            <rotation axis="x" angle="90" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -812,16 +789,14 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="-10" y="0" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="-10" y="0" z="0" />
 
         </transformations>
 
@@ -847,16 +822,14 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="-5" y="0" z="ff" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
+            <translation x="-5" y="0" z="0" />
 
         </transformations>
 
@@ -882,7 +855,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -890,8 +863,6 @@
 
         <transformations>
             <translation x="5" y="0" z="0" />
-            <rotation axis="cc" angle="ff" />
-            <scale sx="ff" sy="ff" sz="ff" />
 
         </transformations>
 
@@ -916,7 +887,7 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
@@ -924,7 +895,7 @@
 
         <transformations>
             <translation x="5" y="0" z="0" />
-            <rotation axis="xx" angle="Math.PI/2.0" />
+            <rotation axis="x" angle="90" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -951,15 +922,14 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="5" y="0" z="ff" />
-            <rotation axis="cc" angle="ff" />
+            <translation x="5" y="0" z="0" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -986,15 +956,14 @@
                                       id="clear" clears texture declaration received from parent node -->
 
 
-            <amplification afs="ff" aft="ff" />            <!-- for primitives = dx/afs, dy/aft -->
+            <amplification afs="1" aft="1" />            <!-- for primitives = dx/afs, dy/aft -->
 
         </texture>
 
         <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
         <transformations>
-            <translation x="10" y="0" z="ff" />
-            <rotation axis="cc" angle="ff" />
+            <translation x="10" y="0" z="0" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
