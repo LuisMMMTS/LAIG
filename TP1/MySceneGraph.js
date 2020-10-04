@@ -245,6 +245,27 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
+    this.views=[];//it will store the ids in even spaces and the views in odd spaces
+
+    for(let i=0;i<viewsNode.childNodes.length;i++){
+        var new_node=viewsNode.childNodes[i];
+
+        if (new_node.name != "perspective" && new_node.name){ //check tag is correctly defined
+            this.onXMLMinorError("Unknown tag in [VIEWS] parsing: "+ new_node.name);
+            continue;
+        }
+
+        for (let i=0;i<this.views.length;i+=2){//check node id still does not exist
+            if (this.views[i]==new_node.id){
+                this.onXMLError("[views] id repeated "+ new_node.id);
+                return;
+            }
+        }
+
+        
+
+
+    }
         this.onXMLMinorError("To do: Parse views and create cameras.");
         return null;
     }
