@@ -7,7 +7,6 @@
  * @param slices - sections around the inner radius
  * @param loops - sections around the outer radius
  */    
-
 class MyTorus extends CGFobject {
 	constructor(scene, inner, outer, slices, loops) {
 		super(scene);
@@ -31,9 +30,9 @@ class MyTorus extends CGFobject {
 
 			for(var s=0; s <= this.slices; s++){
 				var phi = s*2*Math.PI/this.slices;
-				var x = (this.outer + (this.inner * Math.cos(theta))) * Math.cos(phi);
-				var y = (this.outer + (this.inner * Math.cos(theta))) * Math.sin(phi);
-				var z = this.inner * Math.sin(theta);
+				var x = (this.outer + (this.inner * Math.cos(phi))) * Math.cos(theta);
+				var y = (this.outer + (this.inner * Math.cos(phi))) * Math.sin(theta);
+				var z = this.inner * Math.sin(phi);
 
 				var k  = n/this.loops;
 				var t  = s/this.slices;	
@@ -45,20 +44,25 @@ class MyTorus extends CGFobject {
 			
 		}
 
-		/*verify indices*/ 
-		for(var n=0; n <= this.loops; n++){
-			for(var s=0; s<=this.slices; s++){	
+		for(var n=0; n < this.loops; n++){
+			for(var s=0; s < this.slices; s++){	
 				var i = n*(this.slices+1) + s;
 				var j = i + this.slices + 1;
 
-				this.indices.push(i, j+1, j);
-				this.indices.push(i, i+1, j+1);
+				this.indices.push(i, j, j+1);
+				this.indices.push(j, j+1, i+1);
 			}
 			
 		}
 		
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
+	}
+
+
+
+	updateTexCoords(coords) {
+		//to do 
 	}
 
 }
