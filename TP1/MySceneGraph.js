@@ -246,28 +246,69 @@ class MySceneGraph {
      */
     parseViews(viewsNode) {
     this.views=[];//it will store the ids in even spaces and the views in odd spaces
+    this.views.push(this.reader.getFloat(viewsNode, 'default'));//the default camera id is stored in position 0
+    this.views.push("");//required so that the odd even space rule applies
 
     for(let i=0;i<viewsNode.childNodes.length;i++){
         var new_node=viewsNode.childNodes[i];
 
-        if (new_node.name != "perspective" && new_node.name){ //check tag is correctly defined
-            this.onXMLMinorError("Unknown tag in [VIEWS] parsing: "+ new_node.name);
+        if (new_node.nodeName != "perspective" && new_node.nodeName!= "ortho"){ //check tag is correctly defined
+            this.onXMLMinorError("Unknown tag in [VIEWS] parsing: "+ new_node.nodeName);
             continue;
         }
 
-        for (let i=0;i<this.views.length;i+=2){//check node id still does not exist
+        for (let i=2;i<this.views.length;i+=2){//check node id still does not exist. starts in 2 because id 0 has the default camera so the id can already be there
             if (this.views[i]==new_node.id){
                 this.onXMLError("[views] id repeated "+ new_node.id);
                 return;
             }
+        }
+        
+
+        if (new_node.nodeName=="perspective"||new_node.nodeName=="ortho"){
+            this.views.push(new_node.id);
+            this.views.push(parseCamera(new_node));
         }
 
         
 
 
     }
-        this.onXMLMinorError("To do: Parse views and create cameras.");
-        return null;
+        this.log("views and cameras loadded successfully");
+        return views;
+    }
+
+    parseCamera(new_node){
+        let parameters=new_node.childNodes;
+        let from=null;
+        let to=null;
+        let up=[0,1,0];//default values
+
+        for(let i=0; i<parameters.length; i++){
+            
+            if (parameters.nodeName=="from"){
+                from=[this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
+
+            }else if (parameters.nodeName=="to"){
+                to=[this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
+            }else if(parameters.nodeName=="up"&&new_node.nodeName!="ortho"){
+                this.onXMLMinorError("[VIEWS] \"up\" tag declared on non ortho cam");
+            }else if((parameters.nodeName=="up"&&new_node.nodeName=="ortho")){
+                up=[this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
+            
+            }else{
+                this.onXMLError("[VIEWS] unknown/missing tag <" + parameters[j].nodeName + ">");
+                return;
+            }
+        
+        }
+        if (new_node.nodeName=="perspective"){
+            return new CGFcamera(this.reader.getFloat(new_node, 'angle') * DEGREE_TO_RAD, this.reader.getFloat(new_node, 'near'), this.reader.getFloat(new_node, 'far'), vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]));
+        }else if (new_node.nodeName=="ortho"){
+            return new CGFcameraOrtho(this.reader.getFloat(new_node, 'left'), this.reader.getFloat(new_node, 'right'), this.reader.getFloat(new_node, 'bottom'), this.reader.getFloat(new_node, 'top'), this.reader.getFloat(new_node, 'near'), this.reader.getFloat(new_node, 'far'), vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]),vec3.fromValues(up[0], up[1], up[2]));
+        }else{
+            return this.onXMLError("exited parse camera because camera node not ortho or perspective");
+        }
     }
 
     /**
@@ -392,6 +433,7 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
 
+        let texturesNode=texturesNode.childNodes;
         //For each texture in textures block, check ID and file URL
         this.onXMLMinorError("To do: Parse textures.");
         return null;
