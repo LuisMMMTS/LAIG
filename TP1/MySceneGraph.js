@@ -244,10 +244,11 @@ class MySceneGraph {
      * Parses the <views> block.
      * @param {view block element} viewsNode
      */
+    //TO DO:store the default camera
     parseViews(viewsNode) {
-    this.views=[];//it will store the ids in even spaces and the views in odd spaces
-    this.views.push(this.reader.getFloat(viewsNode, 'default'));//the default camera id is stored in position 0
-    this.views.push("");//required so that the odd even space rule applies
+    this.views=[];
+    //this.views.push(this.reader.getFloat(viewsNode, 'default'));//the default camera id is stored in position 0
+    
 
     for(let i=0;i<viewsNode.childNodes.length;i++){
         var new_node=viewsNode.childNodes[i];
@@ -257,17 +258,16 @@ class MySceneGraph {
             continue;
         }
 
-        for (let i=2;i<this.views.length;i+=2){//check node id still does not exist. starts in 2 because id 0 has the default camera so the id can already be there
-            if (this.views[i]==new_node.id){
-                this.onXMLError("[views] id repeated "+ new_node.id);
-                return;
-            }
+        //check node id still does not exist
+        if (this.views[new_node.id]!=null){
+            this.onXMLError("[views] id repeated "+ new_node.id);
+            return;
         }
+        
         
 
         if (new_node.nodeName=="perspective"||new_node.nodeName=="ortho"){
-            this.views.push(new_node.id);
-            this.views.push(parseCamera(new_node));
+            this.views[new_node.id]=parseCamera(new_node);
         }
 
         
@@ -275,7 +275,7 @@ class MySceneGraph {
 
     }
         this.log("views and cameras loadded successfully");
-        return views;
+        return null;
     }
 
     parseCamera(new_node){
@@ -433,9 +433,35 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
 
-        let texturesNode=texturesNode.childNodes;
+        let texturesChildNodes=texturesNode.childNodes;
+
+        this.textures=[];
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
+        for (let i=0; i<texturesChildNodes.length;i++){
+            if (texturesChildNodes[i].nodeName !== "texture") {
+                this.onXMLMinorError("[TEXTURE] invalid node name");
+                continue;
+            }
+
+            let id = this.reader.getString(texturesChildNodes, 'id')
+
+            if (id.length === 0) {
+                return this.onXMLError("[TEXTURE] no texture ID defined");
+            }
+            if (this.textures[id] != null) {
+                return this.onXMLError("[TEXTURE] repeated id " + id);
+            }
+
+            let path = this.reader.getString(children[i], 'path');
+            if (path.includes('scenes/images')) {
+                this.textures[id] = new CGFtexture(this.scene, path);
+            }else {
+                return this.onXMLMinorError("texture path incorrect in id "+ id);
+            }
+
+        }
+            
+        this.log("Textures successfully parsed");
         return null;
     }
 
