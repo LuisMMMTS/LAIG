@@ -474,7 +474,7 @@ class MySceneGraph {
 
         this.materials = [];
 
-        var grandChildren = [];
+        var grandChildren = [];//this will be the color parameter->shininess, speccular etc.
         var nodeNames = [];
 
         // Any number of materials.
@@ -495,12 +495,46 @@ class MySceneGraph {
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
 
             //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            grandChildren=this.children[i].childNodes;
+            let shininess=null;
+            let specular=null;
+            let diffuse=null;
+            let ambient=null;
+            let emissive=null;
+
+            for (let j=0; j<grandChildren.length;j++){
+
+                if(grandChildren[j].nodeName=="shininess"){
+                    shininess=this.reader.getFloat(grandChildren[i],"value");
+                }else if (grandChildren[j].nodeName=="specular"){
+                    specular=this.parseColor(grandChildren[j],"Specular component in id"+materialID);
+                }else if (grandChildren[j].nodeName=="diffuse"){
+                    diffuse=this.parseColor(grandChildren[j], "diffuse component in id"+materialID);
+                }else if (grandChildren[j].nodeName=="ambient"){
+                    ambient=this.parseColor(grandChildren[j],"ambient component in id"+materialID);
+                }else if (grandChildren[j].nodeName=="emissive"){
+                    emissive=this.parseColor(grandChildren[j], "emissive component in id"+materialID);
+                }
+            
+                
+
+                this.materials[materialID]=new CGFappearance(this.scene);
+                this.materials[materialID].setShininess(shininess);
+                this.materials[materialID].setSpecular(specular);
+                this.materials[materialID].setDiffuse(diffuse);
+                this.materials[materialID].setAmbient(ambient);
+                this.materials[materialID].setEmission(emissive);
+                
+            }
+
+            
         }
 
-        //this.log("Parsed materials");
+        this.log("Parsed materials");
         return null;
     }
+
+    
 
     /**
    * Parses the <nodes> block.
@@ -628,22 +662,22 @@ class MySceneGraph {
         // R
         var r = this.reader.getFloat(node, 'r');
         if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
-            return "unable to parse R component of the " + messageError;
+            return this.onXMLError("unable to parse R component of the " + messageError);
 
         // G
         var g = this.reader.getFloat(node, 'g');
         if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
-            return "unable to parse G component of the " + messageError;
+            return this.onXMLError("unable to parse G component of the " + messageError);
 
         // B
         var b = this.reader.getFloat(node, 'b');
         if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
-            return "unable to parse B component of the " + messageError;
+            return this.onXMLError("unable to parse B component of the " + messageError);
 
         // A
         var a = this.reader.getFloat(node, 'a');
         if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-            return "unable to parse A component of the " + messageError;
+            return this.onXMLError("unable to parse A component of the " + messageError);
 
         color.push(...[r, g, b, a]);
 
