@@ -579,7 +579,47 @@ class MySceneGraph {
             var descendantsIndex = nodeNames.indexOf("descendants");
 
             this.onXMLMinorError("To do: Parse nodes.");
+            
             // Transformations
+            let matrix=mat4.create();
+            let transformations=grandChildren[transformationsIndex].childNodes;
+            for (let j=0;j<transformations.length;j++){
+                if (transformations[j].nodeName=="translation"){
+                    let x=this.reader.getFloat(transformations[j], "x");
+                    let y=this.reader.getFloat(transformations[j], "y");
+                    let z=this.reader.getFloat(transformations[j], "z");
+
+                    if (x == null || y == null || z == null||isNaN(x) || isNaN(y) || isNaN(z)) {
+                        return this.onXMLrError("[NODE] missing/not number values for translation node: " + nodeID);
+                    }
+
+                    mat4.translate(matrix, matrix, [x, y, z]);
+
+                }else if (transformations[j].nodeName=="rotation"){
+                    let axis=this.reader.getString(transformations[j],"axis");
+                    let angle=this.reader.getString(transformations[j],"angle");
+
+                    if (axis == null || (axis != "x" && axis != "y" && axis != "z")||angle == null || isNaN(angle)) {
+                        return this.onXMLError("[NODE] wrong axis or angle on rotation node: " + nodeID);
+                    }
+                    
+                    angle=angle*DEGREE_TO_RAD;
+                    mat4.rotate(matrix, matrix,angle, this.axisCoords[axis]);
+                
+                }else if(transformations[j].nodeName=="scale"){
+                    let sx=this.reader.getFloat(transformations[j], "sx");
+                    let sy=this.reader.getFloat(transformations[j], "sy");
+                    let sz=this.reader.getFloat(transformations[j], "sz");
+
+                    if (x == null || y == null || z == null||isNaN(x) || isNaN(y) || isNaN(z)) {
+                        return this.onXMLrError("[NODE] missing/not number values for scale node: " + nodeID);
+                    }
+
+                    mat4.scale(matrix,matrix, [sx,sy,sz]);
+                }else{
+                    this.onXMLError("[NODE] unknown tag: "+ transformations[j].nodeName);
+                } 
+            }
 
             // Material
 
