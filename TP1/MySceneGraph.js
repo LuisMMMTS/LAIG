@@ -588,6 +588,10 @@ class MySceneGraph {
             this.onXMLMinorError("To do: Parse nodes.");
 
             // Transformations
+            if (transformationsIndex==null){
+                this.onXMLMinorError("transformations not defined for node id: "+nodeID);
+            }
+
             let matrix=mat4.create();
             let transformations=grandChildren[transformationsIndex].childNodes;
             for (let j=0;j<transformations.length;j++){
@@ -600,7 +604,7 @@ class MySceneGraph {
                         return this.onXMLError("[NODE] missing/not number values for translation node: " + nodeID);
                     }
 
-                    mat4.translate(matrix, matrix, [x, y, z]);
+                    mat4.translate(matrix, matrix, new vec3.fromValues(x, y, z));
 
                 }else if (transformations[j].nodeName=="rotation"){
                     let axis=this.reader.getString(transformations[j],"axis");
@@ -622,7 +626,7 @@ class MySceneGraph {
                         return this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID);
                     }
 
-                    mat4.scale(matrix,matrix, [sx,sy,sz]);
+                    mat4.scale(matrix,matrix, new vec3.fromValues(sx,sy,sz));
                 }else{
                     this.onXMLError("[NODE] unknown tag: "+ transformations[j].nodeName);
                 } 
@@ -674,7 +678,71 @@ class MySceneGraph {
             
 
             // Descendants
+            let descendants=[];
+            let primitives=[];
 
+            for (let j = 0; j < grandChildren[descendantsIndex].childNodes.length; j++){
+                let descendant = grandChildren[descendantsIndex].childNodes[j];
+                if(descendant.nodeName == "noderef"){
+                    descendants.push(this.reader.getString(descendant,"id"));
+                }
+                else if(descendant.nodeName == "leaf"){
+                    let type = (this.reader.getString(descendant,"type"));
+                    switch(type){
+                        case "retangle":
+                            let x1=this.reader.getFloat("x1");
+                            let y1=this.reader.getFloat("y1");
+                            let x2=this.reader.getFloat("x2");
+                            let y2=this.reader.getFloat("y2");
+                            this.primitives.push(new MyRectangle(x1,y1,x2,y2));
+                            break;
+                        case "cylinder":
+                            let height=this.reader.getFloat("height");
+                            let topRadius=this.reader.getFloat("topRadius");
+                            let bottomRadius=this.reader.getFloat("bottomRadius");
+                            let stacks=this.reader.getFloat("stacks");
+                            let slices=this.reader.getFloat("slices");                            
+                            primitives.push(new MyCylinder(height, topRadius, bottomRadius, stacks, slices));
+                            break;
+                        
+                        case "sphere":
+                            let radius=this.reader.getFloat("radius");
+                            let slices=this.reader.getFloat("slices");
+                            let stacks=this.reader.getFloat("stacks");
+                            primitives.push(new MySphere(radius, slices, stacks));
+                            break;
+
+                        case "torus":
+                            let inner=this.reader.getFloat("inner");
+                            let outter=this.reader.getFloat("outter");
+                            let loops=this.reader.getFloat("loops");
+                            let slices=this.reader.getFloat("slices");
+                            primitives.push(new MyTorus(inner, outter, slices, loops));
+                            break;
+                        case "triangle":
+                            let x1=this.reader.getFloat("x1");
+                            let y1=this.reader.getFloat("y1");
+                            let x2=this.reader.getFloat("x2");
+                            let y2=this.reader.getFloat("y2");
+                            let x3=this.reader.getFloat("x3");
+                            let y3=this.reader.getFloat("y3");
+                            primitives.push(new MyTriangle(x1,y1,x2,y2,x3,y3));
+                            break;
+                    }
+
+                }
+                else{
+                    this.onXMLMinorError("Unknown descendent type in node id: "+ nodeID);
+                }
+            }
+            let node=new Node(nodeID);
+            node.setChildren(descendants);
+            node.setLeafs(primitives);
+            node.setTexture(textureId);
+            node.setMaterial(materialID);
+            node.setTransformation(transformations);
+
+            this.nodes.push(node);
 
         }
     }
@@ -777,10 +845,52 @@ class MySceneGraph {
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
+
     displayScene() {
         
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        
+        this.processNode(this.idRoot, null, null, null ,null);
         //this.nodes[this.idRoot].display()
+    }
+
+    processNode(id, parentId){ //confirme with theoretical classes teacher 
+        let node = this.nodes[id];
+        let parent = this.nodes[parentId];
+
+        this.scene.pushMatrix();
+        let materialId=null;
+
+        if (node.getMaterial()!=null){
+            materialId=node.getMaterial();
+        }
+        else{
+            materialId=this.nodes[parentId].getMaterial();
+            this.nodes[id].setMaterial(this.nodes[parentId].getMaterial());
+        }
+        material=this.materials[materialId];
+        material.setTexture(null);
+        if (node.getTexture() == clear){ //clear texture
+            material.setTexture(null);
+        }
+        else if(node.getTexture() == null){ // get parent's texture
+            //buscar do pai
+            material.setTexture(this.textures[this.nodes[parentId].getTexture()]);
+        }
+        else{
+            material.setTexture(this.textures[node.getTexture()]);
+            this.nodes[id].setTexture(this.nodes[parentId].getTexture());
+        }
+
+        this.scene.multMatrix(node.getMatrix());
+        
+        for(i=0;i<node.getLeafs().length;i++){ // if primitive, display
+
+            node.getLeafs()[i].display();
+        }
+        for(i=0; i<node.getChildren().length(); i++){// if node, recursive call
+            processNode(node.getChildren()[i].getId(), node.getChildren()[i].getMatrix(), node.getChildren()[i].getTexture());
+        }
+
+        this.scene.popMatrix();
     }
 }
