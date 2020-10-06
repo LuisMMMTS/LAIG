@@ -488,7 +488,11 @@ class MySceneGraph {
             // Get id of the current material.
             var materialID = this.reader.getString(children[i], 'id');
             if (materialID == null)
-                return "no ID defined for material";
+                return this.onXMLMinorError("no ID defined for material");
+
+            if (materialId.toLowerCase() =="null")
+                return this.onXMLError("material id cannot be named null");
+
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
@@ -528,6 +532,9 @@ class MySceneGraph {
             }
 
             
+        }
+        if (this.materials.length<1){
+            return this.onXMLError("no materials parsed");
         }
 
         this.log("Parsed materials");
@@ -579,7 +586,7 @@ class MySceneGraph {
             var descendantsIndex = nodeNames.indexOf("descendants");
 
             this.onXMLMinorError("To do: Parse nodes.");
-            
+
             // Transformations
             let matrix=mat4.create();
             let transformations=grandChildren[transformationsIndex].childNodes;
@@ -590,7 +597,7 @@ class MySceneGraph {
                     let z=this.reader.getFloat(transformations[j], "z");
 
                     if (x == null || y == null || z == null||isNaN(x) || isNaN(y) || isNaN(z)) {
-                        return this.onXMLrError("[NODE] missing/not number values for translation node: " + nodeID);
+                        return this.onXMLError("[NODE] missing/not number values for translation node: " + nodeID);
                     }
 
                     mat4.translate(matrix, matrix, [x, y, z]);
@@ -612,7 +619,7 @@ class MySceneGraph {
                     let sz=this.reader.getFloat(transformations[j], "sz");
 
                     if (x == null || y == null || z == null||isNaN(x) || isNaN(y) || isNaN(z)) {
-                        return this.onXMLrError("[NODE] missing/not number values for scale node: " + nodeID);
+                        return this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID);
                     }
 
                     mat4.scale(matrix,matrix, [sx,sy,sz]);
@@ -622,10 +629,53 @@ class MySceneGraph {
             }
 
             // Material
+            let materialId=this.reader.getString(grandChildren[materialIndex], "id");
 
+            if (materialId == null) {//case material parameter does not exist
+                return this.onXMLError("[NODE] Material ID is not valid on node ID: " + nodeID);
+            }
+            
+            if (this.materials[materialId] == null && this.materials.toLowerCase()!= "null") {//not on materials defined
+                return "[NODE] Material ID: " + materialId + " does not exist. Error on node: " + nodeID;
+            }
+            
             // Texture
+            let textureId=this.reader.getString(grandChildren[textureIndex],"id");
+            
+            if (textureId == null) {//case material parameter does not exist
+                return this.onXMLError("[NODE] texture ID is not valid on node ID: " + nodeID);
+            }
+
+            if (textureId.toLowerCase()!="null" &&textureId.toLowerCase()!="clear"){
+                if (this.textures[textureId]==null){
+                    return "[NODE] Texture ID: " + textureId + " does not exist. Error on node: " + nodeID;
+                }
+            }
+
+            let amplificationNodes=grandChildren[textureIndex].childNodes;
+            let afs=1;
+            let aft=1; //if amplification not defined next cycle wont run and this will be default values
+
+            for (let j=0; j<amplificationNodes.length;j++){
+                if (amplificationNodes[j].nodeName!="amplification"){
+                    return this.onXMLError("Unknown section on textures children, where amplificaton should be. node Id; " + nodeID);
+                }else{
+                    afs=this.reader.getFloat(amplificationNodes[j], "afs");
+                    aft=this.reader.getFloat(amplificationNodes[j], "aft");
+
+                    if (aft==null||afs==null||isNaN(afs)||isNaN(aft)){
+                        this.onXMLMinorError("wrong amplification values in node: "+ nodeID);
+                        afs=1;
+                        aft=1;
+                    }
+                }
+            }
+
+            
 
             // Descendants
+
+
         }
     }
 
