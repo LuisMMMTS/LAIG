@@ -250,9 +250,9 @@ class MySceneGraph {
         this.views = [];
         //this.views.push(this.reader.getFloat(viewsNode, 'default'));//the default camera id is stored in position 0
         
-
-        for(let i = 0; i < viewsNode.childNodes.length; i++){
-            var new_node = viewsNode.childNodes[i];
+        var children = viewsNode.children;
+        for(let i = 0; i < children.length; i++){
+            var new_node = children[i];
 
             if (new_node.nodeName != "perspective" && new_node.nodeName != "ortho"){ //check if tag is correctly defined
                 this.onXMLMinorError("Unknown tag in [VIEWS] parsing: " + new_node.nodeName);
@@ -266,7 +266,7 @@ class MySceneGraph {
             }
 
             if (new_node.nodeName == "perspective" || new_node.nodeName == "ortho"){
-                this.views[new_node.id] = parseCamera(new_node);
+                //this.views[new_node.id] = parseCamera(new_node);
             }
         }
         this.log("views and cameras loadded successfully");
@@ -279,7 +279,7 @@ class MySceneGraph {
      */
 
     parseCamera(new_node){
-        let parameters = new_node.childNodes;
+        let parameters = new_node.children;
         let from = null;
         let to = null;
         let up = [0,1,0];//default values, since it is optional to define it 
@@ -438,36 +438,36 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
 
-        let texturesChildNodes=texturesNode.childNodes;
+        let texturesChildNodes=texturesNode.children;
         this.textures=[];
 
         //For each texture in textures block, check ID and file path
 
         for (let i = 0; i < texturesChildNodes.length; i++){
-            if (texturesChildNodes[i].nodeName != "texture") {
+            if (texturesChildNodes[i].nodeName !== "texture") {
                 this.onXMLMinorError("[TEXTURE] invalid node name");
                 continue;
             }
 
-            let id = this.reader.getString(texturesChildNodes, 'id')
+            let id = this.reader.getString(texturesChildNodes[i], 'id')
 
-            if (id.length == 0) {
+            if (id.length === 0) {
                 return this.onXMLError("[TEXTURE] no texture ID defined");
             }
             if (this.textures[id] != null) {
                 return this.onXMLError("[TEXTURE] repeated id " + id);
             }
 
-            let path = this.reader.getString(children[i], 'path');
+            let path = this.reader.getString(texturesChildNodes[i], 'path');
 
-            if (path.includes('scenes/images')) {
+            if (path.includes('./textures')) {
                 this.textures[id] = new CGFtexture(this.scene, path);
             }
             else {
                 return this.onXMLMinorError("texture path incorrect in id " + id);
             }
         }
-            
+        
         this.log("Textures successfully parsed");
         return null;
     }
@@ -484,9 +484,13 @@ class MySceneGraph {
         var grandChildren = []; //this will be the color parameter -> shininess, speccular etc.
         var nodeNames = [];
 
+        
+        if (children.length < 1){
+            return this.onXMLError("no materials parsed");
+        }
+
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
-
             if (children[i].nodeName != "material") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
@@ -496,7 +500,7 @@ class MySceneGraph {
             var materialID = this.reader.getString(children[i], 'id');
             if (materialID == null)
                 return this.onXMLMinorError("no ID defined for material");
-            if (materialId.toLowerCase() == "null")
+            if (materialID.toLowerCase() == "null")
                 return this.onXMLError("material id cannot be named null");
 
 
@@ -505,7 +509,7 @@ class MySceneGraph {
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
 
             
-            grandChildren = this.children[i].childNodes;
+            grandChildren = children[i].children;
             let shininess = null;
             let specular = null;
             let diffuse = null;
@@ -515,7 +519,7 @@ class MySceneGraph {
             for (let j = 0; j < grandChildren.length; j++){
 
                 if(grandChildren[j].nodeName == "shininess"){
-                    shininess = this.reader.getFloat(grandChildren[i],"value");
+                    shininess = this.reader.getFloat(grandChildren[j],"value");
                 }
                 else if (grandChildren[j].nodeName=="specular"){
                     specular = this.parseColor(grandChildren[j],"Specular component in id"+materialID);
@@ -539,10 +543,6 @@ class MySceneGraph {
             }
         }
 
-        if (this.materials.length < 1){
-            return this.onXMLError("no materials parsed");
-        }
-
         this.log("Parsed materials");
         return null;
     }
@@ -563,7 +563,7 @@ class MySceneGraph {
 
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
-
+            
             if (children[i].nodeName != "node") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
@@ -598,13 +598,14 @@ class MySceneGraph {
             }
 
             let matrix = mat4.create();
-            let transformations = grandChildren[transformationsIndex].childNodes;
+            let transformations = grandChildren[transformationsIndex].children;
+            this.log("ola");
             for (let j = 0; j < transformations.length; j++){
+                this.log(nodeID);
                 if (transformations[j].nodeName == "translation"){
                     let x = this.reader.getFloat(transformations[j], "x");
                     let y = this.reader.getFloat(transformations[j], "y");
                     let z = this.reader.getFloat(transformations[j], "z");
-
                     if (x == null || y == null || z == null|| isNaN(x) || isNaN(y) || isNaN(z)) {
                         return this.onXMLError("[NODE] missing/not number values for translation node: " + nodeID);
                     }
@@ -629,7 +630,7 @@ class MySceneGraph {
                     let sy = this.reader.getFloat(transformations[j], "sy");
                     let sz = this.reader.getFloat(transformations[j], "sz");
 
-                    if (x == null || y == null || z == null|| isNaN(x) || isNaN(y) || isNaN(z)) {
+                    if (sx == null || sy == null || sz == null|| isNaN(sx) || isNaN(sy) || isNaN(sz)) {
                         return this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID);
                     }
 
@@ -639,16 +640,23 @@ class MySceneGraph {
                     this.onXMLError("[NODE] unknown tag: " + transformations[j].nodeName);
                 } 
             }
+            
 
             // Material
-            let materialId = this.reader.getString(grandChildren[materialIndex], "id");
+            let materialID = this.reader.getString(grandChildren[materialIndex], "id");
 
-            if (materialId == null) {//case material parameter does not exist
+            /*if (materialId == null) {//case material parameter does not exist
                 return this.onXMLError("[NODE] Material ID is not valid on node ID: " + nodeID);
             }
             
-            if (this.materials[materialId] == null && this.materials.toLowerCase() != "null") {//not on materials defined
+            if (this.materials[materialId] == null && this.materials[materialId] != "null") {//not on materials defined
                 return "[NODE] Material ID: " + materialId + " does not exist. Error on node: " + nodeID;
+            }
+*/
+            if(materialID !== "null"){//case material parameter does not exist 
+                if(this.materials[materialID] == null){ //not on materials defined
+                    this.onXMLMinorError("[NODE] Material with ID: " + materialID + " does not exist. Error on node: " + nodeID);
+                }
             }
             
             // Texture
@@ -664,7 +672,7 @@ class MySceneGraph {
                 }
             }
 
-            let amplificationNodes = grandChildren[textureIndex].childNodes;
+            let amplificationNodes = grandChildren[textureIndex].children;
             let afs = 1;
             let aft = 1; //if amplification is not defined, the next cycle wont run and this will be the default values
 
@@ -690,8 +698,8 @@ class MySceneGraph {
             let descendants = [];
             let primitives = [];
 
-            for (let j = 0; j < grandChildren[descendantsIndex].childNodes.length; j++){
-                let descendant = grandChildren[descendantsIndex].childNodes[j];
+            for (let j = 0; j < grandChildren[descendantsIndex].children.length; j++){
+                let descendant = grandChildren[descendantsIndex].children[j];
                 if(descendant.nodeName == "noderef"){
                     descendants.push(this.reader.getString(descendant,"id"));
                 }
@@ -699,44 +707,44 @@ class MySceneGraph {
                     let type = (this.reader.getString(descendant,"type"));
                     switch(type){
                         case "retangle":
-                            let x1 = this.reader.getFloat("x1");
-                            let y1 = this.reader.getFloat("y1");
-                            let x2 = this.reader.getFloat("x2");
-                            let y2 = this.reader.getFloat("y2");
-                            this.primitives.push(new MyRectangle(x1,y1,x2,y2));
+                            var x1 = this.reader.getFloat("x1");
+                            var y1 = this.reader.getFloat("y1");
+                            var x2 = this.reader.getFloat("x2");
+                            var y2 = this.reader.getFloat("y2");
+                            this.primitives.push(new MyRectangle(this,x1,y1,x2,y2));
                             break;
                         case "cylinder":
-                            let height = this.reader.getFloat("height");
-                            let topRadius = this.reader.getFloat("topRadius");
-                            let bottomRadius = this.reader.getFloat("bottomRadius");
-                            let stacks = this.reader.getFloat("stacks");
-                            let slices = this.reader.getFloat("slices");                            
-                            primitives.push(new MyCylinder(height, topRadius, bottomRadius, stacks, slices));
+                            var height = this.reader.getFloat("height");
+                            var topRadius = this.reader.getFloat("topRadius");
+                            var bottomRadius = this.reader.getFloat("bottomRadius");
+                            var stacks = this.reader.getFloat("stacks");
+                            var slices = this.reader.getFloat("slices");                            
+                            primitives.push(new MyCylinder(this,height, topRadius, bottomRadius, stacks, slices));
                             break;
                         
                         case "sphere":
-                            let radius = this.reader.getFloat("radius");
-                            let slices = this.reader.getFloat("slices");
-                            let stacks = this.reader.getFloat("stacks");
-                            primitives.push(new MySphere(radius, slices, stacks));
+                            var radius = this.reader.getFloat("radius");
+                            var slices = this.reader.getFloat("slices");
+                            var stacks = this.reader.getFloat("stacks");
+                            primitives.push(new MySphere(this,radius, slices, stacks));
                             break;
 
                         case "torus":
-                            let inner = this.reader.getFloat("inner");
-                            let outter = this.reader.getFloat("outter");
-                            let loops = this.reader.getFloat("loops");
-                            let slices = this.reader.getFloat("slices");
-                            primitives.push(new MyTorus(inner, outter, slices, loops));
+                            var inner = this.reader.getFloat("inner");
+                            var outter = this.reader.getFloat("outter");
+                            var loops = this.reader.getFloat("loops");
+                            var slices = this.reader.getFloat("slices");
+                            primitives.push(new MyTorus(this,inner, outter, slices, loops));
                             break;
 
                         case "triangle":
-                            let x1 = this.reader.getFloat("x1");
-                            let y1 = this.reader.getFloat("y1");
-                            let x2 = this.reader.getFloat("x2");
-                            let y2 = this.reader.getFloat("y2");
-                            let x3 = this.reader.getFloat("x3");
-                            let y3 = this.reader.getFloat("y3");
-                            primitives.push(new MyTriangle(x1,y1,x2,y2,x3,y3));
+                            var x1 = this.reader.getFloat("x1");
+                            var y1 = this.reader.getFloat("y1");
+                            var x2 = this.reader.getFloat("x2");
+                            var y2 = this.reader.getFloat("y2");
+                            var x3 = this.reader.getFloat("x3");
+                            var y3 = this.reader.getFloat("y3");
+                            primitives.push(new MyTriangle(this,x1,y1,x2,y2,x3,y3));
                             break;
                     }
 
@@ -753,8 +761,13 @@ class MySceneGraph {
             node.setTransformation(transformations);
 
             this.nodes.push(node);
+            
 
         }
+        console.log(this.nodes);
+        this.log("Parsed nodes");
+        return null;
+        
     }
     /**
      * Parse a boolean from a node with ID = id
@@ -880,7 +893,7 @@ class MySceneGraph {
 
         this.scene.pushMatrix();
         let materialId = null;
-
+        
         if (node.getMaterial() != null){
             materialId = node.getMaterial();
         }

@@ -42,6 +42,7 @@
 
 <textures>
    <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
+
     <texture id="danger" path="./textures/danger.png" />
     <texture id="floorTexture" path="./textures/chao.png" />
     <texture id="glassWallTexture" path="./textures/airport_glassWall.jpg" />

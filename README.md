@@ -1,6 +1,7 @@
 # LAIG 2020/2021
 
-## Group T0xG0y
+## Group: T01G07
+
 | Name             | Number    | E-Mail              |
 | ---------------- | --------- | --------------------|
 | Rita Peixoto     | 201806257 | up201806257@fe.up.pt|

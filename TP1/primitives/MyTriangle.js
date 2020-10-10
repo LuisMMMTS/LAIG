@@ -24,7 +24,33 @@ class MyTriangle extends CGFobject {
 	}
 	
 	initBuffers() {
+        this.verices = [
+            this.x1, this,y1, 0, //0
+            this.x2, this.y2, 0, //1 
+            this.x3, this.y3, 0  //2
+        ]
+
+        this.indices = [0,1,2] //only one side
+
+        this.normals = [
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+		]
+
+        this.texCoords = [
+			0, 1,
+			1, 1,
+			0, 0,
+			1, 0
+		]
 		
+        this.primitiveType = this.scene.gl.TRIANGLES
+
+        this.initGLBuffers()
+    }
+    updateTexCoords(coords) {
+		//to do
 	}
 
 }
