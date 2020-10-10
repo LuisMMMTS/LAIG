@@ -32,7 +32,7 @@ class MyCylinder extends CGFobject {
 	
 	updateTexCoords(coords) {
 		//to do
-	  }
+	}
 
 	
 	display(){

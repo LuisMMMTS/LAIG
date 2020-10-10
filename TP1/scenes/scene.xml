@@ -311,7 +311,7 @@
                 <descendants>                    
                     <noderef id="rightSphere"/>
                     <noderef id="leftSphere"/>
-                    <leaf type="torus" inner="1" outer="12" slices="6" loops="20" />
+                    <leaf type="torus" inner="1" outer="12" slices="6" loops="20"/>
 
                         <!-- inner and outer radius, sections around the inner radius, sections around the outer radius  -->
             </descendants>

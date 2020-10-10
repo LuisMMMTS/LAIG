@@ -220,10 +220,13 @@ class MySceneGraph {
 
         var rootNode = children[rootIndex];
         var id = this.reader.getString(rootNode, 'id');
+
         if (id == null)
             return "No root id defined for scene.";
 
         this.idRoot = id;
+
+
 
         // Get axis length        
         if(referenceIndex == -1)
@@ -591,7 +594,6 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            this.onXMLMinorError("To do: Parse nodes.");
 
             // Transformations
             if (transformationsIndex == null){
@@ -600,7 +602,6 @@ class MySceneGraph {
 
             let matrix = mat4.create();
             let transformations = grandChildren[transformationsIndex].children;
-            this.log("ola");
             for (let j = 0; j < transformations.length; j++){
                 this.log(nodeID);
                 if (transformations[j].nodeName == "translation"){
@@ -707,52 +708,55 @@ class MySceneGraph {
                 else if(descendant.nodeName == "leaf"){
                     let type = (this.reader.getString(descendant,"type"));
                     switch(type){
-                        case "retangle":
-                            var x1 = this.reader.getFloat("x1");
-                            var y1 = this.reader.getFloat("y1");
-                            var x2 = this.reader.getFloat("x2");
-                            var y2 = this.reader.getFloat("y2");
-                            this.primitives.push(new MyRectangle(this,x1,y1,x2,y2));
+                        case "rectangle":
+                            var x1 = this.reader.getFloat(descendant,"x1");
+                            var y1 = this.reader.getFloat(descendant,"y1");
+                            var x2 = this.reader.getFloat(descendant,"x2");
+                            var y2 = this.reader.getFloat(descendant,"y2");
+                            primitives.push(new MyRectangle(this.scene,x1,y1,x2,y2));
                             break;
                         case "cylinder":
-                            var height = this.reader.getFloat("height");
-                            var topRadius = this.reader.getFloat("topRadius");
-                            var bottomRadius = this.reader.getFloat("bottomRadius");
-                            var stacks = this.reader.getFloat("stacks");
-                            var slices = this.reader.getFloat("slices");                            
-                            primitives.push(new MyCylinder(this,height, topRadius, bottomRadius, stacks, slices));
+                            var height = this.reader.getFloat(descendant,"height");
+                            var topRadius = this.reader.getFloat(descendant,"topRadius");
+                            var bottomRadius = this.reader.getFloat(descendant,"bottomRadius");
+                            var stacks = this.reader.getFloat(descendant,"stacks");
+                            var slices = this.reader.getFloat(descendant,"slices");                            
+                            primitives.push(new MyCylinder(this.scene,height, topRadius, bottomRadius, stacks, slices));
                             break;
                         
                         case "sphere":
-                            var radius = this.reader.getFloat("radius");
-                            var slices = this.reader.getFloat("slices");
-                            var stacks = this.reader.getFloat("stacks");
-                            primitives.push(new MySphere(this,radius, slices, stacks));
+                            var radius = this.reader.getFloat(descendant,"radius");
+                            var slices = this.reader.getFloat(descendant,"slices");
+                            var stacks = this.reader.getFloat(descendant,"stacks");
+                            primitives.push(new MySphere(this.scene,radius, slices, stacks));
                             break;
 
                         case "torus":
-                            var inner = this.reader.getFloat("inner");
-                            var outter = this.reader.getFloat("outter");
-                            var loops = this.reader.getFloat("loops");
-                            var slices = this.reader.getFloat("slices");
-                            primitives.push(new MyTorus(this,inner, outter, slices, loops));
+                            var inner = this.reader.getFloat(descendant,"inner");
+                            var outer = this.reader.getFloat(descendant,"outer");
+                            var loops = this.reader.getFloat(descendant,"loops");
+                            var slices = this.reader.getFloat(descendant,"slices");
+                            primitives.push(new MyTorus(this.scene,inner, outer, slices, loops));
                             break;
 
                         case "triangle":
-                            var x1 = this.reader.getFloat("x1");
-                            var y1 = this.reader.getFloat("y1");
-                            var x2 = this.reader.getFloat("x2");
-                            var y2 = this.reader.getFloat("y2");
-                            var x3 = this.reader.getFloat("x3");
-                            var y3 = this.reader.getFloat("y3");
-                            primitives.push(new MyTriangle(this,x1,y1,x2,y2,x3,y3));
+                            var x1 = this.reader.getFloat(descendant,"x1");
+                            var y1 = this.reader.getFloat(descendant,"y1");
+                            var x2 = this.reader.getFloat(descendant,"x2");
+                            var y2 = this.reader.getFloat(descendant,"y2");
+                            var x3 = this.reader.getFloat(descendant,"x3");
+                            var y3 = this.reader.getFloat(descendant,"y3");
+                            primitives.push(new MyTriangle(this.scene,x1,y1,x2,y2,x3,y3));
                             break;
+                        default:
+                            this.onXMLMinorError("Unknown leaf type in node id: "+ nodeID);
                     }
 
                 }
                 else{
                     this.onXMLMinorError("Unknown descendent type in node id: "+ nodeID);
                 }
+                
             }
             let node = new Node(nodeID);
             node.setChildren(descendants);
@@ -761,11 +765,9 @@ class MySceneGraph {
             node.setMaterial(materialID);
             node.setTransformation(transformations);
 
-            this.nodes.push(node);
-            
-
+            this.nodes[nodeID]=node;
+        
         }
-        console.log(this.nodes);
         this.log("Parsed nodes");
         return null;
         
@@ -877,9 +879,8 @@ class MySceneGraph {
      */
 
     displayScene() {
-        
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        this.processNode(this.idRoot, null, null, null ,null);
+        this.processNode(this.idRoot, null);
         //this.nodes[this.idRoot].display()
     }
 
@@ -890,11 +891,14 @@ class MySceneGraph {
      */
     processNode(id, parentId){ //confirme with theoretical classes teacher 
         let node = this.nodes[id];
+        this.log(node.getId());
+   
         let parent = this.nodes[parentId];
 
         this.scene.pushMatrix();
         let materialId = null;
         
+        let material = null;        
         if (node.getMaterial() != null){
             materialId = node.getMaterial();
         }
@@ -903,7 +907,8 @@ class MySceneGraph {
             this.nodes[id].setMaterial(this.nodes[parentId].getMaterial());
         }
         material = this.materials[materialId];
-        material.setTexture(null);
+        
+        //material.setTexture(null);
         if (node.getTexture() == clear){ //clear texture
             material.setTexture(null);
         }
@@ -916,14 +921,14 @@ class MySceneGraph {
             this.nodes[id].setTexture(this.nodes[parentId].getTexture());
         }
 
-        this.scene.multMatrix(node.getMatrix());
+        this.scene.multMatrix(node.getTransformation());
         
         for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display
             node.getLeafs()[i].display();
         }
 
         for(var i = 0; i < node.getChildren().length(); i++){// if node, recursive call
-            processNode(node.getChildren()[i].getId(), node.getChildren()[i].getMatrix(), node.getChildren()[i].getTexture());
+            processNode(node.getChildren()[i].getId(),id);
         }
 
         this.scene.popMatrix();

@@ -25,7 +25,7 @@ class MyTriangle extends CGFobject {
 	
 	initBuffers() {
         this.verices = [
-            this.x1, this,y1, 0, //0
+            this.x1, this.y1, 0, //0
             this.x2, this.y2, 0, //1 
             this.x3, this.y3, 0  //2
         ]
