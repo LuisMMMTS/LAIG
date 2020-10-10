@@ -880,46 +880,43 @@ class MySceneGraph {
 
     displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        this.processNode(this.idRoot, null);
+        var matId = this.nodes[this.idRoot].getMaterial();
+        var texId = this.nodes[this.idRoot].getTexture();
+        this.processNode(this.idRoot, this.textures[texId], this.materials[matId]);
         //this.nodes[this.idRoot].display()
     }
 
     /**
      * Processes each node and its descendants, applying its textures, materials and transformations
      * @param id - id of the node
-     * @param parentId - id of the parent's node
+     * @param {CGFtexture} text
+     * @param {CGFappearance} mat  
      */
-    processNode(id, parentId){ //confirme with theoretical classes teacher 
+    processNode(id, tex, mat){ //confirme with theoretical classes teacher 
         let node = this.nodes[id];
-        this.log(node.getId());
-   
-        let parent = this.nodes[parentId];
-
+        
+        
         this.scene.pushMatrix();
-        let materialId = null;
         
-        let material = null;        
-        if (node.getMaterial() != null){
-            materialId = node.getMaterial();
+        let materialID = null;
+        if (node.getMaterial() != "null"){
+            materialID = node.getMaterial();
+            mat = this.materials[materialID];
+        }
+
+        
+        if (node.getTexture() === "clear"){ //clear texture
+            mat.setTexture(null);
+        }
+        else if(node.getTexture() === "null"){ // get parent's texture
+            mat.setTexture(tex);
         }
         else{
-            materialId = this.nodes[parentId].getMaterial();
-            this.nodes[id].setMaterial(this.nodes[parentId].getMaterial());
+            mat.setTexture(this.textures[node.getTexture()]);
         }
-        material = this.materials[materialId];
-        
-        //material.setTexture(null);
-        if (node.getTexture() == clear){ //clear texture
-            material.setTexture(null);
-        }
-        else if(node.getTexture() == null){ // get parent's texture
-            //buscar do pai
-            material.setTexture(this.textures[this.nodes[parentId].getTexture()]);
-        }
-        else{
-            material.setTexture(this.textures[node.getTexture()]);
-            this.nodes[id].setTexture(this.nodes[parentId].getTexture());
-        }
+
+        this.mat.apply();
+        mat.setTexture(null);
 
         this.scene.multMatrix(node.getTransformation());
         
@@ -927,8 +924,10 @@ class MySceneGraph {
             node.getLeafs()[i].display();
         }
 
-        for(var i = 0; i < node.getChildren().length(); i++){// if node, recursive call
-            processNode(node.getChildren()[i].getId(),id);
+        for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
+            this.scene.pushMatrix();
+            this.processNode(node.getChildren()[i],node.getTexture(), node.getMaterial());
+            this.scene.popMatrix();
         }
 
         this.scene.popMatrix();
