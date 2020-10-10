@@ -461,6 +461,7 @@ class MySceneGraph {
             let path = this.reader.getString(texturesChildNodes[i], 'path');
 
             if (path.includes('./textures')) {
+
                 this.textures[id] = new CGFtexture(this.scene, path);
             }
             else {
