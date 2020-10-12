@@ -647,14 +647,6 @@ class MySceneGraph {
             // Material
             let materialID = this.reader.getString(grandChildren[materialIndex], "id");
 
-            /*if (materialId == null) {//case material parameter does not exist
-                return this.onXMLError("[NODE] Material ID is not valid on node ID: " + nodeID);
-            }
-            
-            if (this.materials[materialId] == null && this.materials[materialId] != "null") {//not on materials defined
-                return "[NODE] Material ID: " + materialId + " does not exist. Error on node: " + nodeID;
-            }
-*/
             if(materialID !== "null"){//case material parameter does not exist 
                 if(this.materials[materialID] == null){ //not on materials defined
                     this.onXMLMinorError("[NODE] Material with ID: " + materialID + " does not exist. Error on node: " + nodeID);
@@ -699,9 +691,10 @@ class MySceneGraph {
             // Descendants
             let descendants = [];
             let primitives = [];
+            let descendant = null;
 
             for (let j = 0; j < grandChildren[descendantsIndex].children.length; j++){
-                let descendant = grandChildren[descendantsIndex].children[j];
+                descendant = grandChildren[descendantsIndex].children[j];
                 if(descendant.nodeName == "noderef"){
                     descendants.push(this.reader.getString(descendant,"id"));
                 }
@@ -763,14 +756,15 @@ class MySceneGraph {
             node.setLeafs(primitives);
             node.setTexture(textureId);
             node.setMaterial(materialID);
-            node.setTransformation(transformations);
-
-            this.nodes[nodeID]=node;
-        
+            node.setTransformation(matrix);
+            console.log(textureId);
+            console.log(materialID);
+            this.nodes[nodeID] = node;
+            
         }
         this.log("Parsed nodes");
-        return null;
         
+        return null;
     }
     /**
      * Parse a boolean from a node with ID = id
@@ -882,8 +876,8 @@ class MySceneGraph {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         var matId = this.nodes[this.idRoot].getMaterial();
         var texId = this.nodes[this.idRoot].getTexture();
-        this.processNode(this.idRoot, this.textures[texId], this.materials[matId]);
-        //this.nodes[this.idRoot].display()
+        this.processNode(this.idRoot, texId, matId);
+
     }
 
     /**
@@ -898,25 +892,31 @@ class MySceneGraph {
         
         this.scene.pushMatrix();
         
-        let materialID = null;
-        if (node.getMaterial() != "null"){
-            materialID = node.getMaterial();
-            mat = this.materials[materialID];
-        }
+        let materialID = node.getMaterial();
+        let textureID = node.getTexture();
 
+
+       /* if( textureID == "null"){ // get parent's texture
+            textureID = tex;
+        }
+    
+
+        if ( materialID === "null"){ // get parent's material 
+            materialID = mat;
+        }
+        if(materialID != "null"){ 
+            let material = new CGFappearance(this.scene);
+            material = this.materials[materialID];
         
-        if (node.getTexture() === "clear"){ //clear texture
-            mat.setTexture(null);
-        }
-        else if(node.getTexture() === "null"){ // get parent's texture
-            mat.setTexture(tex);
-        }
-        else{
-            mat.setTexture(this.textures[node.getTexture()]);
-        }
+            
+            if(textureID != "clear"){
+                let texture = this.textures[textureID];
+                //material.setTexture(texture);
+            }
+            
+            material.apply();
+        }*/
 
-        this.mat.apply();
-        mat.setTexture(null);
 
         this.scene.multMatrix(node.getTransformation());
         
@@ -926,7 +926,7 @@ class MySceneGraph {
 
         for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
             this.scene.pushMatrix();
-            this.processNode(node.getChildren()[i],node.getTexture(), node.getMaterial());
+            this.processNode(node.getChildren()[i],null, null);
             this.scene.popMatrix();
         }
 

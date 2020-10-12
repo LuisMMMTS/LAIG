@@ -21,7 +21,7 @@ class Node{
         return this.nodeID;
     }
 
-    setChildren( children){
+    setChildren(children){
         this.children = children;
     }
 

@@ -27,23 +27,49 @@ class MyTriangle extends CGFobject {
         this.verices = [
             this.x1, this.y1, 0, //0
             this.x2, this.y2, 0, //1 
+            this.x3, this.y3, 0,  //2
+            this.x1, this.y1, 0, //0
+            this.x2, this.y2, 0, //1 
             this.x3, this.y3, 0  //2
         ]
 
-        this.indices = [0,1,2] //only one side
+        this.indices = [0,1,2,
+                        2,1,0] //double side
 
         this.normals = [
 			0, 0, 1,
 			0, 0, 1,
-			0, 0, 1,
+            0, 0, 1,
+            0, 0, -1,
+			0, 0, -1,
+			0, 0, -1,
 		]
-
-        this.texCoords = [
+        
+        /*this.texCoords = [
 			0, 1,
 			1, 1,
 			0, 0,
 			1, 0
-		]
+        ]*/
+        
+            //"Triangle UV texture mapping coordinates calculation" pwp, slide 3
+ 
+            var a = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2));
+            var b = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2));
+            var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y1, 2));
+     
+            var alpha_cos = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c);
+            var alpha_sin = Math.sqrt(1 - Math.pow(alpha_cos, 2)); 
+     
+            //não sei bem o que fazer com length_u e length_v, não sei se é suposto assumir que são 1
+            this.texCoords = [
+                0, 0,
+                a, 0,
+                c*alpha_cos, c*alpha_sin,
+                0, 0,
+                a, 0,
+                c*alpha_cos, c*alpha_sin
+            ]
 		
         this.primitiveType = this.scene.gl.TRIANGLES
 
