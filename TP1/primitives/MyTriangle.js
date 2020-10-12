@@ -45,30 +45,21 @@ class MyTriangle extends CGFobject {
 			0, 0, -1,
 		]
         
-        /*this.texCoords = [
-			0, 1,
-			1, 1,
-			0, 0,
-			1, 0
-        ]*/
-        
-            //"Triangle UV texture mapping coordinates calculation" pwp, slide 3
- 
             var a = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2));
             var b = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2));
-            var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y1, 2));
+            var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2));
      
-            var alpha_cos = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c);
-            var alpha_sin = Math.sqrt(1 - Math.pow(alpha_cos, 2)); 
+            var cos = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c);
+            var sin = Math.sqrt(1 - Math.pow(cos, 2)); 
      
-            //não sei bem o que fazer com length_u e length_v, não sei se é suposto assumir que são 1
+            //assuming length_u and lenght_v are 1
             this.texCoords = [
                 0, 0,
                 a, 0,
-                c*alpha_cos, c*alpha_sin,
+                c*cos, c*sin,
                 0, 0,
                 a, 0,
-                c*alpha_cos, c*alpha_sin
+                c*cos, c*sin
             ]
 		
         this.primitiveType = this.scene.gl.TRIANGLES
