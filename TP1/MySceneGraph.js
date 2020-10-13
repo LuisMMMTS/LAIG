@@ -227,7 +227,6 @@ class MySceneGraph {
         this.idRoot = id;
 
 
-
         // Get axis length        
         if(referenceIndex == -1)
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
@@ -251,10 +250,13 @@ class MySceneGraph {
     //TO DO:store the default camera
     parseViews(viewsNode) {
         this.views = [];
-        //this.views.push(this.reader.getFloat(viewsNode, 'default'));//the default camera id is stored in position 0
-        
+        this.defaultCameraId = this.reader.getString(viewsNode, 'default');//the default camera id is stored in position 0
+        if(this.defaultCameraId == null)
+            return "No default view defined";
         var children = viewsNode.children;
+        var failed = 0, hasOne = 0;
         for(let i = 0; i < children.length; i++){
+            
             var new_node = children[i];
 
             if (new_node.nodeName != "perspective" && new_node.nodeName != "ortho"){ //check if tag is correctly defined
@@ -268,15 +270,31 @@ class MySceneGraph {
                 return;
             }
 
-            if (new_node.nodeName == "perspective" || new_node.nodeName == "ortho"){
-                //this.views[new_node.id] = parseCamera(new_node);
+            if ((new_node.nodeName == "perspective" || new_node.nodeName == "ortho") && !failed){
+                var camera = this.parseCamera(new_node);
+                if(camera != null)
+                    this.views[new_node.id] = camera;
+                else 
+                    failed = 1;
             }
+            if(failed == 0 && hasOne == 0){// if there isn't a fully right parsed view and this one hasn't failed, it means we have a fully right parsed view
+                hasOne = 1;
+            }
+            failed = 0;
         }
+
+        if(this.views[this.defaultCameraId] == null){
+            this.onXMLError("The assigned default view is not defined");
+            //criar uma camara default 
+            //guardar id em this.defaultCameraID
+            //dar push nas views
+        }
+
         this.log("views and cameras loadded successfully");
         return null;
     }
 
-      /**
+      /**   
      * Parses the camera information
      * @param new_node - new camera node 
      */
@@ -285,26 +303,25 @@ class MySceneGraph {
         let parameters = new_node.children;
         let from = null;
         let to = null;
-        let up = [0,1,0];//default values, since it is optional to define it 
+        let up = [0,1,0]; //default values, since it is optional to define it 
 
         for(let i = 0; i < parameters.length; i++){
-            
-            if (parameters.nodeName == "from"){
+            if (parameters[i].nodeName == "from"){
                 from = [this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
 
             }
-            else if (parameters.nodeName == "to"){
+            else if (parameters[i].nodeName == "to"){
                 to = [this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
             }
-            else if(parameters.nodeName == "up" && new_node.nodeName != "ortho"){
+            else if(parameters[i].nodeName == "up" && new_node.nodeName != "ortho"){
                 this.onXMLMinorError("[VIEWS] \"up\" tag declared on non ortho cam");
             }
-            else if((parameters.nodeName == "up" && new_node.nodeName == "ortho")){
+            else if((parameters[i].nodeName == "up" && new_node.nodeName == "ortho")){
                 up = [this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
             
             }
             else{
-                this.onXMLError("[VIEWS] unknown/missing tag <" + parameters[j].nodeName + ">");
+                this.onXMLError("[VIEWS] unknown/missing tag <" + parameters[i].nodeName + ">");
                 return;
             }
         }
@@ -316,7 +333,8 @@ class MySceneGraph {
             return new CGFcameraOrtho(this.reader.getFloat(new_node, 'left'), this.reader.getFloat(new_node, 'right'), this.reader.getFloat(new_node, 'bottom'), this.reader.getFloat(new_node, 'top'), this.reader.getFloat(new_node, 'near'), this.reader.getFloat(new_node, 'far'), vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]),vec3.fromValues(up[0], up[1], up[2]));
         }
         else{
-            return this.onXMLError("exited parse camera because camera node not ortho or perspective");
+            this.onXMLError("Exited parse camera because camera node not ortho or perspective");
+            return;
         }
     }
 
@@ -327,7 +345,8 @@ class MySceneGraph {
     parseIllumination(illuminationsNode) {
 
         var children = illuminationsNode.children;
-
+        var defaultAmbient = [0.2,0.2,0.2,1.0];
+        var defaultBackground = [0.7,0.8,1.0,1.0];
         this.ambient = [];
         this.background = [];
 
@@ -340,14 +359,18 @@ class MySceneGraph {
         var backgroundIndex = nodeNames.indexOf("background");
 
         var color = this.parseColor(children[ambientIndex], "ambient");
-        if (!Array.isArray(color))
-            return color;
+        if (!Array.isArray(color)){
+            this.onXMLError("No ambient illumination defined");
+            this.ambient = defaultAmbient;
+        }
         else
             this.ambient = color;
 
         color = this.parseColor(children[backgroundIndex], "background");
-        if (!Array.isArray(color))
-            return color;
+        if (!Array.isArray(color)){
+            this.onXMLError("No background illumination defined");
+            this.background = defaultBackground;
+        }
         else
             this.background = color;
 
@@ -396,6 +419,7 @@ class MySceneGraph {
                 return "ID must be unique for each light (conflict: ID = " + lightId + ")";
 
             grandChildren = children[i].children;
+
             // Specifications for the current light.
 
             nodeNames = [];
@@ -443,11 +467,13 @@ class MySceneGraph {
 
         let texturesChildNodes=texturesNode.children;
         this.textures=[];
+        this.defaultTexture = new CGFtexture(this.scene, "./textures/defaultTexture.jpg");
+        this.textures["default"] = this.defaultTexture;
 
         //For each texture in textures block, check ID and file path
 
         for (let i = 0; i < texturesChildNodes.length; i++){
-            if (texturesChildNodes[i].nodeName !== "texture") {
+            if (texturesChildNodes[i].nodeName !== "texture") { 
                 this.onXMLMinorError("[TEXTURE] invalid node name");
                 continue;
             }
@@ -462,16 +488,15 @@ class MySceneGraph {
             }
 
             let path = this.reader.getString(texturesChildNodes[i], 'path');
-
-            if (path.includes('./textures')) {
-
-                this.textures[id] = new CGFtexture(this.scene, path);
+            
+            if(path == null){ // if the path is null we ignore this texture
+                this.onXMLMinorError("[TEXTURE] invalid path");
+                continue;
             }
-            else {
-                return this.onXMLMinorError("texture path incorrect in id " + id);
-            }
+
+            this.textures[id] = new CGFtexture(this.scene, path);
+            
         }
-        
         this.log("Textures successfully parsed");
         return null;
     }
@@ -482,13 +507,22 @@ class MySceneGraph {
      */
     parseMaterials(materialsNode) {
         var children = materialsNode.children;
+        var color = []; 
 
         this.materials = [];
+
+        this.defaultMaterial = new CGFappearance(this.scene);
+        this.defaultMaterial.setShininess(1.0);
+        this.defaultMaterial.setSpecular([1,1,1,0.5]);
+        this.defaultMaterial.setDiffuse([1,1,1,0.5]);
+        this.defaultMaterial.setAmbient([1,1,1,0.5]);
+        this.defaultMaterial.setEmission([0.5,0.5,0.5,1.0]); 
+        this.materials["default"] = this.defaultMaterial;
 
         var grandChildren = []; //this will be the color parameter -> shininess, speccular etc.
         var nodeNames = [];
 
-        
+
         if (children.length < 1){
             return this.onXMLError("no materials parsed");
         }
@@ -498,7 +532,7 @@ class MySceneGraph {
             if (children[i].nodeName != "material") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
-            }
+            }   
 
             // Get the id of the current material.
             var materialID = this.reader.getString(children[i], 'id');
@@ -515,15 +549,17 @@ class MySceneGraph {
             
             grandChildren = children[i].children;
             let shininess = null;
-            let specular = null;
-            let diffuse = null;
-            let ambient = null;
-            let emissive = null;
+            let specular = [];
+            let diffuse = [];
+            let ambient = [];
+            let emissive = [];
 
             for (let j = 0; j < grandChildren.length; j++){
 
                 if(grandChildren[j].nodeName == "shininess"){
                     shininess = this.reader.getFloat(grandChildren[j],"value");
+                    if(shininess == null || isNaN(shininess))
+                        continue;
                 }
                 else if (grandChildren[j].nodeName=="specular"){
                     specular = this.parseColor(grandChildren[j],"Specular component in id"+materialID);
@@ -537,13 +573,17 @@ class MySceneGraph {
                 else if (grandChildren[j].nodeName=="emissive"){
                     emissive = this.parseColor(grandChildren[j], "emissive component in id"+materialID);
                 }
-            
-                this.materials[materialID] = new CGFappearance(this.scene);
-                this.materials[materialID].setShininess(shininess);
-                this.materials[materialID].setSpecular(specular);
-                this.materials[materialID].setDiffuse(diffuse);
-                this.materials[materialID].setAmbient(ambient);
-                this.materials[materialID].setEmission(emissive);   
+                if (!Array.isArray(specular)||!Array.isArray(diffuse) || !Array.isArray(ambient)|| !Array.isArray(emissive)){
+                    continue;
+                }
+                var material = new CGFappearance(this.scene);
+                material.setShininess(shininess);
+                material.setSpecular(specular[0],specular[1],specular[2],specular[3]);
+                material.setDiffuse(diffuse[0], diffuse[1],diffuse[2],diffuse[3]);
+                material.setAmbient(ambient[0], ambient[1],ambient[2],ambient[3]);
+                material.setEmission(emissive[0],emissive[1],emissive[2],emissive[3]);  
+                this.materials[materialID] = material;
+                
             }
         }
 
@@ -757,8 +797,6 @@ class MySceneGraph {
             node.setTexture(textureId);
             node.setMaterial(materialID);
             node.setTransformation(matrix);
-            console.log(textureId);
-            console.log(materialID);
             this.nodes[nodeID] = node;
             
         }
@@ -780,7 +818,7 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
 
         return boolVal || 1;
-    }
+    }   
 
     /**
      * Parse the coordinates from a node with ID = id
@@ -876,6 +914,8 @@ class MySceneGraph {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         var matId = this.nodes[this.idRoot].getMaterial();
         var texId = this.nodes[this.idRoot].getTexture();
+        //if(texId == "null") texId = "default";
+        //if(matId == "null") matId = "default";
         this.processNode(this.idRoot, texId, matId);
 
     }
@@ -886,7 +926,7 @@ class MySceneGraph {
      * @param {CGFtexture} text
      * @param {CGFappearance} mat  
      */
-    processNode(id, tex, mat){ //confirme with theoretical classes teacher 
+    processNode(id, tex, mat){ 
         let node = this.nodes[id];
         
         
@@ -894,28 +934,36 @@ class MySceneGraph {
         
         let materialID = node.getMaterial();
         let textureID = node.getTexture();
+  
 
-
-       /* if( textureID == "null"){ // get parent's texture
+        if(textureID == "null"){ // get parent's texture
             textureID = tex;
         }
     
-
-        if ( materialID === "null"){ // get parent's material 
+        if (materialID == "null"){ // get parent's material 
             materialID = mat;
         }
+
         if(materialID != "null"){ 
-            let material = new CGFappearance(this.scene);
-            material = this.materials[materialID];
-        
-            
+            let material = this.materials["default"];
+            let texture = this.defaultTexture;
+
+            if(materialID != "default")
+                material = this.materials[materialID];
+
             if(textureID != "clear"){
-                let texture = this.textures[textureID];
-                //material.setTexture(texture);
-            }
-            
+                if(textureID!="default"){
+                    texture = this.textures[textureID];
+                    material.setTexture(texture);
+                }
+            }    
+            else{
+                material.setTexture(null);
+            }   
+            material.setTextureWrap('REPEAT', 'REPEAT');
             material.apply();
-        }*/
+        }
+
 
 
         this.scene.multMatrix(node.getTransformation());
@@ -926,7 +974,7 @@ class MySceneGraph {
 
         for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
             this.scene.pushMatrix();
-            this.processNode(node.getChildren()[i],null, null);
+            this.processNode(node.getChildren()[i],tex, mat);
             this.scene.popMatrix();
         }
 

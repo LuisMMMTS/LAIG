@@ -37,7 +37,13 @@ class MyCircle extends CGFobject{
         this.initGLBuffers();
     }
 
-    updateTexCoords(coords) {
-		//to do
+    /**
+	 * @method updateTexCoords
+	 * Updates the list of texture coordinates of the rectangle
+	 * @param {Array} coords - Array of texture coordinates
+	 */
+	updateTexCoords(coords) {
+		this.texCoords = [...coords];
+		this.updateTexCoordsGLBuffers();
 	}
 }

@@ -46,6 +46,13 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
+    setDefaultAppearance() {
+        this.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.setShininess(10.0);
+    }
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -83,6 +90,7 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+        
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         this.gl.clearColor(...this.graph.background);
@@ -121,8 +129,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
- 
-            this.defaultAppearance.apply();
+            this.setDefaultAppearance();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
@@ -130,7 +137,7 @@ class XMLscene extends CGFscene {
         else
         {
             // Show some "loading" visuals
-            this.defaultAppearance.apply();
+            this.setDefaultAppearance();
 
             this.rotate(-this.loadingProgress/10.0,0,0,1);
             

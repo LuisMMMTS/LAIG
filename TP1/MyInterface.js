@@ -46,5 +46,32 @@ class MyInterface extends CGFinterface {
 
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
+    };
+
+    /*addLightsCheckbox(lights){
+        var  group = this.gui.addFolder("Lights");
+
+        group.open();
+
+        for(var key in lights){
+            if(lights.hasOwnProperty(key)){
+                this.scene.lightsValues[key]= lights[key][0];
+                group.add(this.scene.lightValues, key);
+            }
+        }
+      
     }
+
+    addCamerasDropDown(views){
+        var viewValues = [];
+        for(var key in views){
+            if(views.hasOwnProperty(key)){
+                viewValues.push(key)
+            }
+        }
+        
+        this.gui.add(this.scene, "Camera", viewValues)
+            .name("Current camera")
+            .onChange(val => this.scene.setCurrentCamera(val));
+    }*/
 }

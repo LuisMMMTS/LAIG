@@ -30,8 +30,15 @@ class MyCylinder extends CGFobject {
 		
 	}
 	
+	/**
+	 * @method updateTexCoords
+	 * Updates the list of texture coordinates of the rectangle
+	 * @param {Array} coords - Array of texture coordinates
+	 */
 	updateTexCoords(coords) {
-		//to do
+		this.cylinderBody.updateTexCoords(coords);
+		this.topCircle.updateTexCoords(coords);
+		this.bottomCircle.updateTexCoords(coords);
 	}
 
 	
@@ -114,8 +121,14 @@ class MyCylinderBody extends CGFobject{
         this.initGLBuffers();
 	}
 
+	/**
+	 * @method updateTexCoords
+	 * Updates the list of texture coordinates of the rectangle
+	 * @param {Array} coords - Array of texture coordinates
+	 */
 	updateTexCoords(coords) {
-		//to do
+		this.texCoords = [...coords];
+		this.updateTexCoordsGLBuffers();
 	}
 
 }

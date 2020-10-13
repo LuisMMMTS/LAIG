@@ -24,7 +24,7 @@ class MyTriangle extends CGFobject {
 	}
 	
 	initBuffers() {
-        this.verices = [
+        this.vertices = [
             this.x1, this.y1, 0, //0
             this.x2, this.y2, 0, //1 
             this.x3, this.y3, 0,  //2
@@ -66,8 +66,14 @@ class MyTriangle extends CGFobject {
 
         this.initGLBuffers()
     }
-    updateTexCoords(coords) {
-		//to do
+    /**
+	 * @method updateTexCoords
+	 * Updates the list of texture coordinates of the rectangle
+	 * @param {Array} coords - Array of texture coordinates
+	 */
+	updateTexCoords(coords) {
+		this.texCoords = [...coords];
+		this.updateTexCoordsGLBuffers();
 	}
 
 }
