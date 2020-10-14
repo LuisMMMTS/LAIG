@@ -926,7 +926,7 @@ class MySceneGraph {
      * @param {CGFtexture} text
      * @param {CGFappearance} mat  
      */
-    processNode(id, tex, mat){ 
+    processNode(id, texId, matId){ 
         let node = this.nodes[id];
         
         
@@ -936,34 +936,32 @@ class MySceneGraph {
         let textureID = node.getTexture();
   
 
-        if(textureID == "null"){ // get parent's texture
-            textureID = tex;
-        }
-    
         if (materialID == "null"){ // get parent's material 
-            materialID = mat;
+            if (matId!="null"){
+                materialID = matId;
+            }else{
+                materialID="default";
+            }
+        }
+        let material=this.materials[materialID];
+
+        if(textureID == "null"){ // get parent's texture
+            if(texId!="null"){
+                textureID = texId;
+            }else{
+                textureID=this.defaultTexture;
+            }
         }
 
-        if(materialID != "null"){ 
-            let material = this.materials["default"];
-            let texture = this.defaultTexture;
-
-            if(materialID != "default")
-                material = this.materials[materialID];
-
-            if(textureID != "clear"){
-                if(textureID!="default"){
-                    texture = this.textures[textureID];
-                    material.setTexture(texture);
-                }
-            }    
-            else{
-                material.setTexture(null);
-            }   
-            material.setTextureWrap('REPEAT', 'REPEAT');
-            material.apply();
+        if (textureID=="clear"){
+            material.setTexture(null);
+        }else{
+            let texture = this.textures[textureID];
+            material.setTexture(texture);
         }
-
+            
+        material.setTextureWrap('REPEAT', 'REPEAT');
+        material.apply();
 
 
         this.scene.multMatrix(node.getTransformation());
@@ -974,7 +972,7 @@ class MySceneGraph {
 
         for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
             this.scene.pushMatrix();
-            this.processNode(node.getChildren()[i],tex, mat);
+            this.processNode(node.getChildren()[i],textureID, materialID);
             this.scene.popMatrix();
         }
 
