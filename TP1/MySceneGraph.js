@@ -543,7 +543,7 @@ class MySceneGraph {
 
 
             // Checks for repeated IDs.
-            if (this.materials[materialID] != null)
+            if (this.materials[materialID] != null && materialID!="default")
                 return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
             
