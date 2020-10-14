@@ -31,6 +31,7 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+        this.displayAxis = true;
         this.setUpdatePeriod(100);
 
         this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
@@ -98,10 +99,11 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(...this.graph.ambient);
 
         this.initLights();
+        
+        this.interface.createInterface(this.lights, this.views);
 
         this.sceneInited = true;
     }
-
     /**
      * Displays the scene.
      */
@@ -126,16 +128,18 @@ class XMLscene extends CGFscene {
             this.lights[i].enable();
         }
 
+        
+
         if (this.sceneInited) {
-            // Draw axis
-            this.axis.display();
+                // Draw axis
+            if(this.displayAxis)
+                this.axis.display();
             this.setDefaultAppearance();
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
         }
-        else
-        {
+        else{
             // Show some "loading" visuals
             this.setDefaultAppearance();
 
