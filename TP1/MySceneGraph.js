@@ -467,7 +467,8 @@ class MySceneGraph {
 
         let texturesChildNodes=texturesNode.children;
         this.textures=[];
-        this.defaultTexture = new CGFtexture(this.scene, "./textures/defaultTexture.jpg");
+        let workingDirectory="./scenes/";
+        this.defaultTexture = new CGFtexture(this.scene, "./scenes/images/defaultTexture.jpg");
         this.textures["default"] = this.defaultTexture;
 
         //For each texture in textures block, check ID and file path
@@ -481,13 +482,19 @@ class MySceneGraph {
             let id = this.reader.getString(texturesChildNodes[i], 'id')
 
             if (id.length === 0) {
-                return this.onXMLError("[TEXTURE] no texture ID defined");
+                this.onXMLMinorError("[TEXTURE] no texture ID defined, skipping it");
+                continue;
             }
-            if (this.textures[id] != null) {
-                return this.onXMLError("[TEXTURE] repeated id " + id);
+            if (this.textures[id] != null && id!="default") {
+                this.onXMLMinorError("[TEXTURE] repeated id " + id+" skipping it");
+                continue;
             }
 
             let path = this.reader.getString(texturesChildNodes[i], 'path');
+
+            if (!(path.includes("exture")||path.includes("mages"))){ //check if full path is defined, bewaring of capital leters in the beggining of folder name
+                path=workingDirectory+"images/"+path;
+            }
             
             if(path == null){ // if the path is null we ignore this texture
                 this.onXMLMinorError("[TEXTURE] invalid path");
@@ -495,6 +502,9 @@ class MySceneGraph {
             }
 
             this.textures[id] = new CGFtexture(this.scene, path);
+
+            this.textures["default"] = new CGFtexture(this.scene, path);
+
             
         }
         this.log("Textures successfully parsed");
@@ -697,12 +707,12 @@ class MySceneGraph {
             let textureId = this.reader.getString(grandChildren[textureIndex],"id");
             
             if (textureId == null) {//case material parameter does not exist
-                return this.onXMLError("[NODE] texture ID is not valid on node ID: " + nodeID);
+                return this.onXMLMinorError("[NODE] texture ID is not valid on node ID: " + nodeID);
             }
 
             if (textureId.toLowerCase() !="null" && textureId.toLowerCase() !="clear"){
                 if (this.textures[textureId] == null){
-                    return "[NODE] Texture ID: " + textureId + " does not exist. Error on node: " + nodeID;
+                    this.onXMLMinorError("[NODE] Texture ID: " + textureId + " does not exist. Error on node: " + nodeID);
                 }
             }
 
@@ -941,6 +951,7 @@ class MySceneGraph {
                 materialID = matId;
             }else{
                 materialID="default";
+                //console.warn("using default material, consider checking material definitions");
             }
         }
         let material=this.materials[materialID];
@@ -949,7 +960,8 @@ class MySceneGraph {
             if(texId!="null"){
                 textureID = texId;
             }else{
-                textureID=this.defaultTexture;
+                textureID="default";
+                console.warn("using default texture, consider checking material definitions")
             }
         }
 

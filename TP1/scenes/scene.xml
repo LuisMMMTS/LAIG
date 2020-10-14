@@ -42,9 +42,9 @@
 
 <textures>
    <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-    <texture id="danger" path="textures/danger.png" />
-    <texture id="floorTexture" path="textures/chao.png" />
-    <texture id="glassWallTexture" path="textures/airport_glassWall.jpg" />
+    <texture id="danger" path="danger.png" />
+    <texture id="floorTexture" path="chao.png" />
+    <texture id="glassWallTexture" path="airport_glassWall.jpg" />
 </textures>
 
 
@@ -105,7 +105,7 @@
                                       id="null" maintains material from parent node -->
 
 
-        <texture id="null">         <!-- declared texture superimposes the texture received from parent node
+        <texture id="clear">         <!-- declared texture superimposes the texture received from parent node
                                       id="null" maintains texture from parent node
                                       id="clear" clears texture declaration received from parent node -->
 
