@@ -233,7 +233,7 @@
 
         <transformations>
             <translation x="0" y="10" z="0" />
-            <rotation axis="y" angle="180" />
+            <!--<rotation axis="y" angle="180" />-->
             <rotation axis="z" angle="180" />
         </transformations>
 
@@ -276,7 +276,7 @@
             descendants may be mixed, nodes and leafs -->
         <descendants>
                             <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-            <leaf type="triangle" x1="-1" y1="-1" x2="1" y2="-1" x3="0" y3="1" />
+            <leaf type="triangle" x1="-1" y1="-1" x2="0" y2="1" x3="1" y3="-1" />
                                  <!-- x y coordinates of each vertex; triangle on plane XY -->
 
         </descendants>

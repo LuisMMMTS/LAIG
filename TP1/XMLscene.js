@@ -46,6 +46,12 @@ class XMLscene extends CGFscene {
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        //this.interface.setActiveCamera(this.camera);
+    }
+
+    initXMLCameras(){
+        this.camera = this.graph.views[this.graph.defaultCameraId];
+        this.interface.setActiveCamera(this.default);
     }
 
     setDefaultAppearance() {
@@ -60,7 +66,7 @@ class XMLscene extends CGFscene {
     initLights() {
         var i = 0;
         // Lights index.
-
+        this.lightsArray = [];
         // Reads the lights from the scene graph.
         for (var key in this.graph.lights) {
             if (i >= 8)
@@ -68,6 +74,8 @@ class XMLscene extends CGFscene {
 
             if (this.graph.lights.hasOwnProperty(key)) {
                 var graphLight = this.graph.lights[key];
+
+                this.lightsArray[i] = key;
 
                 this.lights[i].setPosition(...graphLight[1]);
                 this.lights[i].setAmbient(...graphLight[2]);
@@ -87,6 +95,30 @@ class XMLscene extends CGFscene {
         }
     }
 
+    updateCamera(newCamera) {
+        this.newCameraID = newCamera;
+        this.camera = this.graph.views[this.newCameraID];
+        this.interface.setActiveCamera(this.camera);
+    }
+
+    setLights(idx) {
+
+        if (this.lightsArray == undefined)
+            return;
+
+        var lightId = this.lightsArray[idx];
+
+        if (lightId == -1)
+            return;
+
+        if (this.lightValues[lightId])
+            this.lights[idx].enable();
+        else
+            this.lights[idx].disable();
+
+        this.lights[idx].update();
+    }
+
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
@@ -99,8 +131,10 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(...this.graph.ambient);
 
         this.initLights();
-        
-        this.interface.createInterface(this.lights, this.views);
+ 
+        this.interface.createInterface(this.graph.lights, this.graph.views);
+
+        //this.initXMLCameras();
 
         this.sceneInited = true;
     }
@@ -124,17 +158,16 @@ class XMLscene extends CGFscene {
         this.pushMatrix();
 
         for (var i = 0; i < this.lights.length; i++) {
-            this.lights[i].setVisible(true);
-            this.lights[i].enable();
-        }
-
-        
+            this.setLights(i);
+        }   
 
         if (this.sceneInited) {
-                // Draw axis
+            // Draw axis
             if(this.displayAxis)
                 this.axis.display();
+
             this.setDefaultAppearance();
+            this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();

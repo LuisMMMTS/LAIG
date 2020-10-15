@@ -55,32 +55,31 @@ class MyInterface extends CGFinterface {
     }
 
     addLightsCheckbox(lights){
-         var  group = this.gui.addFolder("Lights");
-        group.open();
+        var  group = this.gui.addFolder("Lights");
+        //group.open();
 
-        /*this.scene.lightValues = [];
+        this.scene.lightValues = [];
 
         for(var key in lights){
             if(lights.hasOwnProperty(key)){
-
-                this.scene.lightsValues[key] = lights[key][0];
+                this.scene.lightValues[key] = lights[key][0];
                 group.add(this.scene.lightValues, key);
             }
-        }*/
+        }
       
     }
 
     addCamerasDropDown(views){
-        /*var viewValues = [];
+        var viewValues = [];
         for(var key in views){
             if(views.hasOwnProperty(key)){
                 viewValues.push(key)
             }
-        }*/
+        }
         
-       /* this.gui.add(this.scene, "Camera", viewValues)
-            .name("Current camera")
-            .onChange(val => this.scene.setCurrentCamera(val));*/
+        this.gui.add(this.scene, "camera", viewValues)
+            .name("Camera")
+            .onChange(val => this.scene.updateCamera(val));
     }
 
     addAxisCheckBox(){
