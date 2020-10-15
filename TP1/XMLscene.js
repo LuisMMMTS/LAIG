@@ -32,6 +32,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.displayAxis = true;
+        this.displayLights = true;
         this.setUpdatePeriod(100);
 
         this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
@@ -82,7 +83,8 @@ class XMLscene extends CGFscene {
                 this.lights[i].setDiffuse(...graphLight[3]);
                 this.lights[i].setSpecular(...graphLight[4]);
 
-                this.lights[i].setVisible(true);
+                if(this.displayLights)  
+                    this.lights[i].setVisible(true);
                 if (graphLight[0])
                     this.lights[i].enable();
                 else
@@ -111,6 +113,9 @@ class XMLscene extends CGFscene {
         if (lightId == -1)
             return;
 
+        
+        this.lights[idx].setVisible(this.displayLights);
+
         if (this.lightValues[lightId])
             this.lights[idx].enable();
         else
@@ -132,9 +137,11 @@ class XMLscene extends CGFscene {
 
         this.initLights();
  
+        //this.initXMLCameras();, esta linha inicia logo com o default
+
         this.interface.createInterface(this.graph.lights, this.graph.views);
 
-        //this.initXMLCameras();
+        
 
         this.sceneInited = true;
     }
