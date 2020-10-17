@@ -472,6 +472,9 @@ class MySceneGraph {
         this.textures["default"] = this.defaultTexture;
 
         //For each texture in textures block, check ID and file path
+        if(texturesChildNodes.length==0){
+            this.onXMLMinorError("No textures defined");
+        }
 
         for (let i = 0; i < texturesChildNodes.length; i++){
             if (texturesChildNodes[i].nodeName !== "texture") { 
@@ -538,6 +541,11 @@ class MySceneGraph {
         }
 
         // Any number of materials.
+
+        if (children.length==0){
+            this.onXMLMinorError("No materials defined");
+        }
+
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "material") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
@@ -646,8 +654,8 @@ class MySceneGraph {
 
 
             // Transformations
-            if (transformationsIndex == null){
-                this.onXMLMinorError("transformations not defined for node id: " + nodeID);
+            if (transformationsIndex == -1){
+                this.onXMLMinorError("transformations not defined for node id: " + nodeID );
             }
 
             let matrix = mat4.create();
@@ -697,13 +705,18 @@ class MySceneGraph {
             // Material
             let materialID = this.reader.getString(grandChildren[materialIndex], "id");
 
-            if(materialID !== "null"){//case material parameter does not exist 
-                if(this.materials[materialID] == null){ //not on materials defined
+            if(materialID !== -1){//case material parameter does not exist 
+                if(this.materials[materialID] == null && materialID!='null'){ //not on materials defined
                     this.onXMLMinorError("[NODE] Material with ID: " + materialID + " does not exist. Error on node: " + nodeID);
                 }
             }
             
             // Texture
+
+            if (textureIndex==-1){
+                this.onXMLMinorError("textures not defined for node id: " + nodeID );
+            }
+
             let textureId = this.reader.getString(grandChildren[textureIndex],"id");
             
             if (textureId == null) {//case material parameter does not exist
@@ -719,6 +732,11 @@ class MySceneGraph {
             let amplificationNodes = grandChildren[textureIndex].children;
             let afs = 1;
             let aft = 1; //if amplification is not defined, the next cycle wont run and this will be the default values
+
+            if (amplificationNodes.length==0){
+                this.onXMLMinorError("Missing amplification tags in nodeId "+ nodeID);
+            }
+            
 
             for (let j = 0; j < amplificationNodes.length; j++){
                 if (amplificationNodes[j].nodeName != "amplification"){
@@ -739,6 +757,11 @@ class MySceneGraph {
             
 
             // Descendants
+
+            if (descendantsIndex==-1){
+                this.onXMLMinorError("descendants not defined for node id: " + nodeID );
+            }
+
             let descendants = [];
             let primitives = [];
             let descendant = null;
@@ -942,6 +965,10 @@ class MySceneGraph {
      */
     processNode(id, texId, matId){ 
         let node = this.nodes[id];
+
+        if (node==null){
+            return 1;
+        }
         
         
         this.scene.pushMatrix();
@@ -955,9 +982,18 @@ class MySceneGraph {
                 materialID = matId;
             }else{
                 materialID="default";
-                //console.warn("using default material, consider checking material definitions");
+                if(id!==this.idRoot){ //no need for warning if its the root without material
+                    console.warn("using default material, consider checking material definitions in nodeId "+id);
+                }
             }
         }
+
+        if (this.materials[materialID]==null){
+            console.warn("Material non existent in nodeId "+id)+" using default";
+            textureID="default";
+        }
+
+
         let material=this.materials[materialID];
 
         if(textureID == "null"){ // get parent's texture
@@ -965,13 +1001,17 @@ class MySceneGraph {
                 textureID = texId;
             }else{
                 textureID="default";
-                console.warn("using default texture, consider checking material definitions")
+                console.warn("Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId "+id);
             }
         }
 
+
         if (textureID=="clear"){
             material.setTexture(null);
-        }else{
+        }else if (this.textures[textureID]==null){
+            console.warn("Texture non existent in nodeId "+id+" using default");
+            //textureID="default";
+        }{
             let texture = this.textures[textureID];
             material.setTexture(texture);
         }
@@ -988,7 +1028,10 @@ class MySceneGraph {
 
         for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
             this.scene.pushMatrix();
-            this.processNode(node.getChildren()[i],textureID, materialID);
+            let a=this.processNode(node.getChildren()[i],textureID, materialID);
+            if (a==1){
+                console.warn("NodeID "+ id+" has non existent child with id: "+node.getChildren()[i]);
+            }
             this.scene.popMatrix();
         }
 
