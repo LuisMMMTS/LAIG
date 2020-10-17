@@ -654,12 +654,13 @@ class MySceneGraph {
 
 
             // Transformations
+            let matrix=mat4.create();
+            let transformations;
             if (transformationsIndex == -1){
                 this.onXMLMinorError("transformations not defined for node id: " + nodeID );
-            }
+            }else{
 
-            let matrix = mat4.create();
-            let transformations = grandChildren[transformationsIndex].children;
+            transformations = grandChildren[transformationsIndex].children;
             for (let j = 0; j < transformations.length; j++){
                 this.log(nodeID);
                 if (transformations[j].nodeName == "translation"){
@@ -667,7 +668,10 @@ class MySceneGraph {
                     let y = this.reader.getFloat(transformations[j], "y");
                     let z = this.reader.getFloat(transformations[j], "z");
                     if (x == null || y == null || z == null|| isNaN(x) || isNaN(y) || isNaN(z)) {
-                        return this.onXMLError("[NODE] missing/not number values for translation node: " + nodeID);
+                        this.onXMLError("[NODE] missing/not number values for translation node: " + nodeID+ " Assuming (0,0,0)");
+                        x=0;
+                        y=0;
+                        z=0;
                     }
 
                     mat4.translate(matrix, matrix, new vec3.fromValues(x, y, z));
@@ -678,7 +682,8 @@ class MySceneGraph {
                     let angle = this.reader.getString(transformations[j],"angle");
 
                     if (axis == null || (axis != "x" && axis != "y" && axis != "z")|| angle == null || isNaN(angle)) {
-                        return this.onXMLError("[NODE] wrong axis or angle on rotation node: " + nodeID);
+                        this.onXMLError("[NODE] wrong axis or angle on rotation node: " + nodeID)+ " Assuming 0";
+                        angle=0;
                     }
                     
                     angle = angle * DEGREE_TO_RAD;
@@ -691,7 +696,10 @@ class MySceneGraph {
                     let sz = this.reader.getFloat(transformations[j], "sz");
 
                     if (sx == null || sy == null || sz == null|| isNaN(sx) || isNaN(sy) || isNaN(sz)) {
-                        return this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID);
+                        this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID+" Assuming 0");
+                        sx=0;
+                        sy=0;
+                        sz=0;
                     }
 
                     mat4.scale(matrix,matrix, new vec3.fromValues(sx,sy,sz));
@@ -700,6 +708,7 @@ class MySceneGraph {
                     this.onXMLError("[NODE] unknown tag: " + transformations[j].nodeName);
                 } 
             }
+        }
             
 
             // Material
@@ -707,17 +716,22 @@ class MySceneGraph {
 
             if(materialID !== -1){//case material parameter does not exist 
                 if(this.materials[materialID] == null && materialID!='null'){ //not on materials defined
-                    this.onXMLMinorError("[NODE] Material with ID: " + materialID + " does not exist. Error on node: " + nodeID);
+                    this.onXMLMinorError("[NODE] Material with ID: " + materialID + " does not exist. Error on node: " + nodeID+" Assuming null");
+                    materialID='null';
                 }
             }
             
             // Texture
+            let textureId;
+            let afs = 1;
+            let aft = 1; //if amplification is not defined, the next cycle wont run and this will be the default values
 
             if (textureIndex==-1){
                 this.onXMLMinorError("textures not defined for node id: " + nodeID );
-            }
+                 textureId='default';
+            }else{
 
-            let textureId = this.reader.getString(grandChildren[textureIndex],"id");
+            textureId = this.reader.getString(grandChildren[textureIndex],"id");
             
             if (textureId == null) {//case material parameter does not exist
                 return this.onXMLMinorError("[NODE] texture ID is not valid on node ID: " + nodeID);
@@ -730,12 +744,11 @@ class MySceneGraph {
             }
 
             let amplificationNodes = grandChildren[textureIndex].children;
-            let afs = 1;
-            let aft = 1; //if amplification is not defined, the next cycle wont run and this will be the default values
+            
 
             if (amplificationNodes.length==0){
                 this.onXMLMinorError("Missing amplification tags in nodeId "+ nodeID);
-            }
+            }else{
             
 
             for (let j = 0; j < amplificationNodes.length; j++){
@@ -746,14 +759,15 @@ class MySceneGraph {
                     afs = this.reader.getFloat(amplificationNodes[j], "afs");
                     aft = this.reader.getFloat(amplificationNodes[j], "aft");
 
-                    if (aft == null || afs == null || isNaN(afs) || isNaN(aft)){
-                        this.onXMLMinorError("wrong amplification values in node: "+ nodeID);
+                    if (aft == null || afs == null || isNaN(afs) || isNaN(aft)||afs<=0||aft<=0){
+                        this.onXMLMinorError("wrong amplification values in node: "+ nodeID+" Assuming (1,1)");
                         afs = 1;
                         aft = 1;
                     }
                 }
             }
-
+        }
+        }
             
 
             // Descendants
@@ -779,6 +793,10 @@ class MySceneGraph {
                             var y1 = this.reader.getFloat(descendant,"y1");
                             var x2 = this.reader.getFloat(descendant,"x2");
                             var y2 = this.reader.getFloat(descendant,"y2");
+                            if(x1==x2&&y1==y2){
+                                this.onXMLError("wrong parameters for rectangle definition in nodeID:"+nodeID);
+                            }
+
                             let rectangle=new MyRectangle(this.scene,x1,y1,x2,y2);
                             rectangle.updateTexCoords([afs,aft]);
                             primitives.push(rectangle);
@@ -788,7 +806,11 @@ class MySceneGraph {
                             var topRadius = this.reader.getFloat(descendant,"topRadius");
                             var bottomRadius = this.reader.getFloat(descendant,"bottomRadius");
                             var stacks = this.reader.getFloat(descendant,"stacks");
-                            var slices = this.reader.getFloat(descendant,"slices");                            
+                            var slices = this.reader.getFloat(descendant,"slices"); 
+                            if (height*topRadius*bottomRadius*stacks*slices<=0){
+                                this.onXMLError("Wrongly defined cylinder in nodeID:"+nodeID+" Assuming 1 for all parameters");
+                                height=topRadius=bottomRadius=stacks=slices=1;
+                            }                           
                             primitives.push(new MyCylinder(this.scene,height, topRadius, bottomRadius, stacks, slices));
                             break;
                         
@@ -796,6 +818,10 @@ class MySceneGraph {
                             var radius = this.reader.getFloat(descendant,"radius");
                             var slices = this.reader.getFloat(descendant,"slices");
                             var stacks = this.reader.getFloat(descendant,"stacks");
+                            if (radius*stacks*slices<=0){
+                                this.onXMLError("Wrongly defined sphere in nodeID:"+nodeID+" Assuming 1 for all parameters");
+                                radius=stacks=slices=1;
+                            }     
                             primitives.push(new MySphere(this.scene,radius, slices, stacks));
                             break;
 
@@ -804,6 +830,10 @@ class MySceneGraph {
                             var outer = this.reader.getFloat(descendant,"outer");
                             var loops = this.reader.getFloat(descendant,"loops");
                             var slices = this.reader.getFloat(descendant,"slices");
+                            if (inner*outer*loops*slices<=0){
+                                this.onXMLError("Wrongly defined torus in nodeID:"+nodeID+" Assuming 1 for all parameters");
+                                inner=outer=loops=slices=1;
+                            }     
                             primitives.push(new MyTorus(this.scene,inner, outer, slices, loops));
                             break;
 
@@ -814,6 +844,10 @@ class MySceneGraph {
                             var y2 = this.reader.getFloat(descendant,"y2");
                             var x3 = this.reader.getFloat(descendant,"x3");
                             var y3 = this.reader.getFloat(descendant,"y3");
+                            if((x1==x2&&y1==y2)||(x1==x3&&y1==y3)||(x2==x3&&y2==y3)){
+                                this.onXMLError("wrong parameters for rectangle definition in nodeID:"+nodeID);
+                            }
+                            
                             let triangle=new MyTriangle(this.scene,x1,y1,x2,y2,x3,y3);
                             triangle.updateTexCoords[afs,aft]
                             primitives.push(triangle);
@@ -988,9 +1022,9 @@ class MySceneGraph {
             }
         }
 
-        if (this.materials[materialID]==null){
+        if (this.materials[materialID]==-1){
             console.warn("Material non existent in nodeId "+id)+" using default";
-            textureID="default";
+            materialID="default";
         }
 
 
