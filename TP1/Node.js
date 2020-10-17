@@ -15,6 +15,7 @@ class Node{
         this.textureID = null;
         this.materialID = null;
         this.transformation = null;
+
     }
 
     getId(){
@@ -61,6 +62,6 @@ class Node{
     getTransformation(){
         return this.transformation
     }
-
-
+    
+    
 }

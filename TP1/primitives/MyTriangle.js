@@ -21,6 +21,7 @@ class MyTriangle extends CGFobject {
         this.y3 = y3;
 
 		this.initBuffers();
+        
 	}
 	
 	initBuffers() {
@@ -45,23 +46,14 @@ class MyTriangle extends CGFobject {
 			0, 0, -1,
 		]
         
-            var a = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2));
-            var b = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2));
-            var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2));
-     
-            var cos = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c);
-            var sin = Math.sqrt(1 - Math.pow(cos, 2)); 
-     
+            
             //assuming length_u and lenght_v are 1
             this.texCoords = [
-                0, 0,
-                a, 0,
-                c*cos, c*sin,
-                0, 0,
-                a, 0,
-                c*cos, c*sin
-            ]
-		
+            1, 1,
+            0.5, 0,
+            0, 1
+            ];
+            
         this.primitiveType = this.scene.gl.TRIANGLES
 
         this.initGLBuffers()
@@ -72,7 +64,20 @@ class MyTriangle extends CGFobject {
 	 * @param {Array} coords - Array of texture coordinates
 	 */
 	updateTexCoords(coords) {
-		this.texCoords = [...coords];
+        
+        var a = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2));
+        var b = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2));
+        var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2));
+    
+        var cos = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c);
+        var sin = Math.sqrt(1 - Math.pow(cos, 2)); 
+        
+        this.texCoords = [
+			(c - a*cos)/coords[0], (coords[1] - a*sin)/coords[1],
+			0, 1,
+			c/coords[0], 1
+		];
+		
 		this.updateTexCoordsGLBuffers();
 	}
 

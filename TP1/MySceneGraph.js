@@ -756,7 +756,9 @@ class MySceneGraph {
                             var y1 = this.reader.getFloat(descendant,"y1");
                             var x2 = this.reader.getFloat(descendant,"x2");
                             var y2 = this.reader.getFloat(descendant,"y2");
-                            primitives.push(new MyRectangle(this.scene,x1,y1,x2,y2));
+                            let rectangle=new MyRectangle(this.scene,x1,y1,x2,y2);
+                            rectangle.updateTexCoords([afs,aft]);
+                            primitives.push(rectangle);
                             break;
                         case "cylinder":
                             var height = this.reader.getFloat(descendant,"height");
@@ -789,7 +791,9 @@ class MySceneGraph {
                             var y2 = this.reader.getFloat(descendant,"y2");
                             var x3 = this.reader.getFloat(descendant,"x3");
                             var y3 = this.reader.getFloat(descendant,"y3");
-                            primitives.push(new MyTriangle(this.scene,x1,y1,x2,y2,x3,y3));
+                            let triangle=new MyTriangle(this.scene,x1,y1,x2,y2,x3,y3);
+                            triangle.updateTexCoords[afs,aft]
+                            primitives.push(triangle);
                             break;
                         default:
                             this.onXMLMinorError("Unknown leaf type in node id: "+ nodeID);
@@ -978,7 +982,7 @@ class MySceneGraph {
 
         this.scene.multMatrix(node.getTransformation());
         
-        for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display
+        for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, 
             node.getLeafs()[i].display();
         }
 
