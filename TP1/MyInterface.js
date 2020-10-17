@@ -50,11 +50,12 @@ class MyInterface extends CGFinterface {
 
     createInterface(lights, views){
         this.addAxisCheckBox();
-        this.addLightsCheckbox(lights);
+        this.addLightsCheckbox();
+        this.addLightsFolder(lights);
         this.addCamerasDropDown(views);
     }
 
-    addLightsCheckbox(lights){
+    addLightsFolder(lights){
         var  group = this.gui.addFolder("Lights");
         //group.open();
 
@@ -84,5 +85,8 @@ class MyInterface extends CGFinterface {
 
     addAxisCheckBox(){
         this.gui.add(this.scene,'displayAxis').name("Display Axis");
+    }
+    addLightsCheckbox(){
+        this.gui.add(this.scene,'displayLights').name("Display Lights");
     }
 }
