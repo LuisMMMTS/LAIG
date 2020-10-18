@@ -45,15 +45,13 @@ class MyTriangle extends CGFobject {
 			0, 0, -1,
 			0, 0, -1,
 		]
+             
+        this.texCoords = [
+        1, 1,
+        0.5, 0,
+        0, 1
+        ];
         
-            
-            //assuming length_u and lenght_v are 1
-            this.texCoords = [
-            1, 1,
-            0.5, 0,
-            0, 1
-            ];
-            
         this.primitiveType = this.scene.gl.TRIANGLES
 
         this.initGLBuffers()
