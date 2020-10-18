@@ -8,16 +8,24 @@
                         <!-- must be defined in one of the following NODE declarations -->
 </initials>
 
-<views default="defaultCamera">
+<views default="Side">
     <!-- at least one of the following type of cameras must be declared -->
-    <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-        <from x="0" y="15" z="30" />
+    <perspective id="Side" near="0.1" far="500" angle="23">
+        <from x="15" y="15" z="15" />
         <to x="0" y="0" z="0" />
     </perspective>
-    <ortho id="demoOrtho" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
-        <from x="5" y="0" z="0"/>
-        <to x="5" y="0" z="0" />
-        <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
+    <perspective id="Front" near="0.1" far="500" angle="12">
+        <from x="2" y="5" z="40" />
+        <to x="0" y="3.5" z="0" />
+    </perspective>
+    <perspective id="Top" near="0.1" far="500" angle="23">
+        <from x="15" y="25" z="15" />
+        <to x="0" y="0" z="0" />
+    </perspective>
+    <ortho id="Ortho" near="0" far="900" left="-30" right="20" top="30" bottom="0">
+        <from x="8" y="2" z="15"/>
+        <to x="0" y="-0.5" z="2" />
+        <up x="0" y="5" z="0" /><!-- optional, default 0,1,0 -->    
     </ortho>    
 </views>
 
@@ -30,12 +38,26 @@
 
 <lights>
     <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-    <light id="Light1">            <!-- light identifier -->
+    <light id="LightRight">            <!-- light identifier -->
         <enable value="1" />        <!-- enable/disable -->
         <position x="10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
         <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+        <specular r="0.8" g="0.8" b="0.8" a="0.8" />            <!-- specular component -->
+    </light>
+    <light id="LightLeft">            <!-- light identifier -->
+        <enable value="0" />        <!-- enable/disable -->
+        <position x="-10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+        <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+        <diffuse r="0.5" g="0.5" b="0.5" a="1" />             <!-- diffuse component -->
+        <specular r="0.5" g="0.5" b="0.5" a="0.5" />            <!-- specular component -->
+    </light>
+     <light id="LightTop">            <!-- light identifier -->
+        <enable value="0" />        <!-- enable/disable -->
+        <position x="0" y="20" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+        <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+        <diffuse r="0.5" g="0.5" b="0.5" a="1" />             <!-- diffuse component -->
+        <specular r="0.5" g="0.5" b="0.5" a="0.5" />            <!-- specular component -->
     </light>
 </lights>
 
@@ -43,8 +65,9 @@
 <textures>
    <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     <texture id="danger" path="danger.png" />
-    <texture id="floorTexture" path="chao.png" />
+    <texture id="floorTexture" path="chao4.jpg" />
     <texture id="glassWallTexture" path="airport_glassWall.jpg" />
+    <texture id="feetTexture" path="feet.jpg"/>
 </textures>
 
 
@@ -56,7 +79,7 @@
    <material id="Porcelain_Grey">     <!--cor das paredes-->                             
        <shininess value="1" />
        <specular r="0.6" g="0.6" b="0.6" a="1" />        <!-- specular reflection -->
-        <diffuse r="0.6" g="0.6" b="0.6" a="1" />         <!-- diffuse reflection -->
+        <diffuse r="0.8" g="0.8" b="0.8 " a="1" />         <!-- diffuse reflection -->
         <ambient r="0.6" g="0.6" b="0.6" a="1" />         <!-- ambient reflection -->
         <emissive r="0.1" g="0.1" b="0.1" a="1" />        <!-- emissive component -->
      </material>
@@ -74,12 +97,12 @@
         <ambient r="0.18" g="0.19" b="0.19" a="1" />         <!-- ambient reflection -->
         <emissive r="0" g="0" b="0" a="1.0" />               <!-- emissive component -->
      </material>
-        <material id="hoki">                                  
+        <material id="navy_blue">                                  
        <shininess value="1.0" />
        <specular r="0.1" g="0.2" b="0.2" a="1.0" />        <!-- specular reflection -->
         <diffuse r="0.1" g="0.20" b="0.2" a="1.0"  />         <!-- diffuse reflection -->
         <ambient r="0.1" g="0.20" b="0.2" a="1.0"  />         <!-- ambient reflection -->
-        <emissive r="0.25" g="0.15" b="0.6" a="1.0"  />        <!-- emissive component -->
+        <emissive r="0" g="0.1" b="0.2" a="1.0"  />        <!-- emissive component -->
      </material>
      <material id="green">                                  
         <shininess value="1.0" />
@@ -134,7 +157,7 @@
 
     <node id="walls">       <!-- defines one intermediate node; may be repeated as necessary -->
 
-        <material id="Porcelain_Grey" />    
+        <material id="Off_white" />    
 
         <texture id="clear">         
 
@@ -156,7 +179,7 @@
 
     <node id="leftWall">       
 
-        <material id="null" />      
+        <material id="navy_blue" />      
 
         <texture id="null">     
             <amplification afs="1" aft="1" />            
@@ -208,7 +231,7 @@
         </texture>
 
         <transformations> 
-            <translation x="0" y="0" z="0" />
+            <translation x="0" y="0" z="-0.1" />
             <scale sx="1" sy="1" sz="1" />
 
         </transformations>
@@ -255,8 +278,8 @@
 
 
                 <transformations>
-                    <translation x="-2" y="12.5" z="0.5" />
-                    <scale sx="0.4" sy="1" sz="1" />
+                    <translation x="-2" y="11" z="1.2" />
+                    <scale sx="1" sy="1" sz="0.4" />
 
                 </transformations>
 
@@ -277,8 +300,8 @@
                 </texture>
 
                 <transformations>
-                    <translation x="2" y="12.5" z="0.5" />
-                    <scale sx="0.4" sy="1" sz="1" />
+                    <translation x="2" y="11" z="1.2" />
+                    <scale sx="1" sy="1" sz="0.4" />
 
                 </transformations>
 
@@ -304,6 +327,7 @@
         <descendants>
            <noderef id="securityMat" />
             <noderef id="floorRectangle"/>
+            <noderef id="feetRetangle"/>
 
         </descendants>
 
@@ -311,7 +335,7 @@
     <node id="floorRectangle">
         <material id="Off_white" />    
         <texture id="floorTexture"> 
-            <amplification afs="1" aft="1" />  
+            <amplification afs="4" aft="4" />  
         </texture>
 
         <transformations>
@@ -324,7 +348,22 @@
            <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
         </descendants>
     </node>
+    <node id="feetRetangle">
+        <material id="Off_white" />    
+        <texture id="feetTexture"> 
+            <amplification afs="2" aft="2" />  
+        </texture>
 
+        <transformations>
+            <translation x="0" y="0.1" z="0" />
+            <rotation axis="x" angle="90" />
+            <scale sx="1" sy="1" sz="1" />
+        </transformations>
+
+        <descendants>
+           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+        </descendants>
+    </node>
 
 
     <node id="securityMat">     
@@ -363,7 +402,8 @@
             <noderef id="LeftMatRetangle" />
             <noderef id="LLCylinder" />
             <noderef id="LRCylinder" />   
-            <noderef id="LeftBase" />    
+            <noderef id="LeftBase" />  
+            <noderef id="LeftXRayBox"/>  
         </descendants>
 
     </node>
@@ -388,28 +428,29 @@
             <noderef id="RightMatRetangle" />
             <noderef id="RLCylinder" />
             <noderef id="RRCylinder" />  
-            <noderef id="RightBase" />       
+            <noderef id="RightBase" />
+            <noderef id="RightXRayBox"/>        
         </descendants>
 
     </node>
 
     <node id="LeftBase">   
 
-         <material id="black" />    
+         <material id="Porcelain_Grey" />    
  
          <texture id="clear">   
              <amplification afs="1" aft="1" />     
          </texture>
  
          <transformations>
-             <translation x="-7.5" y="-0.1" z="2.5" />
+             <translation x="-7.41" y="-0.03" z="2.2" />
              <rotation axis="x" angle="90" />
              <scale sx="1" sy="1" sz="1" />
  
          </transformations>
 
          <descendants>
-                 <leaf type="cylinder" height="5" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="24"/>
+                 <leaf type="cylinder" height="4.95" topRadius="2.3" bottomRadius="2.3" stacks="8" slices="24"/>
                    <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
          </descendants>
  
@@ -417,25 +458,57 @@
 
      <node id="RightBase">       
 
-         <material id="black" />  
+         <material id="Porcelain_Grey" />  
  
          <texture id="clear">       
              <amplification afs="1" aft="1" />      
          </texture>
  
          <transformations>
-            <translation x="7.5" y="-0.1" z="2.5" />
+            <translation x="7.56" y="-0.03" z="2.1" />
             <rotation axis="x" angle="90" />
             <scale sx="1" sy="1" sz="1" />
  
          </transformations>
 
          <descendants>
-                 <leaf type="cylinder" height="5" topRadius="2.5" bottomRadius="2.5" stacks="8" slices="24"/>
+                 <leaf type="cylinder" height="4.95" topRadius="2.3" bottomRadius="2.3" stacks="8" slices="24"/>
                    <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
          </descendants>
  
      </node>
+    <node id="LeftXRayBox"> 
+        <material id="Porcelain_Grey" />      
+        <texture id="clear">
+            <amplification afs="1" aft="1" />        
+        </texture>
+
+        <transformations>
+            <translation x="-7.5" y="0" z="2" />
+            <scale sx="0.91" sy="1" sz="2"/>
+        </transformations>
+
+        <descendants>
+                <leaf type="torus" inner="0.5" outer="2.25" slices="6" loops="40"/>
+        </descendants>
+
+    </node>
+     <node id="RightXRayBox"> 
+        <material id="Porcelain_Grey" />      
+        <texture id="clear">
+            <amplification afs="1" aft="1" />        
+        </texture>
+
+        <transformations>
+            <translation x="7.5" y="0" z="2" />
+            <scale sx="0.91" sy="1" sz="2"/>
+        </transformations>
+
+        <descendants>
+                <leaf type="torus" inner="0.5" outer="2.25" slices="6" loops="40"/>
+        </descendants>
+
+    </node>
 
    
 

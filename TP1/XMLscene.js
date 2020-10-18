@@ -137,7 +137,7 @@ class XMLscene extends CGFscene {
 
         this.initLights();
  
-        //this.initXMLCameras();, esta linha inicia logo com o default
+        this.initXMLCameras();
 
         this.interface.createInterface(this.graph.lights, this.graph.views);
 
