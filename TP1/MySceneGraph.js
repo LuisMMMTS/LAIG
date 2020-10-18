@@ -197,7 +197,7 @@ class MySceneGraph {
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
         }
-        this.log("all parsed");
+        this.log("All parsed");
     }
 
     /**
@@ -252,7 +252,7 @@ class MySceneGraph {
         this.views = [];
         this.defaultCameraId = this.reader.getString(viewsNode, 'default');//the default camera id is stored in position 0
         if(this.defaultCameraId == null)
-            return "No default view defined";
+            this.onXMLError("No default view defined, going to use a default");
         var children = viewsNode.children;
         var failed = 0, hasOne = null;
         for(let i = 0; i < children.length; i++){
@@ -260,7 +260,7 @@ class MySceneGraph {
             var new_node = children[i];
 
             if (new_node.nodeName != "perspective" && new_node.nodeName != "ortho"){ //check if tag is correctly defined
-                this.onXMLMinorError("Unknown tag in [VIEWS] parsing: " + new_node.nodeName+" skipping it");
+                this.onXMLMinorError("Unknown tag in [VIEWS] parsing: " + new_node.nodeName + " skipping it");
                 continue;
             }
 
@@ -418,7 +418,7 @@ class MySceneGraph {
 
             //Check type of light
             if (children[i].nodeName != "light") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">, skipping it");
+                this.onXMLMinorError("[LIGHTS] Unknown tag <" + children[i].nodeName + ">, skipping it");
                 continue;
             }
             else {
@@ -429,12 +429,12 @@ class MySceneGraph {
             // Get id of the current light.
             var lightId = this.reader.getString(children[i], 'id');
             if (lightId == null){
-                this.onXMLMinorError("no ID defined for light, skipping it");
+                this.onXMLMinorError("[LIGHTS] No ID defined for light, skipping it");
                 continue;
             }
             // Checks for repeated IDs.
             if (this.lights[lightId] != null){
-                this.onXMLMinorError("ID must be unique for each light (conflict: ID = " + lightId + "), skipping it");
+                this.onXMLMinorError("[LIGHTS] ID must be unique for each light (conflict: ID = " + lightId + "), skipping it");
                 continue;
             }
             grandChildren = children[i].children;
@@ -463,7 +463,7 @@ class MySceneGraph {
                     global.push(aux);
                 }
                 else{
-                    this.onXMLMinorError("light " + attributeNames[i] + " undefined for ID = " + lightId + ", skipping it");
+                    this.onXMLMinorError("[LIGHTS] Light " + attributeNames[i] + " undefined for ID = " + lightId + ", skipping it");
                     continue;
                 }
             }
@@ -471,10 +471,12 @@ class MySceneGraph {
             numLights++;
         }
 
-        if (numLights == 0)
-            return "at least one light must be defined";
+        if (numLights == 0){
+            this.onXMLError("[LIGHTS] At least one light must be defined");
+            return;
+        }
         else if (numLights > 8)
-            this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
+            this.onXMLMinorError("Too many lights defined; WebGL imposes a limit of 8 lights");
 
         this.log("Parsed lights");
         return null;
@@ -494,7 +496,7 @@ class MySceneGraph {
 
         //For each texture in textures block, check ID and file path
         if(texturesChildNodes.length == 0){
-            this.onXMLMinorError("No textures defined");
+            this.onXMLMinorError("[TEXTURE] No textures defined");
         }
 
         for (let i = 0; i < texturesChildNodes.length; i++){
@@ -926,7 +928,6 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Wrongly defined torus in nodeID:" + nodeID + " Assuming 1 for all parameters");
                                 inner=outer=loops=slices=1;
                             }     
-                            console.log("hello");
                             primitives.push(new MyTorus(this.scene,inner, outer, slices, loops));
                             break;
 
@@ -967,7 +968,8 @@ class MySceneGraph {
                 
             }
             if (descendants.length === 0 && primitives.length === 0) {
-                return "[NODE] No descendants! Node id: " + nodeID
+                this.onXMLError("[NODE] No descendants! Node id: " + nodeID);
+                return;
             }
 
             let node = new Node(nodeID);

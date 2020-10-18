@@ -48,23 +48,21 @@ class MyInterface extends CGFinterface {
         return this.activeKeys[keyCode] || false;
     };
 
-    createInterface(lights, views){
+    createInterface(views){
         this.addAxisCheckBox();
         this.addLightsCheckbox();
-        this.addLightsFolder(lights);
+        this.addLightsFolder();
         this.addCamerasDropDown(views);
     }
 
-    addLightsFolder(lights){
+    addLightsFolder(){
         var  group = this.gui.addFolder("Lights");
         //group.open();
-
-        this.scene.lightValues = [];
-
+        const lights = this.scene.graph.lights;
         for(var key in lights){
             if(lights.hasOwnProperty(key)){
                 this.scene.lightValues[key] = lights[key][0];
-                group.add(this.scene.lightValues, key);
+                group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
             }
         }
       
@@ -75,7 +73,7 @@ class MyInterface extends CGFinterface {
         for(var key in views){
             if(views.hasOwnProperty(key)){
                 viewValues.push(key)
-            }
+            }   
         }
         
         this.gui.add(this.scene, "camera", viewValues)
@@ -87,6 +85,6 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene,'displayAxis').name("Display Axis");
     }
     addLightsCheckbox(){
-        this.gui.add(this.scene,'displayLights').name("Display Lights");
+        this.gui.add(this.scene,'displayLights').name("Display Lights").onChange(this.scene.setLights());
     }
 }

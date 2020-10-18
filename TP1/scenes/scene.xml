@@ -19,7 +19,7 @@
         <to x="0" y="3.5" z="0" />
     </perspective>
     <perspective id="Top" near="0.1" far="500" angle="23">
-        <from x="15" y="25" z="15" />
+        <from x="15" y="30" z="15" />
         <to x="0" y="0" z="0" />
     </perspective>
     <ortho id="Ortho" near="0" far="900" left="-30" right="20" top="30" bottom="0">
@@ -39,7 +39,7 @@
 <lights>
     <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
     <light id="LightRight">            <!-- light identifier -->
-        <enable value="1" />        <!-- enable/disable -->
+        <enable value="0" />        <!-- enable/disable -->
         <position x="10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
         <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
@@ -49,15 +49,29 @@
         <enable value="0" />        <!-- enable/disable -->
         <position x="-10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
         <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
-        <diffuse r="0.5" g="0.5" b="0.5" a="1" />             <!-- diffuse component -->
-        <specular r="0.5" g="0.5" b="0.5" a="0.5" />            <!-- specular component -->
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
+        <specular r="0.8" g="0.8" b="0.8" a="0.8" />            <!-- specular component -->
     </light>
      <light id="LightTop">            <!-- light identifier -->
         <enable value="0" />        <!-- enable/disable -->
-        <position x="0" y="20" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+        <position x="-5" y="10" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
         <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
-        <diffuse r="0.5" g="0.5" b="0.5" a="1" />             <!-- diffuse component -->
+        <diffuse r="0.8" g="0.8" b="0.8" a="1" />             <!-- diffuse component -->
+        <specular r="0.1" g="0.1" b="0.1" a="0.5" />            <!-- specular component -->
+    </light>
+    <light id="LightBottom">            <!-- light identifier -->
+        <enable value="1" />        <!-- enable/disable -->
+        <position x="0" y="5" z="10" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+        <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+        <diffuse r="0.2" g="0.2" b="0.2" a="1" />             <!-- diffuse component -->
         <specular r="0.5" g="0.5" b="0.5" a="0.5" />            <!-- specular component -->
+    </light>
+    <light id="CenteredLight">            <!-- light identifier -->
+        <enable value="0" />        <!-- enable/disable -->
+        <position x="0" y="8" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+        <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
     </light>
 </lights>
 
@@ -68,6 +82,8 @@
     <texture id="floorTexture" path="chao4.jpg" />
     <texture id="glassWallTexture" path="airport_glassWall.jpg" />
     <texture id="feetTexture" path="feet.jpg"/>
+    <texture id="restroomTexture" path="restroom.jpg"/>
+    <texture id="gateTexture" path="gate.png"/>
 </textures>
 
 
@@ -78,17 +94,24 @@
          requires a distinct "id". At least one material should be present. -->
    <material id="Porcelain_Grey">     <!--cor das paredes-->                             
        <shininess value="1" />
-       <specular r="0.6" g="0.6" b="0.6" a="1" />        <!-- specular reflection -->
-        <diffuse r="0.8" g="0.8" b="0.8 " a="1" />         <!-- diffuse reflection -->
-        <ambient r="0.6" g="0.6" b="0.6" a="1" />         <!-- ambient reflection -->
+       <specular r="0.86" g="0.86" b="0.86" a="1" />        <!-- specular reflection -->
+        <diffuse r="0.86" g="0.86" b="0.86" a="1" />         <!-- diffuse reflection -->
+        <ambient r="0.86" g="0.86" b="0.86" a="1" />         <!-- ambient reflection -->
         <emissive r="0.1" g="0.1" b="0.1" a="1" />        <!-- emissive component -->
      </material>
-        <material id="Off_white">        <!--cilindros dos tapetes-->                          
+    <material id="Off_white_emissive">        <!--cilindros dos tapetes-->                          
        <shininess value="1" />
        <specular r="0.97" g="0.97" b="1.0" a="1.0" />        <!-- specular reflection -->
         <diffuse r="0.97" g="0.97" b="1.0" a="1.0" />         <!-- diffuse reflection -->
         <ambient r="0.97" g="0.97" b="1.0" a="1.0" />         <!-- ambient reflection -->
-        <emissive r="0.97" g="0.97" b="1.0" a="1.0" />        <!-- emissive component -->
+        <emissive r="0.6" g="0.6" b="0.6" a="1.0" />        <!-- emissive component -->
+     </material>
+        <material id="White">        <!--cilindros dos tapetes-->                          
+       <shininess value="1" />
+       <specular r="1.0" g="1.0" b="1.0" a="1.0" />        <!-- specular reflection -->
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />         <!-- diffuse reflection -->
+        <ambient r="1.0" g="1.0" b="1.0" a="1.0" />         <!-- ambient reflection -->
+        <emissive r="0.5" g="0.5" b="0.5" a="1.0" />        <!-- emissive component -->
      </material>
         <material id="black">            <!--cor do tapete-->                      
        <shininess value="1.0" />
@@ -116,7 +139,7 @@
         <specular r="1" g="0" b="0" a="1.0" />        <!-- specular reflection -->
          <diffuse r="1" g="0" b="0" a="1.0" />         <!-- diffuse reflection -->
          <ambient r="1" g="0" b="0" a="1.0" />         <!-- ambient reflection -->
-         <emissive r="1" g="0" b="0" a="1.0" />        <!-- emissive component -->
+         <emissive r="0.5" g="0" b="0" a="1.0" />        <!-- emissive component -->
       </material>
 </materials>
 
@@ -157,7 +180,7 @@
 
     <node id="walls">       <!-- defines one intermediate node; may be repeated as necessary -->
 
-        <material id="Off_white" />    
+        <material id="Off_white_emissive" />    
 
         <texture id="clear">         
 
@@ -195,6 +218,8 @@
             <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
             <noderef id="dangerSign" /> 
+            <noderef id="gateSign"/>
+            <noderef id="restroomSign"/>
         </descendants>
 
     </node>
@@ -203,7 +228,7 @@
 
     <node id="glassWall">      
 
-        <material id="Off_white" /> 
+        <material id="Off_white_emissive" /> 
 
         <texture id="glassWallTexture">  
 
@@ -213,7 +238,7 @@
 
         <transformations>
             <translation x="0" y="10" z="0" />
-            <!--<rotation axis="y" angle="180" />-->
+            <rotation axis="y" angle="180" />
             <rotation axis="z" angle="180" />
         </transformations>
 
@@ -224,15 +249,15 @@
     </node>
 
     <node id="dangerSign">  
-        <material id="Off_white" />     
+        <material id="Off_white_emissive" />     
 
         <texture id="danger">    
-            <amplification afs="1" aft="1" />        
+            <amplification afs="1" aft="1.4" />        
         </texture>
 
         <transformations> 
-            <translation x="0" y="0" z="-0.1" />
-            <scale sx="1" sy="1" sz="1" />
+            <translation x="6" y="-2" z="-0.4" />
+            <scale sx="0.6" sy="0.6" sz="1" />
 
         </transformations>
 
@@ -242,10 +267,52 @@
         </descendants>
 
     </node>
+    
+    <node id="gateSign">  
+        <material id="Off_white_emissive" />     
+
+        <texture id="gateTexture">    
+            <amplification afs="4" aft="4" />        
+        </texture>
+
+        <transformations> 
+            <translation x="-8" y="0" z="-0.1" />
+            <scale sx="0.4" sy="0.4" sz="1" />
+            <rotation axis="z" angle="180" /> 
+            
+
+        </transformations>
+
+        <descendants>
+            <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
+
+        </descendants>
+
+    </node>
+     <node id="restroomSign">  
+        <material id="Off_white_emissive" />     
+
+        <texture id="restroomTexture">    
+            <amplification afs="4" aft="4" />        
+        </texture>
+
+        <transformations> 
+            <translation x="-8" y="-2" z="-0.1" />
+            <scale sx="0.4" sy="0.4" sz="1" />
+            <rotation axis="z" angle="180" /> 
+
+        </transformations>
+
+        <descendants>
+            <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
+
+        </descendants>
+
+    </node>
         
     <node id="securityGantry">      
 
-                <material id="Off_white" />     
+                <material id="White" />     
 
                 <texture id="clear">       
 
@@ -333,7 +400,7 @@
 
     </node>
     <node id="floorRectangle">
-        <material id="Off_white" />    
+        <material id="Off_white_emissive" />    
         <texture id="floorTexture"> 
             <amplification afs="4" aft="4" />  
         </texture>
@@ -349,7 +416,7 @@
         </descendants>
     </node>
     <node id="feetRetangle">
-        <material id="Off_white" />    
+        <material id="Off_white_emissive" />    
         <texture id="feetTexture"> 
             <amplification afs="2" aft="2" />  
         </texture>
@@ -403,7 +470,7 @@
             <noderef id="LLCylinder" />
             <noderef id="LRCylinder" />   
             <noderef id="LeftBase" />  
-            <noderef id="LeftXRayBox"/>  
+            <noderef id="LeftXRayBox"/> 
         </descendants>
 
     </node>
@@ -450,7 +517,7 @@
          </transformations>
 
          <descendants>
-                 <leaf type="cylinder" height="4.95" topRadius="2.3" bottomRadius="2.3" stacks="8" slices="24"/>
+                 <leaf type="cylinder" height="4.95" topRadius="2.4" bottomRadius="2.4" stacks="8" slices="24"/>
                    <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
          </descendants>
  
@@ -472,7 +539,7 @@
          </transformations>
 
          <descendants>
-                 <leaf type="cylinder" height="4.95" topRadius="2.3" bottomRadius="2.3" stacks="8" slices="24"/>
+                 <leaf type="cylinder" height="4.95" topRadius="2.4" bottomRadius="2.4" stacks="8" slices="24"/>
                    <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->    
          </descendants>
  
@@ -578,8 +645,7 @@
 
     </node>
     
-   
-    
+ 
     <node id="RightMatRetangle">    
 
         <material id="black" /> 
