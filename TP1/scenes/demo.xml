@@ -36,7 +36,7 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="demoTexture" path="airport_glassWall.jpg" />
+        <texture id="demoTexture" path="chao.jpg" />
     </textures>
 
 

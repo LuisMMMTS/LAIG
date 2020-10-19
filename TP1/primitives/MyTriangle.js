@@ -29,21 +29,14 @@ class MyTriangle extends CGFobject {
             this.x1, this.y1, 0, //0
             this.x2, this.y2, 0, //1 
             this.x3, this.y3, 0,  //2
-            this.x1, this.y1, 0, //0
-            this.x2, this.y2, 0, //1 
-            this.x3, this.y3, 0  //2
         ]
 
-        this.indices = [0,1,2,
-                        2,1,0] //double side
+        this.indices = [0,1,2]
 
         this.normals = [
 			0, 0, 1,
 			0, 0, 1,
             0, 0, 1,
-            0, 0, -1,
-			0, 0, -1,
-			0, 0, -1,
 		]
              
         this.texCoords = [

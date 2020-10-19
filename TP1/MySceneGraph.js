@@ -335,6 +335,10 @@ class MySceneGraph {
             let angle = this.reader.getFloat(new_node, 'angle');
             let near = this.reader.getFloat(new_node, 'near');
             let far = this.reader.getFloat(new_node, 'far');
+            if(isNaN(angle)||isNaN(near)||isNaN(far)||!Array.isArray(from)||!Array.isArray(to)||angle==null||near==null||far==null||from==null||to==null){
+                this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", skipping it");
+                return null;
+            }
             return new CGFcamera(angle * DEGREE_TO_RAD, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]));
         }
         else if (new_node.nodeName == "ortho"){
@@ -344,6 +348,10 @@ class MySceneGraph {
             let top = this.reader.getFloat(new_node, 'top');
             let near = this.reader.getFloat(new_node, 'near');
             let far = this.reader.getFloat(new_node, 'far');
+            if(isNaN(left)||isNaN(right)||isNaN(bottom)||isNaN(top)||isNaN(near)||isNaN(far)||top==null||near==null||far==null||bottom==null||left==null|| right==null || !Array.isArray(up)){
+                this.onXMLError("[VIEWS] Invalid values on ortho camera id: "+ new_node.id +", skipping it");
+                return null;
+            }
             return new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]),vec3.fromValues(up[0], up[1], up[2]));
         }
         else{
@@ -360,7 +368,7 @@ class MySceneGraph {
 
         var children = illuminationsNode.children;
         var defaultAmbient = [0.2,0.2,0.2,1.0];
-        var defaultBackground = [0.7,0.8,1.0,1.0];
+        var defaultBackground = [0.58,0,0.83,1.0];
         this.ambient = [];
         this.background = [];
 
@@ -375,7 +383,7 @@ class MySceneGraph {
         var color = this.parseColor(children[ambientIndex], "ambient");
         //if ambient is not defined or wrongly defined we use a default
         if (!Array.isArray(color)){
-            this.onXMLError("No ambient illumination defined");
+            this.onXMLError("No ambient illumination defined, adding a default one");
             this.ambient = defaultAmbient;
         }
         else{
@@ -385,7 +393,7 @@ class MySceneGraph {
         color = this.parseColor(children[backgroundIndex], "background");
         //if background is not defined or wrongly defined we use a default
         if (!Array.isArray(color)){
-            this.onXMLError("No background illumination defined");
+            this.onXMLError("No background illumination defined, adding a default one");
             this.background = defaultBackground;
         }
         else
@@ -511,7 +519,7 @@ class MySceneGraph {
                 this.onXMLMinorError("[TEXTURE] no texture ID defined, skipping it");
                 continue;
             }
-            if (this.textures[id] != null && id!="default") {
+            if (this.textures[id] != null && id != "default") {
                 this.onXMLMinorError("[TEXTURE] ID must be unique for each texture (conflict: ID = " + textureId + ") skipping it");
                 continue;
             }
@@ -528,10 +536,6 @@ class MySceneGraph {
             }
 
             this.textures[id] = new CGFtexture(this.scene, path);
-
-            this.textures["default"] = new CGFtexture(this.scene, path);
-
-            
         }
         this.log("Parsed Textures");
         return null;
@@ -557,11 +561,6 @@ class MySceneGraph {
 
         var grandChildren = []; //this will be the color parameter -> shininess, speccular etc.
         var nodeNames = [];
-
-
-        if (children.length < 1){
-            return this.onXMLError("[MATERIALS] No materials parsed, it was defined a default");
-        }
 
         // Any number of materials.
 
@@ -621,6 +620,7 @@ class MySceneGraph {
                 this.onXMLMinorError("[MATERIALS] Missing specular tag of the material " + materialID + ", skipping it"); 
                 continue;
             }
+            
             let shininess = null;
             let specular = [];
             let diffuse = [];
@@ -665,7 +665,8 @@ class MySceneGraph {
             }
         }
         if(nMaterials == 0){
-            return "[MATERIALS] No materials defined, a default one was defined";
+            this.onXMLError("[MATERIALS] No materials defined, a default one was defined");
+            //return
         }
 
         this.log("Parsed materials");
@@ -796,13 +797,13 @@ class MySceneGraph {
                 textureId = this.reader.getString(grandChildren[textureIndex],"id");
                 
                 if (textureId == null) {//case material parameter does not exist
-                    this.onXMLMinorError("[NODE] texture ID is not valid on node ID: " + nodeID + "setting default texture");
+                    this.onXMLMinorError("[NODE] texture ID is not valid on node ID: " + nodeID + " setting default texture");
                     textureId = 'default';
                 }
 
                 if (textureId.toLowerCase() !== "null" && textureId.toLowerCase() !== "clear"){
                     if (this.textures[textureId] == null){
-                        this.onXMLMinorError("[NODE] Texture ID: " + textureId + " does not exist. Error on node: " + nodeID + "setting default texture");
+                        this.onXMLMinorError("[NODE] Texture ID: " + textureId + " does not exist. Error on node: " + nodeID + " setting default texture");
                         textureId = 'default';
                     }
                 }
@@ -813,23 +814,23 @@ class MySceneGraph {
                     this.onXMLMinorError("[NODE] Missing amplification tags in nodeId "+ nodeID + ". Assuming (1,1)");
                 }
                 else{
-                    for (let j = 0; j < amplificationNodes.length; j++){
-                        if (amplificationNodes[j].nodeName !== "amplification"){
-                            this.onXMLError("[NODE] Unknown section on textures children, where amplificaton should be. node Id: " + nodeID + ". Ignoring it and assuming (1,1)");
-                        }
-                        else{
-                            afs = this.reader.getFloat(amplificationNodes[j], "afs");
-                            aft = this.reader.getFloat(amplificationNodes[j], "aft");
+  
+                    if (amplificationNodes[0].nodeName !== "amplification"){
+                        this.onXMLMinorError("[NODE] Unknown section on textures children, where amplificaton should be. node Id: " + nodeID + ". Ignoring it and assuming (1,1)");
+                    }
+                    else{
+                        afs = this.reader.getFloat(amplificationNodes[0], "afs");
+                        aft = this.reader.getFloat(amplificationNodes[0], "aft");
 
-                            if (aft == null || afs == null || isNaN(afs) || isNaN(aft)||afs<=0||aft<=0){
-                                this.onXMLMinorError("[NODE] Wrong amplification values in node: "+ nodeID + " Assuming (1,1)");
-                                afs = 1;
-                                aft = 1;
-                            }
+                        if (aft == null || afs == null || isNaN(afs) || isNaN(aft)|| afs <= 0 || aft <= 0){
+                            this.onXMLMinorError("[NODE] Wrong amplification values in node: "+ nodeID + " Assuming (1,1)");
+                            afs = 1;
+                            aft = 1;
                         }
                     }
+                    
                 }
-        }
+            }
             
 
             // Descendants
@@ -857,14 +858,13 @@ class MySceneGraph {
                             var x2 = this.reader.getFloat(descendant,"x2");
                             var y2 = this.reader.getFloat(descendant,"y2");
                             if(x1 == null || x2 == null || y1 == null || y2 == null){
-                                this.onXMLError("[NODE] Missing values for rectangle definition in nodeID: "+nodeID + ", skipping it");
+                                this.onXMLError("[NODE] Missing values for rectangle definition in nodeID: "+ nodeID + ", skipping it");
                                 continue;
                             }
                             else if(x1 == x2 || y1 == y2 ||isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)){
-                                this.onXMLError("[NODE] Invalid values for rectangle definition in nodeID: "+nodeID + ", skipping it");
+                                this.onXMLError("[NODE] Invalid values for rectangle definition in nodeID: "+ nodeID + ", skipping it");
                                 continue;
                             }
-
 
                             let rectangle = new MyRectangle(this.scene,x1,y1,x2,y2);
                             rectangle.updateTexCoords([afs,aft]);
@@ -904,7 +904,7 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Invalid parameters for sphere definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            else if (radius*stacks*slices <= 0){
+                            else if (radius * stacks * slices <= 0){
                                 this.onXMLError("[NODE] Wrongly defined sphere in nodeID:" + nodeID + " Assuming 1 for all parameters");
                                 radius = stacks = slices = 1;
                             }     
@@ -969,7 +969,7 @@ class MySceneGraph {
             }
             if (descendants.length === 0 && primitives.length === 0) {
                 this.onXMLError("[NODE] No descendants! Node id: " + nodeID);
-                return;
+                continue;
             }
 
             let node = new Node(nodeID);
@@ -1096,10 +1096,7 @@ class MySceneGraph {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         var matId = this.nodes[this.idRoot].getMaterial();
         var texId = this.nodes[this.idRoot].getTexture();
-        //if(texId == "null") texId = "default";
-        //if(matId == "null") matId = "default";
         this.processNode(this.idRoot, texId, matId);
-
     }
 
     /**
@@ -1151,16 +1148,13 @@ class MySceneGraph {
             }
         }
 
-
         if (textureID == "clear"){
             material.setTexture(null);
         }
-        else if (this.textures[textureID] == null){
-            console.warn("Texture non existent in nodeId " + id + " using default");
-            //textureID="default";
-         }{ let texture = this.textures[textureID];
-            material.setTexture(texture);
-        }
+
+        let texture = this.textures[textureID];
+        material.setTexture(texture);
+        
             
         material.setTextureWrap('REPEAT', 'REPEAT');
         material.apply();
@@ -1176,7 +1170,7 @@ class MySceneGraph {
             this.scene.pushMatrix();
             let a = this.processNode(node.getChildren()[i],textureID, materialID);
             if (a == 1){
-                console.warn("NodeID "+ id + " has non existent child with id: " + node.getChildren()[i]);
+                this.onXMLError("NodeID "+ id + " has non existent child with id: " + node.getChildren()[i]);
             }
             this.scene.popMatrix();
         }

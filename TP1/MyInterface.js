@@ -76,9 +76,7 @@ class MyInterface extends CGFinterface {
             }   
         }
         
-        this.gui.add(this.scene, "camera", viewValues)
-            .name("Camera")
-            .onChange(val => this.scene.updateCamera(val));
+        this.gui.add(this.scene, "camera", viewValues).name("Camera").onChange(val => this.scene.updateCamera(val));
     }
 
     addAxisCheckBox(){

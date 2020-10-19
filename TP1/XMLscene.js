@@ -69,7 +69,7 @@ class XMLscene extends CGFscene {
     initLights() {
         var i = 0;
         // Lights index.
-
+      
         // Reads the lights from the scene graph.
         for (var key in this.lightValues) {
             if (i >= 8)
@@ -105,7 +105,6 @@ class XMLscene extends CGFscene {
         this.camera = this.graph.views[this.newCameraID];
         this.interface.setActiveCamera(this.camera);
     }
-
     setLights() {
         var i = 0;
         // Lights index.
@@ -135,19 +134,16 @@ class XMLscene extends CGFscene {
 
         this.gl.clearColor(...this.graph.background);
 
-        this.setGlobalAmbientLight(...this.graph.ambient);
-
-        this.interface.createInterface(this.graph.views);   
+        this.setGlobalAmbientLight(...this.graph.ambient);  
 
         this.initLights();
- 
+        this.initCameras();
+
         this.initXMLCameras();
-
+      
+        this.interface.createInterface(this.graph.views); 
+        
         this.setLights();
-
-             
-        
-        
         this.sceneInited = true;
     }
     /**
