@@ -1,8 +1,7 @@
 <lsf>
 
-
 <initials>
-    <reference length="20" />              <!-- axis length; "0" means no axis displayed -->
+    <reference length="0" />              <!-- axis length; "0" means no axis displayed -->
 
     <root id="root" />     <!-- identifier of root node of the scene graph; this node -->
                         <!-- must be defined in one of the following NODE declarations -->
@@ -199,7 +198,7 @@
 
     <node id="walls">       <!-- defines one intermediate node; may be repeated as necessary -->
 
-        <material id="Off_white_emissive" />    
+        <material id="null" />    
 
         <texture id="clear">         
 
@@ -222,7 +221,6 @@
     <node id="leftWall">       
 
         <material id="navy_blue" />      
-
         <texture id="null">     
             <amplification afs="1" aft="1" />            
         </texture>
@@ -231,14 +229,12 @@
             <translation x="-10" y="10" z="20" />
             <scale sx="1" sy="1" sz="1" />
             <rotation axis="y" angle="-90" /> 
-
         </transformations>
 
         <descendants>
             <leaf type="rectangle" x1="-20" y1="10" x2="20" y2="-10" />
                             <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
             <noderef id="dangerSign" /> 
-
             <noderef id="restroomSign"/>
             <noderef id="flightBoard"/>
             <noderef id="measures"/>
@@ -251,10 +247,7 @@
     <node id="glassWall">      
 
         <material id="Off_white_emissive" /> 
-
         <texture id="glassWallTexture">  
-
-
             <amplification afs="20" aft="20" />           
         </texture>
 
@@ -273,27 +266,23 @@
 
     <node id="dangerSign">  
         <material id="Off_white_emissive" />     
-
         <texture id="danger">    
-            <amplification afs="1" aft="1.4" />        
+            <amplification afs="1" aft="1" />        
         </texture>
 
         <transformations> 
             <translation x="-3" y="0" z="-0.4" />
             <scale sx="1.2" sy="1.2" sz="1" />
-
         </transformations>
 
         <descendants>
             <leaf type="triangle" x1="-1" y1="-1" x2="0" y2="1" x3="1" y3="-1" />
-
         </descendants>
 
     </node>
     
     <node id="gateSign">  
         <material id="Off_white_emissive" />     
-
         <texture id="gateTexture">    
             <amplification afs="4" aft="4" />        
         </texture>
@@ -301,16 +290,14 @@
         <transformations> 
             <translation x="9" y="0" z="-0.1" />
             <scale sx="0.4" sy="0.4" sz="1" />
-
         </transformations>
 
         <descendants>
             <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
         </descendants>
     </node>
-     <node id="restroomSign">  
+    <node id="restroomSign">
         <material id="Off_white_emissive" />     
-
         <texture id="restroomTexture">    
             <amplification afs="4" aft="4" />        
         </texture>
@@ -319,18 +306,15 @@
             <translation x="-18" y="-2" z="-0.1" />
             <scale sx="0.4" sy="0.4" sz="1" />
             <rotation axis="z" angle="180" /> 
-
         </transformations>
 
         <descendants>
             <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
-
         </descendants>
 
     </node>
     <node id="measures">  
         <material id="Off_white_emissive" />     
-
         <texture id="measuresTexture">    
             <amplification afs="4" aft="4" />        
         </texture>
@@ -339,18 +323,15 @@
             <translation x="-15" y="-1" z="-0.1" />
             <scale sx="1" sy="1" sz="1" />
             <rotation axis="z" angle="180" /> 
-
         </transformations>
 
         <descendants>
             <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
-
         </descendants>
 
     </node>
     <node id="flightBoard">  
         <material id="Off_white_emissive" />     
-
         <texture id="flightBoardTexture">    
             <amplification afs="4" aft="4" />        
         </texture>
@@ -368,31 +349,27 @@
         
     <node id="securityGantry">      
 
-                <material id="White" />     
+        <material id="White" />     
+        <texture id="clear">       
+            <amplification afs="1" aft="1" />            
+        </texture>
 
-                <texture id="clear">       
+        <transformations>
+            <scale sx="0.25" sy="1" sz="1" />
+        </transformations>
 
-                    <amplification afs="1" aft="1" />            
-
-                </texture>
-
-                <transformations>
-                    <scale sx="0.25" sy="1" sz="1" />
-
-                </transformations>
-                <descendants>                    
-                    <noderef id="rightSphere"/>
-                    <noderef id="leftSphere"/>
-                    <leaf type="torus" inner="1" outer="12" slices="6" loops="20"/>
-                        <!-- inner and outer radius, sections around the inner radius, sections around the outer radius  -->
-            </descendants>
+        <descendants>                    
+            <noderef id="rightSphere"/>
+            <noderef id="leftSphere"/>
+            <leaf type="torus" inner="1" outer="12" slices="6" loops="20"/>
+                <!-- inner and outer radius, sections around the inner radius, sections around the outer radius  -->
+        </descendants>
 
     </node>
 
      <node id="leftSphere">       
 
         <material id="green" />    
-
         <texture id="clear">        
             <amplification afs="1" aft="1" />        
         </texture>
@@ -403,8 +380,7 @@
         </transformations>
 
         <descendants>
-            <leaf type="sphere" radius="0.25" slices="16" stacks="8"/>
-            
+            <leaf type="sphere" radius="0.25" slices="16" stacks="8"/>  
         </descendants>
 
     </node>
@@ -429,14 +405,12 @@
     <node id="floor">    
 
         <material id="null" />   
-
         <texture id="null">    
             <amplification afs="1" aft="1" />         
         </texture>
 
 
         <transformations>
-
         </transformations>
 
         <descendants>
@@ -455,7 +429,6 @@
     <node id="distanceMark1">    
 
         <material id="Off_white_emissive" />   
-
         <texture id="securityTexture">    
             <amplification afs="2" aft="2" />         
         </texture>
@@ -474,7 +447,6 @@
     <node id="distanceMark2">    
 
         <material id="Off_white_emissive" />   
-
         <texture id="securityTexture">    
             <amplification afs="2" aft="2" />         
         </texture>
@@ -493,7 +465,6 @@
      <node id="divisors1">    
 
         <material id="emissive" />   
-
         <texture id="metalTexture">    
             <amplification afs="1" aft="1" />         
         </texture>
@@ -516,7 +487,6 @@
             <amplification afs="1" aft="1" />         
         </texture>
 
-
         <transformations>
             <translation x="0" y="0" z="12" />
         </transformations>
@@ -530,7 +500,6 @@
     <node id="divisors">    
 
         <material id="null" />   
-
         <texture id="null">    
             <amplification afs="1" aft="1" />         
         </texture>
@@ -549,11 +518,9 @@
      <node id="frontDivisor">    
 
         <material id="null" />   
-
         <texture id="null">    
             <amplification afs="1" aft="1" />         
         </texture>
-
 
         <transformations>
             <rotation axis="x" angle="-90" /> 
@@ -566,7 +533,6 @@
     <node id="backDivisor">    
 
         <material id="null" />   
-
         <texture id="null">    
             <amplification afs="1" aft="1" />         
         </texture>
@@ -584,11 +550,9 @@
     <node id="middleDivisor">    
 
         <material id="null" />   
-
         <texture id="null">    
             <amplification afs="1" aft="1" />         
         </texture>
-
 
         <transformations>
             <translation x="0" y="0" z="3" />
@@ -614,7 +578,7 @@
            <noderef id="laptop"/>
         </descendants>
     </node>
-     <node id="laptop">
+    <node id="laptop">
         <material id="Porcelain_Grey" />    
         <texture id="laptopTexture"> 
             <amplification afs="2" aft="2" />  
@@ -624,7 +588,6 @@
             <translation x="0" y="5.1" z="-1.0" />
             <scale sx="0.8" sy="1" sz="0.6" />
             <rotation axis="x" angle="90" />
-
         </transformations>
 
         <descendants>
@@ -689,7 +652,6 @@
             <translation x="0" y="5" z="0" />
             <rotation axis="x" angle="0" />
             <scale sx="1" sy="1" sz="1" />
-
         </transformations>
 
         <descendants>
@@ -726,19 +688,14 @@
     <node id="RightSecurityMat"> 
 
         <material id="null" />    
-
-
         <texture id="clear">      
             <amplification afs="1" aft="1" />          
         </texture>
 
-
         <transformations>
- 
         </transformations>
 
         <descendants>
-
             <noderef id="RightMatRetangle" />
             <noderef id="RLCylinder" />
             <noderef id="RRCylinder" />  
@@ -752,7 +709,6 @@
     <node id="LeftBase">   
 
          <material id="Porcelain_Grey" />    
- 
          <texture id="clear">   
              <amplification afs="1" aft="1" />     
          </texture>
@@ -761,7 +717,6 @@
              <translation x="-7.41" y="-0.03" z="2.2" />
              <rotation axis="x" angle="90" />
              <scale sx="1" sy="1" sz="1" />
- 
          </transformations>
 
          <descendants>
@@ -774,7 +729,6 @@
      <node id="RightBase">       
 
          <material id="Porcelain_Grey" />  
- 
          <texture id="clear">       
              <amplification afs="1" aft="1" />      
          </texture>
@@ -783,7 +737,6 @@
             <translation x="7.56" y="-0.03" z="2.1" />
             <rotation axis="x" angle="90" />
             <scale sx="1" sy="1" sz="1" />
- 
          </transformations>
 
          <descendants>
@@ -829,19 +782,14 @@
     <node id="LeftMatRetangle">      
 
         <material id="black" />    
-
-
         <texture id="clear">       
-
             <amplification afs="1" aft="1" />      
-
         </texture>
 
         <transformations>
             <translation x="-7.5" y="0" z="2.5" />
             <rotation axis="x" angle="90" />
             <scale sx="1" sy="1" sz="1" />
-
         </transformations>
 
         <descendants>
@@ -853,16 +801,12 @@
     <node id="LLCylinder">   
 
         <material id="Porcelain_Grey" />     
-
-
         <texture id="clear">
             <amplification afs="1" aft="1" /> 
         </texture>
 
-
         <transformations>
             <translation x="-9.75" y="0" z="-5" />
-
         </transformations>
 
         <descendants>
@@ -895,11 +839,8 @@
     <node id="RightMatRetangle">    
 
         <material id="black" /> 
-
-
         <texture id="clear">      
             <amplification afs="1" aft="1" />       
-
         </texture>
 
 
@@ -918,7 +859,6 @@
     <node id="RLCylinder"> 
 
         <material id="Porcelain_Grey" />    
-
         <texture id="clear">     
             <amplification afs="1" aft="1" />          
         </texture>
@@ -936,7 +876,6 @@
 
    <node id="RRCylinder"> 
         <material id="Porcelain_Grey" />
-
         <texture id="clear">  
             <amplification afs="1" aft="1" />          
         </texture>
@@ -952,33 +891,33 @@
         </descendants>
     </node>
 
-      <node id="curtainsLeft">      
-            <material id="black" />    
-            <texture id="clear">       
-                <amplification afs="1" aft="1" />      
-            </texture>
+    <node id="curtainsLeft">      
+        <material id="black" />    
+        <texture id="clear">       
+            <amplification afs="1" aft="1" />      
+        </texture>
 
-            <transformations>
-                 <translation x="-7" y="0.1" z="2" />
-                 <rotation axis="x" angle="-180" /> 
-                 <scale sx="0.1" sy="1.5" sz="1" />-->
-            </transformations>
+        <transformations>
+                <translation x="-7" y="0.1" z="2" />
+                <rotation axis="x" angle="-180" /> 
+                <scale sx="0.1" sy="1.5" sz="1" />-->
+        </transformations>
 
-            <descendants>
-                <noderef id="curtain1"/>
-                <noderef id="curtain2"/>
-                <noderef id="curtain3"/>
-                <noderef id="curtain4"/>
-                <noderef id="curtain5"/>
-                <noderef id="curtain6"/>
-                <noderef id="curtain7"/>
-                <noderef id="curtain8"/>
-                <noderef id="curtain9"/>
-                <noderef id="curtain10"/>
-                <noderef id="curtain11"/>
-                <noderef id="curtain12"/>
-                <noderef id="curtain13"/>
-            </descendants>
+        <descendants>
+            <noderef id="curtain1"/>
+            <noderef id="curtain2"/>
+            <noderef id="curtain3"/>
+            <noderef id="curtain4"/>
+            <noderef id="curtain5"/>
+            <noderef id="curtain6"/>
+            <noderef id="curtain7"/>
+            <noderef id="curtain8"/>
+            <noderef id="curtain9"/>
+            <noderef id="curtain10"/>
+            <noderef id="curtain11"/>
+            <noderef id="curtain12"/>
+            <noderef id="curtain13"/>
+        </descendants>
     </node>
     <node id="curtain1">      
         <material id="black" />    
@@ -1076,7 +1015,7 @@
         </descendants>
 
     </node>
-        <node id="curtain7">      
+    <node id="curtain7">      
         <material id="black" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1092,7 +1031,7 @@
         </descendants>
 
     </node>
-        <node id="curtain8">      
+    <node id="curtain8">      
         <material id="black" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1108,7 +1047,7 @@
         </descendants>
 
     </node>
-        <node id="curtain9">      
+    <node id="curtain9">      
         <material id="black" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1124,7 +1063,7 @@
         </descendants>
 
     </node>
-        <node id="curtain10">      
+    <node id="curtain10">      
         <material id="black" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1140,7 +1079,7 @@
         </descendants>
 
     </node>
-           <node id="curtain11">      
+    <node id="curtain11">      
         <material id="black" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1156,7 +1095,7 @@
         </descendants>
 
     </node>
-        <node id="curtain12">      
+    <node id="curtain12">      
         <material id="black" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1172,7 +1111,7 @@
         </descendants>
 
     </node>
-       <node id="curtain13">      
+    <node id="curtain13">      
         <material id="black" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1188,7 +1127,7 @@
         </descendants>
 
     </node>
-         <node id="RightCurtains">      
+    <node id="RightCurtains">      
         <material id="null" />    
         <texture id="clear">       
             <amplification afs="1" aft="1" />      
@@ -1205,7 +1144,6 @@
     </node>
     <node id="boxPile"> 
         <material id="null" />
-
         <texture id="clear">
             <amplification afs="1.0" aft="1.0" />
         </texture>
@@ -1216,9 +1154,11 @@
             <rotation axis="y" angle="45" /> 
             <rotation axis="x" angle="90" />  
         </transformations>
+        
         <descendants>
             <leaf type="cylinder" height="1" topRadius="1" bottomRadius="1" stacks="8" slices="4"/>
         </descendants>
+
     </node>
 
     </nodes>
