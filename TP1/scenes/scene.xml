@@ -7,7 +7,7 @@
                         <!-- must be defined in one of the following NODE declarations -->
 </initials>
 
-<views default="Top">
+<views default="Side">
     <!-- at least one of the following type of cameras must be declared -->
     <perspective id="Side" near="0.1" far="500" angle="23">
         <from x="30" y="5" z="7" />
@@ -21,10 +21,10 @@
         <from x="3" y="30" z="5" />
         <to x="-1.5" y="0" z="5" />
     </perspective>
-    <ortho id="Ortho" near="0" far="900" left="-30" right="20" top="30" bottom="0">
-        <from x="8" y="2" z="15"/>
-        <to x="0" y="-0.5" z="2" />
-        <up x="0" y="5" z="0" /><!-- optional, default 0,1,0 -->    
+    <ortho id="Ortho" near="0" far="50" left="-10" right="10" top="10" bottom="-1">
+        <from x="6" y="3" z="15"/>
+        <to x="0" y="-1.5" z="2" />
+        <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->    
     </ortho>    
 </views>
 
