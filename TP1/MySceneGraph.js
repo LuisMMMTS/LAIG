@@ -235,6 +235,8 @@ class MySceneGraph {
         var axis_length = this.reader.getFloat(refNode, 'length');
         if (axis_length == null)
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
+        else if(axis_length < 0)
+            this.onXMLMinorError("Invalid axis_length defined for scene; assuming 'length = 1'");
 
         this.referenceLength = axis_length || 1;
 
@@ -251,10 +253,13 @@ class MySceneGraph {
     parseViews(viewsNode) {
         this.views = [];
         this.defaultCameraId = this.reader.getString(viewsNode, 'default');//the default camera id is stored in position 0
+
         if(this.defaultCameraId == null)
             this.onXMLError("No default view defined, going to use a default");
+
         var children = viewsNode.children;
         var failed = 0, hasOne = null;
+        
         for(let i = 0; i < children.length; i++){
             
             var new_node = children[i];
@@ -311,19 +316,24 @@ class MySceneGraph {
         let up = [0.0,1.0,0.0]; //default values, since it is optional to define it 
 
         for(let i = 0; i < parameters.length; i++){
+            let x = this.reader.getFloat(parameters[i], 'x');
+                let y = this.reader.getFloat(parameters[i], 'y');
+                let z = this.reader.getFloat(parameters[i], 'z');
+                if(x == null || y == null || z == null || isNaN(x) || isNaN(y) || isNaN(z)){
+                    this.onXMLError("Wrong coordinates for camera "+new_node.id+", skipping it.")
+                }
+                
             if (parameters[i].nodeName == "from"){
-                from = [this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
-
+                from = [x,y,z];
             }
             else if (parameters[i].nodeName == "to"){
-                to = [this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
+                to = [x,y,z];
             }
             else if(parameters[i].nodeName == "up" && new_node.nodeName != "ortho"){
                 this.onXMLMinorError("[VIEWS] \"up\" tag declared on non ortho cam");
             }
             else if((parameters[i].nodeName == "up" && new_node.nodeName == "ortho")){
-                up = [this.reader.getFloat(parameters[i], 'x'),this.reader.getFloat(parameters[i], 'y'),this.reader.getFloat(parameters[i], 'z')];
-            
+                up = [x,y,z];
             }
             else{
                 this.onXMLError("[VIEWS] unknown/missing tag <" + parameters[i].nodeName + ">");
@@ -335,8 +345,17 @@ class MySceneGraph {
             let angle = this.reader.getFloat(new_node, 'angle');
             let near = this.reader.getFloat(new_node, 'near');
             let far = this.reader.getFloat(new_node, 'far');
+
             if(isNaN(angle)||isNaN(near)||isNaN(far)||!Array.isArray(from)||!Array.isArray(to)||angle==null||near==null||far==null||from==null||to==null){
                 this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", skipping it");
+                return null;
+            }
+            if (near<0||far<0||angle<0){
+                this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", Values cannot be negative. Skipping it.");
+                return null;
+            }
+            if (near>far){
+                this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", value \"near\" must be inferior or equal to \"far\". Skipping it.");
                 return null;
             }
             return new CGFcamera(angle * DEGREE_TO_RAD, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]));
@@ -348,8 +367,17 @@ class MySceneGraph {
             let top = this.reader.getFloat(new_node, 'top');
             let near = this.reader.getFloat(new_node, 'near');
             let far = this.reader.getFloat(new_node, 'far');
+            
             if(isNaN(left)||isNaN(right)||isNaN(bottom)||isNaN(top)||isNaN(near)||isNaN(far)||top==null||near==null||far==null||bottom==null||left==null|| right==null || !Array.isArray(up)){
                 this.onXMLError("[VIEWS] Invalid values on ortho camera id: "+ new_node.id +", skipping it");
+                return null;
+            }
+            if (near<0||far<0){
+                this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", Values cannot be negative. Skipping it.");
+                return null;
+            }
+            if (near>far){
+                this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", value \"near\" must be inferior or equal to \"far\". Skipping it.");
                 return null;
             }
             return new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]),vec3.fromValues(up[0], up[1], up[2]));
@@ -391,6 +419,7 @@ class MySceneGraph {
         }
 
         color = this.parseColor(children[backgroundIndex], "background");
+
         //if background is not defined or wrongly defined we use a default
         if (!Array.isArray(color)){
             this.onXMLError("No background illumination defined, adding a default one");
@@ -499,7 +528,7 @@ class MySceneGraph {
         let texturesChildNodes = texturesNode.children;
         this.textures = [];
         let workingDirectory ="./scenes/";
-        this.defaultTexture = new CGFtexture(this.scene, "./scenes/images/defaultTexture.jpg");
+        this.defaultTexture = null;
         this.textures["default"] = this.defaultTexture;
 
         //For each texture in textures block, check ID and file path
@@ -567,6 +596,7 @@ class MySceneGraph {
         if (children.length == 0){
             return this.onXMLMinorError("[MATERIALS] No materials defined, it was defined a default");
         }
+
         let nMaterials = 0;
         for (var i = 0; i < children.length; i++) {
             if (children[i].nodeName != "material") {
@@ -730,6 +760,7 @@ class MySceneGraph {
                 if (transformations[j].nodeName == "translation"){
                     let coordinates = this.parseCoordinates3D(transformations[j], "translate transformation for ID " + nodeID + ", skipping it");
                     if (!Array.isArray(coordinates)){
+                        this.onXMLMinorError(coordinates);
                         continue;
                     }
                     mat4.translate(matrix, matrix, coordinates);
@@ -737,7 +768,7 @@ class MySceneGraph {
                 }
                 else if (transformations[j].nodeName == "rotation"){
                     let axis = this.reader.getString(transformations[j],"axis");
-                    let angle = this.reader.getString(transformations[j],"angle");
+                    let angle = this.reader.getFloat(transformations[j],"angle");
 
                     if (axis == null || (axis != "x" && axis != "y" && axis != "z")|| angle == null || isNaN(angle)) {
                         this.onXMLError("[NODE] wrong axis or angle on rotation node: " + nodeID + ", skipping it");
@@ -1171,6 +1202,7 @@ class MySceneGraph {
             let a = this.processNode(node.getChildren()[i],textureID, materialID);
             if (a == 1){
                 this.onXMLError("NodeID "+ id + " has non existent child with id: " + node.getChildren()[i]);
+                node.children.splice(i, i+1);
             }
             this.scene.popMatrix();
         }

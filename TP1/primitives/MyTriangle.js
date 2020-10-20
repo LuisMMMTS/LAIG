@@ -40,9 +40,9 @@ class MyTriangle extends CGFobject {
 		]
              
         this.texCoords = [
+        0, 1,
         1, 1,
-        0.5, 0,
-        0, 1
+        0.5, 0
         ];
         
         this.primitiveType = this.scene.gl.TRIANGLES
@@ -52,7 +52,7 @@ class MyTriangle extends CGFobject {
     /**
 	 * @method updateTexCoords
 	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
+	 * @param {Array} coords - Array of texture coordinates coords[afs, aft]
 	 */
 	updateTexCoords(coords) {
         
@@ -64,9 +64,9 @@ class MyTriangle extends CGFobject {
         var sin = Math.sqrt(1 - Math.pow(cos, 2)); 
         
         this.texCoords = [
-			(c - a*cos)/coords[0], (coords[1] - a*sin)/coords[1],
-			0, 1,
-			c/coords[0], 1
+            0, 1/coords[1],
+            c/coords[0], 1/coords[1],
+			(c - a*cos)/coords[0], (coords[1] - a*sin)/coords[1]
 		];
 		
 		this.updateTexCoordsGLBuffers();

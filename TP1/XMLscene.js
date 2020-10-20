@@ -108,7 +108,6 @@ class XMLscene extends CGFscene {
     setLights() {
         var i = 0;
         // Lights index.
-
         for (var key in this.lightValues) {
             if (this.lightValues.hasOwnProperty(key)) {
                 this.lights[i].setVisible(this.displayLights); 
@@ -164,6 +163,14 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
 
         this.pushMatrix();
+        var i = 0;
+        for (var key in this.lightValues) {
+            if (this.lightValues.hasOwnProperty(key)) {
+                this.lights[i].setVisible(this.displayLights); 
+                this.lights[i].update();
+                i++;
+            }
+        }
    
         if (this.sceneInited) {
             // Draw axis

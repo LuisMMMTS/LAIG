@@ -7,19 +7,19 @@
                         <!-- must be defined in one of the following NODE declarations -->
 </initials>
 
-<views default="Side">
+<views default="Top">
     <!-- at least one of the following type of cameras must be declared -->
     <perspective id="Side" near="0.1" far="500" angle="23">
-        <from x="15" y="15" z="15" />
-        <to x="0" y="0" z="0" />
+        <from x="30" y="5" z="7" />
+        <to x="0" y="5" z="7" />
     </perspective>
-    <perspective id="Front" near="0.1" far="500" angle="12">
-        <from x="2" y="5" z="40" />
+    <perspective id="Front" near="5" far="500" angle="12">
+        <from x="2" y="5" z="45" />
         <to x="0" y="3.5" z="0" />
     </perspective>
-    <perspective id="Top" near="0.1" far="500" angle="23">
-        <from x="15" y="30" z="15" />
-        <to x="0" y="0" z="0" />
+    <perspective id="Top" near="0.1" far="500" angle="27">
+        <from x="3" y="30" z="5" />
+        <to x="-1.5" y="0" z="5" />
     </perspective>
     <ortho id="Ortho" near="0" far="900" left="-30" right="20" top="30" bottom="0">
         <from x="8" y="2" z="15"/>
@@ -228,12 +228,13 @@
         <transformations>
             <translation x="-10" y="10" z="20" />
             <scale sx="1" sy="1" sz="1" />
-            <rotation axis="y" angle="-90" /> 
+            <rotation axis="y" angle="90" /> 
+            
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-20" y1="10" x2="20" y2="-10" />
-                            <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+            <leaf type="rectangle" x1="-20" y1="-10" x2="20" y2="10" />
+                            <!-- 2D coordinates on the XY plane for left-bottom and right-top vertices. -->
             <noderef id="dangerSign" /> 
             <noderef id="restroomSign"/>
             <noderef id="flightBoard"/>
@@ -253,13 +254,11 @@
 
         <transformations>
             <translation x="0" y="10" z="0" />
-            <rotation axis="y" angle="180" />
-            <rotation axis="z" angle="180" />
         </transformations>
 
         <descendants>
             <noderef id="gateSign"/>
-            <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
+            <leaf type="rectangle" x1="-10" y1="-10" x2="10" y2="10" />
         </descendants>
 
     </node>
@@ -271,12 +270,12 @@
         </texture>
 
         <transformations> 
-            <translation x="-3" y="0" z="-0.4" />
+            <translation x="-3" y="0" z="0.4" />
             <scale sx="1.2" sy="1.2" sz="1" />
         </transformations>
 
         <descendants>
-            <leaf type="triangle" x1="-1" y1="-1" x2="0" y2="1" x3="1" y3="-1" />
+            <leaf type="triangle" x1="-1" y1="-1" x2="1" y2="-1" x3="0" y3="1" />
         </descendants>
 
     </node>
@@ -288,12 +287,12 @@
         </texture>
 
         <transformations> 
-            <translation x="9" y="0" z="-0.1" />
+            <translation x="9" y="0" z="0.1"/>
             <scale sx="0.4" sy="0.4" sz="1" />
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
+            <leaf type="rectangle" x1="-2" y1="-2" x2="2" y2="2" />
         </descendants>
     </node>
     <node id="restroomSign">
@@ -303,13 +302,12 @@
         </texture>
 
         <transformations> 
-            <translation x="-18" y="-2" z="-0.1" />
+            <translation x="18" y="-2" z="0.1" />
             <scale sx="0.4" sy="0.4" sz="1" />
-            <rotation axis="z" angle="180" /> 
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
+            <leaf type="rectangle" x1="-2" y1="-2" x2="2" y2="2" />
         </descendants>
 
     </node>
@@ -320,13 +318,12 @@
         </texture>
 
         <transformations> 
-            <translation x="-15" y="-1" z="-0.1" />
+            <translation x="15" y="-1" z="0.1" />
             <scale sx="1" sy="1" sz="1" />
-            <rotation axis="z" angle="180" /> 
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
+            <leaf type="rectangle" x1="-2" y1="-2" x2="2" y2="2" />
         </descendants>
 
     </node>
@@ -337,13 +334,12 @@
         </texture>
 
         <transformations> 
-            <translation x="12" y="1" z="-0.1" />
+            <translation x="-12" y="1" z="0.1" />
             <scale sx="3.5" sy="2.5" sz="1" />
-            <rotation axis="z" angle="180" /> 
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-2" y1="2" x2="2" y2="-2" />
+            <leaf type="rectangle" x1="-2" y1="-2" x2="2" y2="2" />
         </descendants>
     </node>
         
@@ -436,11 +432,11 @@
 
         <transformations>
             <translation x="-2.5" y="0.1" z="15" />
-            <rotation axis="x" angle="90" /> 
+            <rotation axis="x" angle="-90" /> 
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+            <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -454,11 +450,11 @@
 
         <transformations>
             <translation x="2.5" y="0.1" z="15" />
-            <rotation axis="x" angle="90" /> 
+            <rotation axis="x" angle="-90" /> 
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+            <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -585,13 +581,13 @@
         </texture>
 
         <transformations>
-            <translation x="0" y="5.1" z="-1.0" />
-            <scale sx="0.8" sy="1" sz="0.6" />
-            <rotation axis="x" angle="90" />
+            <rotation axis="x" angle="-90" />
+            <translation x="0" y="1.0" z="5.1" />
+            <scale sx="0.8" sy="1" sz="0.6" />-->
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
     </node>
     <node id="rightBoxes">
@@ -616,12 +612,12 @@
 
         <transformations>
             <translation x="0" y="0" z="10" />
-            <rotation axis="x" angle="90" />
+            <rotation axis="x" angle="-90" />
             <scale sx="1" sy="2" sz="2" />
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-10" y1="10" x2="10" y2="-10" />
+           <leaf type="rectangle" x1="-10" y1="-10" x2="10" y2="10" />
         </descendants>
     </node>
     <node id="feetRetangle">
@@ -632,12 +628,12 @@
 
         <transformations>
             <translation x="0" y="0.1" z="0" />
-            <rotation axis="x" angle="90" />
+            <rotation axis="x" angle="-90" />
             <scale sx="1" sy="1" sz="1" />
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
     </node>
 
@@ -650,8 +646,7 @@
 
         <transformations>
             <translation x="0" y="5" z="0" />
-            <rotation axis="x" angle="0" />
-            <scale sx="1" sy="1" sz="1" />
+            <scale sx="1" sy="1" sz="1" />-->
         </transformations>
 
         <descendants>
@@ -788,12 +783,12 @@
 
         <transformations>
             <translation x="-7.5" y="0" z="2.5" />
-            <rotation axis="x" angle="90" />
+            <rotation axis="x" angle="-90" />
             <scale sx="1" sy="1" sz="1" />
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-2" y1="7.5" x2="2" y2="-7.5" />
+            <leaf type="rectangle" x1="-2" y1="-7.5" x2="2" y2="7.5" />
         </descendants>
 
     </node>
@@ -846,12 +841,12 @@
 
         <transformations>
             <translation x="7.5" y="0" z="2.5" />
-            <rotation axis="x" angle="90" />
+            <rotation axis="x" angle="-90" />
             <scale sx="1" sy="1" sz="1" />
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-2" y1="7.5" x2="2" y2="-7.5" />
+            <leaf type="rectangle" x1="-2" y1="-7.5" x2="2" y2="7.5" />
         </descendants>
 
     </node>
@@ -899,7 +894,6 @@
 
         <transformations>
                 <translation x="-7" y="0.1" z="2" />
-                <rotation axis="x" angle="-180" /> 
                 <scale sx="0.1" sy="1.5" sz="1" />-->
         </transformations>
 
@@ -931,7 +925,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -947,7 +941,7 @@
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+            <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
     </node>
 
@@ -963,7 +957,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -979,7 +973,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -995,7 +989,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1011,7 +1005,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1027,7 +1021,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1043,7 +1037,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1059,7 +1053,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1075,7 +1069,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1091,7 +1085,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1107,7 +1101,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
@@ -1123,7 +1117,7 @@
         </transformations>
 
         <descendants>
-           <leaf type="rectangle" x1="-1" y1="1" x2="1" y2="-1" />
+           <leaf type="rectangle" x1="-1" y1="-1" x2="1" y2="1" />
         </descendants>
 
     </node>
