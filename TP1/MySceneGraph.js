@@ -507,7 +507,6 @@ class MySceneGraph {
             this.lights[lightId] = global;
             numLights++;
         }
-
         if (numLights == 0){
             this.onXMLError("[LIGHTS] At least one light must be defined");
             return;

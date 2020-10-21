@@ -71,13 +71,13 @@ class XMLscene extends CGFscene {
         // Lights index.
       
         // Reads the lights from the scene graph.
+         console.log(this.graph.lights);
         for (var key in this.lightValues) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebCGF on default shaders.
 
             if (this.lightValues.hasOwnProperty(key)) {
                 var graphLight = this.graph.lights[key];
-
 
                 this.lights[i].setPosition(...graphLight[1]);
                 this.lights[i].setAmbient(...graphLight[2]);
@@ -86,7 +86,7 @@ class XMLscene extends CGFscene {
                 
 
                 this.lights[i].setVisible(this.displayLights);
-
+                
                 if (this.lightValues[key]){
                     this.lights[i].enable();
                 }
@@ -108,15 +108,18 @@ class XMLscene extends CGFscene {
     setLights() {
         var i = 0;
         // Lights index.
+    
+        // Reads the lights from the lightsAux map.
         for (var key in this.lightValues) {
             if (this.lightValues.hasOwnProperty(key)) {
-                this.lights[i].setVisible(this.displayLights); 
+                this.lights[i].setVisible(this.displayLights);
                 if (this.lightValues[key]){
                     this.lights[i].enable();
                 }
                 else{
                     this.lights[i].disable();
-                }	
+                }		
+    
                 this.lights[i].update();
     
                 i++;
@@ -136,13 +139,13 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(...this.graph.ambient);  
 
         this.initLights();
+        
         this.initCameras();
-
         this.initXMLCameras();
       
         this.interface.createInterface(this.graph.views); 
-        
         this.setLights();
+        
         this.sceneInited = true;
     }
     /**
@@ -163,14 +166,7 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
 
         this.pushMatrix();
-        var i = 0;
-        for (var key in this.lightValues) {
-            if (this.lightValues.hasOwnProperty(key)) {
-                this.lights[i].setVisible(this.displayLights); 
-                this.lights[i].update();
-                i++;
-            }
-        }
+ 
    
         if (this.sceneInited) {
             // Draw axis

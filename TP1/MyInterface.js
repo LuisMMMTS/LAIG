@@ -83,6 +83,6 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene,'displayAxis').name("Display Axis");
     }
     addLightsCheckbox(){
-        this.gui.add(this.scene,'displayLights').name("Display Lights").onChange(val=>this.scene.setLights());
+        this.gui.add(this.scene,'displayLights').name("Display Lights");
     }
 }

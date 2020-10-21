@@ -13,8 +13,8 @@
         <from x="30" y="5" z="7" />
         <to x="0" y="5" z="7" />
     </perspective>
-    <perspective id="Front" near="5" far="500" angle="12">
-        <from x="2" y="5" z="45" />
+    <perspective id="Front" near="7" far="500" angle="15">
+        <from x="1" y="5" z="45" />
         <to x="0" y="3.5" z="0" />
     </perspective>
     <perspective id="Top" near="0.1" far="500" angle="27">
@@ -151,13 +151,6 @@
          <diffuse r="1" g="0" b="0" a="1.0" />         <!-- diffuse reflection -->
          <ambient r="1" g="0" b="0" a="1.0" />         <!-- ambient reflection -->
          <emissive r="0.5" g="0" b="0" a="1.0" />        <!-- emissive component -->
-      </material>
-       <material id="brown">                                  
-        <shininess value="1.0" />
-        <specular r="0.59" g="0.29" b="0" a="1.0" />        <!-- specular reflection -->
-         <diffuse r="0.59" g="0.29" b="0" a="1.0" />         <!-- diffuse reflection -->
-         <ambient r="0.59" g="0.29" b="0" a="1.0" />         <!-- ambient reflection -->
-         <emissive r="0.1" g="0.1" b="0.1" a="1.0" />        <!-- emissive component -->
       </material>
 </materials>
 
@@ -357,7 +350,7 @@
         <descendants>                    
             <noderef id="rightSphere"/>
             <noderef id="leftSphere"/>
-            <leaf type="torus" inner="1" outer="12" slices="6" loops="20"/>
+            <leaf type="torus" inner="1" outer="12" slices="20" loops="6"/>
                 <!-- inner and outer radius, sections around the inner radius, sections around the outer radius  -->
         </descendants>
 
@@ -591,7 +584,7 @@
         </descendants>
     </node>
     <node id="rightBoxes">
-        <material id="brown" />    
+        <material id="Off_white_emissive" />    
         <texture id="clear"> 
             <amplification afs="1" aft="1" />  
         </texture>
@@ -752,7 +745,7 @@
         </transformations>
 
         <descendants>
-                <leaf type="torus" inner="0.5" outer="2.25" slices="6" loops="40"/>
+                <leaf type="torus" inner="0.5" outer="2.25" slices="40" loops="6"/>
         </descendants>
 
     </node>
@@ -768,7 +761,7 @@
         </transformations>
 
         <descendants>
-                <leaf type="torus" inner="0.5" outer="2.25" slices="6" loops="40"/>
+                <leaf type="torus" inner="0.5" outer="2.25" slices="40" loops="6"/>
         </descendants>
 
     </node>
