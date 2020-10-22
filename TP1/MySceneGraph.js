@@ -98,7 +98,7 @@ class MySceneGraph {
      * @param {XML root element} rootElement
      */
     parseXMLFile(rootElement) {
-        if (rootElement.nodeName != "lsf") //the file must begin and end with lsf tag
+        if (rootElement.nodeName != "lsf") //the file must begin and end with lsf tag, it's mandatory so we're ending the program
             return "root tag <lsf> missing";
 
         var nodes = rootElement.children;
@@ -270,7 +270,7 @@ class MySceneGraph {
                 continue;
             }
 
-            //check if node id still doesn't already exist
+            //check if node id doesn't already exist
             if (this.views[new_node.id] != null){
                 this.onXMLError("[VIEWS] Repeated id " + new_node.id + ", skipping it");
                 continue;
@@ -292,10 +292,10 @@ class MySceneGraph {
         //if there isn't a defined default camera
         if(this.views[this.defaultCameraId] == null){
             this.onXMLError("[VIEWS] The assigned default view is not defined");
-            if(hasOne != null){
+            if(hasOne != null){//if there is at least one rightly parsed camera, the default one is one of those
                 this.defaultCameraId = hasOne;
             }
-            else{
+            else{//it's defined a default camera
                 this.views["default"] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
                 this.defaultCameraId = "default";
             }
@@ -316,7 +316,7 @@ class MySceneGraph {
         let to = null;
         let up = [0.0,1.0,0.0]; //default values, since it is optional to define it 
 
-        for(let i = 0; i < parameters.length; i++){
+        for(let i = 0; i < parameters.length; i++){//getting the value of each parameter, checking for errors
             let x = this.reader.getFloat(parameters[i], 'x');
                 let y = this.reader.getFloat(parameters[i], 'y');
                 let z = this.reader.getFloat(parameters[i], 'z');
@@ -514,8 +514,8 @@ class MySceneGraph {
         }
         console.log(this.lights);
         if (numLights == 0){
-            this.onXMLError("[LIGHTS] At least one light must be defined");
-            return null;
+            return "[LIGHTS] At least one light must be defined";
+
         }
         else if (numLights > 8)
             this.onXMLError("[LIGHTS] Too many lights defined; WebGL imposes a limit of 8 lights, we're only using the first 8");
@@ -701,7 +701,6 @@ class MySceneGraph {
         }
         if(nMaterials == 0){
             this.onXMLError("[MATERIALS] No materials defined, a default one was defined");
-            //return
         }
 
         this.log("Parsed materials");
@@ -941,7 +940,7 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Invalid parameters for sphere definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            else if (radius * stacks * slices <= 0){
+                            else if (radius * stacks * slices <= 0){//can't have negative or zero values
                                 this.onXMLError("[NODE] Wrongly defined sphere in nodeID:" + nodeID + " Assuming 1 for all parameters");
                                 radius = stacks = slices = 1;
                             }     
@@ -961,7 +960,7 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Invalid parameters for torus definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            else if (inner * outer * loops * slices <= 0){
+                            else if (inner * outer * loops * slices <= 0){//can't have negative or zero values
                                 this.onXMLError("[NODE] Wrongly defined torus in nodeID:" + nodeID + " Assuming 1 for all parameters");
                                 inner=outer=loops=slices=1;
                             }     

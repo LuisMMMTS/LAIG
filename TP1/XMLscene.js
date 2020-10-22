@@ -35,6 +35,7 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.displayAxis = true;
         this.displayLights = true;
+
         this.setUpdatePeriod(100);
 
         this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
@@ -45,12 +46,15 @@ class XMLscene extends CGFscene {
     }
 
     /**
-     * Initializes the scene cameras.
+     * Initializes the default camera.
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
         this.interface.setActiveCamera(this.camera);
     }
+    /**
+     * Initializes the scene cameras.
+     */
 
     initXMLCameras(){
         this.cameraID=this.graph.defaultCameraId;
@@ -104,12 +108,17 @@ class XMLscene extends CGFscene {
             }
         }
     }
-
+    /**
+     * Update the current camera according to a change in the  cameras dropdown in the interface
+     */
     updateCamera(newCamera) {
         this.cameraID = newCamera;
         this.camera = this.graph.views[this.cameraID];
         this.interface.setActiveCamera(this.camera);
     }
+    /**
+     * Enables the lights accordingly to the lights chosen in the interface
+     */
     setLights() {
         var i = 0;
         // Lights index.
@@ -139,18 +148,21 @@ class XMLscene extends CGFscene {
         
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
+        //default appearance
         this.gl.clearColor(...this.graph.background);
 
         this.setGlobalAmbientLight(...this.graph.ambient);  
 
         
-        
+        //cameras
         this.initCameras();
 
         this.initXMLCameras();
 
+        //initializing the interface elements
         this.interface.createInterface(this.graph.views); 
       
+        //lights
         this.initLights();
 
         
@@ -185,6 +197,7 @@ class XMLscene extends CGFscene {
 
             this.defaultAppearance.apply();
             
+            //set the active camera, necessary for being able to move the camera around
             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).

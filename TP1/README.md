@@ -30,3 +30,14 @@
 
 - (items describing unimplemented features, bugs, problems, etc.)
 
+## Things to keep in mind
+- When does the program execution stops?
+  - There isn't a root id defined 
+  - It's missing one of the main tags (ex: initials, materials, lights,etc.)
+  - There isn't at least one light defined or the ones defined are defined in the wrong way
+  - There's a non-defined id node
+  - There's a node whose id is repeated
+  
+- Other implementation details
+  - Having no descendants is an error, because it doesn't make a lot of sense to have a node without descendants, so something must be wrong
+  - Every time something isn't valid, it's ignored and set a default whole element, not only a default component, because, for instance, if the material has an invalid r value for RGB in specular, the output of the parsing won't be what was expected, so to warn the user, we use a default one, something he wasn't expecting to see there
