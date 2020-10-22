@@ -1,11 +1,14 @@
-class MySphere extends CGFobject {
-    /**
-     * @method constructor
-     * @param  {CGFscene} scene - MyScene object
-     * @param  {integer} radius - radius of the sphere
-     * @param  {integer} slices - number of "sides" around the Z axis
-     * @param  {integer} stacks - number of divisions along the Z axis, from the center to the poles (half of sphere)
+ /**
+  * MySphere
+  * @method constructor
+  * @param  {CGFscene} scene - MyScene object
+  * @param  {integer} radius - radius of the sphere
+  * @param  {integer} slices - number of "sides" around the Z axis
+  * @param  {integer} stacks - number of divisions along the Z axis, from the center to the poles (half of sphere)
      */
+
+class MySphere extends CGFobject {
+  
     constructor(scene, radius, slices, stacks) {
       super(scene);
       this.radius = radius;
@@ -50,7 +53,7 @@ class MySphere extends CGFobject {
         for (let longitude = 0; longitude <= this.longDivs; longitude++) {
           //--- Vertices coordinates
           var x = Math.cos(theta) * sinPhi * this.radius;
-          var y = Math.sin(-theta) * sinPhi * this.radius; 
+          var y = Math.sin(theta) * sinPhi * this.radius; 
           var z = cosPhi * this.radius;
           this.vertices.push(x, y, z);
   

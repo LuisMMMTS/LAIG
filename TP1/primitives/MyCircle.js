@@ -1,3 +1,11 @@
+/**
+ * MyCircle
+ * @constructor
+ * @param scene - Reference to MyScene object
+ * @param radius - radius of the circle 
+ * @param slices - parts per section
+ */    
+
 class MyCircle extends CGFobject{
     constructor(scene, radius, slices){
         super(scene);

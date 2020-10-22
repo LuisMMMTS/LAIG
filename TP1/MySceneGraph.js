@@ -117,10 +117,10 @@ class MySceneGraph {
         // <initials>
         var index;
         if ((index = nodeNames.indexOf("initials")) == -1)
-            return "tag <initials> missing";
+            return "[FILE] Tag <initials> missing";
         else {
             if (index != INITIALS_INDEX)
-                this.onXMLMinorError("tag <initials> out of order " + index);
+                this.onXMLMinorError("[FILE] Tag <initials> out of order " + index);
 
             //Parse initials block
             if ((error = this.parseInitials(nodes[index])) != null)
@@ -129,10 +129,10 @@ class MySceneGraph {
 
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
-            return "tag <views> missing";
+            return "[FILE] Tag <views> missing";
         else {
             if (index != VIEWS_INDEX)
-                this.onXMLMinorError("tag <views> out of order");
+                this.onXMLMinorError("[FILE] Tag <views> out of order");
 
             //Parse views block
             if ((error = this.parseViews(nodes[index])) != null)
@@ -141,10 +141,10 @@ class MySceneGraph {
 
         // <illumination>
         if ((index = nodeNames.indexOf("illumination")) == -1)
-            return "tag <illumination> missing";
+            return "[FILE] Tag <illumination> missing";
         else {
             if (index != ILLUMINATION_INDEX)
-                this.onXMLMinorError("tag <illumination> out of order");
+                this.onXMLMinorError("[FILE] Tag <illumination> out of order");
 
             //Parse illumination block
             if ((error = this.parseIllumination(nodes[index])) != null)
@@ -153,10 +153,10 @@ class MySceneGraph {
 
         // <lights>
         if ((index = nodeNames.indexOf("lights")) == -1)
-            return "tag <lights> missing";
+            return "[FILE] Tag <lights> missing";
         else {
             if (index != LIGHTS_INDEX)
-                this.onXMLMinorError("tag <lights> out of order");
+                this.onXMLMinorError("[FILE] Tag <lights> out of order");
 
             //Parse lights block
             if ((error = this.parseLights(nodes[index])) != null)
@@ -164,10 +164,10 @@ class MySceneGraph {
         }
         // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)
-            return "tag <textures> missing";
+            return "[FILE] Tag <textures> missing";
         else {
             if (index != TEXTURES_INDEX)
-                this.onXMLMinorError("tag <textures> out of order");
+                this.onXMLMinorError("[FILE] Tag <textures> out of order");
 
             //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
@@ -176,10 +176,10 @@ class MySceneGraph {
 
         // <materials>
         if ((index = nodeNames.indexOf("materials")) == -1)
-            return "tag <materials> missing";
+            return "[FILE] Tag <materials> missing";
         else {
             if (index != MATERIALS_INDEX)
-                this.onXMLMinorError("tag <materials> out of order");
+                this.onXMLMinorError("[FILE] Tag <materials> out of order");
 
             //Parse materials block
             if ((error = this.parseMaterials(nodes[index])) != null)
@@ -188,10 +188,10 @@ class MySceneGraph {
 
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
-            return "tag <nodes> missing";
+            return "[FILE] Tag <nodes> missing";
         else {
             if (index != NODES_INDEX)
-                this.onXMLMinorError("tag <nodes> out of order");
+                this.onXMLMinorError("[FILE] Tag <nodes> out of order");
 
             //Parse nodes block
             if ((error = this.parseNodes(nodes[index])) != null)
@@ -216,27 +216,28 @@ class MySceneGraph {
 
         // Get root of the scene.
         if(rootIndex == -1)
-            return "No root id defined for scene.";
+            return "[INITIALS] No root id defined for scene.";
 
         var rootNode = children[rootIndex];
         var id = this.reader.getString(rootNode, 'id');
 
         if (id == null)
-            return "No root id defined for scene.";
+            return "[INITIALS] No root id defined for scene.";
 
         this.idRoot = id;
 
 
         // Get axis length        
         if(referenceIndex == -1)
-            this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
+            this.onXMLMinorError("[INITIALS] No axis_length defined for scene, assuming 'length = 1'");
 
         var refNode = children[referenceIndex];
         var axis_length = this.reader.getFloat(refNode, 'length');
+
         if (axis_length == null)
-            this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
+            this.onXMLMinorError("[INITIALS] No axis_length defined for scene, assuming 'length = 1'");
         else if(axis_length < 0)
-            this.onXMLMinorError("Invalid axis_length defined for scene; assuming 'length = 1'");
+            this.onXMLMinorError("[INITIALS] Invalid axis_length defined for scene, assuming 'length = 1'");
 
         this.referenceLength = axis_length || 1;
 
@@ -255,7 +256,7 @@ class MySceneGraph {
         this.defaultCameraId = this.reader.getString(viewsNode, 'default');//the default camera id is stored in position 0
 
         if(this.defaultCameraId == null)
-            this.onXMLError("No default view defined, going to use a default");
+            this.onXMLError("[VIEWS] No default view defined, using a default");
 
         var children = viewsNode.children;
         var failed = 0, hasOne = null;
@@ -265,13 +266,13 @@ class MySceneGraph {
             var new_node = children[i];
 
             if (new_node.nodeName != "perspective" && new_node.nodeName != "ortho"){ //check if tag is correctly defined
-                this.onXMLMinorError("Unknown tag in [VIEWS] parsing: " + new_node.nodeName + " skipping it");
+                this.onXMLMinorError("[VIEWS] Unknown tag in parsing: " + new_node.nodeName + ", skipping it");
                 continue;
             }
 
             //check if node id still doesn't already exist
             if (this.views[new_node.id] != null){
-                this.onXMLError("[Views] id repeated " + new_node.id + " skipping it");
+                this.onXMLError("[VIEWS] Repeated id " + new_node.id + ", skipping it");
                 continue;
             }
 
@@ -290,7 +291,7 @@ class MySceneGraph {
         }
         //if there isn't a defined default camera
         if(this.views[this.defaultCameraId] == null){
-            this.onXMLError("The assigned default view is not defined");
+            this.onXMLError("[VIEWS] The assigned default view is not defined");
             if(hasOne != null){
                 this.defaultCameraId = hasOne;
             }
@@ -320,7 +321,8 @@ class MySceneGraph {
                 let y = this.reader.getFloat(parameters[i], 'y');
                 let z = this.reader.getFloat(parameters[i], 'z');
                 if(x == null || y == null || z == null || isNaN(x) || isNaN(y) || isNaN(z)){
-                    this.onXMLError("Wrong coordinates for camera "+new_node.id+", skipping it.")
+                    this.onXMLError("[VIEWS] Wrong coordinates for camera "+ new_node.id +", skipping it.");
+                    return null;
                 }
                 
             if (parameters[i].nodeName == "from"){
@@ -337,7 +339,7 @@ class MySceneGraph {
             }
             else{
                 this.onXMLError("[VIEWS] unknown/missing tag <" + parameters[i].nodeName + ">");
-                return;
+                return null;
             }
         }
 
@@ -346,15 +348,15 @@ class MySceneGraph {
             let near = this.reader.getFloat(new_node, 'near');
             let far = this.reader.getFloat(new_node, 'far');
 
-            if(isNaN(angle)||isNaN(near)||isNaN(far)||!Array.isArray(from)||!Array.isArray(to)||angle==null||near==null||far==null||from==null||to==null){
+            if(isNaN(angle) || isNaN(near) || isNaN(far) || !Array.isArray(from) || !Array.isArray(to) || angle==null || near==null || far==null || from==null || to==null){
                 this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", skipping it");
                 return null;
             }
-            if (near<0||far<0||angle<0){
+            if (near < 0 || far  < 0 || angle < 0){
                 this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", Values cannot be negative. Skipping it.");
                 return null;
             }
-            if (near>far){
+            if (near > far){
                 this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", value \"near\" must be inferior or equal to \"far\". Skipping it.");
                 return null;
             }
@@ -373,18 +375,18 @@ class MySceneGraph {
                 return null;
             }
             if (near<0||far<0){
-                this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", Values cannot be negative. Skipping it.");
+                this.onXMLError("[VIEWS] Invalid values on ortho camera id: "+ new_node.id +", Values cannot be negative. Skipping it.");
                 return null;
             }
             if (near>far){
-                this.onXMLError("[VIEWS] Invalid values on perspective camera id: "+ new_node.id +", value \"near\" must be inferior or equal to \"far\". Skipping it.");
+                this.onXMLError("[VIEWS] Invalid values on ortho camera id: "+ new_node.id +", value \"near\" must be inferior or equal to \"far\". Skipping it.");
                 return null;
             }
             return new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]),vec3.fromValues(up[0], up[1], up[2]));
         }
         else{
-            this.onXMLError("Exited parse camera because camera node not ortho or perspective");
-            return;
+            this.onXMLError("[VIEWS] Exited parse camera because camera node not ortho or perspective");
+            return null;
         }
     }
 
@@ -411,7 +413,7 @@ class MySceneGraph {
         var color = this.parseColor(children[ambientIndex], "ambient");
         //if ambient is not defined or wrongly defined we use a default
         if (!Array.isArray(color)){
-            this.onXMLError("No ambient illumination defined, adding a default one");
+            this.onXMLError("[ILLUMINATION] No ambient illumination defined, adding a default one");
             this.ambient = defaultAmbient;
         }
         else{
@@ -422,7 +424,7 @@ class MySceneGraph {
 
         //if background is not defined or wrongly defined we use a default
         if (!Array.isArray(color)){
-            this.onXMLError("No background illumination defined, adding a default one");
+            this.onXMLError("[ILLUMINATION] No background illumination defined, adding a default one");
             this.background = defaultBackground;
         }
         else
@@ -494,8 +496,11 @@ class MySceneGraph {
                     else
                         var aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " illumination for ID" + lightId);
 
-                    if (typeof aux === 'string')
-                        return aux;
+                    if (typeof aux === 'string'){
+                        this.onXMLMinorError(aux);
+                        continue;
+                    }
+                        
 
                     global.push(aux);
                 }
@@ -507,12 +512,13 @@ class MySceneGraph {
             this.lights[lightId] = global;
             numLights++;
         }
+        console.log(this.lights);
         if (numLights == 0){
             this.onXMLError("[LIGHTS] At least one light must be defined");
-            return;
+            return null;
         }
         else if (numLights > 8)
-            this.onXMLMinorError("Too many lights defined; WebGL imposes a limit of 8 lights");
+            this.onXMLError("[LIGHTS] Too many lights defined; WebGL imposes a limit of 8 lights, we're only using the first 8");
 
         this.log("Parsed lights");
         return null;
@@ -753,48 +759,48 @@ class MySceneGraph {
                 this.onXMLMinorError("[NODE] Transformations not defined for node id: " + nodeID );
             }
             else{
-            transformations = grandChildren[transformationsIndex].children;
+                transformations = grandChildren[transformationsIndex].children;
 
-            for (let j = 0; j < transformations.length; j++){
-                if (transformations[j].nodeName == "translation"){
-                    let coordinates = this.parseCoordinates3D(transformations[j], "translate transformation for ID " + nodeID + ", skipping it");
-                    if (!Array.isArray(coordinates)){
-                        this.onXMLMinorError(coordinates);
-                        continue;
+                for (let j = 0; j < transformations.length; j++){
+                    if (transformations[j].nodeName == "translation"){
+                        let coordinates = this.parseCoordinates3D(transformations[j], "translate transformation for ID " + nodeID + ", skipping it");
+                        if (!Array.isArray(coordinates)){
+                            this.onXMLMinorError(coordinates);
+                            continue;
+                        }
+                        mat4.translate(matrix, matrix, coordinates);
+
                     }
-                    mat4.translate(matrix, matrix, coordinates);
+                    else if (transformations[j].nodeName == "rotation"){
+                        let axis = this.reader.getString(transformations[j],"axis");
+                        let angle = this.reader.getFloat(transformations[j],"angle");
 
-                }
-                else if (transformations[j].nodeName == "rotation"){
-                    let axis = this.reader.getString(transformations[j],"axis");
-                    let angle = this.reader.getFloat(transformations[j],"angle");
-
-                    if (axis == null || (axis != "x" && axis != "y" && axis != "z")|| angle == null || isNaN(angle)) {
-                        this.onXMLError("[NODE] wrong axis or angle on rotation node: " + nodeID + ", skipping it");
-                        continue;
-                    }
+                        if (axis == null || (axis != "x" && axis != "y" && axis != "z")|| angle == null || isNaN(angle)) {
+                            this.onXMLError("[NODE] wrong axis or angle on rotation node: " + nodeID + ", skipping it");
+                            continue;
+                        }
+                        
+                        angle = angle * DEGREE_TO_RAD;
+                        mat4.rotate(matrix, matrix,angle, this.axisCoords[axis]);
                     
-                    angle = angle * DEGREE_TO_RAD;
-                    mat4.rotate(matrix, matrix,angle, this.axisCoords[axis]);
-                
-                }
-                else if(transformations[j].nodeName == "scale"){
-                    let sx = this.reader.getFloat(transformations[j], "sx");
-                    let sy = this.reader.getFloat(transformations[j], "sy");
-                    let sz = this.reader.getFloat(transformations[j], "sz");
-
-                    if (sx == null || sy == null || sz == null|| isNaN(sx) || isNaN(sy) || isNaN(sz)) {
-                        this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID + ", skipping it");
-                        continue;
                     }
+                    else if(transformations[j].nodeName == "scale"){
+                        let sx = this.reader.getFloat(transformations[j], "sx");
+                        let sy = this.reader.getFloat(transformations[j], "sy");
+                        let sz = this.reader.getFloat(transformations[j], "sz");
 
-                    mat4.scale(matrix,matrix, new vec3.fromValues(sx,sy,sz));
+                        if (sx == null || sy == null || sz == null|| isNaN(sx) || isNaN(sy) || isNaN(sz)) {
+                            this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID + ", skipping it");
+                            continue;
+                        }
+
+                        mat4.scale(matrix,matrix, new vec3.fromValues(sx,sy,sz));
+                    }
+                    else{
+                        this.onXMLError("[NODE] unknown tag: " + transformations[j].nodeName);
+                    } 
                 }
-                else{
-                    this.onXMLError("[NODE] unknown tag: " + transformations[j].nodeName);
-                } 
             }
-        }
             
 
             // Material
@@ -851,9 +857,10 @@ class MySceneGraph {
                     else{
                         afs = this.reader.getFloat(amplificationNodes[0], "afs");
                         aft = this.reader.getFloat(amplificationNodes[0], "aft");
-
-                        if (aft == null || afs == null || isNaN(afs) || isNaN(aft)|| afs <= 0 || aft <= 0){
-                            this.onXMLMinorError("[NODE] Wrong amplification values in node: "+ nodeID + " Assuming (1,1)");
+                        
+                       
+                        if (aft == null || afs == null || isNaN(afs) || isNaN(aft)|| afs == 0 || aft == 0){                            
+                            this.onXMLMinorError("[NODE] Wrong amplification values in node: "+ nodeID + " Assuming (1,1)"+ afs+" "+aft);
                             afs = 1;
                             aft = 1;
                         }
@@ -975,7 +982,7 @@ class MySceneGraph {
                              }
                             else if((x1 == x2 && y1==y2)||(x1 == x3 && y1 == y3)||(x2 == x3 && y2 == y3)){
                                 this.onXMLError("[NODE] Wrong parameters for triangle definition in nodeID: "+nodeID + ", skipping it");
-                                continue;
+                                continue;   
                             }
                             else if( x1 == null || x2 == null || x3 == null || y1 == null || y2 == null || y3 == null){
                                 this.onXMLError("[NODE] Missing values for triangle definition in nodeID: "+nodeID + ", skipping it");
@@ -983,7 +990,7 @@ class MySceneGraph {
                             }
                             
                             let triangle = new MyTriangle(this.scene,x1,y1,x2,y2,x3,y3);
-                            triangle.updateTexCoords[afs,aft]
+                            triangle.updateTexCoords([afs,aft]);
                             primitives.push(triangle);
                             break;
                         default:
@@ -1026,7 +1033,7 @@ class MySceneGraph {
         var boolVal = true;
         boolVal = this.reader.getBoolean(node, name);
         if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false))){
-            this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
+            this.onXMLMinorError("[Boolean] Unable to parse value component " + messageError + "; assuming 'value = 1'");
             return true;
         }
         return boolVal;
@@ -1043,17 +1050,17 @@ class MySceneGraph {
         // x
         var x = this.reader.getFloat(node, 'x');
         if (!(x != null && !isNaN(x)))
-            return "unable to parse x-coordinate of the " + messageError;
+            return "[COORDINATES] Unable to parse x-coordinate of the " + messageError;
 
         // y
         var y = this.reader.getFloat(node, 'y');
         if (!(y != null && !isNaN(y)))
-            return "unable to parse y-coordinate of the " + messageError;
+            return "[COORDINATES] Unable to parse y-coordinate of the " + messageError;
 
         // z
         var z = this.reader.getFloat(node, 'z');
         if (!(z != null && !isNaN(z)))
-            return "unable to parse z-coordinate of the " + messageError;
+            return "[COORDINATES] Unable to parse z-coordinate of the " + messageError;
 
         position.push(...[x, y, z]);
 
@@ -1078,7 +1085,7 @@ class MySceneGraph {
         // w
         var w = this.reader.getFloat(node, 'w');
         if (!(w != null && !isNaN(w)))
-            return "unable to parse w-coordinate of the " + messageError;
+            return "[COORDINATES] Unable to parse w-coordinate of the " + messageError;
 
         position.push(w);
 
@@ -1096,22 +1103,22 @@ class MySceneGraph {
         // R
         var r = this.reader.getFloat(node, 'r');
         if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
-            return this.onXMLError("unable to parse R component of the " + messageError);
+            return this.onXMLError("[COLOR] Unable to parse R component of the " + messageError);
 
         // G
         var g = this.reader.getFloat(node, 'g');
         if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
-            return this.onXMLError("unable to parse G component of the " + messageError);
+            return this.onXMLError("[COLOR] Unable to parse G component of the " + messageError);
 
         // B
         var b = this.reader.getFloat(node, 'b');
         if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
-            return this.onXMLError("unable to parse B component of the " + messageError);
+            return this.onXMLError("[COLOR] Unable to parse B component of the " + messageError);
 
         // A
         var a = this.reader.getFloat(node, 'a');
         if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-            return this.onXMLError("unable to parse A component of the " + messageError);
+            return this.onXMLError("[COLOR] Unable to parse A component of the " + messageError);
 
         color.push(...[r, g, b, a]);
 
@@ -1138,7 +1145,7 @@ class MySceneGraph {
     processNode(id, texId, matId){ 
         let node = this.nodes[id];
 
-        if (node == null){
+        if (node == null){//node does not exist
             return 1;
         }
         
@@ -1155,13 +1162,13 @@ class MySceneGraph {
             else{
                 materialID = "default";
                 if(id !== this.idRoot){ //no need for warning if its the root without material
-                    console.warn("using default material, consider checking material definitions in nodeId "+id);
+                    console.warn("[PROCESS NODE] Using default material, consider checking material definitions in nodeId "+id);
                 }
             }
         }
 
-        if (this.materials[materialID] == -1){
-            console.warn("Material non existent in nodeId " + id) + " using default";
+        if (this.materials[materialID] == -1){//material does not exist
+            console.warn("[PROCESS NODE] Material non existent in nodeId " + id) + " using default";
             materialID = "default";
         }
 
@@ -1172,13 +1179,13 @@ class MySceneGraph {
             if(texId !="null"){
                 textureID = texId;
             }
-            else{
+            else{// using default
                 textureID = "default";
-                console.warn("Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId " + id);
+                console.warn("[PROCESS NODE] Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId " + id);
             }
         }
 
-        if (textureID == "clear"){
+        if (textureID == "clear"){//removing texture
             material.setTexture(null);
         }
 
@@ -1190,7 +1197,7 @@ class MySceneGraph {
         material.apply();
 
 
-        this.scene.multMatrix(node.getTransformation());
+        this.scene.multMatrix(node.getTransformation());//apply transformation
         
         for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display 
             node.getLeafs()[i].display();
@@ -1199,9 +1206,9 @@ class MySceneGraph {
         for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
             this.scene.pushMatrix();
             let a = this.processNode(node.getChildren()[i],textureID, materialID);
-            if (a == 1){
-                this.onXMLError("NodeID "+ id + " has non existent child with id: " + node.getChildren()[i]);
-                node.children.splice(i, i+1);
+            if (a == 1){//the node does not exist
+                this.onXMLError("[PROCESS NODE] NodeID "+ id + " has non existent child with id: " + node.getChildren()[i]);
+                node.children.splice(i, i+1);//removes this node from the children so it's not printing the same message over and over again
             }
             this.scene.popMatrix();
         }

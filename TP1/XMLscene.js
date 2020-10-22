@@ -69,14 +69,14 @@ class XMLscene extends CGFscene {
     initLights() {
         var i = 0;
         // Lights index.
-      
+        
         // Reads the lights from the scene graph.
-         console.log(this.graph.lights);
-        for (var key in this.lightValues) {
+        for (var key in this.graph.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebCGF on default shaders.
-
-            if (this.lightValues.hasOwnProperty(key)) {
+                
+            if (this.graph.lights.hasOwnProperty(key)) {
+                
                 var graphLight = this.graph.lights[key];
 
                 this.lights[i].setPosition(...graphLight[1]);
@@ -84,10 +84,14 @@ class XMLscene extends CGFscene {
                 this.lights[i].setDiffuse(...graphLight[3]);
                 this.lights[i].setSpecular(...graphLight[4]);
                 
-
-                this.lights[i].setVisible(this.displayLights);
+                if(this.displayLights){
+                    this.lights[i].setVisible(true);
+                }
+                else
+                    this.lights[i].setVisible(false);
+               
                 
-                if (this.lightValues[key]){
+                if (this.lights[i][0]){
                     this.lights[i].enable();
                 }
                 else{
@@ -108,8 +112,8 @@ class XMLscene extends CGFscene {
     setLights() {
         var i = 0;
         // Lights index.
-    
-        // Reads the lights from the lightsAux map.
+        
+        // Reads the lights from the lightValues map.
         for (var key in this.lightValues) {
             if (this.lightValues.hasOwnProperty(key)) {
                 this.lights[i].setVisible(this.displayLights);
@@ -138,13 +142,16 @@ class XMLscene extends CGFscene {
 
         this.setGlobalAmbientLight(...this.graph.ambient);  
 
-        this.initLights();
+        
         
         this.initCameras();
+
         this.initXMLCameras();
-      
+
         this.interface.createInterface(this.graph.views); 
-        this.setLights();
+      
+        this.initLights();
+
         
         this.sceneInited = true;
     }
@@ -165,15 +172,18 @@ class XMLscene extends CGFscene {
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
 
+        this.setLights();
+        
         this.pushMatrix();
- 
+        
    
         if (this.sceneInited) {
             // Draw axis
             if(this.displayAxis)
                 this.axis.display();
 
-            this.setDefaultAppearance();
+            this.defaultAppearance.apply();
+            
             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).

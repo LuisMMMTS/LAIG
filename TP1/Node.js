@@ -10,8 +10,8 @@ class Node{
 
     constructor(nodeID){
         this.nodeID= nodeID;
-        this.children = [];
-        this.leafs = [];
+        this.children = []; //are other nodes 
+        this.leafs = []; // are primitives 
         this.textureID = null;
         this.materialID = null;
         this.transformation = null;

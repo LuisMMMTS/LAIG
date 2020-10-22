@@ -1,20 +1,20 @@
 /*
-- Base na origem
-- eixo central coincidente com Zz
-- altura: tamanho na direçao dos zz
-- base: raio da base(Z=0)
-- topo: raio do topo(Z=altura)
-- slices: n de divisoes à volta da circunferencia
-- stacks: n de divisoes a longo do eixo dos Z
-- tem que ter topo e base
+- Base at origin
+- central axis coinciding with Zz axis
+- height: size in the zz axis direction
+- base: radius of the base (Z = 0)
+- top: radius of the top (Z = height)
+- slices: n of divisions around the circumference
+- stacks: n of divisions along the Z axis
+- must have top and bottom
 */
 /**
  * MyCylinder
  * @constructor
  * @param scene - Reference to MyScene object
- * @param height 
- * @param topRadius 
- * @param bottomRadius
+ * @param height - height of the cylinder
+ * @param topRadius - radius of the top base
+ * @param bottomRadius - radius of the bottom base
  * @param stacks - sections along height
  * @param slices - parts per section
  */    
@@ -61,6 +61,16 @@ class MyCylinder extends CGFobject {
 
 }
 
+/**
+ * MyCylinderBody
+ * @constructor
+ * @param scene - Reference to MyScene object
+ * @param height - height of the cylinder
+ * @param topRadius - radius of the top base
+ * @param bottomRadius - radius of the bottom base
+ * @param stacks - sections along height
+ * @param slices - parts per section
+ */    
 
 class MyCylinderBody extends CGFobject{
 	constructor(scene, height, topRadius, bottomRadius, stacks, slices) {

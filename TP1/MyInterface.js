@@ -64,8 +64,8 @@ class MyInterface extends CGFinterface {
                 this.scene.lightValues[key] = lights[key][0];
                 group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
             }
-        }
-      
+        }   
+        
     }
 
     addCamerasDropDown(views){
@@ -83,6 +83,6 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene,'displayAxis').name("Display Axis");
     }
     addLightsCheckbox(){
-        this.gui.add(this.scene,'displayLights').name("Display Lights");
+        this.gui.add(this.scene,'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
     }
 }

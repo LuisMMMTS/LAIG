@@ -19,7 +19,7 @@ class MyTriangle extends CGFobject {
         this.y2 = y2;
         this.x3 = x3;
         this.y3 = y3;
-
+        
 		this.initBuffers();
         
 	}
@@ -38,11 +38,17 @@ class MyTriangle extends CGFobject {
 			0, 0, 1,
             0, 0, 1,
 		]
-             
-        this.texCoords = [
-        0, 1,
-        1, 1,
-        0.5, 0
+            
+        this.a = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2));
+        this.b = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2));
+        this.c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2));
+    
+        this.cos = (Math.pow(this.a, 2) - Math.pow(this.b, 2) + Math.pow(this.c, 2))/(2*this.a*this.c);
+        this.sin = Math.sqrt(1 - Math.pow(this.cos, 2)); 
+         this.texCoords = [
+            0, 1,
+			this.a, 1,
+			(this.c*this.cos), 1-(this.c*this.sin)
         ];
         
         this.primitiveType = this.scene.gl.TRIANGLES
@@ -52,21 +58,17 @@ class MyTriangle extends CGFobject {
     /**
 	 * @method updateTexCoords
 	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates coords[afs, aft]
+	 * @param {Array} amplification - Array of texture coordinates amplification[0] = afs, amplification[1] = aft
 	 */
-	updateTexCoords(coords) {
+	updateTexCoords(amplification) {
+        this.afs = amplification[0];
+        this.aft = amplification[1];
         
-        var a = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2));
-        var b = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2));
-        var c = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2));
-    
-        var cos = (Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c);
-        var sin = Math.sqrt(1 - Math.pow(cos, 2)); 
         
         this.texCoords = [
-            0, 1/coords[1],
-            c/coords[0], 1/coords[1],
-			(c - a*cos)/coords[0], (coords[1] - a*sin)/coords[1]
+                0, 1,
+                this.a/amplification[0], 1,
+                (this.c*this.cos)/amplification[0], 1 -(this.c*this.sin)/[amplification[1]]
 		];
 		
 		this.updateTexCoordsGLBuffers();
