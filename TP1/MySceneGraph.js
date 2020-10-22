@@ -587,10 +587,10 @@ class MySceneGraph {
 
         this.defaultMaterial = new CGFappearance(this.scene);
         this.defaultMaterial.setShininess(1.0);
-        this.defaultMaterial.setSpecular([1,1,1,0.5]);
-        this.defaultMaterial.setDiffuse([1,1,1,0.5]);
-        this.defaultMaterial.setAmbient([1,1,1,0.5]);
-        this.defaultMaterial.setEmission([0.5,0.5,0.5,1.0]); 
+        this.defaultMaterial.setSpecular(1,1,1,0.5);
+        this.defaultMaterial.setDiffuse(1,1,1,0.5);
+        this.defaultMaterial.setAmbient(1,1,1,0.5);
+        this.defaultMaterial.setEmission(0.5,0.5,0.5,1.0); 
         this.materials["default"] = this.defaultMaterial;
 
         var grandChildren = []; //this will be the color parameter -> shininess, speccular etc.
@@ -922,7 +922,7 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Invalid parameters for cylinder definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            if (height * topRadius * bottomRadius * stacks * slices <=0){
+                            if (height * topRadius * bottomRadius * slices <=0 && stacks>=0){
                                 this.onXMLError("[NODE] Wrongly defined cylinder in nodeID:"+ nodeID +" Assuming 1 for all parameters");
                                 height = topRadius = bottomRadius = stacks = slices = 1;
                             }                           
@@ -1174,7 +1174,6 @@ class MySceneGraph {
 
 
         let material = this.materials[materialID];
-
         if(textureID == "null"){ // get parent's texture
             if(texId !="null"){
                 textureID = texId;
