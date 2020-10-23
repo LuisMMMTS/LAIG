@@ -514,9 +514,35 @@ class MySceneGraph {
         }
         console.log(this.lights);
         if (numLights == 0){
-            return "[LIGHTS] At least one light must be defined";
+
+            this.onXMLError("[LIGHTS] At least one light must be defined");
+            var global = [];
+            var attributeNames = [];
+            var attributeTypes = [];
+            attributeNames.push(...["enable", "position", "ambient", "diffuse", "specular"]);
+            attributeTypes.push(...["boolean","position", "color", "color", "color"]);
+            var lightId="UndefinedDefault";
+            for (var j = 0; j < attributeNames.length; j++) {
+                if (attributeIndex != -1) {
+                    if (attributeTypes[j] == "boolean")
+                        var aux = true;
+                    else if (attributeTypes[j] == "position")
+                        var aux = vec4.create(0,0,0,1);
+                    else
+                        var aux = [0.6,0.2,0.6,1];
+
+                    if (typeof aux === 'string'){
+                        this.onXMLMinorError(aux);
+                        continue;
+                    }
+                        
+
+                    global.push(aux);
+                }
 
         }
+        this.lights["UndefinedDefault"]=global;
+    }
         else if (numLights > 8)
             this.onXMLError("[LIGHTS] Too many lights defined; WebGL imposes a limit of 8 lights, we're only using the first 8");
 
