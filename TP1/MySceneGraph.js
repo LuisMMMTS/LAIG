@@ -512,7 +512,6 @@ class MySceneGraph {
             this.lights[lightId] = global;
             numLights++;
         }
-        console.log(this.lights);
         if (numLights == 0){
 
             this.onXMLError("[LIGHTS] At least one light must be defined");
@@ -947,7 +946,7 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Invalid parameters for cylinder definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            if (height * topRadius * bottomRadius * slices <=0 && stacks>=0){
+                            if ((topRadius<0 || bottomRadius<0 || height <=0 || slices <=0) && stacks>=0){
                                 this.onXMLError("[NODE] Wrongly defined cylinder in nodeID:"+ nodeID +" Assuming 1 for all parameters");
                                 height = topRadius = bottomRadius = stacks = slices = 1;
                             }                           
