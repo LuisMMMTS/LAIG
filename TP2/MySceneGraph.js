@@ -772,9 +772,9 @@ class MySceneGraph {
                 continue;
             }
             var animation = new KeyFrameAnimation(this.scene, animationID);
+
             //Parsing keyframes
             grandChildren = children[j].children;
-            var keyframes = [];
 
             for(let i = 0; i<grandChildren.length; i++){
                 if (grandChildren[i].nodeName != "keyframe") {
@@ -784,47 +784,38 @@ class MySceneGraph {
 
                 var keyframe = new KeyFrame();
                 keyframe.instant = this.reader.getString(grandChildren[i], 'instant');
-                if(!(keyframe.instante != null && !isNaN(keyframe.instant) && keyframe.instant > 0)){
+                
+                /*if(keyframe.instante == null || isNaN(keyframe.instant) || keyframe.instant < 0){
                     this.onXMLMinorError("[ANIMATIONS] Invalid/Missing value for keyframe instant of the animation " + animationID);
                     continue;
-                }
+                }*/
                 var grandgrandChildren = grandChildren[i].children;
-                
-                for(var k = 0; grandgrandChildren.length; k++){
-                    if(k==0){
-                        if(grandgrandChildren[k].nodeName == "translation"){
-
-                        }
-                        else{
+               
+                for(var k = 0; k<grandgrandChildren.length; k++){
+                    if(k == 0){
+                        if(grandgrandChildren[k].nodeName != "translation"){
                             this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
                             break;
                         }
                     }
-                    else if(k==1 || k==2 || k==3){
-                        if(grandgrandChildren[k].nodeName=="rotation"){
-
-                        }
-                        else{
+                    else if(k == 1 || k == 2 || k == 3){
+                        if(grandgrandChildren[k].nodeName !="rotation"){
                             this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
                             break;
                         }
-
                     }
                     else if(k == 4){
-                        if (grandgrandChildren[k].nodeName=="scale"){
-                            
-                        }
-                        else{
+                        if (grandgrandChildren[k].nodeName !="scale"){
                             this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
                             break;
                         }
-
                     }
                     else{
                         this.onXMLMinorError("[ANIMATIONS] Too many transformations declared in animation " + animationID);
                     }
                 }
-                keyframe.transformations=this.parseTransformations(grandgrandChildren, nodeID);
+
+                keyframe.transformationMatrix=this.parseTransformations(grandgrandChildren, animationID);
 
                 //the new keyframe is added to the array
                 animation.addKeyFrame(keyframe);
@@ -838,7 +829,9 @@ class MySceneGraph {
     }
 
     parseTransformations(transformations, nodeID){
+
         let matrix = mat4.create();
+
         for (let j = 0; j < transformations.length; j++){
             if (transformations[j].nodeName == "translation"){
                 let coordinates = this.parseCoordinates3D(transformations[j], "translate transformation for ID " + nodeID + ", skipping it");
@@ -1008,19 +1001,22 @@ class MySceneGraph {
                 }
             }
             //Animation
-            let animationID = this.reader.getString(grandChildren[animationIndex], "id");
-            if(animationIndex == -1){
-                this.onXMLError("[NODES] Animation not defined for node id: " + nodeID+ " assuming null");
-                continue;
+            /*if(animationIndex == -1){
+                //this.onXMLMinorError("[NODES] Animation not defined for node id: " + nodeID+ " assuming null");
+                //continue;
+            }*/
+            let animationID = null;
+            if(animationIndex != -1){
+                 animationID = this.reader.getString(grandChildren[animationIndex], "id");
+                if(animationID == null){
+                    this.onXMLMinorError("[NODES] Animation ID is not valid. node ID: " + nodeID + ", assuming null");
+                }
+                if(this.animations[animationID] == null){
+                    this.onXMLMinorError("[NODE] Animation with ID: " + animationID + " does not exist. Error on node: " + nodeID + " Assuming null");
+                    animationID = null;
+                }
             }
-            if(animationID == null){
-                this.onXMLMinorError("[NODES] Animation ID is not valid. node ID: " + nodeID + ", assuming null");
-            }
-            if(this.animations[animationID] == null){
-                this.onXMLMinorError("[NODE] Animation with ID: " + animationID + " does not exist. Error on node: " + nodeID + " Assuming null");
-                animationID = null;
-            }
-           
+            
 
             // Descendants
             if (descendantsIndex == -1){

@@ -10,14 +10,14 @@ class KeyFrameAnimation extends Animation{
 
     constructor(scene,animationID){
         super(scene, animationID);
-        this.instant = 0;
         this.keyframes = [];
 
     }
 
     addKeyFrame(keyFrame){
-        //acho q temos que ordenar
         this.keyframes.push(keyFrame);
+        //to make sure it's in ascending time order
+        //this.keyframes.sort(function(a, b){return a.instant - b.instant});
     }
 
     update(currentTime){

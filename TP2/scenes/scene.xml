@@ -155,11 +155,11 @@
 </materials>
 <animations>
 <!-- This is optional and can be empty-->
-    <animation id ="ss">
+    <animation id ="a">
     <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
     one keyframe. Instant is time expressed in seconds since the beginning of the animation.
         Keyframes must be declared in ascending order of time -->
-        <keyframe instant="ff">
+        <keyframe instant="5">
 
             <!-- translate, rotate e scale representam as -->
             <!-- quantidades das transformações -->
@@ -169,17 +169,11 @@
             <!-- translate, rotate e scale sao obrigatorios -->
             <!-- e fornecidos por esta ordem -->
 
-                <translation x="ff" y="ff" z="ff" />
-
-                <rotation axis="x" angle="ff" />
-        
-                <rotation axis="y" angle="ff" />
-        
-                <rotation axis="z" angle="ff" />
-         
-                <scale sx="ff" sy="ff" sz="ff"/>
-
-
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1"/>
         </keyframe>
     
     
@@ -209,7 +203,7 @@
         </transformations>
 
         <!-- Animationref is optional and must be declared after transformations of the component  -->
-        <animationref id="ss" />
+        <animationref id="a"/>
 
          <!-- declaring descendants, at least one node or one leaf must be present
             descendants may be mixed, nodes and leafs -->
@@ -238,6 +232,8 @@
         <transformations>
             <translation x="0" y="0" z="-10" />
         </transformations>
+
+        <animationref id="a"/>
 
         <descendants>
             <noderef id="leftWall" />  
@@ -371,8 +367,6 @@
             <leaf type="rectangle" x1="-2" y1="-2" x2="2" y2="2"/>
         </descendants>
     </node>
-
-        
     <node id="securityGantry">      
 
         <material id="White" />     
