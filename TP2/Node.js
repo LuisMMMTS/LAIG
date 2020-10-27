@@ -15,6 +15,7 @@ class Node{
         this.textureID = null;
         this.materialID = null;
         this.transformation = null;
+        this.animation = null;
 
     }
 
@@ -62,6 +63,11 @@ class Node{
     getTransformation(){
         return this.transformation
     }
-    
+    getAnimation(){
+        return this.animation;
+    }
+    setAnimation(animationID){
+        this.animation = animationID;
+    }
     
 }

@@ -153,6 +153,38 @@
          <emissive r="0.5" g="0" b="0" a="1.0" />        <!-- emissive component -->
       </material>
 </materials>
+<animations>
+<!-- This is optional and can be empty-->
+    <animation id ="ss">
+    <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
+    one keyframe. Instant is time expressed in seconds since the beginning of the animation.
+        Keyframes must be declared in ascending order of time -->
+        <keyframe instant="ff">
+
+            <!-- translate, rotate e scale representam as -->
+            <!-- quantidades das transformações -->
+            <!-- correspondentes, medidas em relação à -->
+            <!-- situação inicial (instante zero) --> 
+            <!-- Para uma mesma keyframe, os elementos -->
+            <!-- translate, rotate e scale sao obrigatorios -->
+            <!-- e fornecidos por esta ordem -->
+
+                <translation x="ff" y="ff" z="ff" />
+
+                <rotation axis="x" angle="ff" />
+        
+                <rotation axis="y" angle="ff" />
+        
+                <rotation axis="z" angle="ff" />
+         
+                <scale sx="ff" sy="ff" sz="ff"/>
+
+
+        </keyframe>
+    
+    
+    </animation>
+</animations>
 
 <nodes>
 
@@ -175,6 +207,9 @@
         <transformations>
             <scale sx="0.5" sy="0.5" sz="0.5" />
         </transformations>
+
+        <!-- Animationref is optional and must be declared after transformations of the component  -->
+        <animationref id="ss" />
 
          <!-- declaring descendants, at least one node or one leaf must be present
             descendants may be mixed, nodes and leafs -->
@@ -320,6 +355,7 @@
         </descendants>
 
     </node>
+
     <node id="flightBoard">  
         <material id="Off_white_emissive" />     
         <texture id="flightBoardTexture">    
@@ -332,9 +368,10 @@
         </transformations>
 
         <descendants>
-            <leaf type="rectangle" x1="-2" y1="-2" x2="2" y2="2" />
+            <leaf type="rectangle" x1="-2" y1="-2" x2="2" y2="2"/>
         </descendants>
     </node>
+
         
     <node id="securityGantry">      
 
@@ -1148,6 +1185,6 @@
 
     </node>
 
-    </nodes>
+</nodes>
 
 </lsf>
