@@ -1,11 +1,12 @@
 # LAIG 2020/2021 - TP2
 
-## Group: T0xG0y
+## Group: T01G07
 
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+| Name             | Number    | E-Mail              |
+| ---------------- | --------- | --------------------|
+| Rita Peixoto     | 201806257 | up201806257@fe.up.pt|
+| Luis Silva       | 201808912 | up201808912@fe.up.pt|
+
 
 ----
 ## Project information
