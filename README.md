@@ -21,6 +21,7 @@
 -  Reutilization of already defined primitives improving XML readibility and lightweightness
 -  Realistic scene
 -  Object oriented structure with get and set functions
+
 [TP1 - README](https://git.fe.up.pt/laig/laig-2020-2021/t01/laig-t01-g07/-/blob/master/TP1/README.md)
 
 -----
