@@ -785,39 +785,96 @@ class MySceneGraph {
                 var keyframe = new KeyFrame();
                 keyframe.instant = this.reader.getString(grandChildren[i], 'instant');
                 
-                /*if(keyframe.instante == null || isNaN(keyframe.instant) || keyframe.instant < 0){
+                if(keyframe.instant == null || isNaN(keyframe.instant) || keyframe.instant < 0){
                     this.onXMLMinorError("[ANIMATIONS] Invalid/Missing value for keyframe instant of the animation " + animationID);
                     continue;
-                }*/
+                }
                 var grandgrandChildren = grandChildren[i].children;
-               
-                for(var k = 0; k<grandgrandChildren.length; k++){
-                    if(k == 0){
-                        if(grandgrandChildren[k].nodeName != "translation"){
-                            this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
-                            break;
-                        }
+                var xangle=null, yangle=null, zangle=null;
+                for(var k = 0; k < grandgrandChildren.length; k++){//we should warn it's not in the expected order but we don't ignore it
+                    if(grandgrandChildren.length > 5){
+                        this.onXMLError("[ANIMATIONS] Too many transformations declared in animation " + animationID+" skipping it");
+                        break;
                     }
-                    else if(k == 1 || k == 2 || k == 3){
-                        if(grandgrandChildren[k].nodeName !="rotation"){
+                    else if(grandgrandChildren[k].nodeName == "translation"){
+                        if(k != 0){
                             this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
+                        }
+                        
+                        let coordinates = this.parseCoordinates3D(grandgrandChildren[k], "translate transformation for ID " + animationID + ", skipping it");
+                        if (!Array.isArray(coordinates)){
+                            this.onXMLMinorError(coordinates);
                             break;
                         }
+                        keyframe.translation = coordinates;
+                    
+                    }    
+                    else if(grandgrandChildren[k].nodeName =="rotation"){
+                        if(k != 1 && k != 2 && k != 3){
+                            this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
+                        }
+                        
+                        let axis = this.reader.getString(grandgrandChildren[k],"axis");
+                        let angle = this.reader.getFloat(grandgrandChildren[k],"angle");
+
+                        if (axis == null || angle == null || isNaN(angle)) {
+                            this.onXMLError("[ANIMATIONS] Wrong axis or angle on rotation of animation : " + animationID + ", skipping it");
+                            continue;
+                        }
+                        else if (axis == "x" ) {
+                            if(xangle !=null){//nao sei o que fazer neste caso
+                                this.onXMLError("[ANIMATIONS] Redefinition of x rotation of animation : " + animationID + ", skipping it");
+                                continue;
+                            }
+                            else{
+                                xangle = angle * DEGREE_TO_RAD;
+                            }
+                        }
+                        else if(axis == "y"){
+                            if(yangle !=null){
+                                this.onXMLError("[ANIMATIONS] Redefinition of y rotation of animation : " + animationID + ", skipping it");
+                                continue;
+                            }
+                            else{
+                                yangle = angle * DEGREE_TO_RAD;
+                            }
+                        }
+                        else if(axis == "z"){
+                            if(zangle !=null){
+                                this.onXMLError("[ANIMATIONS] Redefinition of z rotation of animation : " + animationID + ", skipping it");
+                                continue;
+                            }
+                            else{
+                                zangle = angle * DEGREE_TO_RAD;
+                            }
+
+                        }
+
                     }
-                    else if(k == 4){
-                        if (grandgrandChildren[k].nodeName !="scale"){
-                            this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
-                            break;
+                    else if (grandgrandChildren[k].nodeName =="scale"){
+                        if(k != 4){
+                            this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation2 " + animationID);
                         }
+                        let sx = this.reader.getFloat(grandgrandChildren[k], "sx");
+                        let sy = this.reader.getFloat(grandgrandChildren[k], "sy");
+                        let sz = this.reader.getFloat(grandgrandChildren[k], "sz");
+
+                        if (sx == null || sy == null || sz == null|| isNaN(sx) || isNaN(sy) || isNaN(sz)) {
+                            this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID + ", skipping it");
+                            continue;
+                        }
+                        keyframe.scale = new vec3.fromValues(sx,sy,sz);
+
                     }
                     else{
-                        this.onXMLMinorError("[ANIMATIONS] Too many transformations declared in animation " + animationID);
+                        this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + grandgrandChildren[k].nodeName + ">");
+                        break;
                     }
                 }
 
-                keyframe.transformationMatrix=this.parseTransformations(grandgrandChildren, animationID);
-
+                keyframe.rotation = new vec3.fromValues(xangle,yangle,zangle);
                 //the new keyframe is added to the array
+                console.log(keyframe);
                 animation.addKeyFrame(keyframe);
             }
             //the keyframeAnimation of animationId is added to the animations array

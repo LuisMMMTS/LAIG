@@ -10,7 +10,10 @@ class KeyFrame {
 
     constructor(){
         this.instant = 0;
-        this.transformationMatrix = mat4.create();
+        this.translation = null;
+        this.rotation = null;
+        this.scale = null;
+        //this.transformationMatrix = mat4.create();
     }
 
     

@@ -13,7 +13,7 @@ class KeyFrameAnimation extends Animation{
         this.keyframes = [];
 
     }
-
+    
     addKeyFrame(keyFrame){
         this.keyframes.push(keyFrame);
         //to make sure it's in ascending time order
