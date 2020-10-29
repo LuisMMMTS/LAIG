@@ -176,7 +176,7 @@
                 <scale sx="1000" sy="1" sz="1"/>
         </keyframe>
 
-        <keyframe instant="7">
+        <keyframe instant="10">
 
             <!-- translate, rotate e scale representam as -->
             <!-- quantidades das transformações -->

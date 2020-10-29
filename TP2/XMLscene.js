@@ -171,17 +171,18 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
     update(time){
-        let delta = time - this.previousTime;
+        let delta = (time/1000 %1000)- this.previousTime;
+        
         //updates animations based on current time
         if(this.sceneInited){
             for(let node in this.graph.nodes){
                 if(node.animation != null){
-                    this.node.animation.update(deltaTime);
+                    this.node.animation.update(delta);
                 }
             }
         }
 
-        this.previousTime = time;
+        this.previousTime = time/1000 % 1000;
     }
 
 
