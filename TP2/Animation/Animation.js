@@ -1,5 +1,5 @@
 /** 
- * Animation - class that stores the node information
+ * Animation - class that stores the animation information
  */
 
 class Animation{
@@ -13,13 +13,15 @@ class Animation{
         this.animationID= animationID;
         this.startTime = 0;
         this.endTime = 0;
+        this.elapsedTime = 0;
         this.startTransformation = mat4.create();
         this.endTransformation = mat4.create();
-
+        this.ended = false;
 
     }
 
     update(currentTime){
+        
 
     }
 

@@ -775,7 +775,7 @@ class MySceneGraph {
 
             //Parsing keyframes
             grandChildren = children[j].children;
-
+            let instants = [];
             for(let i = 0; i<grandChildren.length; i++){
                 if (grandChildren[i].nodeName != "keyframe") {
                     this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + children[i].nodeName + ">");
@@ -789,11 +789,18 @@ class MySceneGraph {
                     this.onXMLMinorError("[ANIMATIONS] Invalid/Missing value for keyframe instant of the animation " + animationID);
                     continue;
                 }
+                if(instants[keyframe.instant] != null){//check repeated instants
+                    this.onXMLError("[ANIMATIONS] Repeated keyframe instant on animation "+ animationID);
+                    continue;
+                }
+                instants[keyframe.instant] = keyframe.instant;
+
+
                 var grandgrandChildren = grandChildren[i].children;
                 var xangle=null, yangle=null, zangle=null;
                 for(var k = 0; k < grandgrandChildren.length; k++){//we should warn it's not in the expected order but we don't ignore it
                     if(grandgrandChildren.length > 5){
-                        this.onXMLError("[ANIMATIONS] Too many transformations declared in animation " + animationID+" skipping it");
+                        this.onXMLError("[ANIMATIONS] Too many transformations declared in animation " + animationID +" skipping it");
                         break;
                     }
                     else if(grandgrandChildren[k].nodeName == "translation"){
@@ -822,7 +829,7 @@ class MySceneGraph {
                             continue;
                         }
                         else if (axis == "x" ) {
-                            if(xangle !=null){//nao sei o que fazer neste caso
+                            if(xangle !=null){//ignore it and stay with first one
                                 this.onXMLError("[ANIMATIONS] Redefinition of x rotation of animation : " + animationID + ", skipping it");
                                 continue;
                             }
@@ -1400,9 +1407,13 @@ class MySceneGraph {
         material.setTextureWrap('REPEAT', 'REPEAT');
         material.apply();
 
-
         this.scene.multMatrix(node.getTransformation());//apply transformation
+
         
+        if(node.animation != null){//it has animation defined
+            this.animations[node.animation].apply();
+        }//should it pass to the descendants?
+
         for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display 
             node.getLeafs()[i].display();
         }

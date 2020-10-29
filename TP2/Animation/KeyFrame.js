@@ -1,21 +1,17 @@
 /** 
- * KeyFrameAnimation - class that stores the node information
+ * KeyFrame - class that stores the keyframe information
  */
 
 class KeyFrame {
     /**
     * @constructor
-    * @param animationID - ID of the animation 
     */
 
     constructor(){
         this.instant = 0;
-        this.translation = null;
-        this.rotation = null;
-        this.scale = null;
-        //this.transformationMatrix = mat4.create();
+        this.translation = [0,0,0];
+        this.rotation = [0,0,0];
+        this.scale = [1,1,1];
     }
-
-    
     
 }

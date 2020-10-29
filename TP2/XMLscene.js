@@ -37,6 +37,7 @@ class XMLscene extends CGFscene {
         this.displayLights = true;
 
         this.setUpdatePeriod(100);
+        this.previousTime = 0;
 
         this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
         this.loadingProgress=0;
@@ -165,9 +166,27 @@ class XMLscene extends CGFscene {
         //lights
         this.initLights();
 
-        
+        this.setUpdatePeriod(100);
+
         this.sceneInited = true;
     }
+    update(time){
+        let delta = time - this.previousTime;
+        //updates animations based on current time
+        if(this.sceneInited){
+            for(let node in this.graph.nodes){
+                if(node.animation != null){
+                    this.node.animation.update(deltaTime);
+                }
+            }
+        }
+
+        this.previousTime = time;
+    }
+
+
+
+
     /**
      * Displays the scene.
      */
