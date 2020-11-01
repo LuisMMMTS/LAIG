@@ -881,7 +881,7 @@ class MySceneGraph {
 
                 keyframe.rotation = new vec3.fromValues(xangle,yangle,zangle);
                 //the new keyframe is added to the array
-                console.log(keyframe);
+                
                 animation.addKeyFrame(keyframe);
             }
             //the keyframeAnimation of animationId is added to the animations array
@@ -1409,7 +1409,6 @@ class MySceneGraph {
 
         this.scene.multMatrix(node.getTransformation());//apply transformation
 
-        
         if(node.animation != null){//it has animation defined
             this.animations[node.animation].apply();
         }//should it pass to the descendants?

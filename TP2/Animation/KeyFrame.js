@@ -9,9 +9,9 @@ class KeyFrame {
 
     constructor(){
         this.instant = 0;
-        this.translation = [0,0,0];
-        this.rotation = [0,0,0];
-        this.scale = [1,1,1];
+        this.translation = new vec3.fromValues(0,0,0);
+        this.rotation = new vec3.fromValues(0,0,0);
+        this.scale = new vec3.fromValues(1,1,1);
     }
     
 }

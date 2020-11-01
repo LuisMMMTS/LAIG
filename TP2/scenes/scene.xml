@@ -169,10 +169,10 @@
             <!-- translate, rotate e scale sao obrigatorios -->
             <!-- e fornecidos por esta ordem -->
 
-                <translation x="100" y="100" z="100" />
-                <rotation axis="x" angle="180" />
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="180" />
+                <rotation axis="z" angle="0" />
                 <scale sx="1000" sy="1" sz="1"/>
         </keyframe>
 
@@ -193,7 +193,7 @@
                 <scale sx="-1000" sy="1" sz="1"/>
         </keyframe>
 
-        <keyframe instant="200">
+        <keyframe instant="20">
 
             <!-- translate, rotate e scale representam as -->
             <!-- quantidades das transformações -->
@@ -236,8 +236,6 @@
             <scale sx="0.5" sy="0.5" sz="0.5" />
         </transformations>
 
-        <!-- Animationref is optional and must be declared after transformations of the component  -->
-        <animationref id="a"/>
 
          <!-- declaring descendants, at least one node or one leaf must be present
             descendants may be mixed, nodes and leafs -->
@@ -266,8 +264,6 @@
         <transformations>
             <translation x="0" y="0" z="-10" />
         </transformations>
-
-        <animationref id="a"/>
 
         <descendants>
             <noderef id="leftWall" />  
