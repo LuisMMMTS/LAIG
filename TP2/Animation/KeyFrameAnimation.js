@@ -41,7 +41,6 @@ class KeyFrameAnimation extends Animation{
 
     update(currentTime){
     
-        
         console.log("current time is "+ currentTime);
         console.log("elapsed time is "+ this.elapsedTime);
 
@@ -107,7 +106,7 @@ class KeyFrameAnimation extends Animation{
         this.scene.rotate(this.animationRotation[1],0,1,0);
         this.scene.rotate(this.animationRotation[2],0,0,1);
         this.scene.scale(this.animationScale[0],this.animationScale[1],this.animationScale[2]); 
-        
+
     }
     
     

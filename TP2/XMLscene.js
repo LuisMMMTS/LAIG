@@ -177,6 +177,7 @@ class XMLscene extends CGFscene {
         }
     
        let delta = (time/1000) - this.initialTime;
+       
         console.log(delta);
         //updates animations based on current time
          if(this.sceneInited){
