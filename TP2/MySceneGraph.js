@@ -881,7 +881,6 @@ class MySceneGraph {
 
                 keyframe.rotation = new vec3.fromValues(xangle,yangle,zangle);
                 //the new keyframe is added to the array
-                
                 animation.addKeyFrame(keyframe);
             }
             //the keyframeAnimation of animationId is added to the animations array
