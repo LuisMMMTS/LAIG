@@ -40,14 +40,9 @@ class KeyFrameAnimation extends Animation{
 
 
     update(currentTime){
-    
-        //console.log("current time is "+ currentTime);
-        //console.log("elapsed time is "+ this.elapsedTime);
 
-        if(this.ended){//if animation reached the end, return
-            console.log("end");
-            return;
-        }
+        //if animation reached the end, return
+        if(this.ended) return;
 
         //update elapsedTime based on lastTime and update lastTime
         this.elapsedTime += (currentTime - this.lastTime);
@@ -55,19 +50,15 @@ class KeyFrameAnimation extends Animation{
 
         
         //check if the animation should be active
-        if(this.elapsedTime < this.startTime && !this.ended){ 
-            console.log("hasn't started yet");
-            return;
-        }
-        
+        if(this.elapsedTime < this.startTime && !this.ended) return;
+       
         //End of animation 
         if(this.elapsedTime >= this.endTime){
             this.ended = true;
         }
         
 
-        let keyframeStartInstant = 0, keyframeEndInstant = 0;
-        let keyframeStartIndex = 0, keyframeEndIndex = 0;
+        let keyframeStartInstant = 0, keyframeEndInstant = 0, keyframeStartIndex = 0, keyframeEndIndex = 0;
         
         //maybe change this because is not that efficient
         for(let i = 0; i < this.keyframes.length; i++){
