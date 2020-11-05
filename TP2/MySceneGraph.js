@@ -1161,8 +1161,7 @@ class MySceneGraph {
             let descendants = [];
             let primitives = [];
             let descendant = null;
-            let spritetexts = [];
-            let spriteanimations = [];
+
 
             for (let j = 0; j < grandChildren[descendantsIndex].children.length; j++){
                 descendant = grandChildren[descendantsIndex].children[j];
@@ -1280,11 +1279,11 @@ class MySceneGraph {
                             case "spritetext":
                                 var text = this.reader.getString(descendant, "text");
                                 if (text == null){
-                                    this.onXMLError("[NODE] Missing values for spritetext definition in nodeID: "+nodeID + ", skipping it");
+                                    this.onXMLError("[NODE] Missing values for spritetext definition in nodeID: "+ nodeID + ", skipping it");
                                     continue;
                                 }
                                 let spriteText = new MySpriteText(this.scene, text);
-                                spritetexts.push(spriteText);
+                                primitives.push(spriteText);
                                 break;
                                 
                             case "spriteanim":
@@ -1293,23 +1292,23 @@ class MySceneGraph {
                                 let endCell = this.reader.getFloat(descendant,"endCell");
                                 let duration = this.reader.getFloat(descendant,"duration");
 
-                                if(startCell==null||isNaN(startCell)){
+                                if(startCell == null || isNaN(startCell)){
                                     startCell=0;
                                 }
 
                                 if (id == null || startCell == null || isNaN(startCell) || startCell < 0|| endCell == null || isNaN(endCell)||
                                  endCell < startCell || duration < 0 || duration == null || isNaN(duration)){
-                                    this.onXMLError("[NODE] Missing values for spriteanim definition in nodeID: "+nodeID + ", skipping it");
+                                    this.onXMLError("[NODE] Missing values for spriteanim definition in nodeID: "+ nodeID + ", skipping it");
                                     continue;
                                 }
                                 
                                 if (this.spritesheets[id] == null){
-                                    this.onXMLError("[NODE] Wrong value for spriteanim ID in nodeID: "+nodeID + ", skipping it");
+                                    this.onXMLError("[NODE] Wrong value for spriteanim ID in nodeID: "+ nodeID + ", skipping it");
                                     continue;
                                 }
                                 
                                 let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[id], startCell, endCell, duration);
-                                spriteanimations.push(spriteanim);
+                                primitives.push(spriteanim);
                                 this.spriteanimations.push(spriteanim);
                                 break;
                         
@@ -1324,7 +1323,7 @@ class MySceneGraph {
                 }
                 
             }
-            if (descendants.length === 0 && primitives.length === 0 && spriteanimations.length === 0 && spritetexts.length === 0) {
+            if (descendants.length === 0 && primitives.length === 0) {
                 this.onXMLError("[NODE] No descendants! Node id: " + nodeID);
                 continue;
             }
@@ -1337,8 +1336,6 @@ class MySceneGraph {
             node.setMaterial(materialID);
             node.setTransformation(matrix);
             node.setAnimation(animationID);
-            node.setSpriteTexts(spritetexts);
-            node.setSpriteanimations(spriteanimations);
             this.nodes[nodeID] = node;
             
         }
@@ -1523,22 +1520,18 @@ class MySceneGraph {
 
         if(node.animation != null){//it has animation defined
             this.animations[node.animation].apply();
-        }//should it pass to the descendants?
+        }
 
         for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display 
-            node.getLeafs()[i].display();
+            if(node.getLeafs()[i] instanceof MySpriteText){ 
+                this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext
+                node.getLeafs()[i].display();
+                this.scene.popMatrix();
+            }
+            else{
+                node.getLeafs()[i].display();
+            }
         }
-        
-        for(var i=0; i<node.getSpriteTexts().length; i++){
-            this.scene.pushMatrix();
-            node.getSpriteTexts()[i].display();
-            this.scene.popMatrix();
-        }
-
-        for(var i=0; i<node.getSpriteAnimations().length; i++){
-            node.getSpriteAnimations()[i].display();
-        }
-
 
         for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
             this.scene.pushMatrix();

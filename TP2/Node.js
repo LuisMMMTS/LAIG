@@ -9,6 +9,7 @@ class Node{
     */
 
     constructor(nodeID){
+
         this.nodeID= nodeID;
         this.children = []; //are other nodes 
         this.leafs = []; // are primitives 
@@ -16,9 +17,7 @@ class Node{
         this.materialID = null;
         this.transformation = null;
         this.animation = null;
-        this.spritetexts = [];
-        this.spriteanimations = [];
-
+        
     }
 
 /* Sets and gets are not needed but we did it for readability */
@@ -37,13 +36,6 @@ class Node{
     setAnimation(animationID){
         this.animation = animationID;
     }
-    setSpriteTexts(spritetexts){
-        this.spritetexts = spritetexts;
-    }
-    setSpriteanimations(spriteanimations){
-        this.spriteanimations = spriteanimations;
-    }
-
     setMaterial(materialID){
         this.materialID=materialID;
     }
@@ -80,11 +72,4 @@ class Node{
         return this.animation;
     }
 
-    getSpriteTexts(){
-        return this.spritetexts;
-    }
-
-    getSpriteAnimations(){
-        return this.spriteanimations;
-    }
 }
