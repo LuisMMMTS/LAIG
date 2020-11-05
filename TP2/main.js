@@ -12,7 +12,7 @@ function getUrlVars() {
 }	 
 //Include additional files here
 serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', './primitives/MyRectangle.js','./primitives/MyTorus.js', './primitives/MySphere.js', './primitives/MyCylinder.js','./primitives/MyTriangle.js','./primitives/MyCircle.js','Node.js','./Animation/Animation.js','./Animation/KeyFrameAnimation.js','./Animation/KeyFrame.js',
-'./Sprites/MySpriteAnimation.js', './Sprites/MySpritesheet.js', './Sprites/MySpriteText.js',
+'./Sprites/MySpriteAnimation.js', './Sprites/MySpritesheet.js', './Sprites/MySpriteText.js','./primitives/MyPlane.js', './primitives/MyPatch.js', './primitives/MyDefBarrel.js',
 main=function()
 {
 	// Standard application, scene and interface setup

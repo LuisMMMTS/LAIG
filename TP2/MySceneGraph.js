@@ -1312,6 +1312,42 @@ class MySceneGraph {
                                 spriteanimations.push(spriteanim);
                                 this.spriteanimations.push(spriteanim);
                                 break;
+                            case "plane":
+                                let nPartsU = this.reader.getFloat(descendant, "nPartsU");
+                                let nPartsV = this.reader.getFloat(descendant, "nPartsV");
+
+                                if(nPartsU == null || nPartsV == null || isNaN(nPartsU) || isNaN(nPartsV) || nPartsU <= 0 || nPartsV <= 0){
+                                    this.onXMLError("[NODE] Wrong values for plane definition in nodeID: "+ nodeID + ", skipping it");
+                                    continue;
+                                }
+                                //dont know if needs more verifications
+                                let plane = new MyPlane(this.scene, nPartsU, nPartsV);
+                                primitives.push(plane);
+                                break;
+                            case "patch":
+                                //TO DO
+                                this.console.warn("TO DO: case primitive is patch"); 
+                                /*<leaf type=”patch” npointsU=“ii” npointsV=“ii” npartsU=“ii” npartsV=“ii” >
+
+                                    <controlpoint xx=“ff” yy=“ff” zz=“ff” />
+
+                                     ...
+
+                                </leaf> */
+                                break;
+                            case "defbarrel":
+                                let base = this.reader.getFloat(descendant, "base");
+                                let middle = this.reader.getFloat(descendant, "middle"); 
+                                let h = this.reader.getFloat(descendant, "height");
+                                let sl = this.reader.getFloat(descendant, "slices");
+                                let st = this.reader.getFloat(descendant, "stacks");
+                                
+                                // missing all verifications
+                                
+                                let defbarrel = new MyDefBarrel(this.scene, base, middle, h, sl, st);
+                                primitives.push(defbarrel);
+                                break;
+                            
                         
                         default:
                             this.onXMLMinorError("[NODE] Unknown leaf type in node id: "+ nodeID);
