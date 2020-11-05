@@ -41,9 +41,8 @@ class KeyFrameAnimation extends Animation{
 
     update(currentTime){
     
-        console.log("current time is "+ currentTime);
-        console.log("elapsed time is "+ this.elapsedTime);
-
+        //console.log("current time is "+ currentTime);
+        //console.log("elapsed time is "+ this.elapsedTime);
 
         if(this.ended){//if animation reached the end, return
             console.log("end");

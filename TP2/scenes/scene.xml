@@ -169,11 +169,11 @@
             <!-- translate, rotate e scale sao obrigatorios -->
             <!-- e fornecidos por esta ordem -->
 
-                <translation x="0" y="0" z="0" />
+                <translation x="2" y="2" z="2" />
                 <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
-                <scale sx="1000" sy="1" sz="1"/>
+                <scale sx="4" sy="4" sz="4"/>
         </keyframe>
 
         <keyframe instant="10">
@@ -186,11 +186,11 @@
             <!-- translate, rotate e scale sao obrigatorios -->
             <!-- e fornecidos por esta ordem -->
 
-                <translation x="-100" y="-100" z="-100" />
+                <translation x="0" y="0" z="0" />
                 <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="180" />
+                <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
-                <scale sx="-1000" sy="1" sz="1"/>
+                <scale sx="1" sy="1" sz="1"/>
         </keyframe>
 
         <keyframe instant="20">
@@ -213,6 +213,16 @@
     
     </animation>
 </animations>
+
+<!-- spritesheets -->
+<!-- o bloco "spritesheets" deve ser declarado -->
+<!-- imediatamente após o bloco "textures" -->
+<spritesheets>
+        <!-- Semelhante à declaração de textura,  mas inclui a definição do nº de colunas e linhas -->
+        <spritesheet id="sprite1" path="bank.jpg" sizeM="5" sizeN="5" />
+</spritesheets>
+
+
 
 <nodes>
 
@@ -244,7 +254,9 @@
                                  <!-- may be repeated as necessary. It can refer an -->
                                  <!-- identifier of another node, before or later defined in the file. -->
             <noderef id="floor" /> 
-            <noderef id="securityGantry" />  
+            <noderef id="securityGantry" /> 
+            <leaf type="spriteanim" ssid="sprite1" startCell="0" endCell="10" duration="5" />
+            <leaf type="spritetext" text="ola" />
 
         </descendants>
         

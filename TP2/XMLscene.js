@@ -42,7 +42,10 @@ class XMLscene extends CGFscene {
         this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
         this.loadingProgress=0;
 
-        this.defaultAppearance=new CGFappearance(this);
+        this.defaultAppearance = new CGFappearance(this);
+
+        //init shadders
+        this.shader = new CGFshader(this.gl, "./scenes/shaders/shader.vert","./scenes/shaders/shader.frag");
 
     }
 
@@ -178,12 +181,16 @@ class XMLscene extends CGFscene {
     
        let delta = (time/1000) - this.initialTime;
        
-        console.log(delta);
+        //console.log(delta);
         //updates animations based on current time
          if(this.sceneInited){
              if(this.graph.animations == undefined) return;
-             for(let animation in this.graph.animations){
+             for(let animation in this.graph.animations){ //update keyframeanimations
                 this.graph.animations[animation].update(delta); // delta is the time in seconds since the beginning of the program
+             }
+             if(this.graph.spriteanimations == undefined) return;
+             for(let i = 0; i < this.graph.spriteanimations.length; i++){ //update spriteanimations
+                 this.graph.spriteanimations[i].update(delta);
              }
          }
      }

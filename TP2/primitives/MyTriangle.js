@@ -67,7 +67,7 @@ class MyTriangle extends CGFobject {
         
         this.texCoords = [
                 0, 1,
-                this.a/amplification[0], 1,
+                this.a/this.afs, 1,
                 (this.c*this.cos)/this.afs, 1 -(this.c*this.sin)/this.aft
 		];
 		

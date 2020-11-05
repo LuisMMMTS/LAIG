@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var ANIMATIONS_INDEX = 6;
-var NODES_WITH_ANIMATION_INDEX = 7;
-var NODES_WITHOUT_ANIMATION_INDEX = 6;
+var SPRITESHEETS_INDEX = 7;
+// var NODES_WITH_ANIMATION_INDEX = 7;
+var NODES_INDEX = 6;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -200,13 +201,26 @@ class MySceneGraph {
             if ((error = this.parseAnimations(nodes[index])) != null)
                 return error;
         }
+        //<spritesheets>
+        var spritesheets = false;
+        if ((index = nodeNames.indexOf("spritesheets")) == -1)
+            this.onXMLMinorError("[FILE] Tag <spritesheets> not defined");
+        else {
+            spritesheets=true;
+            if (index != SPRITESHEETS_INDEX)
+                this.onXMLMinorError("[FILE] Tag <spritesheets> out of order");
+
+            //Parse spritesheets block
+            if ((error = this.parseSpritesheets(nodes[index])) != null)
+                return error;
+        }
 
 
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "[FILE] Tag <nodes> missing";
         else {
-            if ((index != NODES_WITH_ANIMATION_INDEX && animations) ||(index != NODES_WITHOUT_ANIMATION_INDEX && !animations))
+            if (index != (NODES_INDEX+spritesheets+animations))
                 this.onXMLMinorError("[FILE] Tag <nodes> out of order");
 
             //Parse nodes block
@@ -595,7 +609,7 @@ class MySceneGraph {
                 continue;
             }
             if (this.textures[id] != null && id != "default") {
-                this.onXMLMinorError("[TEXTURE] ID must be unique for each texture (conflict: ID = " + textureId + ") skipping it");
+                this.onXMLMinorError("[TEXTURE] ID must be unique for each texture (conflict: ID = " + id + ") skipping it");
                 continue;
             }
 
@@ -890,6 +904,65 @@ class MySceneGraph {
         return null;
 
     }
+    /**
+   * Parses the <animations> block.
+   * @param {spritesheet block element} spritesheetNodes
+   */
+    parseSpritesheets(spritesheetNodes){
+        this.spritesheets = [];
+        var children = spritesheetNodes.children;
+        let workingDirectory ="./scenes/";
+
+        if(spritesheetNodes.length == 0){
+            this.onXMLMinorError("[SPRITESHEETS] No spritesheets defined");
+        }
+        for(let i = 0; i < children.length; i++){
+            if(children[i].nodeName !== "spritesheet"){
+                this.onXMLMinorError("[SPRITESHEETS] Invalid node name, skipping it. Unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            let id = this.reader.getString(children[i], 'id');
+            if(id.length === 0){
+                this.onXMLMinorError("[SPRITESHEETS] no spritesheet ID defined, skipping it");
+                continue;
+            }
+            if(this.spritesheets[id] != null){
+                this.onXMLMinorError("[SPRITESHEETS] ID must be unique for each spritesheet (conflict: ID = " + id + ") skipping it");
+                continue;
+            }
+
+            let path = this.reader.getString(children[i], 'path');
+            
+            if (!(path.includes("exture")||path.includes("mages"))){ //check if full path is defined, bewaring of capital leters in the beggining of folder name
+                path = workingDirectory + "images/" + path;
+            }
+            
+            if(path == null){ // if the path is null we ignore this spritesheet
+                this.onXMLMinorError("[SPRITSHEETS] invalid path");
+                continue;
+            }
+
+            let texture = new CGFtexture(this.scene, path);
+            
+            let sizeM = this.reader.getFloat(children[i], 'sizeM');
+            if(sizeM == null || isNaN(sizeM)){
+                this.onXMLError("[SPRITESHEETS] Missing/not valid values for sizeM on spritesheet: " + id + ", skipping it");
+                continue;
+            }
+            let sizeN = this.reader.getFloat(children[i], 'sizeN');
+            if(sizeN == null || isNaN(sizeN)){
+                this.onXMLError("[SPRITESHEETS] Missing/not valid values for sizeN on spritesheet: " + id + ", skipping it");
+                continue;
+            }
+
+            this.spritesheets[id] = new MySpritesheet(this.scene, id, texture, sizeM, sizeN);
+        }
+    
+        console.log(this.spritesheets);
+        this.log("Parsed Spritesheets");
+        return null;
+    }
 
     parseTransformations(transformations, nodeID){
 
@@ -1063,11 +1136,7 @@ class MySceneGraph {
                     
                 }
             }
-            //Animation
-            /*if(animationIndex == -1){
-                //this.onXMLMinorError("[NODES] Animation not defined for node id: " + nodeID+ " assuming null");
-                //continue;
-            }*/
+        
             let animationID = null;
             if(animationIndex != -1){
                  animationID = this.reader.getString(grandChildren[animationIndex], "id");
@@ -1090,6 +1159,8 @@ class MySceneGraph {
             let descendants = [];
             let primitives = [];
             let descendant = null;
+            this.spritetexts = [];
+            this.spriteanimations = [];
 
             for (let j = 0; j < grandChildren[descendantsIndex].children.length; j++){
                 descendant = grandChildren[descendantsIndex].children[j];
@@ -1203,6 +1274,42 @@ class MySceneGraph {
                             triangle.updateTexCoords([afs,aft]);
                             primitives.push(triangle);
                             break;
+
+                            case "spritetext":
+                                var text = this.reader.getString(descendant, "text");
+                                if (text == null){
+                                    this.onXMLError("[NODE] Missing values for spritetext definition in nodeID: "+nodeID + ", skipping it");
+                                    congotpointercapture;
+                                }
+                                let spriteText = new MySpriteText(this.scene, text);
+                                this.spritetexts.push(spriteText);
+                                break;
+                                
+                            case "spriteanim":
+                                let id = this.reader.getString(descendant,"ssid");
+                                let startCell = this.reader.getFloat(descendant,"startCell");
+                                let endCell = this.reader.getFloat(descendant,"endCell");
+                                let duration = this.reader.getFloat(descendant,"duration");
+
+                                if(startCell==null||isNaN(startCell)){
+                                    startCell=0;
+                                }
+
+                                if (id == null || startCell == null || isNaN(startCell) || startCell < 0|| endCell == null || isNaN(endCell)||
+                                 endCell < startCell || duration < 0 || duration == null || isNaN(duration)){
+                                    this.onXMLError("[NODE] Missing values for spriteanim definition in nodeID: "+nodeID + ", skipping it");
+                                    continue;
+                                }
+                                
+                                if (this.spritesheets[id] == null){
+                                    this.onXMLError("[NODE] Wrong value for spriteanim ID in nodeID: "+nodeID + ", skipping it");
+                                    continue;
+                                }
+                                
+                                let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[id], startCell, endCell, duration);
+                                this.spriteanimations.push(spriteanim);
+                                break;
+                        
                         default:
                             this.onXMLMinorError("[NODE] Unknown leaf type in node id: "+ nodeID);
                     }
@@ -1219,6 +1326,8 @@ class MySceneGraph {
                 continue;
             }
 
+            //console.log(spriteanimations);    
+            //console.log(spritetexts);
             let node = new Node(nodeID);
             node.setChildren(descendants);
             node.setLeafs(primitives);
@@ -1226,6 +1335,8 @@ class MySceneGraph {
             node.setMaterial(materialID);
             node.setTransformation(matrix);
             node.setAnimation(animationID);
+            node.setSpriteTexts(this.spritetexts);
+            node.setSpriteanimations(this.spriteanimations);
             this.nodes[nodeID] = node;
             
         }

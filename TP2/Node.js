@@ -16,6 +16,8 @@ class Node{
         this.materialID = null;
         this.transformation = null;
         this.animation = null;
+        this.spritetexts=[];
+        this.spriteanimations=[];
 
     }
 
@@ -68,6 +70,12 @@ class Node{
     }
     setAnimation(animationID){
         this.animation = animationID;
+    }
+    setSpriteTexts(spritetexts){
+        this.spritetexts=spritetexts;
+    }
+    setSpriteanimations(spriteanimations){
+        this.spriteanimations=spriteanimations;
     }
     
 }
