@@ -49,7 +49,6 @@ class MySpriteText {
     display(){
         this.spritesheet.activate();
        
-
          for (let i of this.text){
                 let positionInSprite = this.getCharacterPosition(i); //get character's sprite 
 

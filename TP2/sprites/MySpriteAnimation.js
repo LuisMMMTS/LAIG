@@ -30,6 +30,7 @@ class MySpriteAnimation extends CGFobject{
 
     update(currentTime){
         this.lastTime += currentTime;
+        
         //calculate elapsedTime
         let instant = this.lastTime % this.duration;
         
