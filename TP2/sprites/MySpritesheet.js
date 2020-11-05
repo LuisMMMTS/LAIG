@@ -2,7 +2,7 @@
  * MySpritesheet - class that stores 
  */
 
-class MySpritesheet extends CGFobject{
+class MySpritesheet {
     /**
     * @constructor
     * @param scene
@@ -12,7 +12,7 @@ class MySpritesheet extends CGFobject{
     */
 
     constructor(scene, id, texture, sizeM, sizeN){
-        super(scene);
+        this.scene = scene;
         this.id = id;
         this.texture = texture;
         this.sizeM = sizeM;
@@ -22,8 +22,6 @@ class MySpritesheet extends CGFobject{
         this.scaleN = 1/sizeN;
 
         //initialize shader -- created in XMLscene
-        this.scene.shader.setUniformsValues({scaleM: this.scaleM});
-        this.scene.shader.setUniformsValues({scaleN: this.scaleN});
         this.scene.shader.setUniformsValues({uSampler:0});
 
     }
@@ -33,7 +31,8 @@ class MySpritesheet extends CGFobject{
     * @param sizeM - number of the column (int)
     * @param sizeN - number of the row (int)
     */
-    activateCellMN(m,n){        
+    activateCellMN(m,n){   
+           
        this.scene.shader.setUniformsValues({offsetM: m * this.scaleM});
        this.scene.shader.setUniformsValues({offsetN: n * this.scaleN});
 
@@ -48,6 +47,15 @@ class MySpritesheet extends CGFobject{
        let n = Math.floor(p / this.sizeM); /*the correspondig row is the division for the number of columns rounded down */
 
        this.activateCellMN(m,n);
+    }
+
+    activate(){
+
+        this.scene.shader.setUniformsValues({scaleM: this.scaleM});
+        this.scene.shader.setUniformsValues({scaleN: this.scaleN});
+
+        this.scene.setActiveShader(this.scene.shader); //activate shader
+        this.texture.bind(0);//bind in texture
     }
     
        

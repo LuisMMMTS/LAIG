@@ -3,7 +3,7 @@
  * MySpriteText - class that stores 
  */
 
-class MySpriteText extends CGFobject{
+class MySpriteText {
     /**
     * @constructor
     * @param scene - 
@@ -11,7 +11,7 @@ class MySpriteText extends CGFobject{
     */
 
     constructor(scene, text){
-        super(scene);
+        this.scene = scene;
         this.text = text;
 
         /*Creates the geometry where the characters will be mapped */
@@ -47,9 +47,8 @@ class MySpriteText extends CGFobject{
     */
 
     display(){
-
-        this.scene.setActiveShader(this.scene.shader); //activate shader
-        this.texture.bind(0);//bind in texture
+        this.spritesheet.activate();
+       
 
          for (let i of this.text){
                 let positionInSprite = this.getCharacterPosition(i); //get character's sprite 
@@ -58,7 +57,7 @@ class MySpriteText extends CGFobject{
 
                 this.spritesheet.activateCellP(positionInSprite); // pass the shader the offset 
                 
-                this.retangle.display();//display retangle
+                this.retangle.display();//display base geometry
                 this.scene.translate(1,0,0); // addind space between letters
          }
 

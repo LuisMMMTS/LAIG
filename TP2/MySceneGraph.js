@@ -32,6 +32,8 @@ class MySceneGraph {
 
         this.nodes = []; //all nodes of the scene
 
+        this.spriteanimations = [];
+
         this.idRoot = null; // The id of the root element.
 
         this.axisCoords = [];
@@ -1308,6 +1310,7 @@ class MySceneGraph {
                                 
                                 let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[id], startCell, endCell, duration);
                                 spriteanimations.push(spriteanim);
+                                this.spriteanimations.push(spriteanim);
                                 break;
                         
                         default:
@@ -1321,13 +1324,12 @@ class MySceneGraph {
                 }
                 
             }
-            if (descendants.length === 0 && primitives.length === 0) {
+            if (descendants.length === 0 && primitives.length === 0 && spriteanimations.length === 0 && spritetexts.length === 0) {
                 this.onXMLError("[NODE] No descendants! Node id: " + nodeID);
                 continue;
             }
 
-            //console.log(spriteanimations);    
-            //console.log(spritetexts);
+            
             let node = new Node(nodeID);
             node.setChildren(descendants);
             node.setLeafs(primitives);
@@ -1532,6 +1534,7 @@ class MySceneGraph {
             node.getSpriteTexts()[i].display();
             this.scene.popMatrix();
         }
+
         for(var i=0; i<node.getSpriteAnimations().length; i++){
             node.getSpriteAnimations()[i].display();
         }

@@ -20,39 +20,35 @@ class MySpriteAnimation extends CGFobject{
 
         this.lastTime = 0;
         this.elapsedTime = 0;
-        this.nCells = endCell - startCell;
-        this.currentIndex = 0;
+        this.nCells = endCell - startCell + 1;
+        this.currentIndex = 0;  
         this.activeState = 0;
+
+        this.spriteTime = this.duration/this.nCells;
         
     }
 
     update(currentTime){
+        this.lastTime += currentTime;
         //calculate elapsedTime
-        this.elapsedTime += (currentTime - this.lastTime);
-        this.lastTime = currentTime;
-
+        let instant = this.lastTime % this.duration;
+        
         //calculate which state is active, using elapsed time, duration, n of cells
         //save current state and other variables ( index of current sprite)        
-        this.activeState = (this.nCells * this.elapsedTime) / this.duration;
-    }
-    
-    display(){
-        this.spritesheet.activateCellP(this.activeState); /* pass the shader the offset */
+        this.activeState = Math.floor(instant / this.spriteTime) + this.startCell;
         
-        this.scene.setActiveShader(this.scene.shader); //activate shader
-        this.spritesheet.texture.bind(0);//bind in texture*/
+    }
 
-        this.retangle.display();//display retangle
+    display(){
+        
+        this.spritesheet.activate();
+
+        this.spritesheet.activateCellP(this.activeState); /* pass the shader the offset */
+
+        this.retangle.display();//display base geometry
+
         this.scene.setActiveShader(this.scene.defaultShader); //set default shader
-                
-        
-        /*
-        - Activate sprite using current index --- activateCellP/activateCellMN
-        - display base geometry
-        
-        */
-    }
-   
-    
+            
+    } 
     
 }
