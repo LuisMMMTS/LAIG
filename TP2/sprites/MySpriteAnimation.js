@@ -3,14 +3,15 @@
  * MySpriteAnimation - class that stores 
  */
 
-class MySpriteAnimation{
+class MySpriteAnimation extends CGFobject{
     /**
     * @constructor
     * @param scene - 
     */
 
     constructor(scene, spritesheet, startCell, endCell, duration){
-        this.scene = scene;
+        super(scene);
+
         this.spritesheet = spritesheet;
         this.startCell = startCell;
         this.endCell = endCell;
@@ -22,10 +23,10 @@ class MySpriteAnimation{
         this.nCells = endCell - startCell;
         this.currentIndex = 0;
         this.activeState = 0;
+        
     }
 
     update(currentTime){
-
         //calculate elapsedTime
         this.elapsedTime += (currentTime - this.lastTime);
         this.lastTime = currentTime;
@@ -34,14 +35,15 @@ class MySpriteAnimation{
         //save current state and other variables ( index of current sprite)        
         this.activeState = (this.nCells * this.elapsedTime) / this.duration;
     }
+    
     display(){
-        activatecellP(i); /* pass the shader the offset */
+        this.spritesheet.activateCellP(this.activeState); /* pass the shader the offset */
         
-        this.setActiveShader(this.scene.shader); //activate shader
-        /*this.texture.bind(0);//bind in texture*/
+        this.scene.setActiveShader(this.scene.shader); //activate shader
+        this.spritesheet.texture.bind(0);//bind in texture*/
 
         this.retangle.display();//display retangle
-        this.setActiveShader(this.scene.defautShader); //set default shader
+        this.scene.setActiveShader(this.scene.defaultShader); //set default shader
                 
         
         /*

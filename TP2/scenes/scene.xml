@@ -256,7 +256,7 @@
             <noderef id="floor" /> 
             <noderef id="securityGantry" /> 
             <leaf type="spriteanim" ssid="sprite1" startCell="0" endCell="10" duration="5" />
-            <leaf type="spritetext" text="ola" />
+            
 
         </descendants>
         
@@ -305,6 +305,7 @@
             <noderef id="restroomSign"/>
             <noderef id="flightBoard"/>
             <noderef id="measures"/>
+            <leaf type="spritetext" text="AIRPORT" />
         </descendants>
 
     </node>

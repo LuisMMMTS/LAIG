@@ -220,7 +220,7 @@ class MySceneGraph {
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "[FILE] Tag <nodes> missing";
         else {
-            if (index != (NODES_INDEX+spritesheets+animations))
+            if (index != (NODES_INDEX + spritesheets + animations))
                 this.onXMLMinorError("[FILE] Tag <nodes> out of order");
 
             //Parse nodes block
@@ -1159,8 +1159,8 @@ class MySceneGraph {
             let descendants = [];
             let primitives = [];
             let descendant = null;
-            this.spritetexts = [];
-            this.spriteanimations = [];
+            let spritetexts = [];
+            let spriteanimations = [];
 
             for (let j = 0; j < grandChildren[descendantsIndex].children.length; j++){
                 descendant = grandChildren[descendantsIndex].children[j];
@@ -1279,10 +1279,10 @@ class MySceneGraph {
                                 var text = this.reader.getString(descendant, "text");
                                 if (text == null){
                                     this.onXMLError("[NODE] Missing values for spritetext definition in nodeID: "+nodeID + ", skipping it");
-                                    congotpointercapture;
+                                    continue;
                                 }
                                 let spriteText = new MySpriteText(this.scene, text);
-                                this.spritetexts.push(spriteText);
+                                spritetexts.push(spriteText);
                                 break;
                                 
                             case "spriteanim":
@@ -1307,7 +1307,7 @@ class MySceneGraph {
                                 }
                                 
                                 let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[id], startCell, endCell, duration);
-                                this.spriteanimations.push(spriteanim);
+                                spriteanimations.push(spriteanim);
                                 break;
                         
                         default:
@@ -1335,8 +1335,8 @@ class MySceneGraph {
             node.setMaterial(materialID);
             node.setTransformation(matrix);
             node.setAnimation(animationID);
-            node.setSpriteTexts(this.spritetexts);
-            node.setSpriteanimations(this.spriteanimations);
+            node.setSpriteTexts(spritetexts);
+            node.setSpriteanimations(spriteanimations);
             this.nodes[nodeID] = node;
             
         }
@@ -1526,6 +1526,16 @@ class MySceneGraph {
         for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display 
             node.getLeafs()[i].display();
         }
+        
+        for(var i=0; i<node.getSpriteTexts().length; i++){
+            this.scene.pushMatrix();
+            node.getSpriteTexts()[i].display();
+            this.scene.popMatrix();
+        }
+        for(var i=0; i<node.getSpriteAnimations().length; i++){
+            node.getSpriteAnimations()[i].display();
+        }
+
 
         for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
             this.scene.pushMatrix();

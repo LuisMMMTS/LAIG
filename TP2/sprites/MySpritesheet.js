@@ -28,19 +28,12 @@ class MySpritesheet extends CGFobject{
 
     }
 
-    /*
-    1. Pass cell parameters to shader --- shader.setUniformValues() 
-    2. Activate Shader --- this.scene.setActiveShader()
-
-    Note: dont forget to activate default shader when done
-    */
-
     /**
     * @activateCellMN - activates the cell with coordinates(m,n), passing cell paramets to shader 
     * @param sizeM - number of the column (int)
     * @param sizeN - number of the row (int)
     */
-    activateCellMN(m,n){
+    activateCellMN(m,n){        
        this.scene.shader.setUniformsValues({offsetM: m * this.scaleM});
        this.scene.shader.setUniformsValues({offsetN: n * this.scaleN});
 
@@ -51,12 +44,11 @@ class MySpritesheet extends CGFobject{
     * @param p - number of the column (int)
     */
     activateCellP(p){
-       let m = p % this.scaleM; /*the corresponding column is the rest of the division for the number of columns*/
-       let n = Math.floor(p / this.scaleM); /*the correspondig row is the division for the number of columns rounded down */
+       let m = p % this.sizeM; /*the corresponding column is the rest of the division for the number of columns*/
+       let n = Math.floor(p / this.sizeM); /*the correspondig row is the division for the number of columns rounded down */
 
        this.activateCellMN(m,n);
     }
     
-    
-    
+       
 }

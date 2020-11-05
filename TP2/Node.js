@@ -16,24 +16,46 @@ class Node{
         this.materialID = null;
         this.transformation = null;
         this.animation = null;
-        this.spritetexts=[];
-        this.spriteanimations=[];
+        this.spritetexts = [];
+        this.spriteanimations = [];
 
     }
 
-    getId(){
-        return this.nodeID;
-    }
-
+/* Sets and gets are not needed but we did it for readability */
+/*---------- SETS------------------- */
     setChildren(children){
         this.children = children;
     }
 
-
     setLeafs(leafs){
         this.leafs = leafs;
     }
+    setTexture(textureID){
+        this.textureID=textureID;
+    }
 
+    setAnimation(animationID){
+        this.animation = animationID;
+    }
+    setSpriteTexts(spritetexts){
+        this.spritetexts = spritetexts;
+    }
+    setSpriteanimations(spriteanimations){
+        this.spriteanimations = spriteanimations;
+    }
+
+    setMaterial(materialID){
+        this.materialID=materialID;
+    }
+    setTransformation(transformation){
+        this.transformation=transformation;
+    }
+
+/*---------- GETS------------------- */
+    getId(){
+        return this.nodeID;
+    }
+    
     getChildren(){
         return this.children;
     }
@@ -42,40 +64,27 @@ class Node{
         return this.leafs;
     }
 
-    setTexture(textureID){
-        this.textureID=textureID;
-    }
-
     getTexture(){
         return this.textureID;
-    }
-
-    setMaterial(materialID){
-        this.materialID=materialID;
     }
 
     getMaterial(){
         return this.materialID;
     }
 
-    setTransformation(transformation){
-        this.transformation=transformation;
-    }
-
     getTransformation(){
         return this.transformation
     }
+
     getAnimation(){
         return this.animation;
     }
-    setAnimation(animationID){
-        this.animation = animationID;
+
+    getSpriteTexts(){
+        return this.spritetexts;
     }
-    setSpriteTexts(spritetexts){
-        this.spritetexts=spritetexts;
+
+    getSpriteAnimations(){
+        return this.spriteanimations;
     }
-    setSpriteanimations(spriteanimations){
-        this.spriteanimations=spriteanimations;
-    }
-    
 }
