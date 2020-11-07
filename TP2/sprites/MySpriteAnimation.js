@@ -3,14 +3,14 @@
  * MySpriteAnimation - class that stores 
  */
 
-class MySpriteAnimation extends CGFobject{
+class MySpriteAnimation {
     /**
     * @constructor
     * @param scene - 
     */
 
     constructor(scene, spritesheet, startCell, endCell, duration){
-        super(scene);
+        this.scene = scene;
 
         this.spritesheet = spritesheet;
         this.startCell = startCell;
