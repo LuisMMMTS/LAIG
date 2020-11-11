@@ -212,6 +212,248 @@
     
     
     </animation>
+
+    <animation id ="caixa">
+        
+            <keyframe instant="5">
+    
+                    <translation x="0" y="0" z="0" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            <keyframe instant="13">
+                    <translation x="0" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+            
+            <keyframe instant="20">
+                    <translation x="0" y="0" z="-25" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+
+        </animation>
+
+       <animation id ="personBody">
+                <keyframe instant="5">
+                        <translation x="0" y="0" z="0" />
+                        <rotation axis="x" angle="0" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="13">
+                        <translation x="0" y="0" z="-15" />
+                        <rotation axis="x" angle="0" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="16">
+                    <translation x="0" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+                <keyframe instant="17">
+                    <translation x="0" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="18">
+                    <translation x="-7" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="-90" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="19">
+                    <translation x="-7" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="27">
+                    <translation x="-7.5" y="0" z="-27" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+
+            </animation>
+            <animation id ="personLegs">
+                    <keyframe instant="5">
+                            <translation x="0" y="0" z="0" />
+                            <rotation axis="x" angle="3" />
+                            <rotation axis="y" angle="0" />
+                            <rotation axis="z" angle="0" />
+                            <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="6">
+                        <translation x="0" y="0" z="-1.875" />
+                        <rotation axis="x" angle="-3" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                    <keyframe instant="7">
+                            <translation x="0" y="0" z="-3.75" />
+                            <rotation axis="x" angle="3" />
+                            <rotation axis="y" angle="0" />
+                            <rotation axis="z" angle="0" />
+                            <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="8">
+                        <translation x="0" y="0" z="-5.625" />
+                        <rotation axis="x" angle="-3" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                    <keyframe instant="9">
+                            <translation x="0" y="0" z="-7.5" />
+                            <rotation axis="x" angle="3" />
+                            <rotation axis="y" angle="0" />
+                            <rotation axis="z" angle="0" />
+                            <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="10">
+                        <translation x="0" y="0" z="-9.375" />
+                        <rotation axis="x" angle="-3" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="11">
+                        <translation x="0" y="0" z="-11.25" />
+                        <rotation axis="x" angle="3" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="12">
+                    <translation x="0" y="0" z="-13.125" />
+                    <rotation axis="x" angle="-3" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="13">
+                        <translation x="0" y="0" z="-15" />
+                        <rotation axis="x" angle="0" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="16">
+                    <translation x="0" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+            </keyframe>
+                <keyframe instant="17">
+                    <translation x="0" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="90" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="18">
+                    <translation x="-7" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="90" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="19">
+                    <translation x="-7" y="0" z="-15" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                <keyframe instant="27">
+                    <translation x="-7.5" y="0" z="-27" />
+                    <rotation axis="x" angle="0" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                    
+                </animation>
+                <animation id ="personArms">
+                    <keyframe instant="5">
+                            <translation x="0" y="0" z="0" />
+                            <rotation axis="x" angle="0" />
+                            <rotation axis="y" angle="0" />
+                            <rotation axis="z" angle="0" />
+                            <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                   <keyframe instant="13">
+                            <translation x="0" y="0" z="-15" />
+                            <rotation axis="x" angle="0" />
+                            <rotation axis="y" angle="0" />
+                            <rotation axis="z" angle="0" />
+                            <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="15">
+                            <translation x="-2.5" y="0" z="-10" />
+                            <rotation axis="x" angle="-90" />
+                            <rotation axis="y" angle="0" />
+                            <rotation axis="z" angle="0" />
+                            <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="16">
+                        <translation x="-2.5" y="5" z="-10" />
+                        <rotation axis="x" angle="-90" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                </keyframe>
+                    <keyframe instant="17">
+                        <translation x="-2.5" y="5" z="-10" />
+                        <rotation axis="x" angle="-90" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="90" />
+                        <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="18">
+                        <translation x="-7" y="5" z="-10" />
+                        <rotation axis="x" angle="-90" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="90" />
+                        <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="19">
+                        <translation x="-7" y="5" z="-10" />
+                        <rotation axis="x" angle="-90" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+                    <keyframe instant="27">
+                        <translation x="-7.5" y="5" z="-22" />
+                        <rotation axis="x" angle="-90" />
+                        <rotation axis="y" angle="0" />
+                        <rotation axis="z" angle="0" />
+                        <scale sx="1" sy="1" sz="1"/>
+                    </keyframe>
+             
+                    
+                </animation>
 </animations>
 
 <!-- spritesheets -->
@@ -305,11 +547,46 @@
             <noderef id="restroomSign"/>
             <noderef id="flightBoard"/>
             <noderef id="measures"/>
-            <leaf type="spritetext" text="AIRPORT" />
+            <noderef id="AIRPORT"/>
+            <noderef id = "Danger"/>
+            
         </descendants>
 
     </node>
+    <node id="AIRPORT">      
 
+        <material id="Off_white_emissive" /> 
+        <texture id="clear">  
+            <amplification afs="1" aft="1" />           
+        </texture>
+
+        <transformations>
+            <translation x="-16" y="4.5" z="0.2" />
+            <scale sx="0.9" sy="1" sz="1"/>
+        </transformations>
+
+        <descendants>
+            <leaf type="spritetext" text="DEPARTURES" />
+        </descendants>
+
+    </node>
+    <node id="Danger">      
+
+        <material id="Off_white_emissive" /> 
+        <texture id="clear">  
+            <amplification afs="1" aft="1" />           
+        </texture>
+
+        <transformations>
+            <translation x="-1.3" y="-2" z="0.2" />
+            <scale sx="0.4" sy="0.8" sz="1"/>
+        </transformations>
+
+        <descendants>
+            <leaf type="spritetext" text="DANGER!" />
+        </descendants>
+
+    </node>
     
 
     <node id="glassWall">      
@@ -337,7 +614,7 @@
         </texture>
 
         <transformations> 
-            <translation x="-3" y="0" z="0.4" />
+            <translation x="-0.2" y="0" z="0.4" />
             <scale sx="1.2" sy="1.2" sz="1" />
         </transformations>
 
@@ -491,7 +768,7 @@
             <noderef id="distanceMark1"/>
             <noderef id="distanceMark2"/>
             <noderef id="sprite"/>
-            <!--<noderef id="person"/>-->
+            <noderef id="person"/>
             
         </descendants>
 
@@ -689,8 +966,10 @@
         </texture>
 
         <transformations>
-            <translation x="7.5" y="0.4" z="8" />
+            <translation x="7.4" y="0.4" z="24.5" />
         </transformations>
+
+        <animationref id="caixa" />
 
         <descendants>
            <noderef id="boxPile"/>
@@ -1253,21 +1532,81 @@
         </texture>
 
         <transformations>
-            <translation x="0" y="-0.5" z="0.0" />
+            <translation x="5" y="-0.5" z="27.0" />
             <scale sx="1" sy="1" sz="1" />
             <rotation axis="y" angle="0" /> 
+            <translation x="2.5" y="0" z="0" />
         </transformations>
+        
+        <descendants>
+            <noderef id="headBody"/>
+            <noderef id= "arms"/>
+            <noderef id ="legs"/>
+        </descendants>
+
+    </node>
+
+    <node id="headBody"> 
+        <material id="null" />
+        <texture id="clear">
+            <amplification afs="1.0" aft="1.0" />
+        </texture>
+
+        <transformations>
+            <translation x="0" y="0" z="0" />
+            <rotation axis="y" angle="0" />
+            <scale sx="1" sy="1" sz="1" />
+        </transformations>
+
+        <animationref id="personBody" />
         
         <descendants>
             <noderef id="head"/>
             <noderef id="body"/>
+        </descendants>
+    </node>
+
+    <node id="arms"> 
+        <material id="null" />
+        <texture id="clear">
+            <amplification afs="1.0" aft="1.0" />
+        </texture>
+
+        <transformations>
+            <translation x="0" y="0" z="0" />
+            <rotation axis="y" angle="0" />
+            <scale sx="1" sy="1" sz="1" />
+        </transformations>
+
+        <animationref id="personArms" />
+        
+        <descendants>
             <noderef id="armLeft"/>
             <noderef id="armRight"/>
+        </descendants>
+    </node>
+
+    <node id="legs"> 
+        <material id="null" />
+        <texture id="clear">
+            <amplification afs="1.0" aft="1.0" />
+        </texture>
+
+        <transformations>
+            <translation x="0" y="0" z="0" />
+            <rotation axis="y" angle="0" />
+            <scale sx="1" sy="1" sz="1" />
+        </transformations>
+
+        <animationref id="personLegs" />
+        
+        <descendants>
             <noderef id="legLeft"/>
             <noderef id="legRight"/>
         </descendants>
-
     </node>
+
+
     <node id="head"> 
         <material id="black" />
         <texture id="clear">
@@ -1313,10 +1652,12 @@
             <scale sx="1" sy="1" sz="1" />
             <rotation axis="x" angle="-90" />
             <rotation axis ="y" angle="25"/> 
+            <rotation axis ="x" angle="90"/>
+            <translation x="0.0001" y="1.5" z="-2.5"/>
         </transformations>
         
         <descendants>
-            <leaf type="cylinder" height="1.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
+            <leaf type="cylinder" height="2.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
         </descendants>
     </node>
     <node id="armRight"> 
@@ -1330,10 +1671,12 @@
             <scale sx="1" sy="1" sz="1" />
             <rotation axis="x" angle="-90" />
             <rotation axis ="y" angle="-25"/> 
+            <rotation axis ="x" angle="90"/>
+            <translation x="0.0001" y="1.5" z="-2.5"/>
         </transformations>
         
         <descendants>
-            <leaf type="cylinder" height="1.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
+            <leaf type="cylinder" height="2.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
         </descendants>
     </node>
     <node id="legLeft"> 
@@ -1342,6 +1685,8 @@
             <amplification afs="1.0" aft="1.0" />
         </texture>
 
+        <!-- <animationref id="personLegs" />-->
+
         <transformations>
             <translation x="-0.75" y="0.75" z="00" />
             <scale sx="1" sy="1" sz="1" />
@@ -1349,7 +1694,7 @@
         </transformations>
         
         <descendants>
-            <leaf type="cylinder" height="2.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
+            <leaf type="cylinder" height="5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
         </descendants>
     </node>
     <node id="legRight"> 
@@ -1358,14 +1703,18 @@
             <amplification afs="1.0" aft="1.0" />
         </texture>
 
+        <!-- <animationref id="personLegs" />-->
+
         <transformations>
-            <translation x="+0.75" y="0.75" z="00" />
+            <translation x="+0.75" y="5.75" z="00" />
             <scale sx="1" sy="1" sz="1" />
             <rotation axis="x" angle="-90" />
+            <rotation axis="y" angle="180"/>
+            
         </transformations>
         
         <descendants>
-            <leaf type="cylinder" height="2.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
+            <leaf type="cylinder" height="5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24"/> 
         </descendants>
     </node>
 

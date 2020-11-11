@@ -48,7 +48,7 @@ class KeyFrameAnimation extends Animation{
         this.elapsedTime += (currentTime - this.lastTime);
         this.lastTime = currentTime;
 
-        
+        console.log(this.elapsedTime);  
         //check if the animation should be active
         if(this.elapsedTime < this.startTime && !this.ended) return;
        
@@ -66,9 +66,10 @@ class KeyFrameAnimation extends Animation{
                 keyframeStartInstant = this.keyframes[i].instant;
                 keyframeStartIndex = i;
             }
-            else if (this.keyframes[i].instant >this.elapsedTime){
+            else if (this.keyframes[i].instant > this.elapsedTime){
                 keyframeEndInstant = this.keyframes[i].instant;
                 keyframeEndIndex = i;
+                break;
             }
             else if(this.keyframes[i].instant == this.elapsedTime){ // no need for interpolation, its in a matching keyframe instant
                 this.animationTranslation = this.keyframes[i].translation;
