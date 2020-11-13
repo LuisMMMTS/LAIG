@@ -152,6 +152,13 @@
          <ambient r="1" g="0" b="0" a="1.0" />         <!-- ambient reflection -->
          <emissive r="0.5" g="0" b="0" a="1.0" />        <!-- emissive component -->
       </material>
+      <material id="transparent">                                  
+        <shininess value="1.0" />
+        <specular r="1" g="0" b="0" a="0.0" />        <!-- specular reflection -->
+         <diffuse r="1" g="0" b="0" a="0.0" />         <!-- diffuse reflection -->
+         <ambient r="1" g="0" b="0" a="0.0" />         <!-- ambient reflection -->
+         <emissive r="0.5" g="0" b="0" a="0.0" />        <!-- emissive component -->
+      </material>
 </materials>
 <animations>
 <!-- This is optional and can be empty-->
@@ -580,7 +587,9 @@
 <spritesheets>
         <!-- Semelhante à declaração de textura,  mas inclui a definição do nº de colunas e linhas -->
         <spritesheet id="sprite1" path="walking.jpg" sizeM="9" sizeN="2" />
-        <spritesheet id="boardSprite" path="board.jpg" sizeM="3" sizeN="60" />
+        <spritesheet id="boardSprite" path="board2.png" sizeM="3" sizeN="1" />
+        <spritesheet id="xraySprite" path="xray.png" sizeM="52" sizeN="1" />
+        <spritesheet id="groundArrow" path="arrow.png" sizeM="3" sizeN="1"/>
 </spritesheets>
 
 
@@ -676,7 +685,7 @@
     
     <node id="sprite2">    
 
-        <material id="Off_white_emissive" />   
+        <material id="transparent" />   
         <texture id="clear">    
             <amplification afs="1" aft="1" />         
         </texture>
@@ -684,11 +693,11 @@
 
         <transformations>
             <translation x="2" y="2" z="2" />
-             
+            <scale sx="15" sy="7" sz="1" />             
         </transformations>
 
         <descendants>
-            <leaf type="spriteanim" ssid="boardSprite" startCell="2" endCell="5" duration="5000" />
+            <leaf type="spriteanim" ssid="boardSprite" startCell="1" endCell="3" duration="1" />
         </descendants>
 
     </node>
@@ -910,13 +919,15 @@
             <noderef id="distanceMark2"/>
             <noderef id="sprite"/>
             <noderef id="person"/>
+            <noderef id="arrow1"/>
+            <noderef id="arrow2"/>
             
         </descendants>
 
     </node>
     <node id="sprite">    
 
-        <material id="Off_white_emissive" />   
+        <material id="transparent" />   
         <texture id="clear">    
             <amplification afs="1" aft="1" />         
         </texture>
@@ -932,6 +943,51 @@
         </descendants>
 
     </node>
+
+    <node id="arrow1">    
+
+        <material id="transparent" />   
+        <texture id="clear">    
+            <amplification afs="1" aft="1" />         
+        </texture>
+
+
+        <transformations>
+            <translation x="-3" y="0.1" z="10" />
+            <rotation axis="x" angle="-90"/>
+            <rotation axis="z" angle="90"/>
+            <scale sx="2" sy="2" sz="2" />
+             
+        </transformations>
+
+        <descendants>
+            <leaf type="spriteanim" ssid="groundArrow" startCell="1" endCell="3" duration="10" />
+        </descendants>
+
+    </node>
+
+    <node id="arrow2">    
+
+        <material id="transparent" />   
+        <texture id="clear">    
+            <amplification afs="1" aft="1" />         
+        </texture>
+
+
+        <transformations>
+            <translation x="3" y="0.1" z="10" />
+            <rotation axis="x" angle="-90"/>
+            <rotation axis="z" angle="90"/>
+            <scale sx="2" sy="2" sz="2" />             
+        </transformations>
+
+        <descendants>
+            <leaf type="spriteanim" ssid="groundArrow" startCell="1" endCell="3" duration="10" />
+        </descendants>
+
+    </node>
+
+    
     <node id="distanceMark1">    
 
         <material id="Off_white_emissive" />   
@@ -1093,7 +1149,7 @@
         <transformations>
             <rotation axis="x" angle="-90" />
             <translation x="0" y="1.0" z="5.1" />
-            <scale sx="0.8" sy="1" sz="0.6" />-->
+            <scale sx="0.8" sy="1" sz="0.6" />
         </transformations>
 
         <descendants>
@@ -1377,6 +1433,25 @@
 
         <descendants>
             <leaf type="cylinder" height="15" topRadius="0.3" bottomRadius="0.3" stacks="8" slices="16"/>    
+            <noderef id="xrayscreen"/>
+        </descendants>
+
+    </node>
+    <node id="xrayscreen"> 
+
+        <material id="Porcelain_Grey" />    
+        <texture id="clear">     
+            <amplification afs="1" aft="1" />          
+        </texture>
+
+        <transformations>
+            <translation x="2.2" y="2.5" z="8" />
+            <scale sx="3" sy="1" sz="1" />
+        </transformations>
+
+        <descendants>
+            <leaf type="spriteanim" ssid="xraySprite" startCell="1" endCell="9" duration="30" />
+            <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" />  <!--//will this create an inverted rectangle??-->
         </descendants>
 
     </node>

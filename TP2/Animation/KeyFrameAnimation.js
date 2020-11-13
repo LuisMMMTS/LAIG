@@ -48,7 +48,7 @@ class KeyFrameAnimation extends Animation{
         this.elapsedTime += (currentTime - this.lastTime);
         this.lastTime = currentTime;
 
-        console.log(this.elapsedTime);  
+        //console.log(this.elapsedTime);  
         //check if the animation should be active
         if(this.elapsedTime < this.startTime && !this.ended) return;
        
