@@ -792,6 +792,7 @@ class MySceneGraph {
             //Parsing keyframes
             grandChildren = children[j].children;
             let instants = [];
+            let last_instant=0;
             for(let i = 0; i<grandChildren.length; i++){
                 if (grandChildren[i].nodeName != "keyframe") {
                     this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + children[i].nodeName + ">");
@@ -799,7 +800,7 @@ class MySceneGraph {
                 }
 
                 var keyframe = new KeyFrame();
-                keyframe.instant = this.reader.getString(grandChildren[i], 'instant');
+                keyframe.instant = this.reader.getFloat(grandChildren[i], 'instant');
                 
                 if(keyframe.instant == null || isNaN(keyframe.instant) || keyframe.instant < 0){
                     this.onXMLMinorError("[ANIMATIONS] Invalid/Missing value for keyframe instant of the animation " + animationID);
@@ -809,6 +810,10 @@ class MySceneGraph {
                     this.onXMLError("[ANIMATIONS] Repeated keyframe instant on animation "+ animationID);
                     continue;
                 }
+                if(keyframe.instant<=last_instant){
+                    this.onXMLMinorError("[ANIMATIONS] Unordered keyframe instant on animation "+ animationID+" in instant "+ keyframe.instant+ " coming only after instant "+last_instant+" but using it anyway");
+                }
+                last_instant=keyframe.instant;
                 instants[keyframe.instant] = keyframe.instant;
 
 
