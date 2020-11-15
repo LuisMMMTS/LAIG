@@ -16,13 +16,14 @@ class KeyFrameAnimation extends Animation{
         //variables where the current animation is being stored
         this.animationTranslation = vec3.create();
         this.animationRotation = vec3.create();
-        this.animationScale = new vec3.fromValues(1,1,1);
+        this.animationScale = new vec3.fromValues(0,0,0);
         
         this.startTime = 0;
         this.endTime = 0;
         this.elapsedTime = 0;
         this.lastTime = 0;
 
+        this.active = false;
         this.ended = false; 
     }
 
@@ -43,11 +44,16 @@ class KeyFrameAnimation extends Animation{
 
         //if animation reached the end, return
         if(this.ended) return;
-
+        
         //update elapsedTime based on lastTime and update lastTime
         this.elapsedTime += (currentTime - this.lastTime);
         this.lastTime = currentTime;
-
+        if(!this.active){
+            if(this.elapsedTime >= this.startTime)
+                this.active = true;
+            else 
+                return;
+        }
         //console.log(this.elapsedTime);  
         //check if the animation should be active
         if(this.elapsedTime < this.startTime && !this.ended) return;

@@ -792,7 +792,7 @@ class MySceneGraph {
             //Parsing keyframes
             grandChildren = children[j].children;
             let instants = [];
-            let last_instant=0;
+            let last_instant = 0;
             for(let i = 0; i<grandChildren.length; i++){
                 if (grandChildren[i].nodeName != "keyframe") {
                     this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + children[i].nodeName + ">");
@@ -810,10 +810,10 @@ class MySceneGraph {
                     this.onXMLError("[ANIMATIONS] Repeated keyframe instant on animation "+ animationID);
                     continue;
                 }
-                if(keyframe.instant<=last_instant){
-                    this.onXMLMinorError("[ANIMATIONS] Unordered keyframe instant on animation "+ animationID+" in instant "+ keyframe.instant+ " coming only after instant "+last_instant+" but using it anyway");
+                if(keyframe.instant < last_instant){
+                    this.onXMLMinorError("[ANIMATIONS] Unordered keyframe instant on animation "+ animationID +" in instant "+ keyframe.instant + " coming only after instant "+ last_instant + " but using it anyway");
                 }
-                last_instant=keyframe.instant;
+                last_instant = keyframe.instant;
                 instants[keyframe.instant] = keyframe.instant;
 
 
@@ -888,7 +888,7 @@ class MySceneGraph {
                         let sz = this.reader.getFloat(grandgrandChildren[k], "sz");
 
                         if (sx == null || sy == null || sz == null|| isNaN(sx) || isNaN(sy) || isNaN(sz)) {
-                            this.onXMLError("[NODE] missing/not number values for scale node: " + nodeID + ", skipping it");
+                            this.onXMLError("[ANIMATIONS] missing/not number values for scale node: " + animationID + ", skipping it");
                             continue;
                         }
                         keyframe.scale = new vec3.fromValues(sx,sy,sz);
