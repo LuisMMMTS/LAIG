@@ -172,11 +172,11 @@
     </materials>
     <animations>
         <!-- This is optional and can be empty-->
-        <animation id="sphereAnimation">
+        <animation id="sphereAnimationGreen">
             <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
     one keyframe. Instant is time expressed in seconds since the beginning of the animation.
         Keyframes must be declared in ascending order of time -->
-            <keyframe instant="0">
+            <keyframe instant="20">
 
                 <!-- translate, rotate e scale representam as -->
                 <!-- quantidades das transformações -->
@@ -192,26 +192,62 @@
                 <rotation axis="z" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
-            <keyframe instant="26">
+            <keyframe instant="25">
                 <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-            <keyframe instant="27">
-                <translation x="2" y="2" z="2" />
                 <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
                 <scale sx="2" sy="2" sz="2" />
             </keyframe>
-            <keyframe instant="30">
+            <keyframe instant="27">
                 <translation x="0" y="0" z="0" />
                 <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="90" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+            <keyframe instant="28">
+                <translation x="1" y="0" z="1" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="3" sy="3" sz="3" />
+            </keyframe>
+
+
+        </animation>
+
+        <animation id="sphereAnimationRed">
+            <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
+    one keyframe. Instant is time expressed in seconds since the beginning of the animation.
+        Keyframes must be declared in ascending order of time -->
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="25">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+            <keyframe instant="27">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+            <keyframe instant="28">
+                <translation x="-1" y="0" z="-1" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="0" sy="0" sz="0" />
             </keyframe>
 
 
@@ -872,7 +908,7 @@
                 <scale sx="1" sy="1" sz="0.4" />
             </transformations>
 
-            <!-- <animationref id="sphereAnimation" /> -->
+            <animationref id="sphereAnimationGreen" />
 
             <descendants>
                 <leaf type="sphere" radius="0.25" slices="16" stacks="8" />
@@ -891,7 +927,7 @@
                 <scale sx="1" sy="1" sz="0.4" />
             </transformations>
 
-            <!-- <animationref id="sphereAnimation" /> -->
+            <animationref id="sphereAnimationRed" />
 
             <descendants>
                 <leaf type="sphere" radius="0.25" slices="16" stacks="8" />
