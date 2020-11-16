@@ -590,8 +590,8 @@
     <spritesheets>
         <!-- Semelhante à declaração de textura,  mas inclui a definição do nº de colunas e linhas -->
         <spritesheet id="sprite1" path="walking.jpg" sizeM="9" sizeN="2" />
-        <spritesheet id="boardSprite" path="board2.png" sizeM="3" sizeN="1" />
-        <spritesheet id="xraySprite" path="xray.png" sizeM="52" sizeN="1" />
+        <spritesheet id="boardSprite" path="board.png" sizeM="1" sizeN="4" />
+        <spritesheet id="xraySprite" path="xray.png" sizeM="1" sizeN="36" />
         <spritesheet id="groundArrow" path="arrow.png" sizeM="3" sizeN="1" />
     </spritesheets>
 
@@ -700,7 +700,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="boardSprite" startCell="1" endCell="3" duration="100" />
+                <leaf type="spriteanim" ssid="boardSprite" startCell="0" endCell="3" duration="5" />
             </descendants>
 
         </node>
@@ -963,7 +963,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="groundArrow" startCell="1" endCell="3" duration="10" />
+                <leaf type="spriteanim" ssid="groundArrow" startCell="0" endCell="2" duration="2" />
             </descendants>
 
         </node>
@@ -984,7 +984,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="groundArrow" startCell="1" endCell="3" duration="10" />
+                <leaf type="spriteanim" ssid="groundArrow" startCell="0" endCell="2" duration="2" />
             </descendants>
 
         </node>
@@ -1452,7 +1452,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="xraySprite" startCell="1" endCell="9" duration="30" />
+                <leaf type="spriteanim" ssid="xraySprite" startCell="0" endCell="34" duration="10" />
                 <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" /> <!--//will this create an inverted rectangle??-->
             </descendants>
 

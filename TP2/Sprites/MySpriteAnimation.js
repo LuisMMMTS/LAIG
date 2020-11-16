@@ -29,7 +29,8 @@ class MySpriteAnimation {
     }
 
     update(currentTime){
-        this.lastTime += currentTime;
+        this.lastTime = currentTime;
+        //console.log("current time: "+currentTime);
         
         //calculate elapsedTime
         let instant = this.lastTime % this.duration;
@@ -37,6 +38,7 @@ class MySpriteAnimation {
         //calculate which state is active, using elapsed time, duration, n of cells
         //save current state and other variables ( index of current sprite)        
         this.activeState = Math.floor(instant / this.spriteTime) + this.startCell;
+        //console.log("this.activeState="+this.activeState);
         
     }
 

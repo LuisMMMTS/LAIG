@@ -16,7 +16,7 @@ class KeyFrameAnimation extends Animation{
         //variables where the current animation is being stored
         this.animationTranslation = vec3.create();
         this.animationRotation = vec3.create();
-        this.animationScale = new vec3.fromValues(0,0,0);
+        this.animationScale = new vec3.fromValues(1,1,1);
         
         this.startTime = 0;
         this.endTime = 0;

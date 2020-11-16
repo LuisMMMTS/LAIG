@@ -1469,6 +1469,7 @@ class MySceneGraph {
      * @param {CGFappearance} mat  
      */
     processNode(id, texId, matId){ 
+        let display=true;
         let node = this.nodes[id];
 
         if (node == null){//node does not exist
@@ -1525,8 +1526,10 @@ class MySceneGraph {
 
         if(node.animation != null){//it has animation defined
             this.animations[node.animation].apply();
+            display=this.animations[node.animation].active;
         }
 
+        if (display){
         for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display 
             if(node.getLeafs()[i] instanceof MySpriteText){ 
                 this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext
@@ -1547,7 +1550,7 @@ class MySceneGraph {
             }
             this.scene.popMatrix();
         }
-
+    }
         this.scene.popMatrix();
     }
 }

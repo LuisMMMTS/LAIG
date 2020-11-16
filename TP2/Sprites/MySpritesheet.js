@@ -51,10 +51,11 @@ class MySpritesheet {
 
     activate(){
 
+        this.scene.setActiveShaderSimple(this.scene.shader); //activate shader
+
         this.scene.shader.setUniformsValues({scaleM: this.scaleM});
         this.scene.shader.setUniformsValues({scaleN: this.scaleN});
 
-        this.scene.setActiveShader(this.scene.shader); //activate shader
         this.texture.bind(0);//bind in texture
     }
     
