@@ -33,8 +33,8 @@ class XMLscene extends CGFscene {
         this.lightValues = [];
 
         this.axis = new CGFaxis(this);
-        this.displayAxis = true;
-        this.displayLights = true;
+        this.displayAxis = false;
+        this.displayLights = false;
 
         this.setUpdatePeriod(1000/60);
         this.initialTime = 0;
@@ -184,11 +184,15 @@ class XMLscene extends CGFscene {
         //console.log(delta);
         //updates animations based on current time
          if(this.sceneInited){
+
              if(this.graph.animations == undefined) return;
+
              for(let animation in this.graph.animations){ //update keyframeanimations
                 this.graph.animations[animation].update(delta); // delta is the time in seconds since the beginning of the program
              }
+
              if(this.graph.spriteanimations == undefined) return;
+             
              for(let i = 0; i < this.graph.spriteanimations.length; i++){ //update spriteanimations
                  this.graph.spriteanimations[i].update(delta);
              }

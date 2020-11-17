@@ -23,6 +23,7 @@ class KeyFrameAnimation extends Animation{
         this.elapsedTime = 0;
         this.lastTime = 0;
 
+        this.active = false;
         this.ended = false; 
     }
 
@@ -31,43 +32,41 @@ class KeyFrameAnimation extends Animation{
         this.keyframes.push(keyFrame);
         
         //to make sure it's in ascending time order
-        this.keyframes.sort(function(a, b){return a.instant - b.instant});
+        this.keyframes.sort(function(a, b){ return a.instant - b.instant });
         
         this.startTime = this.keyframes[0].instant;
-        this.endTime = this.keyframes[this.keyframes.length-1].instant;
+        this.endTime = this.keyframes[this.keyframes.length - 1].instant;
 
     }
 
 
     update(currentTime){
-    
-        //console.log("current time is "+ currentTime);
-        //console.log("elapsed time is "+ this.elapsedTime);
 
-        if(this.ended){//if animation reached the end, return
-            console.log("end");
-            return;
-        }
-
+        //if animation reached the end, return
+        if(this.ended) return;
+        
         //update elapsedTime based on lastTime and update lastTime
         this.elapsedTime += (currentTime - this.lastTime);
         this.lastTime = currentTime;
 
-        
-        //check if the animation should be active
-        if(this.elapsedTime < this.startTime && !this.ended){ 
-            console.log("hasn't started yet");
-            return;
+        //check if the keyframe should be active or not
+        if(!this.active){
+            if(this.elapsedTime >= this.startTime)
+                this.active = true;
+            else 
+                return;
         }
-        
+        //console.log(this.elapsedTime);  
+        //check if the animation should be active
+        if(this.elapsedTime < this.startTime && !this.ended) return;
+       
         //End of animation 
         if(this.elapsedTime >= this.endTime){
             this.ended = true;
         }
         
 
-        let keyframeStartInstant = 0, keyframeEndInstant = 0;
-        let keyframeStartIndex = 0, keyframeEndIndex = 0;
+        let keyframeStartInstant = 0, keyframeEndInstant = 0, keyframeStartIndex = 0, keyframeEndIndex = 0;
         
         //maybe change this because is not that efficient
         for(let i = 0; i < this.keyframes.length; i++){
@@ -75,9 +74,10 @@ class KeyFrameAnimation extends Animation{
                 keyframeStartInstant = this.keyframes[i].instant;
                 keyframeStartIndex = i;
             }
-            else if (this.keyframes[i].instant >this.elapsedTime){
+            else if (this.keyframes[i].instant > this.elapsedTime){
                 keyframeEndInstant = this.keyframes[i].instant;
                 keyframeEndIndex = i;
+                break;
             }
             else if(this.keyframes[i].instant == this.elapsedTime){ // no need for interpolation, its in a matching keyframe instant
                 this.animationTranslation = this.keyframes[i].translation;
@@ -90,10 +90,12 @@ class KeyFrameAnimation extends Animation{
         /* INTERPOLATION */
 
         //It's not the end so we need to do interpolation
-        let interpolationAmount = (this.elapsedTime - keyframeStartInstant) /(keyframeEndInstant-keyframeStartInstant);
+        let interpolationAmount = (this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant);
 
         vec3.lerp(this.animationTranslation,this.keyframes[keyframeStartIndex].translation, this.keyframes[keyframeEndIndex].translation,interpolationAmount);
+
         vec3.lerp(this.animationRotation,this.keyframes[keyframeStartIndex].rotation, this.keyframes[keyframeEndIndex].rotation,interpolationAmount);
+        
         vec3.lerp(this.animationScale,this.keyframes[keyframeStartIndex].scale, this.keyframes[keyframeEndIndex].scale,interpolationAmount);
         
     }
