@@ -772,7 +772,7 @@ class MySceneGraph {
         var grandChildren = [];
         var children = animationNodes.children;
         
-        for(let j=0; j<children.length; j++){
+        for(let j=0; j < children.length; j++){
             if (children[j].nodeName != "animation") {
                 this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + children[j].nodeName + ">");
                 continue;
@@ -793,7 +793,7 @@ class MySceneGraph {
             grandChildren = children[j].children;
             let instants = [];
             let last_instant = 0;
-            for(let i = 0; i<grandChildren.length; i++){
+            for(let i = 0; i < grandChildren.length; i++){
                 if (grandChildren[i].nodeName != "keyframe") {
                     this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + children[i].nodeName + ">");
                     continue;
@@ -818,7 +818,7 @@ class MySceneGraph {
 
 
                 var grandgrandChildren = grandChildren[i].children;
-                var xangle=null, yangle=null, zangle=null;
+                var xangle = null, yangle = null, zangle = null;
                 for(var k = 0; k < grandgrandChildren.length; k++){//we should warn it's not in the expected order but we don't ignore it
                     if(grandgrandChildren.length > 5){
                         this.onXMLError("[ANIMATIONS] Too many transformations declared in animation " + animationID +" skipping it");
@@ -837,7 +837,7 @@ class MySceneGraph {
                         keyframe.translation = coordinates;
                     
                     }    
-                    else if(grandgrandChildren[k].nodeName =="rotation"){
+                    else if(grandgrandChildren[k].nodeName == "rotation"){
                         if(k != 1 && k != 2 && k != 3){
                             this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
                         }
@@ -850,7 +850,7 @@ class MySceneGraph {
                             continue;
                         }
                         else if (axis == "x" ) {
-                            if(xangle !=null){//ignore it and stay with first one
+                            if(xangle != null){//ignore it and stay with first one
                                 this.onXMLError("[ANIMATIONS] Redefinition of x rotation of animation : " + animationID + ", skipping it");
                                 continue;
                             }
@@ -859,7 +859,7 @@ class MySceneGraph {
                             }
                         }
                         else if(axis == "y"){
-                            if(yangle !=null){
+                            if(yangle != null){
                                 this.onXMLError("[ANIMATIONS] Redefinition of y rotation of animation : " + animationID + ", skipping it");
                                 continue;
                             }
@@ -868,7 +868,7 @@ class MySceneGraph {
                             }
                         }
                         else if(axis == "z"){
-                            if(zangle !=null){
+                            if(zangle != null){
                                 this.onXMLError("[ANIMATIONS] Redefinition of z rotation of animation : " + animationID + ", skipping it");
                                 continue;
                             }
@@ -879,9 +879,9 @@ class MySceneGraph {
                         }
 
                     }
-                    else if (grandgrandChildren[k].nodeName =="scale"){
+                    else if (grandgrandChildren[k].nodeName == "scale"){
                         if(k != 4){
-                            this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation2 " + animationID);
+                            this.onXMLMinorError("[ANIMATIONS] Transformations out of order in animation " + animationID);
                         }
                         let sx = this.reader.getFloat(grandgrandChildren[k], "sx");
                         let sy = this.reader.getFloat(grandgrandChildren[k], "sy");
@@ -1281,41 +1281,41 @@ class MySceneGraph {
                             primitives.push(triangle);
                             break;
 
-                            case "spritetext":
-                                var text = this.reader.getString(descendant, "text");
-                                if (text == null){
-                                    this.onXMLError("[NODE] Missing values for spritetext definition in nodeID: "+ nodeID + ", skipping it");
-                                    continue;
-                                }
-                                let spriteText = new MySpriteText(this.scene, text);
-                                primitives.push(spriteText);
-                                break;
+                        case "spritetext":
+                            var text = this.reader.getString(descendant, "text");
+                            if (text == null){
+                                this.onXMLError("[NODE] Missing values for spritetext definition in nodeID: "+ nodeID + ", skipping it");
+                                continue;
+                            }
+                            let spriteText = new MySpriteText(this.scene, text);
+                            primitives.push(spriteText);
+                            break;
                                 
-                            case "spriteanim":
-                                let id = this.reader.getString(descendant,"ssid");
-                                let startCell = this.reader.getFloat(descendant,"startCell");
-                                let endCell = this.reader.getFloat(descendant,"endCell");
-                                let duration = this.reader.getFloat(descendant,"duration");
+                        case "spriteanim":
+                            let id = this.reader.getString(descendant,"ssid");
+                            let startCell = this.reader.getFloat(descendant,"startCell");
+                            let endCell = this.reader.getFloat(descendant,"endCell");
+                            let duration = this.reader.getFloat(descendant,"duration");
 
-                                if(startCell == null || isNaN(startCell)){
-                                    startCell=0;
-                                }
+                            if(startCell == null || isNaN(startCell)){
+                                startCell=0;
+                            }
 
-                                if (id == null || startCell == null || isNaN(startCell) || startCell < 0|| endCell == null || isNaN(endCell)||
-                                 endCell < startCell || duration < 0 || duration == null || isNaN(duration)){
-                                    this.onXMLError("[NODE] Missing values for spriteanim definition in nodeID: "+ nodeID + ", skipping it");
-                                    continue;
-                                }
-                                
-                                if (this.spritesheets[id] == null){
-                                    this.onXMLError("[NODE] Wrong value for spriteanim ID in nodeID: "+ nodeID + ", skipping it");
-                                    continue;
-                                }
-                                
-                                let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[id], startCell, endCell, duration);
-                                primitives.push(spriteanim);
-                                this.spriteanimations.push(spriteanim);
-                                break;
+                            if (id == null || startCell == null || isNaN(startCell) || startCell < 0|| endCell == null || isNaN(endCell)||
+                                endCell < startCell || duration < 0 || duration == null || isNaN(duration)){
+                                this.onXMLError("[NODE] Missing values for spriteanim definition in nodeID: "+ nodeID + ", skipping it");
+                                continue;
+                            }
+                            
+                            if (this.spritesheets[id] == null){
+                                this.onXMLError("[NODE] Wrong value for spriteanim ID in nodeID: "+ nodeID + ", skipping it");
+                                continue;
+                            }
+                            
+                            let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[id], startCell, endCell, duration);
+                            primitives.push(spriteanim);
+                            this.spriteanimations.push(spriteanim);
+                            break;
                         
                         default:
                             this.onXMLMinorError("[NODE] Unknown leaf type in node id: "+ nodeID);
@@ -1469,7 +1469,7 @@ class MySceneGraph {
      * @param {CGFappearance} mat  
      */
     processNode(id, texId, matId){ 
-        let display=true;
+        let display = true;
         let node = this.nodes[id];
 
         if (node == null){//node does not exist
@@ -1526,31 +1526,31 @@ class MySceneGraph {
 
         if(node.animation != null){//it has animation defined
             this.animations[node.animation].apply();
-            display=this.animations[node.animation].active;
+            display = this.animations[node.animation].active;
         }
 
         if (display){
-        for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display 
-            if(node.getLeafs()[i] instanceof MySpriteText){ 
-                this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext
-                node.getLeafs()[i].display();
+            for(var i = 0; i < node.getLeafs().length; i++){ // if primitive, display 
+                if(node.getLeafs()[i] instanceof MySpriteText){ 
+                    this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext
+                    node.getLeafs()[i].display();
+                    this.scene.popMatrix();
+                }
+                else{
+                    node.getLeafs()[i].display();
+                }
+            }
+
+            for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
+                this.scene.pushMatrix();
+                let a = this.processNode(node.getChildren()[i],textureID, materialID);
+                if (a == 1){//the node does not exist
+                    this.onXMLError("[PROCESS NODE] NodeID "+ id + " has non existent child with id: " + node.getChildren()[i]);
+                    node.children.splice(i, i+1);//removes this node from the children so it's not printing the same message over and over again
+                }
                 this.scene.popMatrix();
             }
-            else{
-                node.getLeafs()[i].display();
-            }
         }
-
-        for(var i = 0; i < node.getChildren().length; i++){// if node, recursive call
-            this.scene.pushMatrix();
-            let a = this.processNode(node.getChildren()[i],textureID, materialID);
-            if (a == 1){//the node does not exist
-                this.onXMLError("[PROCESS NODE] NodeID "+ id + " has non existent child with id: " + node.getChildren()[i]);
-                node.children.splice(i, i+1);//removes this node from the children so it's not printing the same message over and over again
-            }
-            this.scene.popMatrix();
-        }
-    }
         this.scene.popMatrix();
     }
 }

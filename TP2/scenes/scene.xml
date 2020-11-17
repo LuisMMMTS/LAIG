@@ -176,7 +176,7 @@
             <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
     one keyframe. Instant is time expressed in seconds since the beginning of the animation.
         Keyframes must be declared in ascending order of time -->
-            <keyframe instant="20">
+            <keyframe instant="0">
 
                 <!-- translate, rotate e scale representam as -->
                 <!-- quantidades das transformações -->
@@ -192,35 +192,6 @@
                 <rotation axis="z" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
-            <keyframe instant="25">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="2" sy="2" sz="2" />
-            </keyframe>
-            <keyframe instant="27">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="2" sy="2" sz="2" />
-            </keyframe>
-            <keyframe instant="28">
-                <translation x="1" y="0" z="1" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="3" sy="3" sz="3" />
-            </keyframe>
-
-
-        </animation>
-
-        <animation id="sphereAnimationRed">
-            <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
-    one keyframe. Instant is time expressed in seconds since the beginning of the animation.
-        Keyframes must be declared in ascending order of time -->
             <keyframe instant="20">
                 <translation x="0" y="0" z="0" />
                 <rotation axis="x" angle="0" />
@@ -242,7 +213,50 @@
                 <rotation axis="z" angle="0" />
                 <scale sx="2" sy="2" sz="2" />
             </keyframe>
-            <keyframe instant="28">
+            <keyframe instant="29">
+                <translation x="1" y="0" z="1" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="3" sy="3" sz="3" />
+            </keyframe>
+
+
+        </animation>
+
+        <animation id="sphereAnimationRed">
+            <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
+    one keyframe. Instant is time expressed in seconds since the beginning of the animation.
+        Keyframes must be declared in ascending order of time -->
+            <keyframe instant="0">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="25">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+            <keyframe instant="27">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+            <keyframe instant="29">
                 <translation x="-1" y="0" z="-1" />
                 <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
@@ -496,7 +510,7 @@
                 <scale sx="1" sy="1" sz="1" />
             </keyframe>
         </animation>
-        -->
+
         <animation id="armsPosition">
             <keyframe instant="5">
                 <translation x="0" y="0" z="0" />
@@ -731,7 +745,7 @@
 
 
             <transformations>
-                <translation x="-12" y="1" z="0" />
+                <translation x="-12" y="1" z="0.4" />
                 <scale sx="15" sy="10" sz="1" />
             </transformations>
 
@@ -767,8 +781,8 @@
             </texture>
 
             <transformations>
-                <translation x="-1.3" y="-2" z="0.2" />
-                <scale sx="0.4" sy="0.8" sz="1" />
+                <translation x="1.7" y="-2" z="0.2" />
+                <scale sx="0.6" sy="0.6" sz="1" />
             </transformations>
 
             <descendants>
@@ -803,7 +817,7 @@
             </texture>
 
             <transformations>
-                <translation x="-0.2" y="0" z="0.4" />
+                <translation x="3.5" y="0" z="0.4" />
                 <scale sx="1.2" sy="1.2" sz="1" />
             </transformations>
 
@@ -951,8 +965,7 @@
                 <noderef id="feetRetangle" />
                 <noderef id="leftBoxes" />
                 <noderef id="rightBoxes" />
-                <noderef id="divisors1" />
-                <noderef id="divisors2" />
+                <noderef id="divisors" />
                 <noderef id="distanceMark1" />
                 <noderef id="distanceMark2" />
                <!-- <noderef id="sprite" />-->
@@ -991,7 +1004,7 @@
 
 
             <transformations>
-                <translation x="-3" y="0.1" z="10" />
+                <translation x="-2.5" y="0.1" z="10" />
                 <rotation axis="x" angle="-90" />
                 <rotation axis="z" angle="90" />
                 <scale sx="2" sy="2" sz="2" />
@@ -1013,7 +1026,7 @@
 
 
             <transformations>
-                <translation x="3" y="0.1" z="10" />
+                <translation x="2.5" y="0.1" z="10" />
                 <rotation axis="x" angle="-90" />
                 <rotation axis="z" angle="90" />
                 <scale sx="2" sy="2" sz="2" />
@@ -1035,7 +1048,7 @@
 
 
             <transformations>
-                <translation x="-2.5" y="0.1" z="15" />
+                <translation x="-2.5" y="0.1" z="19" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
@@ -1053,7 +1066,7 @@
 
 
             <transformations>
-                <translation x="2.5" y="0.1" z="15" />
+                <translation x="2.5" y="0.1" z="19" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
@@ -1062,60 +1075,28 @@
             </descendants>
 
         </node>
-        <node id="divisors1">
-
-            <material id="emissive" />
-            <texture id="metalTexture">
-                <amplification afs="1" aft="1" />
-            </texture>
-
-
-            <transformations>
-                <translation x="0" y="0" z="3" />
-            </transformations>
-
-            <descendants>
-                <noderef id="divisors" />
-            </descendants>
-
-        </node>
-        <node id="divisors2">
-
-            <material id="emissive" />
-
-            <texture id="metalTexture">
-                <amplification afs="1" aft="1" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0" z="12" />
-            </transformations>
-
-            <descendants>
-                <noderef id="divisors" />
-            </descendants>
-
-        </node>
 
         <node id="divisors">
 
-            <material id="null" />
-            <texture id="null">
+            <material id="emissive" />
+            <texture id="metalTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
 
             <transformations>
-                <translation x="0" y="0" z="10" />
+                <translation x="0" y="0" z="13" />
             </transformations>
 
             <descendants>
-                <noderef id="frontDivisor" />
-                <noderef id="backDivisor" />
-                <noderef id="middleDivisor" />
+                <noderef id="div1" />
+                <noderef id="div2" />
+                <noderef id="div3" />
+                <noderef id="div4"/>
+                <noderef id="div5"/>
             </descendants>
         </node>
-        <node id="frontDivisor">
+        <node id="div1">
 
             <material id="null" />
             <texture id="null">
@@ -1123,6 +1104,7 @@
             </texture>
 
             <transformations>
+                <translation x="0" y="0" z="3" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
@@ -1130,7 +1112,7 @@
                 <leaf type="cylinder" height="5" topRadius="0.1" bottomRadius="0.2" stacks="8" slices="24" />
             </descendants>
         </node>
-        <node id="backDivisor">
+        <node id="div2">
 
             <material id="null" />
             <texture id="null">
@@ -1147,7 +1129,7 @@
                 <leaf type="cylinder" height="5" topRadius="0.1" bottomRadius="0.2" stacks="8" slices="24" />
             </descendants>
         </node>
-        <node id="middleDivisor">
+        <node id="div3">
 
             <material id="null" />
             <texture id="null">
@@ -1155,7 +1137,39 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="3" />
+                <translation x="0" y="0" z="9" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.1" bottomRadius="0.2" stacks="8" slices="24" />
+            </descendants>
+        </node>
+        <node id="div4">
+
+            <material id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="12" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="5" topRadius="0.1" bottomRadius="0.2" stacks="8" slices="24" />
+            </descendants>
+        </node>
+        <node id="div5">
+
+            <material id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="15" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
@@ -1187,7 +1201,7 @@
             <transformations>
                 <rotation axis="x" angle="-90" />
                 <translation x="0" y="1.0" z="5.1" />
-                <scale sx="0.8" sy="1" sz="0.6" />
+                <scale sx="1" sy="0.8" sz="0.6" />
             </transformations>
 
             <descendants>
@@ -1483,13 +1497,13 @@
             </texture>
 
             <transformations>
-                <translation x="2.2" y="2.5" z="8" />
-                <scale sx="3" sy="1" sz="1" />
+                <translation x="2.3" y="2.8" z="7" />
+                <scale sx="2.5" sy="1" sz="1" />
             </transformations>
 
             <descendants>
                 <leaf type="spriteanim" ssid="xraySprite" startCell="0" endCell="34" duration="10" />
-                <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" /> <!--//will this create an inverted rectangle??-->
+               <!-- <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" /> //will this create an inverted rectangle??-->
             </descendants>
 
         </node>

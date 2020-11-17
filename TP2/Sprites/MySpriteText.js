@@ -44,7 +44,7 @@ class MySpriteText {
             '¤':116, '¢':117, 'ß':118, 'Þ':119, ':':120, ';':121, '^':122, '~':123, '♂':124, '♀':125, '♥':126, '♪':127, '♫':128, '☼':129};
         */
          /*initializes the spritesheet */
-        this.spritesheet = new MySpritesheet(scene, "font",this.texture,16, 16);
+        this.spritesheet = new MySpritesheet(scene, "font", this.texture, 16, 16);
 
         /* initialize shaders is in XMLScene because there is only one shader, no need to be creating one everytime we have a new sprite */
     }

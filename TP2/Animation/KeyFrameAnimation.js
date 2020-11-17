@@ -32,10 +32,10 @@ class KeyFrameAnimation extends Animation{
         this.keyframes.push(keyFrame);
         
         //to make sure it's in ascending time order
-        this.keyframes.sort(function(a, b){return a.instant - b.instant});
+        this.keyframes.sort(function(a, b){ return a.instant - b.instant });
         
         this.startTime = this.keyframes[0].instant;
-        this.endTime = this.keyframes[this.keyframes.length-1].instant;
+        this.endTime = this.keyframes[this.keyframes.length - 1].instant;
 
     }
 
@@ -48,6 +48,8 @@ class KeyFrameAnimation extends Animation{
         //update elapsedTime based on lastTime and update lastTime
         this.elapsedTime += (currentTime - this.lastTime);
         this.lastTime = currentTime;
+
+        //check if the keyframe should be active or not
         if(!this.active){
             if(this.elapsedTime >= this.startTime)
                 this.active = true;
@@ -88,10 +90,12 @@ class KeyFrameAnimation extends Animation{
         /* INTERPOLATION */
 
         //It's not the end so we need to do interpolation
-        let interpolationAmount = (this.elapsedTime - keyframeStartInstant) /(keyframeEndInstant-keyframeStartInstant);
+        let interpolationAmount = (this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant);
 
         vec3.lerp(this.animationTranslation,this.keyframes[keyframeStartIndex].translation, this.keyframes[keyframeEndIndex].translation,interpolationAmount);
+
         vec3.lerp(this.animationRotation,this.keyframes[keyframeStartIndex].rotation, this.keyframes[keyframeEndIndex].rotation,interpolationAmount);
+        
         vec3.lerp(this.animationScale,this.keyframes[keyframeStartIndex].scale, this.keyframes[keyframeEndIndex].scale,interpolationAmount);
         
     }
