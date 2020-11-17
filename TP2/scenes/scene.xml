@@ -967,18 +967,19 @@
                 <noderef id="rightBoxes" />
                 <noderef id="divisors" />
                 <noderef id="distanceMark1" />
-                <noderef id="distanceMark2" />
-               <!-- <noderef id="sprite" />-->
+                <noderef id="distanceMark2" />              
                 <noderef id="person" />
                 <noderef id="arrow1" />
                 <noderef id="arrow2" />
-
+                <noderef id="plane" />
+                <noderef id="patch" />
             </descendants>
 
         </node>
-        <!--<node id="sprite">
 
-            <material id="transparent" />
+        <node id="plane">
+
+            <material id="Off_white_emissive" />
             <texture id="clear">
                 <amplification afs="1" aft="1" />
             </texture>
@@ -990,10 +991,47 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="sprite1" startCell="1" endCell="9" duration="30" />
+                <leaf type="plane" npartsU="3" npartsV="3" />
             </descendants>
 
-        </node>-->
+        </node>
+
+        <node id="patch">
+
+            <material id="transparent" />
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="0" y="6" z="2" />
+
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20">
+                    <controlpoint x="-2.0" y="-2.0" z="1.0"/>
+                    <controlpoint x="-2.0" y="-1.0" z="-2.0"/>
+                    <controlpoint x="-2.0" y="1.0" z="5.0"/>
+                    <controlpoint x="-2.0" y="2.0" z="-1.0"/>
+
+                    <controlpoint x="0" y="-2.0" z="0"/>
+                    <controlpoint x="0" y="-1.0" z="-1.0"/>
+                    <controlpoint x="0" y="1.0" z="1.5"/>
+                    <controlpoint x="0" y="2.0" z="0"/>
+                    
+                    <controlpoint x="2.0" y="-2.0" z="-1.0"/>
+                    <controlpoint x="2.0" y="-1.0" z="2.0"/>
+                    <controlpoint x="2.0" y="1.0" z="-5.0"/>
+                    <controlpoint x="2.0" y="2.0" z="1.0"/>
+
+
+              
+                </leaf>
+            </descendants>
+
+        </node>
 
         <node id="arrow1">
 

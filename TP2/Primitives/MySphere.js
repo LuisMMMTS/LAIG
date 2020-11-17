@@ -74,7 +74,10 @@ class MySphere extends CGFobject {
           // the vector from the center of the sphere to the vertex.
           // in a sphere of radius equal to one, the vector length is one.
           // therefore, the value of the normal is equal to the position vector
-          this.normals.push(x, y, z);
+          let normalizationAux = Math.sqrt(x*x + y*y + z*z);
+          
+          this.normals.push(x/normalizationAux, y/normalizationAux, z/normalizationAux);
+
           
           this.texCoords.push(textureLong, textureLat);
   
