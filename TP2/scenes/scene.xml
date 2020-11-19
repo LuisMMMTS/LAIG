@@ -93,6 +93,7 @@
         <texture id="metalTexture" path="metal.jpg" />
         <texture id="securityTexture" path="distancia_seguranca.png" />
         <texture id="measuresTexture" path="measures.jpg" />
+        <texture id="test" path="test.jpg" />
     </textures>
 
 
@@ -504,7 +505,7 @@
             </keyframe>
             <keyframe instant="27">
                 <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="8" />
+                <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
                 <scale sx="1" sy="1" sz="1" />
@@ -980,7 +981,7 @@
         <node id="plane">
 
             <material id="Off_white_emissive" />
-            <texture id="clear">
+            <texture id="test">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -998,8 +999,8 @@
 
         <node id="patch">
 
-            <material id="transparent" />
-            <texture id="clear">
+            <material id="Off_white_emissive" />
+            <texture id="test">
                 <amplification afs="1" aft="1" />
             </texture>
 

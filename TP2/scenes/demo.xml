@@ -1,6 +1,6 @@
 <lsf>
     <initials>
-        <reference length="2" />
+        <reference length="5" />
         <!-- axis length; "0" means no axis displayed -->
         <root id="demoRoot" />
         <!-- identifier of root node of the scene graph; this node -->
@@ -8,11 +8,15 @@
     </initials>
     <views default="defaultCamera">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="defaultCamera" near="-0.1" far="500" angle="50">
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
             <from x="30" y="15" z="30" />
-            <to x="20" y="-2" z="0" />
+            <to x="0" y="-2" z="0" />
         </perspective>
-        
+        <ortho id="demoOrtho" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
+            <from x="5" y="0" z="10" />
+            <to x="5" y="0" z="0" />
+            <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
+        </ortho>
     </views>
 
     <illumination>
@@ -36,7 +40,7 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="demoTexture" path="image.png" />
+        <texture id="demoTexture" path="./scenes/images/test.jpg" />
     </textures>
 
 
@@ -51,12 +55,12 @@
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="Off_white_emissive">        <!--cilindros dos tapetes-->                          
-       <shininess value="1" />
-       <specular r="0.97" g="0.97" b="1.0" a="1.0" />        <!-- specular reflection -->
-        <diffuse r="0.97" g="0.97" b="1.0" a="1.0" />         <!-- diffuse reflection -->
-        <ambient r="0.97" g="0.97" b="1.0" a="1.0" />         <!-- ambient reflection -->
-        <emissive r="0.6" g="0.6" b="0.6" a="1.0" />        <!-- emissive component -->
-     </material>
+            <shininess value="1" />
+            <specular r="0.97" g="0.97" b="1.0" a="1.0" />        <!-- specular reflection -->
+            <diffuse r="0.97" g="0.97" b="1.0" a="1.0" />         <!-- diffuse reflection -->
+            <ambient r="0.97" g="0.97" b="1.0" a="1.0" />         <!-- ambient reflection -->
+            <emissive r="0.6" g="0.6" b="0.6" a="1.0" />        <!-- emissive component -->
+        </material>
     </materials>
 
     <nodes>
@@ -70,7 +74,8 @@
 
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
-               
+
+
             </transformations>
 
             <!-- declaring descendants, at least one node or one leaf must be present
@@ -81,7 +86,6 @@
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
                 <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-               <!-- <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />-->
                 <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
             </descendants>
         </node>
@@ -95,13 +99,35 @@
 
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
-               <scale sx="4" sy="4" sz="4" />
+                <scale sx="5" sy="5" sz="5"/>
             </transformations>
 
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <leaf type="triangle" x1="0.0" y1="0.0" x2="1.0" y2="0.0" x3="0.0" y3="1.0"/>
+               <leaf type="defbarrel" base="1" middle="1.5" height="5" 
+slices="10" stacks="20" />
+
+<!--<leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20">
+                    <controlpoint x="-2.0" y="-2.0" z="1.0"/>
+                    <controlpoint x="-2.0" y="-1.0" z="-2.0"/>
+                    <controlpoint x="-2.0" y="1.0" z="5.0"/>
+                    <controlpoint x="-2.0" y="2.0" z="-1.0"/>
+
+                    <controlpoint x="0" y="-2.0" z="0"/>
+                    <controlpoint x="0" y="-1.0" z="-1.0"/>
+                    <controlpoint x="0" y="1.0" z="1.5"/>
+                    <controlpoint x="0" y="2.0" z="0"/>
+                    
+                    <controlpoint x="2.0" y="-2.0" z="-1.0"/>
+                    <controlpoint x="2.0" y="-1.0" z="2.0"/>
+                    <controlpoint x="2.0" y="1.0" z="-5.0"/>
+                    <controlpoint x="2.0" y="2.0" z="1.0"/>
+
+
+              
+                </leaf>-->
+                <!--<leaf type="plane" npartsU="3" npartsV="3" />-->
                 <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>
