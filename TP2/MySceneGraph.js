@@ -1384,7 +1384,23 @@ class MySceneGraph {
                             let sl = this.reader.getFloat(descendant, "slices");
                             let st = this.reader.getFloat(descendant, "stacks");
 
-                            // missing all verifications
+                            if( base == null || middle == null || h == null || sl == null || st == null){
+                                this.onXMLError("[NODE] Missing values for barrel definition in nodeID: " + nodeID + ", skipping it");
+                                continue;
+                            }
+
+
+                            if(isNaN(base) || isNaN(middle) || isNaN(h) || isNaN(sl) || isNaN(st)){
+                                this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ", skipping it");
+                                continue;
+
+                            }
+
+                            if(base <= 0 || middle <= 0 || h <= 0 || sl <= 0 || st <= 0 ){
+                                this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ", skipping it");
+                                continue;
+
+                            }
 
                             let defbarrel = new MyDefBarrel(this.scene, base, middle, h, sl, st);
                             primitives.push(defbarrel);
