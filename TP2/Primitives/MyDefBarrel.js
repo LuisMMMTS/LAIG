@@ -13,41 +13,44 @@ class MyDefBarrel extends CGFobject {
         this.height = height;
         this.slices = slices;
         this.stacks = stacks;
+        this.h = (4/3) * this.base;
+        this.H = (4/3) * (this.middle - this.base);
+        let hipotenusa=Math.sqrt(Math.pow(this.middle,2)+Math.pow((this.height/2),2));
+        this.angle=-180-Math.acos(this.base/hipotenusa)-Math.asin(this.base/hipotenusa)*DEGREE_TO_RAD;
         
 
 		this.initBuffers();
 	}
 	
 	initBuffers() {
-        this.h = (4/3) * this.base;
-        this.H = (4/3) * (this.middle - this.base);
-        let angle = 30 * Math.PI / 180; //30degrees
+        
+        //let angle = Math.asin() * Math.PI / 180; //30degrees
        
         this.controlPoints = [
             [ //P4
                 [this.base, 0, 0, 1],//Q1
-                [this.base + this.H, 0, this.H/Math.tan(angle), 1],//Q2
-                [this.base + this.H, 0, this.height - this.H/Math.tan(angle), 1],//Q3
+                [this.base + this.H, 0, this.H/Math.tan(this.angle), 1],//Q2
+                [this.base + this.H, 0, this.height - this.H/Math.tan(this.angle), 1],//Q3
                 [this.base, 0, this.height, 1],//Q4
 
             ],
             [ //P3
                 [this.base, this.h, 0, 1],
-                [this.base + this.H, (4/3)*(this.base + this.H), this.H/Math.tan(angle),1],
-                [this.base + this.H, (4/3)*(this.base + this.H), this.height - this.H/Math.tan(angle),1],
+                [this.base + this.H, (4/3)*(this.base + this.H), this.H/Math.tan(this.angle),1],
+                [this.base + this.H, (4/3)*(this.base + this.H), this.height - this.H/Math.tan(this.angle),1],
                 [this.base, this.h, this.height, 1],
             ],
-            [ //P3
+            [ //P2
                 [-this.base, this.h, 0, 1],
-                [-this.base - this.H, (4/3)*(this.base + this.H),this.H/Math.tan(angle), 1],
-                [-this.base - this.H, (4/3)*(this.base + this.H), this.height - this.H/Math.tan(angle), 1],
+                [-this.base - this.H, (4/3)*(this.base + this.H),this.H/Math.tan(this.angle), 1],
+                [-this.base - this.H, (4/3)*(this.base + this.H), this.height - this.H/Math.tan(this.angle), 1],
                 [-this.base, this.h, this.height, 1],
 
             ],
             [ //P1
                 [-this.base, 0, 0, 1],//Q1
-                [-this.base - this.H, 0,  this.H/Math.tan(angle), 1],//Q2
-                [-this.base - this.H, 0, this.height - this.H/Math.tan(angle) , 1],//Q3
+                [-this.base - this.H, 0,  this.H/Math.tan(this.angle), 1],//Q2
+                [-this.base - this.H, 0, this.height - this.H/Math.tan(this.angle) , 1],//Q3
                 [-this.base, 0, this.height, 1],//Q4
 
             ],

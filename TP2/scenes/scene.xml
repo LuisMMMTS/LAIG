@@ -992,7 +992,9 @@
             </transformations>
 
             <descendants>
-                <leaf type="plane" npartsU="3" npartsV="3" />
+                <!-- <leaf type="plane" npartsU="3" npartsV="3" /> -->
+                <leaf type="defbarrel" base="2" middle="3" height="7" 
+slices="4" stacks="4" />
             </descendants>
 
         </node>
