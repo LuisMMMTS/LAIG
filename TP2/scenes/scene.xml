@@ -96,6 +96,7 @@
         <texture id="test" path="test.jpg" />
         <texture id="barrel" path="barrel.jpg"/>
         <texture id="chinaLamp" path="china-lamp.jpg"/>
+        <texture id="jetBridge" path="jetBridge.jpeg"/>
     </textures>
 
 
@@ -996,7 +997,7 @@
                 <noderef id="person" />
                 <noderef id="arrow1" />
                 <noderef id="arrow2" />
-                <noderef id="plane" />
+                <noderef id="terminal" />
                 <!-- <noderef id="patch" /> --> 
                 <noderef id="barril"/>
             </descendants>
@@ -1044,22 +1045,63 @@
 
         </node>
 
-        <node id="plane">
+        <node id="terminal">
 
             <material id="Off_white_emissive" />
-            <texture id="test">
+            <texture id="clear">
                 <amplification afs="1" aft="1" />
             </texture>
 
 
             <transformations>
-                <translation x="0" y="3" z="-8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="plane"/>
+                <noderef id="terminaldoor"/>
+            </descendants>
+
+        </node>
+
+        <node id="plane">
+
+            <material id="Off_white_emissive" />
+            <texture id="jetBridge">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <scale sx="7.5" sy="10" sz="1" />
+                <rotation axis="x" angle="90" />
+                <translation x="0" y="-8" z="-0.5" />
+                
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="3" npartsV="3" />
+                <!-- <leaf type="defbarrel" base="7" middle="10" height="3" slices="10" stacks="10" /> -->
+            </descendants>
+
+        </node>
+
+        <node id="terminaldoor">
+
+            <material id="Porcelain_Grey" />
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="0" y="3" z="-10" />
+                <scale sx="0.5" sy="1" sz="1" />
                 
             </transformations>
 
             <descendants>
                 <!-- <leaf type="plane" npartsU="3" npartsV="3" /> -->
-                <leaf type="defbarrel" base="7" middle="10" height="4" slices="10" stacks="10" />
+                <leaf type="defbarrel" base="7" middle="10" height="3" slices="10" stacks="10" />
             </descendants>
 
         </node>
