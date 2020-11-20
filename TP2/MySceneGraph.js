@@ -962,6 +962,10 @@ class MySceneGraph {
                 this.onXMLError("[SPRITESHEETS] Missing/not valid values for sizeN on spritesheet: " + id + ", skipping it");
                 continue;
             }
+            if (sizeM%1!=0 || sizeN%1!=0){
+                this.onXMLError("[NODE] Wrong values for spritesheet size definition in spritesheet: " + id + ",values must be integers, skipping it");
+                continue;
+            }
 
             this.spritesheets[id] = new MySpritesheet(this.scene, id, texture, sizeM, sizeN);
         }
@@ -1307,6 +1311,11 @@ class MySceneGraph {
                                 continue;
                             }
 
+                            if (startCell%1!=0 || endCell%1!=0){
+                                this.onXMLError("[NODE] Wrong values for spriteanim definition in nodeID: " + nodeID + ",values must be integers, skipping it");
+                                continue;
+                            }
+
                             if (this.spritesheets[id] == null) {
                                 this.onXMLError("[NODE] Wrong value for spriteanim ID in nodeID: " + nodeID + ", skipping it");
                                 continue;
@@ -1324,6 +1333,10 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Wrong values for plane definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
+                            if (nPartsU%1!=0 || nPartsV%1!=0){
+                                this.onXMLError("[NODE] Wrong values for plane definition in nodeID: " + nodeID + ",values must be integuers, skipping it");
+                                continue;
+                            }
                             //dont know if needs more verifications
                             let plane = new MyPlane(this.scene, nPartsU, nPartsV);
                             primitives.push(plane);
@@ -1336,7 +1349,11 @@ class MySceneGraph {
                             let nPrtsV = this.reader.getFloat(descendant, "npartsV");
                             
                             if (nPrtsU == null || nPrtsV == null || isNaN(nPrtsU) || isNaN(nPrtsV) || nPrtsU <= 0 || nPrtsV <= 0 || nPointsU == null || nPointsV == null || isNaN(nPointsU) || isNaN(nPointsV) || nPointsU <= 0 || nPointsV <= 0) {
-                                this.onXMLError("[NODE] Wrong values for plane definition in nodeID: " + nodeID + ", skipping it");
+                                this.onXMLError("[NODE] Wrong values for patch definition in nodeID: " + nodeID + ", skipping it");
+                                continue;
+                            }
+                            if (nPointsU%1!=0 || nPointsV%1!=0 || nPrtsU%1!=0 || nPrtsV%1!=0){
+                                this.onXMLError("[NODE] Wrong values for patch definition in nodeID: " + nodeID + ",values must be integuers, skipping it");
                                 continue;
                             }
 
@@ -1400,6 +1417,11 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
 
+                            }
+
+                            if (sl%1!=0 || st%1!=0){
+                                this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ",stacks and slices values must be integuers, skipping it");
+                                continue;
                             }
 
                             let defbarrel = new MyDefBarrel(this.scene, base, middle, h, sl, st);

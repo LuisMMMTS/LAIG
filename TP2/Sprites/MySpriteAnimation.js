@@ -43,6 +43,10 @@ class MySpriteAnimation {
     }
 
     display(){
+        //this.gl.enable(this.gl.BLEND);         // enables blending
+
+        //this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+        //this.gl.blendFunc(sfactor, dfactor);   // defines the blending function
         
         this.spritesheet.activate();
 
@@ -51,6 +55,10 @@ class MySpriteAnimation {
         this.retangle.display();//display base geometry
 
         this.scene.setActiveShader(this.scene.defaultShader); //set default shader
+
+        //this.gl.disable(this.gl.BLEND);        // disables blending
+
+
             
     } 
     

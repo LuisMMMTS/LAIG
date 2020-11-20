@@ -94,6 +94,8 @@
         <texture id="securityTexture" path="distancia_seguranca.png" />
         <texture id="measuresTexture" path="measures.jpg" />
         <texture id="test" path="test.jpg" />
+        <texture id="barrel" path="barrel.jpg"/>
+        <texture id="chinaLamp" path="china-lamp.jpg"/>
     </textures>
 
 
@@ -732,7 +734,29 @@
                 <noderef id="AIRPORT" />
                 <noderef id="Danger" />
                 <noderef id="spriteBoard" />
+                <noderef id="chineseLamp" />
 
+            </descendants>
+
+        </node>
+
+        <node id="chineseLamp">
+
+            <material id="Off_white_emissive" />
+            <texture id="chinaLamp">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <rotation axis="x" angle="-90" /> 
+                <translation x="10" y="-1" z="5" />
+                
+            </transformations>
+
+            <descendants>
+                <!-- <leaf type="plane" npartsU="3" npartsV="3" /> -->
+                <leaf type="defbarrel" base="0.25" middle="1" height="2" slices="4" stacks="4" />
             </descendants>
 
         </node>
@@ -973,7 +997,49 @@
                 <noderef id="arrow1" />
                 <noderef id="arrow2" />
                 <noderef id="plane" />
-                <noderef id="patch" />
+                <!-- <noderef id="patch" /> --> 
+                <noderef id="barril"/>
+            </descendants>
+
+        </node>
+
+        <node id="barril">
+
+            <material id="Off_white_emissive" />
+            <texture id="barrel">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="-8" y="0" z="28" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="1.5" middle="2" height="6" slices="4" stacks="4" />
+                <noderef id="portoSouvenirsSprite"/>
+            </descendants>
+
+        </node>
+
+        <node id="portoSouvenirsSprite">
+
+            <material id="Off_white_emissive" />
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+                <rotation axis="y" angle="90" />
+                <translation x="-2" y="3" z="2" />
+                <scale sx="0.5" sy="0.3" sz="0.1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="Souvenirs!"/>
             </descendants>
 
         </node>
@@ -987,19 +1053,19 @@
 
 
             <transformations>
-                <translation x="0" y="3" z="0" />
-
+                <translation x="0" y="3" z="-8" />
+                
             </transformations>
 
             <descendants>
                 <!-- <leaf type="plane" npartsU="3" npartsV="3" /> -->
-                <leaf type="defbarrel" base="2" middle="3" height="7" 
-slices="4" stacks="4" />
+                <leaf type="defbarrel" base="7" middle="10" height="4" slices="10" stacks="10" />
             </descendants>
 
         </node>
+        
 
-        <node id="patch">
+        <!-- <node id="patch">
 
             <material id="Off_white_emissive" />
             <texture id="test">
@@ -1034,7 +1100,7 @@ slices="4" stacks="4" />
                 </leaf>
             </descendants>
 
-        </node>
+        </node> -->
 
         <node id="arrow1">
 
