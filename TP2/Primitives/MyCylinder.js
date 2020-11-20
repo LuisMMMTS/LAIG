@@ -103,8 +103,10 @@ class MyCylinderBody extends CGFobject{
                 var x = Math.cos(aux_ang) * r;
 				var y = Math.sin(aux_ang) * r;
 				
-                this.vertices.push(x, y, z);
-                this.normals.push(x, y, 0);
+				this.vertices.push(x, y, z);
+				let size=Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+				this.normals.push(x/size, y/size, 0);
+				// this.normals.push(x, y, 0);
                 aux_ang += ang;
 			}
 			
@@ -127,7 +129,8 @@ class MyCylinderBody extends CGFobject{
 			}
 		}
 		
-        this.primitiveType = this.scene.gl.TRIANGLES;
+		this.primitiveType = this.scene.gl.TRIANGLES;
+		//this.enableNormalViz();
         this.initGLBuffers();
 	}
 

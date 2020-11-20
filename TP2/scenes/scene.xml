@@ -644,7 +644,7 @@
     <spritesheets>
         <!-- Semelhante à declaração de textura,  mas inclui a definição do nº de colunas e linhas -->
         <spritesheet id="sprite1" path="walking.jpg" sizeM="9" sizeN="2" />
-        <spritesheet id="boardSprite" path="board.png" sizeM="1" sizeN="4" />
+        <spritesheet id="boardSprite" path="board_nowhite.png" sizeM="1" sizeN="4" />
         <spritesheet id="xraySprite" path="xray.png" sizeM="1" sizeN="36" />
         <spritesheet id="groundArrow" path="arrow.png" sizeM="3" sizeN="1" />
     </spritesheets>

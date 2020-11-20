@@ -43,22 +43,19 @@ class MySpriteAnimation {
     }
 
     display(){
-        //this.gl.enable(this.gl.BLEND);         // enables blending
+     
+        this.scene.gl.enable(this.scene.gl.BLEND); // enables blending
+        this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);// defines the blending function
 
-        //this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
-        //this.gl.blendFunc(sfactor, dfactor);   // defines the blending function
-        
+
         this.spritesheet.activate();
-
         this.spritesheet.activateCellP(this.activeState); /* pass the shader the offset */
-
         this.retangle.display();//display base geometry
-
         this.scene.setActiveShader(this.scene.defaultShader); //set default shader
 
-        //this.gl.disable(this.gl.BLEND);        // disables blending
 
 
+        this.scene.gl.disable(this.scene.gl.BLEND);        // disables blending
             
     } 
     
