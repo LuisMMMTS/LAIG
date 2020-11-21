@@ -97,6 +97,11 @@
         <texture id="barrel" path="barrel.jpg"/>
         <texture id="chinaLamp" path="china-lamp.jpg"/>
         <texture id="jetBridge" path="jetBridge.jpeg"/>
+        <texture id="portugalFlag" path="Flag_of_Portugal.png"/>
+        <texture id="italyFlag" path="italyFlag.jpg"/>
+        <texture id="germanyFlag" path="germanyFlag.png"/>
+        <texture id="EUFlag" path="EuFlag.jpg"/>
+        <texture id="franceFlag" path="franceFlag.jpg"/>
     </textures>
 
 
@@ -736,10 +741,131 @@
                 <noderef id="Danger" />
                 <noderef id="spriteBoard" />
                 <noderef id="chineseLamp" />
+                <noderef id="flags"/>
 
             </descendants>
 
         </node>
+
+        <node id="flags">
+
+            <material id="emissive" />
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="-9.5" y="6.3" z="0.4" />
+                <scale sx="0.3" sy="0.3" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="EUnion"/>
+                <noderef id="Portugal"/>
+                <noderef id="France"/>
+                <noderef id="Germany"/>
+                <noderef id="Italy"/>
+            </descendants>
+
+        </node>
+
+        <node id="Portugal">
+
+            <material id="emissive" />
+            <texture id="portugalFlag">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="0" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="flag"/>
+            </descendants>
+
+        </node>
+
+        <node id="France">
+
+            <material id="emissive" />
+            <texture id="franceFlag">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="-5" y="0" z="0" />
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="flag"/>
+            </descendants>
+
+        </node>
+
+        <node id="EUnion">
+
+            <material id="emissive" />
+            <texture id="EUFlag">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="-10" y="0" z="0" />
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="flag"/>
+            </descendants>
+
+        </node>
+
+        <node id="Germany">
+
+            <material id="emissive" />
+            <texture id="germanyFlag">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="-15" y="0" z="0" />
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="flag"/>
+            </descendants>
+
+        </node>
+
+        <node id="Italy">
+
+            <material id="emissive" />
+            <texture id="italyFlag">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+
+            <transformations>
+                <translation x="-20" y="0" z="0" />
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="flag"/>
+            </descendants>
+
+        </node>
+
+
+        
 
         <node id="chineseLamp">
 
@@ -790,7 +916,7 @@
             </texture>
 
             <transformations>
-                <translation x="-19" y="6.5" z="0.2" />
+                <translation x="-19" y="7.5" z="0.2" />
                 <scale sx="0.6" sy="0.7" sz="1" />
             </transformations>
 
@@ -998,7 +1124,7 @@
                 <noderef id="arrow1" />
                 <noderef id="arrow2" />
                 <noderef id="terminal" />
-                <!-- <noderef id="patch" /> --> 
+                <!-- <noderef id="patch" />  -->
             </descendants>
 
         </node>
@@ -1065,42 +1191,41 @@
         </node>
         
 
-        <!-- <node id="patch">
+        <node id="flag">
 
             <material id="Off_white_emissive" />
-            <texture id="test">
+            <texture id="null">
                 <amplification afs="1" aft="1" />
             </texture>
 
 
             <transformations>
-                <translation x="0" y="6" z="2" />
+                <rotation axis="x" angle="90" />
+                <!-- <translation x="0" y="6" z="2" /> -->
 
             </transformations>
 
             <descendants>
-                <leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20">
-                    <controlpoint x="-2.0" y="-2.0" z="1.0"/>
-                    <controlpoint x="-2.0" y="-1.0" z="-2.0"/>
-                    <controlpoint x="-2.0" y="1.0" z="5.0"/>
-                    <controlpoint x="-2.0" y="2.0" z="-1.0"/>
+                <leaf type="patch" npointsU="5" npointsV="2" npartsU="20" npartsV="20">
+                    <controlpoint x="-1.0" y="0.0" z="1.0" />
+                    <controlpoint x="-1.0" y="0.0" z="-1.0" />
 
-                    <controlpoint x="0" y="-2.0" z="0"/>
-                    <controlpoint x="0" y="-1.0" z="-1.0"/>
-                    <controlpoint x="0" y="1.0" z="1.5"/>
-                    <controlpoint x="0" y="2.0" z="0"/>
-                    
-                    <controlpoint x="2.0" y="-2.0" z="-1.0"/>
-                    <controlpoint x="2.0" y="-1.0" z="2.0"/>
-                    <controlpoint x="2.0" y="1.0" z="-5.0"/>
-                    <controlpoint x="2.0" y="2.0" z="1.0"/>
+                    <controlpoint x="0.0" y="1.0" z="1.0" />
+                    <controlpoint x="0.0" y="1.0" z="-1.0" />
 
+                    <controlpoint x="1.0" y="0.0" z="1.0" />
+                    <controlpoint x="1.0" y="0.0" z="-1.0" />
 
-              
+                    <controlpoint x="2.0" y="-1.0" z="1.0" />
+                    <controlpoint x="2.0" y="-1.0" z="-1.0" />
+
+                    <controlpoint x="3.0" y="0.0" z="1.0" />
+                    <controlpoint x="3.0" y="0.0" z="-1.0" />
+
                 </leaf>
             </descendants>
 
-        </node> -->
+        </node>
 
         <node id="arrow1">
 
