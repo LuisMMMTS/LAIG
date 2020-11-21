@@ -40,7 +40,7 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="demoTexture" path="./scenes/images/test.jpg" />
+        <texture id="demoTexture" path="./scenes/images/Flag_of_Portugal.png" />
     </textures>
 
 
@@ -105,30 +105,8 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-    <leaf type="defbarrel" base="0.7" middle="1.5" height="5" 
-slices="10" stacks="20" />
+                <leaf type="cylinder" height="15" topRadius="0.3" bottomRadius="0.3" stacks="8" slices="16" />
 
-<!--<leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20">
-                    <controlpoint x="-2.0" y="-2.0" z="1.0"/>
-                    <controlpoint x="-2.0" y="-1.0" z="-2.0"/>
-                    <controlpoint x="-2.0" y="1.0" z="5.0"/>
-                    <controlpoint x="-2.0" y="2.0" z="-1.0"/>
-
-                    <controlpoint x="0" y="-2.0" z="0"/>
-                    <controlpoint x="0" y="-1.0" z="-1.0"/>
-                    <controlpoint x="0" y="1.0" z="1.5"/>
-                    <controlpoint x="0" y="2.0" z="0"/>
-                    
-                    <controlpoint x="2.0" y="-2.0" z="-1.0"/>
-                    <controlpoint x="2.0" y="-1.0" z="2.0"/>
-                    <controlpoint x="2.0" y="1.0" z="-5.0"/>
-                    <controlpoint x="2.0" y="2.0" z="1.0"/>
-
-
-              
-                </leaf>-->
-               <!-- <leaf type="plane" npartsU="3" npartsV="3" />-->
-                <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>
     </nodes>
