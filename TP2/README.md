@@ -15,10 +15,9 @@
 - Choosable Lights turned on and view
 - New primitives (plane, patch and defbarrel) and added animation 
 - Integration of keyframe animations, sprites and 2D/3D surfaces
-- (items describing main strong points)
 - Scene
   - To the scene was added a person that makes the path through the security, placing its belongings in the security mat that pass through the x-ray and places itself under the security gantry, having a positive check.  On the floor, it is possible to see some arrows indicating the direction to follow, and on the wall, there is a flight board where it's possible to check the state, time, and gate of the flights. The descriptive text was added in some places.
-   - [scene](https://git.fe.up.pt/laig/laig-2020-2021/t01/laig-t01-g07/-/blob/master/TP2/scenes/LAIG_TP1_T1G07.xml)
+   - [scene](https://git.fe.up.pt/laig/laig-2020-2021/t01/laig-t01-g07/-/blob/master/TP2/scenes/LAIG_TP2_T1G07.xml)
 ----
 ## Issues/Problems
 
