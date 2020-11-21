@@ -5,9 +5,9 @@
  * @param nPartsU - number of divisions in U direction
  * @param nPartsV - number of divisions in V direction
  */
-
- /*de forma a gerar, utilizando NURBS, um plano de dimensões 1 x 1 unidades, assente em XZ, 
- centrado na origem e com a face visível apontando para +Y. */
+/*
+    Generate a plane of dimension 1x1 units, based on XZ, centered on the origin and with the visible face pointing to Y
+*/
 
  class MyPlane extends CGFobject {
 	constructor(scene, nPartsU, nPartsV) {

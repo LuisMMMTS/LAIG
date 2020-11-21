@@ -5,6 +5,7 @@
 class KeyFrameAnimation extends Animation{
     /**
     * @constructor
+    * @param scene - Reference to MyScene object
     * @param animationID - ID of the animation 
     */
 
@@ -51,24 +52,24 @@ class KeyFrameAnimation extends Animation{
 
         //check if the keyframe should be active or not
         if(!this.active){
-            if(this.elapsedTime >= this.startTime)
+            if(this.elapsedTime >= this.startTime) // only becomes visible after first keyframe instant
                 this.active = true;
             else 
                 return;
         }
-        //console.log(this.elapsedTime);  
+
         //check if the animation should be active
         if(this.elapsedTime < this.startTime && !this.ended) return;
        
         //End of animation 
         if(this.elapsedTime >= this.endTime){
-            this.ended = true;
+            this.ended = true; //the animation has ended but the object remains with the values of the geometric transformations of the  last keyframe
         }
         
 
         let keyframeStartInstant = 0, keyframeEndInstant = 0, keyframeStartIndex = 0, keyframeEndIndex = 0;
         
-        //maybe change this because is not that efficient
+        //find the keyframes to interpolate between
         for(let i = 0; i < this.keyframes.length; i++){
             if(this.keyframes[i].instant < this.elapsedTime){ //we can do this because its ordered
                 keyframeStartInstant = this.keyframes[i].instant;
@@ -90,6 +91,7 @@ class KeyFrameAnimation extends Animation{
         /* INTERPOLATION */
 
         //It's not the end so we need to do interpolation
+
         let interpolationAmount = (this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant);
 
         vec3.lerp(this.animationTranslation,this.keyframes[keyframeStartIndex].translation, this.keyframes[keyframeEndIndex].translation,interpolationAmount);

@@ -39,7 +39,7 @@
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
         <light id="LightRight">
             <!-- light identifier -->
-            <enable value="1" /> <!-- enable/disable -->
+            <enable value="0" /> <!-- enable/disable -->
             <position x="20" y="20" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
@@ -47,7 +47,7 @@
         </light>
         <light id="LightLeft">
             <!-- light identifier -->
-            <enable value="0" /> <!-- enable/disable -->
+            <enable value="1" /> <!-- enable/disable -->
             <position x="0" y="20" z="20" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
@@ -141,8 +141,8 @@
             <!--cor do tapete-->
             <shininess value="1.0" />
             <specular r="0.18" g="0.19" b="0.19" a="1" /> <!-- specular reflection -->
-            <diffuse r="0.18" g="0.19" b="0.19" a="1" /> <!-- diffuse reflection -->
-            <ambient r="0.18" g="0.19" b="0.19" a="1" /> <!-- ambient reflection -->
+            <diffuse r="0.1" g="0.1" b="0.1" a="1" /> <!-- diffuse reflection -->
+            <ambient r="0" g="0" b="0" a="1" /> <!-- ambient reflection -->
             <emissive r="0" g="0" b="0" a="1.0" /> <!-- emissive component -->
         </material>
         <material id="navy_blue">
@@ -743,7 +743,7 @@
 
         <node id="chineseLamp">
 
-            <material id="Off_white_emissive" />
+            <material id="emissive" />
             <texture id="chinaLamp">
                 <amplification afs="1" aft="1" />
             </texture>
@@ -790,12 +790,12 @@
             </texture>
 
             <transformations>
-                <translation x="-10" y="7.5" z="0.2" />
-                <scale sx="0.9" sy="1" sz="1" />
+                <translation x="-19" y="6.5" z="0.2" />
+                <scale sx="0.6" sy="0.7" sz="1" />
             </transformations>
 
             <descendants>
-                <leaf type="spritetext" text="Welcome to LAIG Airport!" />
+                <leaf type="spritetext" text="International Departures" />
             </descendants>
 
         </node>
@@ -999,48 +999,6 @@
                 <noderef id="arrow2" />
                 <noderef id="terminal" />
                 <!-- <noderef id="patch" /> --> 
-                <noderef id="barril"/>
-            </descendants>
-
-        </node>
-
-        <node id="barril">
-
-            <material id="Off_white_emissive" />
-            <texture id="barrel">
-                <amplification afs="1" aft="1" />
-            </texture>
-
-
-            <transformations>
-                <translation x="-8" y="0" z="28" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="defbarrel" base="1.5" middle="2" height="6" slices="4" stacks="4" />
-                <noderef id="portoSouvenirsSprite"/>
-            </descendants>
-
-        </node>
-
-        <node id="portoSouvenirsSprite">
-
-            <material id="Off_white_emissive" />
-            <texture id="clear">
-                <amplification afs="1" aft="1" />
-            </texture>
-
-
-            <transformations>
-                <rotation axis="x" angle="90" />
-                <rotation axis="y" angle="90" />
-                <translation x="-2" y="3" z="2" />
-                <scale sx="0.5" sy="0.3" sz="0.1" />
-            </transformations>
-
-            <descendants>
-                <leaf type="spritetext" text="Souvenirs!"/>
             </descendants>
 
         </node>
@@ -1072,7 +1030,7 @@
 
 
             <transformations>
-                <scale sx="7.5" sy="10" sz="1" />
+                <scale sx="6.95" sy="10" sz="1" />
                 <rotation axis="x" angle="90" />
                 <translation x="0" y="-8" z="-0.5" />
                 
@@ -1101,7 +1059,7 @@
 
             <descendants>
                 <!-- <leaf type="plane" npartsU="3" npartsV="3" /> -->
-                <leaf type="defbarrel" base="7" middle="10" height="3" slices="10" stacks="10" />
+                <leaf type="defbarrel" base="6.8" middle="10" height="3" slices="20" stacks="20" />
             </descendants>
 
         </node>
@@ -1594,7 +1552,26 @@
 
             <descendants>
                 <leaf type="cylinder" height="15" topRadius="0.3" bottomRadius="0.3" stacks="8" slices="16" />
+                <noderef id="LeftXrayscreen" />
                 <!-- height, top radius, bottom radius, sections along height (stacks), parts per section (slices); main axis is aligned with ZZ; must have top and bottom caps -->
+            </descendants>
+
+        </node>
+         <node id="LeftXrayscreen">
+
+            <material id="Porcelain_Grey" />
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="-2.3" y="2.8" z="7" />
+                <scale sx="2.5" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="xraySprite" startCell="0" endCell="34" duration="10" />
+               <!-- <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" /> //will this create an inverted rectangle??-->
             </descendants>
 
         </node>
@@ -1634,11 +1611,11 @@
 
             <descendants>
                 <leaf type="cylinder" height="15" topRadius="0.3" bottomRadius="0.3" stacks="8" slices="16" />
-                <noderef id="xrayscreen" />
+                <noderef id="RightXrayscreen" />
             </descendants>
 
         </node>
-        <node id="xrayscreen">
+        <node id="RightXrayscreen">
 
             <material id="Porcelain_Grey" />
             <texture id="clear">

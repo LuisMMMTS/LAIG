@@ -5,7 +5,7 @@
 class MySpritesheet {
     /**
     * @constructor
-    * @param scene
+    * @param scene - Reference to MyScene object
     * @param {CGFTexture} texture - texture of the spritesheet
     * @param sizeM - number of columns (int)
     * @param sizeN - number of rows (int)

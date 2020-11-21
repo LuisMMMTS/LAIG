@@ -795,7 +795,7 @@ class MySceneGraph {
             let last_instant = 0;
             for (let i = 0; i < grandChildren.length; i++) {
                 if (grandChildren[i].nodeName != "keyframe") {
-                    this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + children[i].nodeName + ">");
+                    this.onXMLMinorError("[ANIMATIONS] Unknown tag <" + grandChildren[i].nodeName + ">");
                     continue;
                 }
 
@@ -813,13 +813,15 @@ class MySceneGraph {
                 if (keyframe.instant < last_instant) {
                     this.onXMLMinorError("[ANIMATIONS] Unordered keyframe instant on animation " + animationID + " in instant " + keyframe.instant + " coming only after instant " + last_instant + " but using it anyway");
                 }
+
                 last_instant = keyframe.instant;
                 instants[keyframe.instant] = keyframe.instant;
 
 
                 var grandgrandChildren = grandChildren[i].children;
                 var xangle = null, yangle = null, zangle = null;
-                for (var k = 0; k < grandgrandChildren.length; k++) {//we should warn it's not in the expected order but we don't ignore it
+
+                for (var k = 0; k < grandgrandChildren.length; k++) {//we warn it's not in the expected order but we don't ignore it
                     if (grandgrandChildren.length > 5) {
                         this.onXMLError("[ANIMATIONS] Too many transformations declared in animation " + animationID + " skipping it");
                         break;
@@ -946,7 +948,7 @@ class MySceneGraph {
             }
 
             if (path == null) { // if the path is null we ignore this spritesheet
-                this.onXMLMinorError("[SPRITSHEETS] invalid path");
+                this.onXMLMinorError("[SPRITSHEETS] invalid path in spritesheet: " + id + " skipping it");
                 continue;
             }
 
@@ -962,7 +964,7 @@ class MySceneGraph {
                 this.onXMLError("[SPRITESHEETS] Missing/not valid values for sizeN on spritesheet: " + id + ", skipping it");
                 continue;
             }
-            if (sizeM%1!=0 || sizeN%1!=0){
+            if (sizeM % 1 != 0 || sizeN % 1 != 0){
                 this.onXMLError("[NODE] Wrong values for spritesheet size definition in spritesheet: " + id + ",values must be integers, skipping it");
                 continue;
             }
@@ -970,7 +972,6 @@ class MySceneGraph {
             this.spritesheets[id] = new MySpritesheet(this.scene, id, texture, sizeM, sizeN);
         }
 
-        console.log(this.spritesheets);
         this.log("Parsed Spritesheets");
         return null;
     }
@@ -1148,9 +1149,12 @@ class MySceneGraph {
                 }
             }
 
+            //Animation (optional)
             let animationID = null;
+
             if (animationIndex != -1) {
                 animationID = this.reader.getString(grandChildren[animationIndex], "id");
+
                 if (animationID == null) {
                     this.onXMLMinorError("[NODES] Animation ID is not valid. node ID: " + nodeID + ", assuming null");
                 }
@@ -1307,11 +1311,11 @@ class MySceneGraph {
 
                             if (id == null || startCell == null || isNaN(startCell) || startCell < 0 || endCell == null || isNaN(endCell) ||
                                 endCell < startCell || duration < 0 || duration == null || isNaN(duration)) {
-                                this.onXMLError("[NODE] Missing values for spriteanim definition in nodeID: " + nodeID + ", skipping it");
+                                this.onXMLError("[NODE] Missing/Invalid values for spriteanim definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
 
-                            if (startCell%1!=0 || endCell%1!=0){
+                            if (startCell % 1 != 0 || endCell % 1 != 0){
                                 this.onXMLError("[NODE] Wrong values for spriteanim definition in nodeID: " + nodeID + ",values must be integers, skipping it");
                                 continue;
                             }
@@ -1325,6 +1329,7 @@ class MySceneGraph {
                             primitives.push(spriteanim);
                             this.spriteanimations.push(spriteanim);
                             break;
+
                         case "plane":
                             let nPartsU = this.reader.getFloat(descendant, "npartsU");
                             let nPartsV = this.reader.getFloat(descendant, "npartsV");
@@ -1333,16 +1338,16 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Wrong values for plane definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            if (nPartsU%1!=0 || nPartsV%1!=0){
+                            if (nPartsU % 1 != 0 || nPartsV % 1 != 0){
                                 this.onXMLError("[NODE] Wrong values for plane definition in nodeID: " + nodeID + ",values must be integuers, skipping it");
                                 continue;
                             }
-                            //dont know if needs more verifications
+
                             let plane = new MyPlane(this.scene, nPartsU, nPartsV);
                             primitives.push(plane);
                             break;
                         case "patch":
-                            //TO DO
+
                             let nPointsU = this.reader.getFloat(descendant, "npointsU");
                             let nPointsV = this.reader.getFloat(descendant, "npointsV");
                             let nPrtsU = this.reader.getFloat(descendant, "npartsU");
@@ -1352,18 +1357,15 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Wrong values for patch definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            if (nPointsU%1!=0 || nPointsV%1!=0 || nPrtsU%1!=0 || nPrtsV%1!=0){
+                            if (nPointsU % 1 != 0 || nPointsV % 1 != 0 || nPrtsU % 1 != 0 || nPrtsV % 1 != 0){
                                 this.onXMLError("[NODE] Wrong values for patch definition in nodeID: " + nodeID + ",values must be integuers, skipping it");
                                 continue;
                             }
 
-                            let controlPoints = [];
-                            let controlPointsU = [];
-                            let controlPointstemp = [];
-                            let x
-                            let y
-                            let z;
+                            let controlPoints = [], controlPointsU = [], controlPointstemp = [];
+                            let x, y, z;
                             let controlPointsNodes = descendant.children;
+
                             if (controlPointsNodes.length != (nPointsU * nPointsV)) {
                                 this.onXMLError("[PATCH] wrong number of control points declared in nodeID:" + nodeID + ". Should be " + nPointsU * nPointsV + " are actually " + controlPointsNodes.length + ". Assuming 0 if any missing.");
                             }
@@ -1377,13 +1379,15 @@ class MySceneGraph {
                                         this.onXMLError("[NODE] Wrong values for control point definition in nodeID: " + nodeID + ", in control point index " + i + ", skipping it");
                                         continue;
                                     }
-                                } else { //this means there are control points missing so we'll assume them as zero
+                                } 
+                                else { //this means there are control points missing so we'll assume them as zero
                                     x = 0;
                                     y = 0;
                                     z = 0;
                                 }
                                 controlPointstemp.push(x, y, z,1);
-                                controlPointsU.push(controlPointstemp)
+                                controlPointsU.push(controlPointstemp);
+
                                 if (controlPointsU.length == nPointsV){
                                     controlPoints.push(controlPointsU);
                                     controlPointsU = [];
@@ -1394,6 +1398,7 @@ class MySceneGraph {
                             let patch = new MyPatch(this.scene, nPointsU, nPointsV, nPrtsU, nPrtsV, controlPoints);
                             primitives.push(patch);
                             break;
+
                         case "defbarrel":
                             let base = this.reader.getFloat(descendant, "base");
                             let middle = this.reader.getFloat(descendant, "middle");
@@ -1419,7 +1424,7 @@ class MySceneGraph {
 
                             }
 
-                            if (sl%1!=0 || st%1!=0){
+                            if (sl % 1 != 0 || st % 1 != 0){
                                 this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ",stacks and slices values must be integuers, skipping it");
                                 continue;
                             }
@@ -1427,7 +1432,6 @@ class MySceneGraph {
                             let defbarrel = new MyDefBarrel(this.scene, base, middle, h, sl, st);
                             primitives.push(defbarrel);
                             break;
-
 
                         default:
                             this.onXMLMinorError("[NODE] Unknown leaf type in node id: " + nodeID);
@@ -1584,7 +1588,7 @@ class MySceneGraph {
         let display = true;
         let node = this.nodes[id];
 
-        if (node == null) {//node does not exist
+        if (node == null) { //node does not exist
             return 1;
         }
 
@@ -1617,13 +1621,13 @@ class MySceneGraph {
             if (texId != "null") {
                 textureID = texId;
             }
-            else {// using default
+            else { // using default
                 textureID = "default";
                 console.warn("[PROCESS NODE] Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId " + id);
             }
         }
 
-        if (textureID == "clear") {//removing texture
+        if (textureID == "clear") { //removing texture
             material.setTexture(null);
         }
 
@@ -1634,9 +1638,9 @@ class MySceneGraph {
         material.setTextureWrap('REPEAT', 'REPEAT');
         material.apply();
 
-        this.scene.multMatrix(node.getTransformation());//apply transformation
+        this.scene.multMatrix(node.getTransformation()); //apply transformation
 
-        if (node.animation != null) {//it has animation defined
+        if (node.animation != null) { //it has animation defined
             this.animations[node.animation].apply();
             display = this.animations[node.animation].active;
         }
@@ -1656,9 +1660,9 @@ class MySceneGraph {
             for (var i = 0; i < node.getChildren().length; i++) {// if node, recursive call
                 this.scene.pushMatrix();
                 let a = this.processNode(node.getChildren()[i], textureID, materialID);
-                if (a == 1) {//the node does not exist
+                if (a == 1) { //the node does not exist
                     this.onXMLError("[PROCESS NODE] NodeID " + id + " has non existent child with id: " + node.getChildren()[i]);
-                    node.children.splice(i, i + 1);//removes this node from the children so it's not printing the same message over and over again
+                    node.children.splice(i, i + 1); //removes this node from the children so it's not printing the same message over and over again
                 }
                 this.scene.popMatrix();
             }

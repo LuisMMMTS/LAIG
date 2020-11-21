@@ -1,5 +1,8 @@
 /** 
  * Animation - class that stores the animation information
+ * @constructor
+ * @param scene - Reference to MyScene object
+ * @param animationID - id of the animation
  */
 
 class Animation{

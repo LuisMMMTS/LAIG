@@ -2,6 +2,11 @@
  * MyDefBarrel
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param base - radius of the base
+ * @param middle - radius of the middle section
+ * @param height - height of the barrel
+ * @param slices - parts per section
+ * @param stacks - sections along height
  */
 
 class MyDefBarrel extends CGFobject {
@@ -13,10 +18,12 @@ class MyDefBarrel extends CGFobject {
         this.height = height;
         this.slices = slices;
         this.stacks = stacks;
+
         this.h = (4/3) * this.base;
         this.H = (4/3) * (this.middle - this.base);
-        let hipotenusa=Math.sqrt(Math.pow(this.middle,2)+Math.pow((this.height/2),2));
-        this.angle=-180-Math.acos(this.base/hipotenusa)-Math.asin(this.base/hipotenusa)*DEGREE_TO_RAD;
+
+        let hipotenuse = Math.sqrt(Math.pow(this.middle,2) + Math.pow((this.height/2),2));
+        this.angle = -180 - Math.acos(this.base/hipotenuse) - Math.asin(this.base/hipotenuse) * DEGREE_TO_RAD;
         
 
 		this.initBuffers();
@@ -24,7 +31,6 @@ class MyDefBarrel extends CGFobject {
 	
 	initBuffers() {
         
-        //let angle = Math.asin() * Math.PI / 180; //30degrees
        
         this.controlPoints = [
             [ //P4
@@ -56,7 +62,7 @@ class MyDefBarrel extends CGFobject {
             ],
         ];
 
-        this.defbarrel = new MyPatch(this.scene, 4,4,this.stacks, this.slices, this.controlPoints);
+        this.defbarrel = new MyPatch(this.scene, 4, 4, this.stacks, this.slices, this.controlPoints);
         
         
     }

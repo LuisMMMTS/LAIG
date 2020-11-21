@@ -10,12 +10,28 @@
 
 ----
 ## Project information
-
+- Parser with error description
+- Interface with enable/disable display lights and axis
+- Choosable Lights turned on and view
+- New primitives (plane, patch and defbarrel) and added animation 
+- Integration of keyframe animations, sprites and 2D/3D surfaces
 - (items describing main strong points)
 - Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
+  - To the scene was added a person that makes the path through the security, placing its belongings in the security mat that pass through the x-ray and places itself under the security gantry, having a positive check.  On the floor, it is possible to see some arrows indicating the direction to follow, and on the wall, there is a flight board where it's possible to check the state, time, and gate of the flights. The descriptive text was added in some places.
+   - [scene](https://git.fe.up.pt/laig/laig-2020-2021/t01/laig-t01-g07/-/blob/master/TP2/scenes/LAIG_TP1_T1G07.xml)
 ----
 ## Issues/Problems
 
-- (items describing unimplemented features, bugs, problems, etc.)
+- None known bugs
+
+----
+## Things to keep in mind
+- When does the program execution stops?
+  - There isn't a root id defined 
+  - It's missing one of the main tags (ex: initials, materials, lights,etc.)
+  - There's a non-defined id node
+  - There's a node whose id is repeated
+  
+- Other implementation details
+  - Having no descendants is an error, because it doesn't make a lot of sense to have a node without descendants, so something must be wrong
+  - Every time something isn't valid, it's ignored and set a default whole element, not only a default component, because, for instance, if the material has an invalid r value for RGB in specular, the output of the parsing won't be what was expected, so to warn the user, we use a default one, something he wasn't expecting to see there

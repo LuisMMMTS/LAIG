@@ -36,16 +36,18 @@ class XMLscene extends CGFscene {
         this.displayAxis = false;
         this.displayLights = false;
 
+        //init shaders
+        this.shader = new CGFshader(this.gl, "./scenes/shaders/shader.vert","./scenes/shaders/shader.frag");
+
         this.setUpdatePeriod(1000/60);
         this.initialTime = 0;
 
-        this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
-        this.loadingProgress=0;
+        this.loadingProgressObject = new MyRectangle(this, -1, -.1, 1, .1);
+        this.loadingProgress = 0;
 
         this.defaultAppearance = new CGFappearance(this);
 
-        //init shaders
-        this.shader = new CGFshader(this.gl, "./scenes/shaders/shader.vert","./scenes/shaders/shader.frag");
+        
 
     }
 

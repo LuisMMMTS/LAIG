@@ -99,13 +99,13 @@
 
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
-                <scale sx="5" sy="5" sz="5"/>
+                <scale sx="2" sy="2" sz="2"/>
             </transformations>
 
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-               <leaf type="defbarrel" base="1" middle="1.5" height="5" 
+    <leaf type="defbarrel" base="0.7" middle="1.5" height="5" 
 slices="10" stacks="20" />
 
 <!--<leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20">
@@ -127,7 +127,7 @@ slices="10" stacks="20" />
 
               
                 </leaf>-->
-                <!--<leaf type="plane" npartsU="3" npartsV="3" />-->
+               <!-- <leaf type="plane" npartsU="3" npartsV="3" />-->
                 <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>
