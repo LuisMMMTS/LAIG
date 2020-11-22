@@ -64,6 +64,7 @@ class MySpriteText {
 
     display(){
 
+        this.scene.translate(-this.text.length/2,-0.5,0);
 
         this.scene.gl.enable(this.scene.gl.BLEND); // enables blending
         this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);// defines the blending function

@@ -23,7 +23,7 @@ class MyDefBarrel extends CGFobject {
         this.H = (4/3) * (this.middle - this.base);
 
         let hipotenuse = Math.sqrt(Math.pow(this.middle,2) + Math.pow((this.height/2),2));
-        this.angle = -180 - Math.acos(this.base/hipotenuse) - Math.asin(this.base/hipotenuse) * DEGREE_TO_RAD;
+        this.angle = Math.acos(this.base/hipotenuse) + Math.asin(this.base/hipotenuse);
         
 
 		this.initBuffers();
