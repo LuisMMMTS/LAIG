@@ -33,6 +33,7 @@
 - To the scene was added a person that makes the path through the security, placing its belongings in the security mat that pass through the x-ray (sprite animation) and places itself under the security gantry (keyframe animations), facing the gate (defbarrel, plane), having a positive check.  On the floor, it is possible to see some arrows(sprite animation) indicating the direction to follow, and on the wall, there is a flight board (sprite animation) where it's possible to check the state, time, and gate of the flights and also a chinese lamp. The descriptive text (sprite texts) was added in some places and also some flags(patch).
 
 [TP2 - README](https://git.fe.up.pt/laig/laig-2020-2021/t01/laig-t01-g07/-/blob/master/TP2/README.md)
+
 ----
 
 ### [TP3 - ...](TP3)
