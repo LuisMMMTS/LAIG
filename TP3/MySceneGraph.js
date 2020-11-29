@@ -1571,12 +1571,12 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
 
-  /*  displayScene() {
+    displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         var matId = this.nodes[this.idRoot].getMaterial();
         var texId = this.nodes[this.idRoot].getTexture();
         this.processNode(this.idRoot, texId, matId);
-    }*/
+    }
 
     /**
      * Processes each node and its descendants, applying its textures, materials and transformations
@@ -1584,7 +1584,7 @@ class MySceneGraph {
      * @param {CGFtexture} text
      * @param {CGFappearance} mat  
      */
-   /* processNode(id, texId, matId) {
+    processNode(id, texId, matId) {
         let display = true;
         let node = this.nodes[id];
 
@@ -1593,59 +1593,63 @@ class MySceneGraph {
         }
 
         this.scene.pushMatrix();
-
-        let materialID = node.getMaterial();
-        let textureID = node.getTexture();
-
-
-        if (materialID == "null") { // get parent's material 
-            if (matId != "null") {
-                materialID = matId;
-            }
-            else {
-                materialID = "default";
-                if (id !== this.idRoot) { //no need for warning if its the root without material
-                    console.warn("[PROCESS NODE] Using default material, consider checking material definitions in nodeId " + id);
-                }
-            }
-        }
-
-        if (this.materials[materialID] == -1) {//material does not exist
-            console.warn("[PROCESS NODE] Material non existent in nodeId " + id) + " using default";
-            materialID = "default";
-        }
-
-
-        let material = this.materials[materialID];
-        if (textureID == "null") { // get parent's texture
-            if (texId != "null") {
-                textureID = texId;
-            }
-            else { // using default
-                textureID = "default";
-                console.warn("[PROCESS NODE] Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId " + id);
-            }
-        }
-
-        if (textureID == "clear") { //removing texture
-            material.setTexture(null);
-        }
-
-        let texture = this.textures[textureID];
-        material.setTexture(texture);
-
-
-        material.setTextureWrap('REPEAT', 'REPEAT');
-        material.apply();
-
-        this.scene.multMatrix(node.getTransformation()); //apply transformation
-
         if (node.animation != null) { //it has animation defined
-            this.animations[node.animation].apply();
             display = this.animations[node.animation].active;
         }
 
         if (display) {
+
+            let materialID = node.getMaterial();
+            let textureID = node.getTexture();
+
+
+            if (materialID == "null") { // get parent's material 
+                if (matId != "null") {
+                    materialID = matId;
+                }
+                else {
+                    materialID = "default";
+                    if (id !== this.idRoot) { //no need for warning if its the root without material
+                        console.warn("[PROCESS NODE] Using default material, consider checking material definitions in nodeId " + id);
+                    }
+                }
+            }
+
+            if (this.materials[materialID] == -1) {//material does not exist
+                console.warn("[PROCESS NODE] Material non existent in nodeId " + id) + " using default";
+                materialID = "default";
+            }
+
+
+            let material = this.materials[materialID];
+            if (textureID == "null") { // get parent's texture
+                if (texId != "null") {
+                    textureID = texId;
+                }
+                else { // using default
+                    textureID = "default";
+                    console.warn("[PROCESS NODE] Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId " + id);
+                }
+            }
+
+            if (textureID == "clear") { //removing texture
+                material.setTexture(null);
+            }
+
+            let texture = this.textures[textureID];
+            material.setTexture(texture);
+
+
+            material.setTextureWrap('REPEAT', 'REPEAT');
+            material.apply();
+
+            this.scene.multMatrix(node.getTransformation()); //apply transformation
+
+            if (node.animation != null) { //it has animation defined
+                this.animations[node.animation].apply();
+            }
+            
+        
             for (var i = 0; i < node.getLeafs().length; i++) { // if primitive, display 
                 if (node.getLeafs()[i] instanceof MySpriteText) {
                     this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext
@@ -1668,5 +1672,5 @@ class MySceneGraph {
             }
         }
         this.scene.popMatrix();
-    }*/
+    }
 }

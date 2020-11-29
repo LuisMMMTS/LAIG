@@ -24,6 +24,9 @@ class KeyFrameAnimation extends Animation{
         this.elapsedTime = 0;
         this.lastTime = 0;
 
+        this.keyframeStartIndex = 0;
+        this.keyframeEndIndex = 1;
+
         this.active = false;
         this.ended = false; 
     }
@@ -67,38 +70,40 @@ class KeyFrameAnimation extends Animation{
         }
         
 
-        let keyframeStartInstant = 0, keyframeEndInstant = 0, keyframeStartIndex = 0, keyframeEndIndex = 0;
         
-        //find the keyframes to interpolate between
-        for(let i = 0; i < this.keyframes.length; i++){
-            if(this.keyframes[i].instant < this.elapsedTime){ //we can do this because its ordered
-                keyframeStartInstant = this.keyframes[i].instant;
-                keyframeStartIndex = i;
-            }
-            else if (this.keyframes[i].instant > this.elapsedTime){
-                keyframeEndInstant = this.keyframes[i].instant;
-                keyframeEndIndex = i;
-                break;
-            }
-            else if(this.keyframes[i].instant == this.elapsedTime){ // no need for interpolation, its in a matching keyframe instant
-                this.animationTranslation = this.keyframes[i].translation;
-                this.animationRotation = new vec3.fromValues(this.keyframes[i].rotation[0],this.keyframes[i].rotation[1],this.keyframes[i].rotation[2]);
-                this.animationScale = this.keyframes[i].scale;
-                return;
-            }
+        if(this.elapsedTime == this.keyframes[this.keyframeStartIndex].instant){// no need for interpolation, its in a matching keyframe instant
+            this.animationTranslation = this.keyframes[this.keyframeStartIndex].translation;
+            this.animationRotation = new vec3.fromValues(this.keyframes[this.keyframeStartIndex].rotation[0],this.keyframes[this.keyframeStartIndex].rotation[1],this.keyframes[this.keyframeStartIndex].rotation[2]);
+            this.animationScale = this.keyframes[this.keyframeStartIndex].scale;
+            return;
+        }
+        else if(this.elapsedTime == this.keyframes[this.keyframeEndIndex].instant){// no need for interpolation, its in a matching keyframe instant
+            this.animationTranslation = this.keyframes[this.keyframeEndIndex].translation;
+            this.animationRotation = new vec3.fromValues(this.keyframes[this.keyframeEndIndex].rotation[0],this.keyframes[this.keyframeEndIndex].rotation[1],this.keyframes[this.keyframeEndIndex].rotation[2]);
+            this.animationScale = this.keyframes[this.keyframeEndIndex].scale;
+            return;
         }
 
-        /* INTERPOLATION */
+        //find the keyframes to interpolate between
+        if(this.elapsedTime >= this.keyframes[this.keyframeEndIndex].instant){
+            this.keyframeEndIndex++;
+            this.keyframeStartIndex++;
+        }    
 
+        /* INTERPOLATION */
         //It's not the end so we need to do interpolation
 
+        let keyframeStartInstant = this.keyframes[this.keyframeStartIndex].instant;
+        let keyframeEndInstant = this.keyframes[this.keyframeEndIndex].instant;
+
+        
         let interpolationAmount = (this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant);
 
-        vec3.lerp(this.animationTranslation,this.keyframes[keyframeStartIndex].translation, this.keyframes[keyframeEndIndex].translation,interpolationAmount);
+        vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
 
-        vec3.lerp(this.animationRotation,this.keyframes[keyframeStartIndex].rotation, this.keyframes[keyframeEndIndex].rotation,interpolationAmount);
+        vec3.lerp(this.animationRotation,this.keyframes[this.keyframeStartIndex].rotation, this.keyframes[this.keyframeEndIndex].rotation,interpolationAmount);
         
-        vec3.lerp(this.animationScale,this.keyframes[keyframeStartIndex].scale, this.keyframes[keyframeEndIndex].scale,interpolationAmount);
+        vec3.lerp(this.animationScale,this.keyframes[this.keyframeStartIndex].scale, this.keyframes[this.keyframeEndIndex].scale,interpolationAmount);
         
     }
 

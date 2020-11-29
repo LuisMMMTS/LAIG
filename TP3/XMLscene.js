@@ -39,6 +39,12 @@ class XMLscene extends CGFscene {
         //init shaders
         this.shader = new CGFshader(this.gl, "./scenes/shaders/shader.vert","./scenes/shaders/shader.frag");
 
+        
+        /*initializes the spritesheet */
+        this.fontTexture = new CGFtexture(this, "./scenes/shaders/board.png");
+        this.spritesheet = new MySpritesheet(this, "font", this.fontTexture, 16, 16);
+        
+
         this.setUpdatePeriod(1000/60);
         this.initialTime = 0;
 
