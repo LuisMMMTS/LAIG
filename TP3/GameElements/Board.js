@@ -22,10 +22,10 @@ class Board extends CGFobject {
         
         this.tiles = [];
 
-		this.initBuffers();
+		this.init();
 	}	
 	
-	initBuffers() {
+	init() {
         this.board = new MyPlane(this.scene, this.nPartsU, this.nPartsV);
         this.createBoardTiles();
 
@@ -43,15 +43,15 @@ class Board extends CGFobject {
 	}
 
 	addPieceToTile(tile, piece){
-        tile.piece = piece;
+        tile.setPiece(piece);
     }
     
 	removePieceFromTile(){
-		tile.piece = null;
+		tile.setPiece(null);
     }
     
 	getPieceOfTile(tile){
-		return tile.piece;
+		return tile.getPiece();
     }
     
 	getTileOfPiece(piece){
@@ -74,19 +74,28 @@ class Board extends CGFobject {
 	}
 
     display(){
-        /*
+        let id = 1;
         this.scene.pushMatrix();
         this.scene.scale(this.nPartsU, 1, this.nPartsV);
         this.board.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        */
         
-       this.scene.pushMatrix();
-       this.scene.translate(-this.side/4.0,0,-this.side/4.0);
+        
+        this.scene.pushMatrix();
+        this.scene.translate(0,0.1,0);
+        this.scene.translate(-this.side/4.0,0,-this.side/4.0);
+            
         for (let cell = 0; cell < this.tiles.length; cell++){
+            this.scene.registerForPick(id, this.tiles[cell]);
+            if(this.tiles[cell].piece != null){
+                this.scene.registerForPick(id, this.tiles[cell].piece);
+                id++;
+            }
+            else id++;
             this.tiles[cell].display();//each tile 
         }
+        //this.clearPickRegistration();
         this.scene.popMatrix();
         
     }

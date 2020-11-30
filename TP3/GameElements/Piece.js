@@ -1,4 +1,11 @@
-
+/**
+ * Piece
+ * @constructor
+ * @param scene - Reference to MyScene object
+ * @param id
+ * @param tile
+ * @param player
+ */
 
 class Piece{
     constructor(scene, id, tile, player){
@@ -7,8 +14,19 @@ class Piece{
         this.tile = tile;
         this.player = player;
 
-        this.cube =new MyCube(this.scene,0.5);
+        this.type = 'cube';
+        this.cube = new MyCube(this.scene,0.5);
         this.initMaterials();
+
+        //if player is 1 pieces are black, if player is 2 pieces are white
+        if(this.player == 1){
+            this.color = this.black;
+        }
+        else if(this.player == 2){
+            this.color = this.white;
+        }
+
+        this.picked = false;
     }
     
     initMaterials(){
@@ -25,23 +43,43 @@ class Piece{
         this.black.setSpecular(0.0, 0.0, 0.0, 1);
         this.black.setShininess(10.0);
 
+        this.red = new CGFappearance(this.scene);
+        this.red.setAmbient(1.0, 0.0, 0.0, 1);
+        this.red.setDiffuse(1.0, 0.0, 0.0, 1);
+        this.red.setSpecular(1.0, 0.0, 0.0, 1);
+        this.red.setShininess(10.0);    
     }
 
+    setType(type){
+        this.type = type;
+    }
+
+    getType(){
+        return this.type;
+    }
+    pick(){
+        console.log("here");
+        if(!this.picked){
+            this.color = this.red;
+            this.picked = true;
+        }
+        else{
+            this.color = this.black;
+            this.picked = false
+        }
+    }
     display(){
     
         this.scene.pushMatrix();
-        //if player is 1 pieces are black, if player is 2 pieces are white
-        if(this.player == 1){
-            this.black.apply();
-        }
-        else if(this.player == 2){
-            this.white.apply();
-        }
+        this.color.apply();
         
         this.cube.display();
 
         this.scene.popMatrix();
         
+    }
+    displayPiece(){
+
     }
 
 }

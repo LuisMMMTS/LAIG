@@ -46,7 +46,7 @@ class XMLscene extends CGFscene {
         
 
         this.setUpdatePeriod(1000/60);
-        this.setPickEnabled(true);
+        this.setPickEnabled(true);//enable picking
         this.initialTime = 0;
 
         this.loadingProgressObject = new MyRectangle(this, -1, -.1, 1, .1);
@@ -54,7 +54,7 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        this.game = new Board(this, -10,-10,10,10);
+        this.orchestrator = new GameOrchestrator(this);
 
     }
 
@@ -208,13 +208,30 @@ class XMLscene extends CGFscene {
      }
 
 
+     logPicking() {
+		if (this.pickMode == false) {
+			if (this.pickResults != null && this.pickResults.length > 0) {
+				for (var i = 0; i < this.pickResults.length; i++) {
+					var obj = this.pickResults[i][0];
+					if (obj) {
+						var customId = this.pickResults[i][1];
+						console.log("Picked object: " + obj + ", with pick id " + customId);						
+					}
+				}
+				this.pickResults.splice(0, this.pickResults.length);
+			}
+		}
+	}
+
 
     /**
      * Displays the scene.
      */
     display() {
         // ---- BEGIN Background, camera and axis setup
-
+        this.orchestrator.managePick(this.pickMode, this.pickResults);
+		this.clearPickRegistration();
+        
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -243,8 +260,8 @@ class XMLscene extends CGFscene {
 
             // Displays the scene (MySceneGraph function).
             //this.graph.displayScene();
+            this.orchestrator.display();
             
-            this.game.display();
             
         }
         else{

@@ -1,0 +1,258 @@
+
+<auxiliarboard1 x1 y1 x2 y2>
+<auxiliarboard…>
+<auxiliarboardn>
+<piecetype1>
+<piecetype...>
+<piecetypen>
+<tiletype1>
+<tiletype...>
+<tiletypen>
+
+<lsf>
+
+    <initials>
+        <reference length="5" /> <!-- axis length; "0" means no axis displayed -->
+
+        <root id="root" /> <!-- identifier of root node of the scene graph; this node -->
+        <!-- must be defined in one of the following NODE declarations -->
+    </initials>
+
+    <views default="Side">
+        <!-- at least one of the following type of cameras must be declared -->
+        <perspective id="Side" near="0.1" far="500" angle="23">
+            <from x="30" y="5" z="7" />
+            <to x="0" y="5" z="7" />
+        </perspective>
+        <perspective id="Front" near="7" far="500" angle="15">
+            <from x="1" y="5" z="45" />
+            <to x="0" y="3.5" z="0" />
+        </perspective>
+        <perspective id="Top" near="0.1" far="500" angle="27">
+            <from x="3" y="30" z="5" />
+            <to x="-1.5" y="0" z="5" />
+        </perspective>
+        <ortho id="Ortho" near="0" far="50" left="-10" right="10" top="10" bottom="-1">
+            <from x="6" y="3" z="15" />
+            <to x="0" y="-1.5" z="2" />
+            <up x="0" y="1" z="0" /> <!-- optional, default 0,1,0 -->
+        </ortho>
+    </views>
+
+
+    <illumination>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" /> <!-- global ambient -->
+        <background r="0.7" g="0.8" b="1.0" a="1.0" /> <!-- background color -->
+    </illumination>
+
+
+    <lights>
+        <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
+        <light id="LightRight">
+            <!-- light identifier -->
+            <enable value="0" /> <!-- enable/disable -->
+            <position x="20" y="20" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
+            <specular r="0.8" g="0.8" b="0.8" a="0.8" /> <!-- specular component -->
+        </light>
+        <light id="LightLeft">
+            <!-- light identifier -->
+            <enable value="1" /> <!-- enable/disable -->
+            <position x="0" y="20" z="20" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
+            <specular r="0.8" g="0.8" b="0.8" a="0.8" /> <!-- specular component -->
+        </light>
+        <light id="LightTop">
+            <!-- light identifier -->
+            <enable value="0" /> <!-- enable/disable -->
+            <position x="0" y="20" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
+            <diffuse r="0.8" g="0.8" b="0.8" a="1" /> <!-- diffuse component -->
+            <specular r="0.1" g="0.1" b="0.1" a="0.5" /> <!-- specular component -->
+        </light>
+        <light id="LightBottom">
+            <!-- light identifier -->
+            <enable value="0" /> <!-- enable/disable -->
+            <position x="0" y="-20" z="30" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" /> <!-- diffuse component -->
+            <specular r="0.5" g="0.5" b="0.5" a="0.5" /> <!-- specular component -->
+        </light>
+        <light id="CenteredLight">
+            <!-- light identifier -->
+            <enable value="0" /> <!-- enable/disable -->
+            <position x="0" y="8" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular component -->
+        </light>
+    </lights>
+
+
+    <textures>
+        <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
+        <texture id="danger" path="danger.png" />
+        <texture id="floorTexture" path="chao4.jpg" />
+    </textures>
+
+
+    <materials>
+        <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
+
+//especular mais baixa para o que nao queremos metalico
+         requires a distinct "id". At least one material should be present. -->
+        <material id="Porcelain_Grey">
+            <!--cor das paredes-->
+            <shininess value="1" />
+            <specular r="0.86" g="0.86" b="0.86" a="1" /> <!-- specular reflection -->
+            <diffuse r="0.86" g="0.86" b="0.86" a="1" /> <!-- diffuse reflection -->
+            <ambient r="0.86" g="0.86" b="0.86" a="1" /> <!-- ambient reflection -->
+            <emissive r="0.1" g="0.1" b="0.1" a="1" /> <!-- emissive component -->
+        </material>
+        <material id="Off_white_emissive">
+            <!--cilindros dos tapetes-->
+            <shininess value="1" />
+            <specular r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0.6" g="0.6" b="0.6" a="1.0" /> <!-- emissive component -->
+        </material>
+        <material id="emissive">
+            <!--cilindros dos tapetes-->
+            <shininess value="1" />
+            <specular r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- emissive component -->
+        </material>
+        <material id="White">
+            <!--cilindros dos tapetes-->
+            <shininess value="1" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" /> <!-- emissive component -->
+        </material>
+        <material id="black">
+            <!--cor do tapete-->
+            <shininess value="1.0" />
+            <specular r="0.18" g="0.19" b="0.19" a="1" /> <!-- specular reflection -->
+            <diffuse r="0.1" g="0.1" b="0.1" a="1" /> <!-- diffuse reflection -->
+            <ambient r="0" g="0" b="0" a="1" /> <!-- ambient reflection -->
+            <emissive r="0" g="0" b="0" a="1.0" /> <!-- emissive component -->
+        </material>
+        <material id="navy_blue">
+            <shininess value="1.0" />
+            <specular r="0.1" g="0.2" b="0.2" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="0.1" g="0.20" b="0.2" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="0.1" g="0.20" b="0.2" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0" g="0.1" b="0.2" a="1.0" /> <!-- emissive component -->
+        </material>
+        <material id="green">
+            <shininess value="1.0" />
+            <specular r="0" g="0.90" b="0.25" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="0" g="0.90" b="0.25" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="0" g="0.90" b="0.25" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0" g="0.90" b="0.25" a="1.0" /> <!-- emissive component -->
+        </material>
+        <material id="red">
+            <shininess value="1.0" />
+            <specular r="1" g="0" b="0" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="1" g="0" b="0" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="1" g="0" b="0" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0.5" g="0" b="0" a="1.0" /> <!-- emissive component -->
+        </material>
+        <material id="transparent">
+            <shininess value="1.0" />
+            <specular r="1" g="0" b="0" a="0.0" /> <!-- specular reflection -->
+            <diffuse r="1" g="0" b="0" a="0.0" /> <!-- diffuse reflection -->
+            <ambient r="1" g="0" b="0" a="0.0" /> <!-- ambient reflection -->
+            <emissive r="0.5" g="0" b="0" a="0.0" /> <!-- emissive component -->
+        </material>
+    </materials>
+    <animations>
+        <!-- This is optional and can be empty-->
+        <animation id="sphereAnimationGreen">
+            <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
+    one keyframe. Instant is time expressed in seconds since the beginning of the animation.
+        Keyframes must be declared in ascending order of time -->
+            <keyframe instant="0">
+
+                <!-- translate, rotate e scale representam as -->
+                <!-- quantidades das transformações -->
+                <!-- correspondentes, medidas em relação à -->
+                <!-- situação inicial (instante zero) -->
+                <!-- Para uma mesma keyframe, os elementos -->
+                <!-- translate, rotate e scale sao obrigatorios -->
+                <!-- e fornecidos por esta ordem -->
+
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="20">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="25">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+            <keyframe instant="27">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="2" sy="2" sz="2" />
+            </keyframe>
+            <keyframe instant="29">
+                <translation x="1" y="0" z="1" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="3" sy="3" sz="3" />
+            </keyframe>
+
+
+        </animation>
+    </animations>
+
+    <!-- spritesheets -->
+    <!-- o bloco "spritesheets" deve ser declarado -->
+    <!-- imediatamente após o bloco "textures" -->
+    <spritesheets>
+        <!-- Semelhante à declaração de textura,  mas inclui a definição do nº de colunas e linhas -->
+        <spritesheet id="sprite1" path="walking.jpg" sizeM="9" sizeN="2" />
+        <spritesheet id="boardSprite" path="board_nowhite.png" sizeM="1" sizeN="4" />
+        <spritesheet id="xraySprite" path="xray.png" sizeM="1" sizeN="36" />
+        <spritesheet id="groundArrow" path="arrow.png" sizeM="3" sizeN="1" />
+    </spritesheets>
+
+    <gameBoard>
+        <boardDimensions x1= y1= x2= y2=/>
+        <piecetype type = "cube"/>
+    </gameBoard>
+
+    <auxiliarBoard>
+    </auxiliarBoard>
+
+    <nodes>
+
+
+        
+
+
+
+    </nodes>
+
+</lsf>
