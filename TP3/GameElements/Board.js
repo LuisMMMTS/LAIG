@@ -15,39 +15,43 @@ class Board extends CGFobject {
 		this.y1 = y1;
 		this.y2 = y2;
 
-		this.nPartsU = this.x2 - this.x1;
+        this.nPartsU = this.x2 - this.x1;
 		this.nPartsV = this.y2 - this.y1;
 
-		this.side = this.nPartsU;
-		
+        this.side = this.nPartsU;
+        
         this.tiles = [];
-
 
 		this.initBuffers();
 	}	
 	
 	initBuffers() {
-		this.board = new MyPlane(this.scene, this.nPartsU, this.nPartsV);
+        this.board = new MyPlane(this.scene, this.nPartsU, this.nPartsV);
+        this.createBoardTiles();
 
 	}
 	createBoardTiles(){
-        for (let i=0; i<this.side;i++){
-            for (let j=0;j<this.side;j++){
-                this.tiles.push(new BoardTile(this.scene, 1, i, j, ?????));
+        let id = 1
+        let nTiles = this.side/2.0;
+        console.log(nTiles*nTiles);
+        for (let i = 0; i < nTiles; i++){
+            for (let j = 0; j < nTiles; j++){
+                this.tiles.push(new BoardTile(this.scene, 2, i, j, id));
+                id++;
             }
         }
 	}
 
 	addPieceToTile(tile, piece){
-        tile.piece=piece;
+        tile.piece = piece;
     }
     
 	removePieceFromTile(){
-		tile.piece=null;
+		tile.piece = null;
     }
     
 	getPieceOfTile(tile){
-		tile.piece;
+		return tile.piece;
     }
     
 	getTileOfPiece(piece){
@@ -69,23 +73,22 @@ class Board extends CGFobject {
         this.addPieceToTile(aux);
 	}
 
-
-
-
-
-
     display(){
-         
+        /*
+        this.scene.pushMatrix();
+        this.scene.scale(this.nPartsU, 1, this.nPartsV);
         this.board.display();
-
-        for (let cell=0;cell<this.tiles.length;cell++){
-            if (cell%side==0){
-                this.scene.translate(-side,0,1);//start new row
-            }
-            this.tiles[cell].display();
-            this.scene.translate(1,0,0); //move to nex cell
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        */
+        
+       this.scene.pushMatrix();
+       this.scene.translate(-this.side/4.0,0,-this.side/4.0);
+        for (let cell = 0; cell < this.tiles.length; cell++){
+            this.tiles[cell].display();//each tile 
         }
-
+        this.scene.popMatrix();
+        
     }
 
 	

@@ -1571,12 +1571,12 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
 
-    displayScene() {
+    /*displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         var matId = this.nodes[this.idRoot].getMaterial();
         var texId = this.nodes[this.idRoot].getTexture();
         this.processNode(this.idRoot, texId, matId);
-    }
+    }*/
 
     /**
      * Processes each node and its descendants, applying its textures, materials and transformations
@@ -1584,7 +1584,7 @@ class MySceneGraph {
      * @param {CGFtexture} text
      * @param {CGFappearance} mat  
      */
-    processNode(id, texId, matId) {
+    /*processNode(id, texId, matId) {
         let display = true;
         let node = this.nodes[id];
 
@@ -1672,5 +1672,5 @@ class MySceneGraph {
             }
         }
         this.scene.popMatrix();
-    }
+    }*/
 }

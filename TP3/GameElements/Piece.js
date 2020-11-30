@@ -1,14 +1,13 @@
 
 
-class MyPiece{
-    constructor(scene, id, tile, player, x, y){
+class Piece{
+    constructor(scene, id, tile, player){
         this.scene = scene;
         this.id = id;
         this.tile = tile;
         this.player = player;
-        this.initialPos['x'] = x;
-        this.initialPos['y'] = y;
 
+        this.cube =new MyCube(this.scene,0.5);
         this.initMaterials();
     }
     
@@ -29,20 +28,20 @@ class MyPiece{
     }
 
     display(){
+    
         this.scene.pushMatrix();
         //if player is 1 pieces are black, if player is 2 pieces are white
-        if(player == 1){
+        if(this.player == 1){
             this.black.apply();
         }
-        else if(player == 2){
+        else if(this.player == 2){
             this.white.apply();
         }
+        
+        this.cube.display();
 
-        this.displayPiece();
         this.scene.popMatrix();
+        
     }
 
-    displayPiece(){
-
-    }
 }

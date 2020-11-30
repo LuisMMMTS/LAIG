@@ -33,7 +33,7 @@ class XMLscene extends CGFscene {
         this.lightValues = [];
 
         this.axis = new CGFaxis(this);
-        this.displayAxis = false;
+        this.displayAxis = true;
         this.displayLights = false;
 
         //init shaders
@@ -46,6 +46,7 @@ class XMLscene extends CGFscene {
         
 
         this.setUpdatePeriod(1000/60);
+        this.setPickEnabled(true);
         this.initialTime = 0;
 
         this.loadingProgressObject = new MyRectangle(this, -1, -.1, 1, .1);
@@ -53,7 +54,7 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        
+        this.game = new Board(this, -10,-10,10,10);
 
     }
 
@@ -183,13 +184,12 @@ class XMLscene extends CGFscene {
     }
 
      update(time){
-        if(this.initialTime == 0){
+       if(this.initialTime == 0){
             this.initialTime = time/1000;
         }
     
        let delta = (time/1000) - this.initialTime;
        
-        //console.log(delta);
         //updates animations based on current time
          if(this.sceneInited){
 
@@ -242,7 +242,10 @@ class XMLscene extends CGFscene {
             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            //this.graph.displayScene();
+            
+            this.game.display();
+            
         }
         else{
             // Show some "loading" visuals
