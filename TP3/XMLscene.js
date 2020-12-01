@@ -205,6 +205,8 @@ class XMLscene extends CGFscene {
                  this.graph.spriteanimations[i].update(delta);
              }
          }
+
+         this.orchestrator.update(delta);
      }
 
 

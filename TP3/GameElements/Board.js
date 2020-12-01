@@ -1,5 +1,5 @@
 /**
- * MyRectangle
+ * Board
  * @constructor
  * @param scene - Reference to MyScene object
  * @param x1 - x coordinate corner 1
@@ -46,8 +46,8 @@ class Board extends CGFobject {
         tile.setPiece(piece);
     }
     
-	removePieceFromTile(){
-		tile.setPiece(null);
+	removePieceFromTile(tile){
+		tile.unsetPiece();
     }
     
 	getPieceOfTile(tile){
