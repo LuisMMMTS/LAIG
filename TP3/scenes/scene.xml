@@ -1,14 +1,4 @@
 
-<auxiliarboard1 x1 y1 x2 y2>
-<auxiliarboard…>
-<auxiliarboardn>
-<piecetype1>
-<piecetype...>
-<piecetypen>
-<tiletype1>
-<tiletype...>
-<tiletypen>
-
 <lsf>
 
     <initials>
@@ -238,21 +228,62 @@
         <spritesheet id="groundArrow" path="arrow.png" sizeM="3" sizeN="1" />
     </spritesheets>
 
-    <gameBoard>
-        <boardDimensions x1= y1= x2= y2=/>
-        <piecetype type = "cube"/>
-    </gameBoard>
-
-    <auxiliarBoard>
-    </auxiliarBoard>
-
+    
     <nodes>
 
+        <node id="root">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-        
+            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+
+
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+            </descendants>
+        </node>
 
 
 
     </nodes>
+
+    <gameBoard>
+        <boardSize side="10"/>
+
+        <boardMaterial material= "white"/>
+        <boardTexture path = "./images/Flag_of_Portugal.png">
+            <afs="1.0"/>
+            <aft="1.0"/>
+        </boardTexture>
+        <pieces>
+            <type = "cube"/>
+            <side = "1"/>
+            <material1/>
+            <material2/>
+            <texture1>
+                <afs="1.0"/>
+                <aft="1.0"/>
+            </texture1>
+            <texture2>
+                <afs="1.0"/>
+                <aft="1.0"/>
+            </texture2>
+        </pieces>
+    </gameBoard>
+
+    <suroundingScene>
+        <cubeBox path=""/>
+    </suroundingScene>
+
+    <auxiliarBoard>
+    </auxiliarBoard>
 
 </lsf>

@@ -36,7 +36,7 @@ class Board extends CGFobject {
         console.log(nTiles*nTiles);
         for (let i = 0; i < nTiles; i++){
             for (let j = 0; j < nTiles; j++){
-                this.tiles.push(new BoardTile(this.scene, 2, i, j, id));
+                this.tiles.push(new BoardTile(this.scene, 2, i*1.15, j*1.15, id));
                 id++;
             }
         }

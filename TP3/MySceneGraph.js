@@ -230,6 +230,10 @@ class MySceneGraph {
                 return error;
         }
         this.log("All parsed");
+
+        // <gameboard>
+        if ((index = nodeNames.indexOf("gameBoard")) == -1)
+            return "[FILE] Tag <gameBoard> missing";
     }
 
     /**
@@ -1464,6 +1468,25 @@ class MySceneGraph {
 
         return null;
     }
+
+    parseGameBoard(boardNodes){
+        var children = nodesNode.children;
+        var boardSide=null;
+        var boardMaterial=null;
+        var boardTexture=null;
+        var piece1=[];//[material,texture]
+        var piece2=[];
+
+
+
+        for (var i = 0;i<children.length;i++){
+            if (children[i].nodename=="boardSize"){
+                boardSide=this.reader.getFloat(children[i],"side");
+                //check if its an int
+            }
+            else if ()
+        }
+    }
     /**
      * Parse a boolean from a node with ID = id
      * @param {block element} node
@@ -1566,6 +1589,7 @@ class MySceneGraph {
 
         return color;
     }
+
 
     /**
      * Displays the scene, processing each node, starting in the root node.
