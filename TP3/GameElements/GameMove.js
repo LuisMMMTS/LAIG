@@ -1,5 +1,5 @@
 /**
- * Move
+ * GameMove
  * @constructor
  * @param scene - Reference to MyScene object
  * @param piece
@@ -7,7 +7,7 @@
  * @param destination
  * @param gameBoard
  */
-class Move{
+class GameMove{
     constructor(scene, piece, origin, destination, gameBoard){
         this.scene = scene;
         

@@ -27,6 +27,7 @@ class Piece{
         }
 
         this.picked = false;
+        this.previousColor = null;
     }
     
     initMaterials(){
@@ -60,11 +61,13 @@ class Piece{
     pick(){
         console.log("here");
         if(!this.picked){
+            this.previousColor = this.color;
             this.color = this.red;
             this.picked = true;
+            
         }
         else{
-            this.color = this.black;
+            this.color = this.previousColor;
             this.picked = false
         }
     }

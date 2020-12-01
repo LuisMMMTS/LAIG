@@ -1,3 +1,9 @@
+/**
+ * GameOrchestrator
+ * @constructor
+ * @param scene - Reference to MyScene object
+ */
+
 class GameOrchestrator {
     constructor(scene){
         this.scene = scene;
@@ -8,8 +14,11 @@ class GameOrchestrator {
         //this.gameSequence = new GameSequence(this.scene);
         //this.animator = new GameAnimator(this, this.gameSequence);
         //this.themeId = 0;
+        //this.lastPick
+        //this.lastObj
     }
 
+    //updates the animator
     update(time){
         //this.animator.update(time);
     }
@@ -27,6 +36,7 @@ class GameOrchestrator {
 
     }
 
+    //manages Picking
     managePick(mode, results){
         if (mode == false /* && some other game conditions */){
             if (results != null && results.length > 0) { // any results?
@@ -61,12 +71,15 @@ class GameOrchestrator {
     }
         
 
+    //displays the board and animator
     display(){
 
+        this.scene.pushMatrix();
         //this.theme.display();
         this.gameBoard.display();
         //this.animator.display();
 
+        this.scene.popMatrix();
     }
 
 
