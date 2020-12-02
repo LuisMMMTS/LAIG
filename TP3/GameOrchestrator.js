@@ -11,16 +11,17 @@ class GameOrchestrator {
         //this.theme = new MySceneGraph(this.scene);
         this.gameBoard = new Board(this.scene, -10,10,10,-10); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
-        //this.gameSequence = new GameSequence(this.scene);
-        //this.animator = new GameAnimator(this, this.gameSequence);
+        this.gameSequence = new GameSequence(this.scene);
+        this.animator = new GameAnimator(this, this.gameSequence);
         //this.themeId = 0;
-        //this.lastPick
-        //this.lastObj
+        this.previousPick = null;
+        this.previousObj = null
+
     }
 
     //updates the animator
     update(time){
-        //this.animator.update(time);
+        this.animator.update(time);
     }
 
     changeScene(){
@@ -30,7 +31,7 @@ class GameOrchestrator {
     undo(){
 
     }
-
+ 
 
     gameMovie(){
 
@@ -45,8 +46,7 @@ class GameOrchestrator {
                     if (obj) { // exists?
                         var customId = results[i][1] // get id
                         console.log("Picked object: " + obj + ", with pick id " + customId);
-                        this.pickedPiece(obj, customId);
-                        
+                        this.pickedPiece(obj, customId); 
                     }
                 }
                 // clear results
@@ -55,15 +55,32 @@ class GameOrchestrator {
         } 
     }
     pickedPiece(obj, customId) {
-        console.log("here");
-
         if(obj instanceof Piece){
             console.log("piece selected")
-            obj.pick();
+            console.log(obj.isPicked());
+            if(!obj.isPicked() && this.previousPick == null){ //if no piece was selected before only changes that piece color
+                this.previousPick = customId;
+                this.previousObj = obj;
+                obj.pick();
+                console.log("piece 1")
+            }
+            else if(!obj.isPicked()){ //a piece was chosen before, changes this piece color, applies the move and makes pieces color back to normal
+                obj.pick();
+                console.log("helloooo");
+                this.gameSequence.addGameMove(new GameMove(this.scene,this.previousPick, customId, this.gameBoard));
+                this.gameBoard.movePiece(this.previousPick, customId);
+                this.previousObj.pick();
+                obj.pick();
+                this.previousPick = null;
+                console.log("piece 2")
+            }
+            else{
+                obj.pick();
+                this.previousObj = null;
+                this.previousPick = null;
+            }
         }
-        else if(obj instanceof BoardTile){
-            console.log("tile selected");
-        }
+        else if (obj instanceof BoardTile) console.log("tile selected");
         else {
             console.log("error");
         // error ?

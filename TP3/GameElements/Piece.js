@@ -19,12 +19,7 @@ class Piece{
         this.initMaterials();
 
         //if player is 1 pieces are black, if player is 2 pieces are white
-        if(this.player == 1){
-            this.color = this.black;
-        }
-        else if(this.player == 2){
-            this.color = this.white;
-        }
+        this.color = this.material;
 
         this.picked = false;
         this.previousColor = null;
@@ -32,23 +27,26 @@ class Piece{
     
     initMaterials(){
 
-        this.white = new CGFappearance(this.scene);
-        this.white.setAmbient(1.0, 1.0, 1.0, 1);
-        this.white.setDiffuse(1.0, 1.0, 1.0, 1);
-        this.white.setSpecular(1.0, 1.0, 1.0, 1);
-        this.white.setShininess(10.0);
+        if(this.player == 1){
+            this.material = new CGFappearance(this.scene);
+            this.material.setAmbient(0.0, 0.0, 0.0, 1);
+            this.material.setDiffuse(0.0, 0.0, 0.0, 1);
+            this.material.setSpecular(0.0, 0.0, 0.0, 1);
+            this.material.setShininess(10.0);
+        }
+        else if(this.player == 2){
+            this.material = new CGFappearance(this.scene);
+            this.material.setAmbient(1.0, 1.0, 1.0, 1);
+            this.material.setDiffuse(1.0, 1.0, 1.0, 1);
+            this.material.setSpecular(1.0, 1.0, 1.0, 1);
+            this.material.setShininess(10.0);
+        }
 
-        this.black = new CGFappearance(this.scene);
-        this.black.setAmbient(0.0, 0.0, 0.0, 1);
-        this.black.setDiffuse(0.0, 0.0, 0.0, 1);
-        this.black.setSpecular(0.0, 0.0, 0.0, 1);
-        this.black.setShininess(10.0);
-
-        this.red = new CGFappearance(this.scene);
-        this.red.setAmbient(1.0, 0.0, 0.0, 1);
-        this.red.setDiffuse(1.0, 0.0, 0.0, 1);
-        this.red.setSpecular(1.0, 0.0, 0.0, 1);
-        this.red.setShininess(10.0);    
+        this.pickedMaterial = new CGFappearance(this.scene);
+        this.pickedMaterial.setAmbient(1.0, 0.0, 0.0, 1);
+        this.pickedMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
+        this.pickedMaterial.setSpecular(1.0, 0.0, 0.0, 1);
+        this.pickedMaterial.setShininess(10.0);    
     }
 
     setType(type){
@@ -59,15 +57,12 @@ class Piece{
         return this.type;
     }
     pick(){
-        console.log("here");
         if(!this.picked){
-            this.previousColor = this.color;
-            this.color = this.red;
+            this.color = this.pickedMaterial;
             this.picked = true;
-            
         }
         else{
-            this.color = this.previousColor;
+            this.color = this.material;
             this.picked = false
         }
     }
@@ -76,6 +71,9 @@ class Piece{
         this.scene.pushMatrix();
         this.color.apply();
         
+        if(this.picked){
+            this.scene.translate(0,1.5,0);
+        }
         this.cube.display();
 
         this.scene.popMatrix();
@@ -85,4 +83,7 @@ class Piece{
 
     }
 
+    isPicked(){
+        return this.picked;
+    }
 }

@@ -14,7 +14,8 @@ class GameAnimator{
     }
 
     update(time){
-
+        for(v in this.gameSequence.moves)
+            i.animate(time);
     }
 
     display(){

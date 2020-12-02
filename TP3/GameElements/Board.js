@@ -42,7 +42,7 @@ class Board extends CGFobject {
         }
 	}
 
-	addPieceToTile(tile, piece){
+	addPieceToTile(piece, tile){
         tile.setPiece(piece);
     }
     
@@ -66,11 +66,15 @@ class Board extends CGFobject {
     }
     
 	movePiece(tile1, tile2){
-        let aux = tile2.piece;
-        this.removePieceFromTile(tile2);
-        this.addPieceToTile(tile1.piece, tile2);
-        this.removePieceFromTile(tile1);
-        this.addPieceToTile(aux);
+        let pieceOrig = this.tiles[tile1-1].piece;
+        let origin = this.tiles[tile1-1];
+        let dest = this.tiles[tile2-1];
+        let pieceDest = this.tiles[tile2-1].piece;
+        this.removePieceFromTile(dest);
+        this.removePieceFromTile(origin);
+        this.addPieceToTile(pieceDest, origin);
+        this.addPieceToTile(pieceOrig, dest);
+        
 	}
 
     display(){
@@ -95,7 +99,7 @@ class Board extends CGFobject {
             else id++;
             this.tiles[cell].display();//each tile 
         }
-        //this.clearPickRegistration();
+
         this.scene.popMatrix();
         
     }

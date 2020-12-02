@@ -50,6 +50,9 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open('scenes/' + filename, this);
+
+
+        this.board = [];//[board Side, board Material, board Texture, piece1, piece2]
     }
 
     /*
@@ -234,6 +237,9 @@ class MySceneGraph {
         // <gameboard>
         if ((index = nodeNames.indexOf("gameBoard")) == -1)
             return "[FILE] Tag <gameBoard> missing";
+
+        if ((error = this.parseGameBoard(nodes[index])) != null)
+            return error;
     }
 
     /**
@@ -968,7 +974,7 @@ class MySceneGraph {
                 this.onXMLError("[SPRITESHEETS] Missing/not valid values for sizeN on spritesheet: " + id + ", skipping it");
                 continue;
             }
-            if (sizeM % 1 != 0 || sizeN % 1 != 0){
+            if (sizeM % 1 != 0 || sizeN % 1 != 0) {
                 this.onXMLError("[NODE] Wrong values for spritesheet size definition in spritesheet: " + id + ",values must be integers, skipping it");
                 continue;
             }
@@ -1026,6 +1032,104 @@ class MySceneGraph {
         return matrix;
     }
 
+    getTextures(texNode) {
+        // Texture
+        let textureId;
+        let afs = 1;
+        let aft = 1; //if amplification is not defined, the next cycle wont run and this will be the default values
+
+
+        textureId = this.reader.getString(texNode, "id");
+
+        if (textureId == null) {//case material parameter does not exist
+            this.onXMLMinorError("[NODE] texture ID is not valid on node ID: " + nodeID + " setting default texture");
+            textureId = 'default';
+        }
+
+        if (textureId.toLowerCase() !== "null" && textureId.toLowerCase() !== "clear") {
+            if (this.textures[textureId] == null) {
+                this.onXMLMinorError("[NODE] Texture ID: " + textureId + " does not exist. Setting default texture");
+                textureId = 'default';
+            }
+        }
+
+        let amplificationNodes = texNode.children;
+
+        if (amplificationNodes.length == 0) {
+            this.onXMLMinorError("[NODE] Missing amplification tags, assuming (1,1)");
+        }
+        else {
+
+            if (amplificationNodes[0].nodeName !== "amplification") {
+                this.onXMLMinorError("[NODE] Unknown section on textures children, where amplificaton should be. node Id: " + nodeID + ". Ignoring it and assuming (1,1)");
+            }
+            else {
+                afs = this.reader.getFloat(amplificationNodes[0], "afs");
+                aft = this.reader.getFloat(amplificationNodes[0], "aft");
+
+
+                if (aft == null || afs == null || isNaN(afs) || isNaN(aft) || afs == 0 || aft == 0) {
+                    this.onXMLMinorError("[NODE] Wrong amplification values in node: " + nodeID + " Assuming (1,1)" + afs + " " + aft);
+                    afs = 1;
+                    aft = 1;
+                }
+            }
+
+        }
+
+        return [this.textures[textureId], afs, aft];
+    }
+
+    parsePieces(PiecesNode) {
+        console.log(PiecesNode.children);
+        let pieces = [];
+
+        for (let i = 0; i < PiecesNode.children.length; i++) {
+            let pieceType = "cube";
+            let side = 1;
+            let material = null;
+            let texture = null;
+            let playernodes = PiecesNode.children[i].children;
+            for (let j = 0; j < playernodes.length; j++) {
+                console.log(playernodes[j].nodeName);
+                switch (playernodes[j].nodeName) {
+                    case ("pieceType"):
+                        pieceType = this.reader.getString(playernodes[j], "type");
+                        if(pieceType==null){
+                            this.onXMLError("No value defined for piece type, assuming cube")
+                            pieceType="cube";
+                        }
+                        console.log(pieceType);
+                        break;
+
+                    case ("pieceSide"):
+                        side = this.reader.getFloat(playernodes[j], "side");
+                        if(side==null||isNaN(side)||side<=0){
+                            this.onXMLError("Wrong value defined for piece side, assuming 1")
+                            side=1;
+                        }
+                        console.log(side);
+                        break;
+
+                    case ("material"):
+                        let mat = this.reader.getString(playernodes[j], "id");
+                        material = this.materials[mat];
+                        if (material==null){
+                            this.onXMLError("wrong value for material in piece, setting default");
+                            material=this.materials['default'];
+                        }
+                        break;
+
+                    case ("texture"):
+                        texture = this.getTextures(playernodes[j]);
+                        break;
+                }
+            }
+            pieces.push([pieceType, side, material, texture]);
+        }
+
+        return pieces;
+    }
     /**
    * Parses the <nodes> block.
    * @param {nodes block element} nodesNode
@@ -1319,7 +1423,7 @@ class MySceneGraph {
                                 continue;
                             }
 
-                            if (startCell % 1 != 0 || endCell % 1 != 0){
+                            if (startCell % 1 != 0 || endCell % 1 != 0) {
                                 this.onXMLError("[NODE] Wrong values for spriteanim definition in nodeID: " + nodeID + ",values must be integers, skipping it");
                                 continue;
                             }
@@ -1342,7 +1446,7 @@ class MySceneGraph {
                                 this.onXMLError("[NODE] Wrong values for plane definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            if (nPartsU % 1 != 0 || nPartsV % 1 != 0){
+                            if (nPartsU % 1 != 0 || nPartsV % 1 != 0) {
                                 this.onXMLError("[NODE] Wrong values for plane definition in nodeID: " + nodeID + ",values must be integuers, skipping it");
                                 continue;
                             }
@@ -1356,12 +1460,12 @@ class MySceneGraph {
                             let nPointsV = this.reader.getFloat(descendant, "npointsV");
                             let nPrtsU = this.reader.getFloat(descendant, "npartsU");
                             let nPrtsV = this.reader.getFloat(descendant, "npartsV");
-                            
+
                             if (nPrtsU == null || nPrtsV == null || isNaN(nPrtsU) || isNaN(nPrtsV) || nPrtsU <= 0 || nPrtsV <= 0 || nPointsU == null || nPointsV == null || isNaN(nPointsU) || isNaN(nPointsV) || nPointsU <= 0 || nPointsV <= 0) {
                                 this.onXMLError("[NODE] Wrong values for patch definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
-                            if (nPointsU % 1 != 0 || nPointsV % 1 != 0 || nPrtsU % 1 != 0 || nPrtsV % 1 != 0){
+                            if (nPointsU % 1 != 0 || nPointsV % 1 != 0 || nPrtsU % 1 != 0 || nPrtsV % 1 != 0) {
                                 this.onXMLError("[NODE] Wrong values for patch definition in nodeID: " + nodeID + ",values must be integuers, skipping it");
                                 continue;
                             }
@@ -1383,20 +1487,20 @@ class MySceneGraph {
                                         this.onXMLError("[NODE] Wrong values for control point definition in nodeID: " + nodeID + ", in control point index " + i + ", skipping it");
                                         continue;
                                     }
-                                } 
+                                }
                                 else { //this means there are control points missing so we'll assume them as zero
                                     x = 0;
                                     y = 0;
                                     z = 0;
                                 }
-                                controlPointstemp.push(x, y, z,1);
+                                controlPointstemp.push(x, y, z, 1);
                                 controlPointsU.push(controlPointstemp);
 
-                                if (controlPointsU.length == nPointsV){
+                                if (controlPointsU.length == nPointsV) {
                                     controlPoints.push(controlPointsU);
                                     controlPointsU = [];
                                 }
-                                controlPointstemp = []                                
+                                controlPointstemp = []
                             }
 
                             let patch = new MyPatch(this.scene, nPointsU, nPointsV, nPrtsU, nPrtsV, controlPoints);
@@ -1410,25 +1514,25 @@ class MySceneGraph {
                             let sl = this.reader.getFloat(descendant, "slices");
                             let st = this.reader.getFloat(descendant, "stacks");
 
-                            if( base == null || middle == null || h == null || sl == null || st == null){
+                            if (base == null || middle == null || h == null || sl == null || st == null) {
                                 this.onXMLError("[NODE] Missing values for barrel definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
                             }
 
 
-                            if(isNaN(base) || isNaN(middle) || isNaN(h) || isNaN(sl) || isNaN(st)){
+                            if (isNaN(base) || isNaN(middle) || isNaN(h) || isNaN(sl) || isNaN(st)) {
                                 this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
 
                             }
 
-                            if(base <= 0 || middle <= 0 || h <= 0 || sl <= 0 || st <= 0 ){
+                            if (base <= 0 || middle <= 0 || h <= 0 || sl <= 0 || st <= 0) {
                                 this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ", skipping it");
                                 continue;
 
                             }
 
-                            if (sl % 1 != 0 || st % 1 != 0){
+                            if (sl % 1 != 0 || st % 1 != 0) {
                                 this.onXMLError("[NODE] Wrong values for barrel definition in nodeID: " + nodeID + ",stacks and slices values must be integuers, skipping it");
                                 continue;
                             }
@@ -1469,24 +1573,54 @@ class MySceneGraph {
         return null;
     }
 
-    parseGameBoard(boardNodes){
-        var children = nodesNode.children;
-        var boardSide=null;
-        var boardMaterial=null;
-        var boardTexture=null;
-        var piece1=[];//[material,texture]
-        var piece2=[];
+    parseGameBoard(boardNodes) {
+        var children = boardNodes.children;
+        var boardSide = null;
+        var boardMaterial = null;
+        var boardTexture = null;
+        var piece1;
+        var piece2;
 
 
 
-        for (var i = 0;i<children.length;i++){
-            if (children[i].nodename=="boardSize"){
-                boardSide=this.reader.getFloat(children[i],"side");
-                //check if its an int
+        for (var i = 0; i < children.length; i++) {
+            switch (children[i].nodeName) {
+                case ("boardSize"):
+                    boardSide = this.reader.getFloat(children[i], "side");
+                    //check if its an int
+                    if (boardSide%1!=0||boardSide==null||isNaN(boardSide)){
+                        this.onXMLError("wrong value for board side, setting 10");
+                        boardSide=10;
+                    }
+
+                    break;
+
+                case ("boardMaterial"):
+                    let mat = this.reader.getString(children[i], "id")
+                    boardMaterial = this.materials[mat];
+                    if (boardMaterial==null){
+                        this.onXMLError("wrong value for material in piece, setting default");
+                        boardMaterial=this.materials['default'];
+                    }
+                    break;
+
+                case ("boardTexture"):
+                    boardTexture = this.getTextures(children[i]);
+                    break;
+
+                case ("pieces"):
+                    [piece1,piece2]=this.parsePieces(children[i]);
+                    break;
+
+                default:
+                    this.onXMLError("Unknown tag name " + children[i].nodeName + " in Gameboard");
             }
-            else if ()
         }
+        this.board = [boardSide, boardMaterial, boardTexture, piece1, piece2];
+        console.log(this.board);
+
     }
+
     /**
      * Parse a boolean from a node with ID = id
      * @param {block element} node

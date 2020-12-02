@@ -16,9 +16,26 @@ class GameMove{
         this.destination = destination;
         this.gameBoard = gameBoard;
 
+        this.active = true;
     }
 
-    animate(){
+    createAnimation(){
+        let speed = 4.0;
         
+        let duration = Math.sqrt(pow(this.destination.x - this.origin.x,2) + pow(this.destination.y - this.origin.y,2))/speed;
+
+        this.animation = KeyFrameAnimation(this.scene, null);
+
+        this.animation.addKeyFrame(new KeyFrame());
+        let end = KeyFrame();
+        end.translation = (this.destination.x - this.origin.x, this.destination.y - this.origin.y);
+        end.instant = duration+startTime;
+
+        this.animation.addKeyFrame(end);
+    }
+    animate(time){
+        
+        //falta dar update 
+        this.animation.apply();
     }
 }
