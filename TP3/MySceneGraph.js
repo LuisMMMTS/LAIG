@@ -1585,16 +1585,6 @@ class MySceneGraph {
 
         for (var i = 0; i < children.length; i++) {
             switch (children[i].nodeName) {
-                case ("boardSize"):
-                    boardSide = this.reader.getFloat(children[i], "side");
-                    //check if its an int
-                    if (boardSide%1!=0||boardSide==null||isNaN(boardSide)){
-                        this.onXMLError("wrong value for board side, setting 10");
-                        boardSide=10;
-                    }
-
-                    break;
-
                 case ("boardMaterial"):
                     let mat = this.reader.getString(children[i], "id")
                     boardMaterial = this.materials[mat];
@@ -1616,7 +1606,7 @@ class MySceneGraph {
                     this.onXMLError("Unknown tag name " + children[i].nodeName + " in Gameboard");
             }
         }
-        this.board = [boardSide, boardMaterial, boardTexture, piece1, piece2];
+        this.board = [boardMaterial, boardTexture, piece1, piece2];
         console.log(this.board);
 
     }

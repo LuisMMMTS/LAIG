@@ -256,8 +256,6 @@
     </nodes>
 
     <gameBoard>
-        <boardSize side="10"/>
-
         <boardMaterial id= "Porcelain_Grey"/>
         <boardTexture id = "floorTexture">
             <amplification afs="1" aft="1" />
