@@ -5,11 +5,11 @@
  */
 
 class GameOrchestrator {
-    constructor(scene){
+    constructor(theme,scene){
         this.scene = scene;
 
-        //this.theme = new MySceneGraph(this.scene);
-        this.gameBoard = new Board(this.scene, -10,10,10,-10); 
+        this.theme = theme;
+        this.gameBoard = new Board(this.scene, 10); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
@@ -17,15 +17,22 @@ class GameOrchestrator {
         this.previousPick = null;
         this.previousObj = null
 
+
     }
+
+
 
     //updates the animator
     update(time){
         this.animator.update(time);
+        this.gameBoard.update(time);
     }
 
-    changeScene(){
-
+    changeTheme(newTheme){
+        this.scene.sceneInited = false;
+        this.theme = newTheme;
+        this.scene.graph = this.theme;
+        
     }
 
     undo(){
@@ -67,7 +74,11 @@ class GameOrchestrator {
             else if(!obj.isPicked()){ //a piece was chosen before, changes this piece color, applies the move and makes pieces color back to normal
                 obj.pick();
                 console.log("helloooo");
-                this.gameSequence.addGameMove(new GameMove(this.scene,this.previousPick, customId, this.gameBoard));
+                var move = new GameMove(this.scene,this.previousObj,this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
+                this.gameSequence.addGameMove(move);
+                console.log(this.previousObj);
+                move.createAnimation();
+                
                 this.gameBoard.movePiece(this.previousPick, customId);
                 this.previousObj.pick();
                 obj.pick();
@@ -92,7 +103,7 @@ class GameOrchestrator {
     display(){
 
         this.scene.pushMatrix();
-        //this.theme.display();
+        //this.theme.display(); --> dado no xmlscene
         this.gameBoard.display();
         //this.animator.display();
 

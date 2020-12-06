@@ -45,7 +45,11 @@ class KeyFrameAnimation extends Animation{
 
 
     update(currentTime){
-
+        console.log(this.keyframes);
+        /*console.log("end time: "+this.endTime);
+        console.log("current time: "+currentTime);
+        console.log("last time: "+this.lastTime);
+        console.log("hello!!!");*/
         //if animation reached the end, return
         if(this.ended) return;
         
@@ -85,7 +89,7 @@ class KeyFrameAnimation extends Animation{
         }
 
         //find the keyframes to interpolate between
-        if(this.elapsedTime >= this.keyframes[this.keyframeEndIndex].instant){
+        if(this.elapsedTime > this.keyframes[this.keyframeEndIndex].instant){
             this.keyframeEndIndex++;
             this.keyframeStartIndex++;
         }    
@@ -110,10 +114,15 @@ class KeyFrameAnimation extends Animation{
     apply(){
         
         this.scene.translate(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]);
+        console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
         this.scene.rotate(this.animationRotation[0],1,0,0);
+        console.log("rotação x: "+(this.animationRotation[0],1,0,0));
         this.scene.rotate(this.animationRotation[1],0,1,0);
+        console.log("rotação y: "+(this.animationRotation[1],0,1,0));
         this.scene.rotate(this.animationRotation[2],0,0,1);
+        console.log("rotação z: "+(this.animationRotation[2],0,0,1));
         this.scene.scale(this.animationScale[0],this.animationScale[1],this.animationScale[2]); 
+        console.log("escalamento: "+(this.animationScale[0],this.animationScale[1],this.animationScale[2]));
 
     }
     

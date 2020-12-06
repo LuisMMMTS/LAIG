@@ -10,6 +10,20 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+       /* this.filenames = ['scene1.xml'];
+        this.themes = new Map();
+        
+        /*for(var filename of this.filenames){
+            var theme = new MySceneGraph(filename, this);
+            console.log(theme);
+            console.log(theme);
+            this.themes.set(this.theme.themeName, this.theme);
+            
+        }*/
+
+        /*console.log(this.themes);*/
+        
+        
     }
 
     /**
@@ -54,7 +68,10 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        this.orchestrator = new GameOrchestrator(this);
+        
+
+
+        this.orchestrator = new GameOrchestrator(this.graph, this);
 
     }
 
@@ -173,7 +190,7 @@ class XMLscene extends CGFscene {
         this.initXMLCameras();
 
         //initializing the interface elements
-        this.interface.createInterface(this.graph.views); 
+        this.interface.createInterface(this.graph.views, null); 
       
         //lights
         this.initLights();
@@ -209,21 +226,10 @@ class XMLscene extends CGFscene {
          this.orchestrator.update(delta);
      }
 
-
-     logPicking() {
-		if (this.pickMode == false) {
-			if (this.pickResults != null && this.pickResults.length > 0) {
-				for (var i = 0; i < this.pickResults.length; i++) {
-					var obj = this.pickResults[i][0];
-					if (obj) {
-						var customId = this.pickResults[i][1];
-						console.log("Picked object: " + obj + ", with pick id " + customId);						
-					}
-				}
-				this.pickResults.splice(0, this.pickResults.length);
-			}
-		}
-	}
+     changeTheme(themeName){
+        var theme = this.themes[themeName];
+        this.orchestrator.changeTheme(theme);
+     }
 
 
     /**
@@ -261,7 +267,7 @@ class XMLscene extends CGFscene {
             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).
-            //this.graph.displayScene();
+            this.graph.displayScene();
             this.orchestrator.display();
             
             

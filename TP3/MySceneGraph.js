@@ -28,11 +28,14 @@ class MySceneGraph {
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
+        
         scene.graph = this;
 
         this.nodes = []; //all nodes of the scene
 
         this.spriteanimations = [];
+
+        this.themeName = null;
 
         this.idRoot = null; // The id of the root element.
 
@@ -53,6 +56,7 @@ class MySceneGraph {
 
 
         this.board = [];//[board Side, board Material, board Texture, piece1, piece2]
+        return this;
     }
 
     /*
@@ -255,6 +259,7 @@ class MySceneGraph {
 
         var rootIndex = nodeNames.indexOf("root");
         var referenceIndex = nodeNames.indexOf("reference");
+        var nameIndex = nodeNames.indexOf("themename");
 
         // Get root of the scene.
         if (rootIndex == -1)
@@ -282,6 +287,16 @@ class MySceneGraph {
             this.onXMLMinorError("[INITIALS] Invalid axis_length defined for scene, assuming 'length = 1'");
 
         this.referenceLength = axis_length || 1;
+
+        if (nameIndex == -1)
+            return "[INITIALS] No theme name defined for scene ";
+        
+        var themeNode = children[nameIndex];
+        var themeName = this.reader.getString(themeNode, 'name');
+        if(themeName == null){
+            return "[INITIALS] No theme name defined for scene ";
+        }
+        this.themeName =  themeName;
 
         this.log("Parsed initials");
 
@@ -1097,7 +1112,7 @@ class MySceneGraph {
                         pieceType = this.reader.getString(playernodes[j], "type");
                         if(pieceType==null){
                             this.onXMLError("No value defined for piece type, assuming cube")
-                            pieceType="cube";
+                            pieceType = "cube";
                         }
                         console.log(pieceType);
                         break;
@@ -1588,9 +1603,9 @@ class MySceneGraph {
                 case ("boardMaterial"):
                     let mat = this.reader.getString(children[i], "id")
                     boardMaterial = this.materials[mat];
-                    if (boardMaterial==null){
+                    if (boardMaterial == null){
                         this.onXMLError("wrong value for material in piece, setting default");
-                        boardMaterial=this.materials['default'];
+                        boardMaterial = this.materials['default'];
                     }
                     break;
 
@@ -1599,7 +1614,7 @@ class MySceneGraph {
                     break;
 
                 case ("pieces"):
-                    [piece1,piece2]=this.parsePieces(children[i]);
+                    [piece1,piece2] = this.parsePieces(children[i]);
                     break;
 
                 default:
@@ -1719,12 +1734,12 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
 
-    /*displayScene() {
+    displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         var matId = this.nodes[this.idRoot].getMaterial();
         var texId = this.nodes[this.idRoot].getTexture();
         this.processNode(this.idRoot, texId, matId);
-    }*/
+    }
 
     /**
      * Processes each node and its descendants, applying its textures, materials and transformations
@@ -1732,7 +1747,7 @@ class MySceneGraph {
      * @param {CGFtexture} text
      * @param {CGFappearance} mat  
      */
-    /*processNode(id, texId, matId) {
+    processNode(id, texId, matId) {
         let display = true;
         let node = this.nodes[id];
 
@@ -1820,5 +1835,5 @@ class MySceneGraph {
             }
         }
         this.scene.popMatrix();
-    }*/
+    }
 }

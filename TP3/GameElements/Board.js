@@ -8,17 +8,11 @@
  * @param y2 - y coordinate corner 2
  */
 class Board extends CGFobject {
-	constructor(scene, x1, y1, x2, y2) {
+	constructor(scene, size) {
 		super(scene);
-		this.x1 = x1;
-		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
-
-        this.nPartsU = this.x2 - this.x1;
-		this.nPartsV = this.y2 - this.y1;
-
-        this.side = this.nPartsU;
+		
+        this.size = size;
+        this.side = this.size;
         
         this.tiles = [];
 
@@ -26,13 +20,13 @@ class Board extends CGFobject {
 	}	
 	
 	init() {
-        this.board = new MyPlane(this.scene, this.nPartsU, this.nPartsV);
+        this.board = new MyPlane(this.scene, this.size, this.size);
         this.createBoardTiles();
 
 	}
 	createBoardTiles(){
         let id = 1
-        let nTiles = this.side/2.0;
+        let nTiles = this.size;
         console.log(nTiles*nTiles);
         for (let i = 0; i < nTiles; i++){
             for (let j = 0; j < nTiles; j++){
@@ -76,11 +70,22 @@ class Board extends CGFobject {
         this.addPieceToTile(pieceOrig, dest);
         
 	}
-
+    update(time){
+        for(var tile of this.tiles){
+            if(tile.piece != null){
+                if(tile.piece.animation != null){
+                    console.log("update time board 3");
+                    tile.piece.animation.update(time);
+                }
+            }
+        }
+    }
     display(){
         let id = 1;
         this.scene.pushMatrix();
-        this.scene.scale(this.nPartsU, 1, this.nPartsV);
+        this.scene.translate(0.15, 0, 0.10);
+        this.scene.scale(this.size+2, 1, this.size+2);
+        this.scene.graph.boardMaterial.apply();
         this.board.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
@@ -88,7 +93,7 @@ class Board extends CGFobject {
         
         this.scene.pushMatrix();
         this.scene.translate(0,0.1,0);
-        this.scene.translate(-this.side/4.0,0,-this.side/4.0);
+        this.scene.translate(-this.side/2.0,0,-this.side/2.0);
             
         for (let cell = 0; cell < this.tiles.length; cell++){
             this.scene.registerForPick(id, this.tiles[cell]);

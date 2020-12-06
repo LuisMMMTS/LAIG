@@ -15,7 +15,7 @@ class Piece{
         this.player = player;
 
         this.type = 'cube';
-        this.cube = new MyCube(this.scene,0.5);
+        this.cube = new MyCube(this.scene, 0.5);
         this.initMaterials();
 
         //if player is 1 pieces are black, if player is 2 pieces are white
@@ -23,6 +23,8 @@ class Piece{
 
         this.picked = false;
         this.previousColor = null;
+
+        this.animation = null;
     }
     
     initMaterials(){
@@ -74,12 +76,19 @@ class Piece{
         if(this.picked){
             this.scene.translate(0,1.5,0);
         }
+        this.displayPiece();
         this.cube.display();
 
         this.scene.popMatrix();
         
     }
     displayPiece(){
+        //console.log("animation not applied\n");
+        //console.log("this.animation " +this.animation);
+        if(this.animation != null && this.animation.active && !this.animation.ended){
+            console.log("animation applied\n");
+            this.animation.apply();
+        }
 
     }
 
