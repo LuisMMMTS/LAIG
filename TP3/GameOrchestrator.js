@@ -16,6 +16,8 @@ class GameOrchestrator {
         //this.themeId = 0;
         this.previousPick = null;
         this.previousObj = null
+        let prolog= new MyPrologInterface(this);
+        prolog.boardRequest(10);
 
 
     }
