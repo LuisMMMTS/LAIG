@@ -17,7 +17,10 @@ class GameOrchestrator {
         this.previousPick = null;
         this.previousObj = null
         let prolog= new MyPrologInterface(this);
-        prolog.boardRequest(10);
+        let oldPos=[1,1];
+        let board=[["white","black","white","black"],["black","white","black","white"],["white","black","white","black"],["black","white","black","white"]];
+        let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
+        console.log(boards);
 
 
     }

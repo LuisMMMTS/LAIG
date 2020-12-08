@@ -40,11 +40,50 @@ class MyPrologInterface {
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response=data.target.response;
         console.log(response);
+        return response;
     }
 
     boardRequest(size){
         this.getPrologRequest("initialBoard("+size+")", this.handleBoardReply.bind(this));
         //let board=data.target.response;
-        //console.log("board is: "+board);
+        //console.log("board is: "+this);
     }
+
+
+    handleMoveReply(data){
+        //document.querySelector("#query_result").innerHTML=data.target.response;
+        let response=data.target.response;
+        console.log(response);
+    }
+
+    moveRequest(board, player, AiLevel1=null, AiLevel2=null ,OldPos=null,NewPos=null){
+        if(AiLevel1==null && AiLevel2==null){//human
+            this.getPrologRequest("playerTurn("+board+","+player+"-'player'-"+AiLevel1+"-"+AiLevel2+","+OldPos+","+NewPos+")",this.handleMoveReply.bind(this));
+        }else{//computer
+            this.getPrologRequest("playerTurn("+board+","+player+"-'computer'-"+AiLevel1+"-"+AiLevel2+","+OldPos+","+NewPos+")",this.handleMoveReply.bind(this));
+        }
+        
+    }
+
+
+    handleMovablePiecesReply(data){
+        //document.querySelector("#query_result").innerHTML=data.target.response;
+        let response=data.target.response;
+        console.log(response);
+    }
+    
+    getMovablePiecesResquest(board, player){
+        this.getPrologRequest("getMovablePieces("+board+", "+player+")",handleMovablePiecesReply(this));
+    }
+
+
+    handlePieceMovesReply(data){
+        //document.querySelector("#query_result").innerHTML=data.target.response;
+        let response=data.target.response;
+        console.log(response);
+    }
+    getPieceMovesRequest(board, player, pieceCoords){
+        this.getPrologRequest("getValidMovesforPiece("+board+","+ player+","+ pieceCoords+")",handlePieceMovesReply(this));
+    }
+
 }

@@ -108,6 +108,9 @@ parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(initialBoard(X), Res) :- fillBoard(Res, X).
 parse_input(valid_moves(GameState, Player),Res) :-valid_moves(GameState, Player-_-_-_-_, Res).
+parse_input(playerTurn(GameState, Player-Who-AiLevel1-AiLevel2,OldPos,NewPos),Res):-playerTurn(GameState, Player-Who-AiLevel1-AiLevel2,OldPos,NewPos,Res);
+parse_input(getMovablePieces(GameState,Player), Res):-getMovablePieces(GameState, Player, Res);
+parse_input(getValidMovesforPiece(GameState,Player,[Row,Column]),Res):-getValidMovesforPiece(GameState, Player, [Row,Column], Res).
 
 parse_input(quit, goodbye).
 

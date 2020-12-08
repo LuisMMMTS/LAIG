@@ -85,7 +85,7 @@ class Board extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0.15, 0, 0.10);
         this.scene.scale(this.size+2, 1, this.size+2);
-        this.scene.graph.boardMaterial.apply();
+        //this.scene.graph.boardMaterial.apply();
         this.board.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();

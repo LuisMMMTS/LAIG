@@ -89,12 +89,12 @@ class MyInterface extends CGFinterface {
     }
 
     addThemeDropDown(themes){
-        console.log(themes);
+        // console.log(themes);
         var themeNames = [];
         for(var key in themes){
             themeNames.push(key.themeName);
         }
-        console.log(themeNames);
+        // console.log(themeNames);
         this.gui.add(this.scene, "themeName", themes).onChange(val => this.scene.changeTheme(val)).name("Choose a theme");
 
     }
