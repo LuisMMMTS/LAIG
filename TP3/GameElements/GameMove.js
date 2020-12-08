@@ -8,40 +8,80 @@
  * @param gameBoard
  */
 class GameMove{
-    constructor(scene, piece, origin, destination, gameBoard){
+    constructor(scene, startPiece, endPiece, origin, destination, gameBoard){
         this.scene = scene;
         
-        this.piece = piece;
         this.origin = origin;
         this.destination = destination;
         this.gameBoard = gameBoard;
 
         this.active = true;
+
+        this.animating1 = false;
+        this.animating2 = false;
     }
 
     createAnimation(){
         let speed = 0.5;
         console.log(this.destination);
         let duration = Math.sqrt(Math.pow(this.destination.x - this.origin.x,2) + Math.pow(this.destination.y - this.origin.y,2))/speed;
-        console.log("Duration: "+duration);
+        console.log("Duration: "+ duration);
 
-        this.animation = new KeyFrameAnimation(this.scene, null);
-        this.animation.addKeyFrame(new KeyFrame()); //adds keyframe in the current position to start animation
+        this.animationO = new KeyFrameAnimation(this.scene, null);
+        this.animationO.addKeyFrame(new KeyFrame()); //adds keyframe in the current position to start animation
         let end = new KeyFrame();
         end.translation = new vec3.fromValues(this.destination.x - this.origin.x,0 ,this.destination.y - this.origin.y);
-        console.log("End translation: "+ end.translation);
         end.instant = duration;
-        console.log(end.instant);
+        this.animationO.addKeyFrame(end);
+        this.animationO.active=true;
+        //this.piece.animation = this.animationO;
+        //console.log("hello"+this.piece.animation);
 
-        this.animation.addKeyFrame(end);
-        console.log("hi");
-        this.animation.active=true;
-        this.piece.animation = this.animation;
-        console.log("hello"+this.piece.animation);
+        this.animationD = new KeyFrameAnimation(this.scene, null);
+        let start = new KeyFrame();
+        start.translation = new vec3.fromValues(this.origin.x-this.destination.x, 0, this.origin.y- this.destination.y);
+        start.instant = 0;
+        this.animationD.addKeyFrame(start);
+        let end_2 = new KeyFrame();
+        end_2.instant = duration;
+        this.animationD.addKeyFrame(end_2);
+
+        this.animating1 = true;
+        this.animating2 = true;
+
+        this.removePieceFromTile(this.destination);
+        this.removePieceFromTile(this.origin);
+    }
+
+    update(time){
+        if( this.animating1){
+            if(!this.animationO.ended)
+            this.animationO.update(time);
+        }
+        else this.animating1 = false;
+        
+        if(this.animating2){
+            if(!this.animationD.ended)
+            this.animationD.update(time);
+        }
+        else this.animating2 = false;
+
     }
     animate(){
+        if(this.animating1){
+            this.scene.pushMatrix();
+            this.animationO.apply();
+            this.startPiece.display();
+            this.scene.popMatrix();
+        }
         
-        //falta dar update 
-        this.animation.apply();
+        if(this.animating2){
+            this.scene.pushMatrix();
+            this.animationD.apply();
+            this.endPiece.display();
+            this.scene.popMatrix();
+        }
+        
+
     }
 }

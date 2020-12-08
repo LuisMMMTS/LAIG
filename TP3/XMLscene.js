@@ -10,19 +10,6 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
-       /* this.filenames = ['scene1.xml'];
-        this.themes = new Map();
-        
-        /*for(var filename of this.filenames){
-            var theme = new MySceneGraph(filename, this);
-            console.log(theme);
-            console.log(theme);
-            this.themes.set(this.theme.themeName, this.theme);
-            
-        }*/
-
-        /*console.log(this.themes);*/
-        
         
     }
 
@@ -68,10 +55,10 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        
-
-
+        this.filenames = ['scene1.xml', 'scene2.xml', 'scene3.xml'];
         this.orchestrator = new GameOrchestrator(this.graph, this);
+        
+        
 
     }
 
@@ -198,6 +185,8 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
 
         this.sceneInited = true;
+        this.orchestrator.changeTheme();
+
     }
 
      update(time){
@@ -221,15 +210,16 @@ class XMLscene extends CGFscene {
              for(let i = 0; i < this.graph.spriteanimations.length; i++){ //update spriteanimations
                  this.graph.spriteanimations[i].update(delta);
              }
+             this.orchestrator.update(delta);
          }
-
-         this.orchestrator.update(delta);
+         
+         
      }
 
-     changeTheme(themeName){
+     /*changeTheme(themeName){
         var theme = this.themes[themeName];
         this.orchestrator.changeTheme(theme);
-     }
+     }*/
 
 
     /**
@@ -266,8 +256,9 @@ class XMLscene extends CGFscene {
             //set the active camera, necessary for being able to move the camera around
             this.interface.setActiveCamera(this.camera);
 
-            // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            // Displays the scene (MySceneGraph function).  
+            //  console.log(this.graph);
+            //this.graph.displayScene();
             this.orchestrator.display();
             
             

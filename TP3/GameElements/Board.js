@@ -23,7 +23,21 @@ class Board extends CGFobject {
         this.board = new MyPlane(this.scene, this.size, this.size);
         this.createBoardTiles();
 
-	}
+    }
+    changeTheme(theme){
+        this.boardMaterial = theme[0];
+        this.boardTexture = theme[1][0];
+        this.boardMaterial.setTexture(this.boardTexture);
+        this.boardMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        let piece1 = theme[2];
+        let piece2 = theme[3];
+        let tile1 = theme[4];
+        let tile2 = theme[5];
+        for(let tile of this.tiles){
+            tile.changeTheme(piece1, piece2, tile1, tile2);
+        }
+        //falta tratar dos afs e aft
+    }
 	createBoardTiles(){
         let id = 1
         let nTiles = this.size;
@@ -60,17 +74,12 @@ class Board extends CGFobject {
     }
     
 	movePiece(tile1, tile2){
-        let pieceOrig = this.tiles[tile1-1].piece;
-        let origin = this.tiles[tile1-1];
-        let dest = this.tiles[tile2-1];
-        let pieceDest = this.tiles[tile2-1].piece;
-        this.removePieceFromTile(dest);
-        this.removePieceFromTile(origin);
+        
         this.addPieceToTile(pieceDest, origin);
         this.addPieceToTile(pieceOrig, dest);
         
 	}
-    update(time){
+    /*update(time){
         for(var tile of this.tiles){
             if(tile.piece != null){
                 if(tile.piece.animation != null){
@@ -79,13 +88,13 @@ class Board extends CGFobject {
                 }
             }
         }
-    }
+    }*/
     display(){
         let id = 1;
         this.scene.pushMatrix();
         this.scene.translate(0.15, 0, 0.10);
         this.scene.scale(this.size+2, 1, this.size+2);
-        this.scene.graph.boardMaterial.apply();
+        this.boardMaterial.apply();
         this.board.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
@@ -106,6 +115,7 @@ class Board extends CGFobject {
         }
 
         this.scene.popMatrix();
+        
         
     }
 

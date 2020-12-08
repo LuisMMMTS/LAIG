@@ -14,10 +14,16 @@ class GameAnimator{
     }
 
     update(time){
- 
+        this.gameSequence.update(time);
     }
 
     display(){
         // Optionally can look at the orchestrator to stop current animation
+        let currentMove = this.gameSequence.getCurrentMove();
+
+        if(currentMove){
+            currentMove.animate();
+        }
+
     }
 }

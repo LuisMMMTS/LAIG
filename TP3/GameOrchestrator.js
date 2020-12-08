@@ -7,8 +7,7 @@
 class GameOrchestrator {
     constructor(theme,scene){
         this.scene = scene;
-
-        this.theme = theme;
+        this.theme = new MySceneGraph('scene1.xml', scene);
         this.gameBoard = new Board(this.scene, 10); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
@@ -20,19 +19,14 @@ class GameOrchestrator {
 
     }
 
-
-
     //updates the animator
     update(time){
         this.animator.update(time);
-        this.gameBoard.update(time);
+        //this.gameBoard.update(time);
     }
 
-    changeTheme(newTheme){
-        this.scene.sceneInited = false;
-        this.theme = newTheme;
-        this.scene.graph = this.theme;
-        
+    changeTheme(){
+        this.gameBoard.changeTheme(this.theme.board);        
     }
 
     undo(){
@@ -74,10 +68,10 @@ class GameOrchestrator {
             else if(!obj.isPicked()){ //a piece was chosen before, changes this piece color, applies the move and makes pieces color back to normal
                 obj.pick();
                 console.log("helloooo");
-                var move = new GameMove(this.scene,this.previousObj,this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
+                var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
                 this.gameSequence.addGameMove(move);
                 console.log(this.previousObj);
-                move.createAnimation();
+                move.createAnimation(this.previousPick, customId);
                 
                 this.gameBoard.movePiece(this.previousPick, customId);
                 this.previousObj.pick();
@@ -105,7 +99,7 @@ class GameOrchestrator {
         this.scene.pushMatrix();
         //this.theme.display(); --> dado no xmlscene
         this.gameBoard.display();
-        //this.animator.display();
+        this.animator.display();
 
         this.scene.popMatrix();
     }

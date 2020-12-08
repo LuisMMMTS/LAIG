@@ -2219,7 +2219,6 @@
         <pieces>
             <player1>
                 <pieceType  type= "cube"/>
-                <pieceSide side = "1"/>
                 <material id="Porcelain_Grey"/>
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
@@ -2227,7 +2226,6 @@
             </player1>
             <player2>
                 <pieceType  type= "cube"/>
-                <pieceSide side = "1"/>
                 <material id="Porcelain_Grey"/>
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />

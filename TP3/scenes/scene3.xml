@@ -6,7 +6,7 @@
 
         <root id="root" /> <!-- identifier of root node of the scene graph; this node -->
 
-        <themename name = "Theme1"/>
+        <themename name = "Theme3"/>
         <!-- must be defined in one of the following NODE declarations -->
     </initials>
 
@@ -269,15 +269,15 @@
         </tiles>
         <pieces>
             <player1>
-                <pieceType  type= "sphere"/>
-                <material id="green"/>
+                <pieceType  type= "cube"/>
+                <material id="white"/>
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player1>
             <player2>
-                <pieceType  type= "cone"/>
-                <material id="navy_blue"/>
+                <pieceType  type= "cube"/>
+                <material id="black"/>
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>
