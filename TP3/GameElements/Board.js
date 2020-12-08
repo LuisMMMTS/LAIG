@@ -8,33 +8,34 @@
  * @param y2 - y coordinate corner 2
  */
 class Board extends CGFobject {
-	constructor(scene, size) {
-		super(scene);
-		
-        this.size = size;
+    constructor(scene, array) {
+        super(scene);
+
+        this.size = array.length;
         this.side = this.size;
-        
+
         this.tiles = [];
 
-		this.init();
-	}	
+        this.init(array);
+
+    }	
 	
-	init() {
+	init(array) {
         this.board = new MyPlane(this.scene, this.size, this.size);
-        this.createBoardTiles();
+        this.createBoardTiles(array);
 
 	}
-	createBoardTiles(){
+	createBoardTiles(array){
         let id = 1
         let nTiles = this.size;
-        console.log(nTiles*nTiles);
         for (let i = 0; i < nTiles; i++){
             for (let j = 0; j < nTiles; j++){
-                this.tiles.push(new BoardTile(this.scene, 2, i*1.15, j*1.15, id));
+                this.tiles.push(new BoardTile(this.scene, 2, i*1.15, j*1.15, id, array[i][j]));
                 id++;
             }
         }
-	}
+    }
+    
 
 	addPieceToTile(piece, tile){
         tile.setPiece(piece);

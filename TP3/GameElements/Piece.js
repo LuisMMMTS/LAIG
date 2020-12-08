@@ -28,15 +28,15 @@ class Piece{
     }
     
     initMaterials(){
-
-        if(this.player == 1){
+        console.log(this.player);
+        if(this.player == "black"){
             this.material = new CGFappearance(this.scene);
             this.material.setAmbient(0.0, 0.0, 0.0, 1);
             this.material.setDiffuse(0.0, 0.0, 0.0, 1);
             this.material.setSpecular(0.0, 0.0, 0.0, 1);
             this.material.setShininess(10.0);
         }
-        else if(this.player == 2){
+        else if(this.player == "white"){
             this.material = new CGFappearance(this.scene);
             this.material.setAmbient(1.0, 1.0, 1.0, 1);
             this.material.setDiffuse(1.0, 1.0, 1.0, 1);

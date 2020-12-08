@@ -9,7 +9,7 @@ class GameOrchestrator {
         this.scene = scene;
 
         this.theme = theme;
-        this.gameBoard = new Board(this.scene, 10); 
+        //this.gameBoard = new Board(this.scene, 3); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
@@ -17,11 +17,10 @@ class GameOrchestrator {
         this.previousPick = null;
         this.previousObj = null
         let prolog= new MyPrologInterface(this);
-        let oldPos=[1,1];
-        let board=[["white","black","white","black"],["black","white","black","white"],["white","black","white","black"],["black","white","black","white"]];
-        let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
-        console.log(boards);
-
+        // let oldPos=[1,1];
+        // let board=[["white","black","white","black"],["black","white","black","white"],["white","black","white","black"],["black","white","black","white"]];
+        //let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
+        prolog.boardRequest(3);
 
     }
 

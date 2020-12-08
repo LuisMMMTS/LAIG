@@ -8,7 +8,7 @@
  * @param id - tile id
  */
 class BoardTile extends CGFobject {
-	constructor(scene, size, x, y, id) {
+	constructor(scene, size, x, y, id, color) {
         super(scene);
         this.size = size;
 		this.x = x;
@@ -18,9 +18,8 @@ class BoardTile extends CGFobject {
         this.plane = new MyPlane(this.scene, size, size);
 
         console.log('id='+id);
-        console.log((this.id+x/1.15)%2+1);
 
-        this.piece = new Piece(this.scene, id, this, Math.trunc((this.id+x/1.15)%2+1));
+        this.piece = new Piece(this.scene, id, this, color);
 
         this.initMaterials();
     }

@@ -22,6 +22,18 @@ class MyPrologInterface {
         request.send();
     }
 
+    responsesToArrays(response){
+        let array=response.split("[").map(Array)[0][2].slice(2);
+        array = array.map(function(x) { 
+            x = x.replaceAll(']',''); 
+            x=x.split(",");
+            return x;
+          });
+          console.log("AQUI");
+        console.log(array);
+        return array
+    }
+
     makeRequest()
     {
         // Get Parameter Values
@@ -39,8 +51,8 @@ class MyPrologInterface {
     handleBoardReply(data){
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response=data.target.response;
-        console.log(response);
-        return response;
+        response=this.responsesToArrays(response);
+        this.gameOrchestrator.gameBoard=new Board(this.gameOrchestrator.scene, response);
     }
 
     boardRequest(size){
