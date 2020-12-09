@@ -23,15 +23,30 @@ class MyPrologInterface {
     }
 
     responsesToArrays(response){
-        let array=response.split("[").map(Array)[0][2].slice(2);
-        array = array.map(function(x) { 
-            x = x.replaceAll(']',''); 
-            x=x.split(",");
+        let array = response.split("[").map(Array)[0][2].slice(2);
+        array = array.map(function (x) {
+            x = x.replaceAll(']', '');
+            x = x.split(",");
             return x;
-          });
-          console.log("AQUI");
-        console.log(array);
+        });
+        array = array.filter(item => item);
         return array
+    }
+
+    gameBoardtoString(board){
+        let final_array="["
+        for (let i = 0; i < board.size; i++){
+            let row="["
+            for (let j = 0; j < board.size; j++){
+                row=row.concat(board.tiles[i*board.size+j].piece.player+",");
+            }
+            row=row.slice(0,-1);
+            row=row.concat("]");
+            final_array=final_array.concat(row+",");
+        }
+        final_array=final_array.slice(0, -1);
+        final_array=final_array.concat("]");
+        return final_array
     }
 
     makeRequest()
@@ -66,13 +81,22 @@ class MyPrologInterface {
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response=data.target.response;
         console.log(response);
+        response=this.responsesToArrays(response);
+        console.log(response);
+        let OldPos=response[1].slice(0,2);
+        let NewPos=response[2].slice(0,2);
+        //Move piece
+        let newBoard=response.slice(4);
+        //compare to board now and/or save in states?
+        console.log(newBoard);
     }
 
     moveRequest(board, player, AiLevel1=null, AiLevel2=null ,OldPos=null,NewPos=null){
+        board=this.gameBoardtoString(board);
         if(AiLevel1==null && AiLevel2==null){//human
             this.getPrologRequest("playerTurn("+board+","+player+"-'player'-"+AiLevel1+"-"+AiLevel2+","+OldPos+","+NewPos+")",this.handleMoveReply.bind(this));
         }else{//computer
-            this.getPrologRequest("playerTurn("+board+","+player+"-'computer'-"+AiLevel1+"-"+AiLevel2+","+OldPos+","+NewPos+")",this.handleMoveReply.bind(this));
+            this.getPrologRequest("playerTurn("+board+","+player+"-'computer'-"+AiLevel1+"-"+AiLevel2+","+"_"+","+"_"+")",this.handleMoveReply.bind(this));
         }
         
     }
@@ -81,10 +105,12 @@ class MyPrologInterface {
     handleMovablePiecesReply(data){
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response=data.target.response;
+        response=this.responsesToArrays(response);
         console.log(response);
     }
     
     getMovablePiecesResquest(board, player){
+        board=this.gameBoardtoString(board);
         this.getPrologRequest("getMovablePieces("+board+", "+player+")",handleMovablePiecesReply(this));
     }
 
@@ -92,10 +118,16 @@ class MyPrologInterface {
     handlePieceMovesReply(data){
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response=data.target.response;
+        response=this.responsesToArrays(response);
         console.log(response);
     }
     getPieceMovesRequest(board, player, pieceCoords){
+        board=this.gameBoardtoString(board);
         this.getPrologRequest("getValidMovesforPiece("+board+","+ player+","+ pieceCoords+")",handlePieceMovesReply(this));
+    }
+
+    close(){
+        this.getPrologRequest("quit");
     }
 
 }

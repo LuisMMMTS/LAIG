@@ -18,13 +18,22 @@ class GameOrchestrator {
         this.previousObj = null
         let prolog= new MyPrologInterface(this);
         // let oldPos=[1,1];
-        // let board=[["white","black","white","black"],["black","white","black","white"],["white","black","white","black"],["black","white","black","white"]];
+        this.gameBoard=new Board(this.scene,[["white","black","white","black"],["black","white","black","white"],["white","black","white","black"],["black","white","black","white"]]);
         //let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
-        prolog.boardRequest(3);
+        //prolog.boardRequest(3);
+        this.sleep(3000);
+        prolog.moveRequest(this.gameBoard, 'black', 1, 2, null, null);
 
     }
 
-
+    sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
 
     //updates the animator
     update(time){

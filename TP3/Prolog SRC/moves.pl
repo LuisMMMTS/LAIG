@@ -28,8 +28,8 @@ playerTurn(GameState, Player-'player'-_-_, OldPos, NewPos, NewState):-
 	% %moves piece getting the new game state
 	move(GameState, OldPos-NewPos, NewState).
 % Caso: jogador computador
-playerTurn(GameState, Player-'computer'-Ai1-Ai2, _, _, NewState):-
-	printTurn(Player),
+playerTurn(GameState, Player-'computer'-Ai1-Ai2, _, Move, NewState):-
+	%printTurn(Player),
 	getLevel(Player, Ai1-Ai2, Level),
 	choose_move(GameState, Player, Level, Move),
 	move(GameState, Move, NewState).
