@@ -3,11 +3,11 @@
 %Ronda de jogo de um jogador
 % Caso: jogador humano
 getValidMovesforPiece(GameState, Player, [Row,Column], NewMoves):-
-	valid_moves(GameState, Player, ListOfMoves),
+	valid_moves(GameState, Player-_-_-_-_, ListOfMoves),
 	findall(NewPos, member([Row, Column]-NewPos-_, ListOfMoves), NewMoves).
 
-getMovablePieces(GameState, Player, Movable):-
-	valid_moves(GameState, Player, ListOfMoves),
+getMovablePieces(GameState, Player, OldMoves):-
+	valid_moves(GameState, Player-_-_-_-_, ListOfMoves),
 	setof(OldPos, (NewPos-Val)^member(OldPos-NewPos-Val, ListOfMoves), OldMoves).
 %after this we can move. js task nt t let choose wrong pieces???
 

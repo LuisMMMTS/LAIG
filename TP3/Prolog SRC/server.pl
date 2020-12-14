@@ -111,6 +111,8 @@ parse_input(valid_moves(GameState, Player),Res) :-valid_moves(GameState, Player-
 parse_input(playerTurn(GameState, Player-Who-AiLevel1-AiLevel2,OldPos,NewPos),Res):-playerTurn(GameState, Player-Who-AiLevel1-AiLevel2,OldPos,NewPos,NewBoard), Res=[[OldPos,NewPos],NewBoard].
 parse_input(getMovablePieces(GameState,Player), Res):-getMovablePieces(GameState, Player, Res).
 parse_input(getValidMovesforPiece(GameState,Player,[Row,Column]),Res):-getValidMovesforPiece(GameState, Player, [Row,Column], Res).
+parse_input(value(GameState,Player),Res):-value(GameState,Player,Res).
+parse_input(checkEnd(GameState,Player),Res):-checkEnd(GameState, Player-_-_-_-_, Res).
 
 parse_input(quit, goodbye).
 

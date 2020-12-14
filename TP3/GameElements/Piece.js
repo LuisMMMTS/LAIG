@@ -7,8 +7,8 @@
  * @param player
  */
 
-class Piece{
-    constructor(scene, id, tile, player){
+class Piece {
+    constructor(scene, id, tile, player) {
         this.scene = scene;
         this.id = id;
         this.tile = tile;
@@ -26,17 +26,17 @@ class Piece{
 
         this.animation = null;
     }
-    
-    initMaterials(){
+
+    initMaterials() {
         console.log(this.player);
-        if(this.player == "black"){
+        if (this.player == "black") {
             this.material = new CGFappearance(this.scene);
             this.material.setAmbient(0.0, 0.0, 0.0, 1);
             this.material.setDiffuse(0.0, 0.0, 0.0, 1);
             this.material.setSpecular(0.0, 0.0, 0.0, 1);
             this.material.setShininess(10.0);
         }
-        else if(this.player == "white"){
+        else if (this.player == "white") {
             this.material = new CGFappearance(this.scene);
             this.material.setAmbient(1.0, 1.0, 1.0, 1);
             this.material.setDiffuse(1.0, 1.0, 1.0, 1);
@@ -48,51 +48,51 @@ class Piece{
         this.pickedMaterial.setAmbient(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setSpecular(1.0, 0.0, 0.0, 1);
-        this.pickedMaterial.setShininess(10.0);    
+        this.pickedMaterial.setShininess(10.0);
     }
 
-    setType(type){
+    setType(type) {
         this.type = type;
     }
 
-    getType(){
+    getType() {
         return this.type;
     }
-    pick(){
-        if(!this.picked){
+    pick() {
+        if (!this.picked) {
             this.color = this.pickedMaterial;
             this.picked = true;
         }
-        else{
+        else {
             this.color = this.material;
             this.picked = false
         }
     }
-    display(){
-    
+    display() {
+
         this.scene.pushMatrix();
         this.color.apply();
-        
-        if(this.picked){
-            this.scene.translate(0,1.5,0);
+
+        if (this.picked) {
+            this.scene.translate(0, 1.5, 0);
         }
         this.displayPiece();
         this.cube.display();
 
         this.scene.popMatrix();
-        
+
     }
-    displayPiece(){
+    displayPiece() {
         //console.log("animation not applied\n");
         //console.log("this.animation " +this.animation);
-        if(this.animation != null && this.animation.active && !this.animation.ended){
+        if (this.animation != null && this.animation.active && !this.animation.ended) {
             console.log("animation applied\n");
             this.animation.apply();
         }
 
     }
 
-    isPicked(){
+    isPicked() {
         return this.picked;
     }
 }

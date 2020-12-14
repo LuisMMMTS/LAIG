@@ -18,87 +18,87 @@ class Board extends CGFobject {
 
         this.init(array);
 
-    }	
-	
-	init(array) {
+    }
+
+    init(array) {
         this.board = new MyPlane(this.scene, this.size, this.size);
         this.createBoardTiles(array);
 
-	}
-	createBoardTiles(array){
+    }
+    createBoardTiles(array) {
         let id = 1
         let nTiles = this.size;
-        for (let i = 0; i < nTiles; i++){
-            for (let j = 0; j < nTiles; j++){
-                this.tiles.push(new BoardTile(this.scene, 2, i*1.15, j*1.15, id, array[i][j]));
+        for (let i = 0; i < nTiles; i++) {
+            for (let j = 0; j < nTiles; j++) {
+                this.tiles.push(new BoardTile(this.scene, 2, i * 1.15, j * 1.15, id, array[i][j]));
                 id++;
             }
         }
     }
-    
 
-	addPieceToTile(piece, tile){
+
+    addPieceToTile(piece, tile) {
         tile.setPiece(piece);
     }
-    
-	removePieceFromTile(tile){
-		tile.unsetPiece();
+
+    removePieceFromTile(tile) {
+        tile.unsetPiece();
     }
-    
-	getPieceOfTile(tile){
-		return tile.getPiece();
+
+    getPieceOfTile(tile) {
+        return tile.getPiece();
     }
-    
-	getTileOfPiece(piece){
-		for(t in this.tiles){
-			if(t.piece == piece) return t;
-		}
+
+    getTileOfPiece(piece) {
+        for (t in this.tiles) {
+            if (t.piece == piece) return t;
+        }
     }
-    
-	getTileWithCoordinates(x,y){
+
+    getTileWithCoordinates(x, y) {
         return this.tiles(x * side + y)
-		
+
     }
-    
-	movePiece(tile1, tile2){
-        let pieceOrig = this.tiles[tile1-1].piece;
-        let origin = this.tiles[tile1-1];
-        let dest = this.tiles[tile2-1];
-        let pieceDest = this.tiles[tile2-1].piece;
+
+    movePiece(tile1, tile2) {
+        let pieceOrig = this.tiles[tile1 - 1].piece;
+        let origin = this.tiles[tile1 - 1];
+        let dest = this.tiles[tile2 - 1];
+        let pieceDest = this.tiles[tile2 - 1].piece;
         this.removePieceFromTile(dest);
         this.removePieceFromTile(origin);
         this.addPieceToTile(pieceDest, origin);
         this.addPieceToTile(pieceOrig, dest);
-        
-	}
-    update(time){
-        for(var tile of this.tiles){
-            if(tile.piece != null){
-                if(tile.piece.animation != null){
+
+    }
+    update(time) {
+        for (var tile of this.tiles) {
+            if (tile.piece != null) {
+                if (tile.piece.animation != null) {
                     console.log("update time board 3");
                     tile.piece.animation.update(time);
                 }
             }
         }
     }
-    display(){
+    display() {
         let id = 1;
         this.scene.pushMatrix();
         this.scene.translate(0.15, 0, 0.10);
-        this.scene.scale(this.size+2, 1, this.size+2);
+        this.scene.scale(this.size + 2, 1, this.size + 2);
         //this.scene.graph.boardMaterial.apply();
         this.board.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        
-        
+
+
         this.scene.pushMatrix();
-        this.scene.translate(0,0.1,0);
-        this.scene.translate(-this.side/2.0,0,-this.side/2.0);
-            
-        for (let cell = 0; cell < this.tiles.length; cell++){
+        this.scene.translate(0, 0.1, 0);
+        this.scene.translate(-this.side / 2.0, 0, -this.side / 2.0);
+
+        for (let cell = 0; cell < this.tiles.length; cell++) {
             this.scene.registerForPick(id, this.tiles[cell]);
-            if(this.tiles[cell].piece != null){
+            if (this.tiles[cell].piece != null) {
                 this.scene.registerForPick(id, this.tiles[cell].piece);
                 id++;
             }
@@ -107,10 +107,10 @@ class Board extends CGFobject {
         }
 
         this.scene.popMatrix();
-        
+
     }
 
-	
-	
+
+
 }
 
