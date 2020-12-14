@@ -17,20 +17,27 @@ class BoardTile extends CGFobject {
 
         this.plane = new MyPlane(this.scene, size, size);
 
-        console.log('id=' + id);
+        //this.diferentiator = Math.trunc((this.id+x/1.15)%2+1)
+        //console.log('id='+id);
+        //console.log((this.id+x/1.15)%2+1);
 
         this.piece = new Piece(this.scene, id, this, color);
 
-        this.initMaterials();
     }
 
-
-    initMaterials() {
-        this.grey = new CGFappearance(this.scene);
-        this.grey.setAmbient(0.5, 0.5, 0.5, 1);
-        this.grey.setDiffuse(0.5, 0.5, 0.5, 1);
-        this.grey.setSpecular(0.5, 0.5, 0.5, 1);
-        this.grey.setShininess(10.0);
+    changeTheme(piece1, piece2, tile1, tile2){
+        if(this.piece.player == 1){
+            this.piece.changeTheme(piece1);
+        }
+        else if(this.piece.player == 2){
+            this.piece.changeTheme(piece2);
+        }
+        if(this.piece.player == 'black'){
+            this.material = tile1;
+        }
+        else if (this.piece.player == 'white'){
+            this.material = tile2;
+        }
     }
 
 
@@ -52,7 +59,7 @@ class BoardTile extends CGFobject {
 
         this.scene.translate(this.x, 0, this.y); //move to its position    
 
-        this.grey.apply();
+        this.material.apply();
         this.plane.display();
 
 

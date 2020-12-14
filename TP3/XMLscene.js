@@ -10,19 +10,11 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
-       /* this.filenames = ['scene1.xml'];
-        this.themes = new Map();
-        
-        /*for(var filename of this.filenames){
-            var theme = new MySceneGraph(filename, this);
-            console.log(theme);
-            console.log(theme);
-            this.themes.set(this.theme.themeName, this.theme);
-            
-        }*/
-
-        /*console.log(this.themes);*/
-        
+        this.themes = ["Theme1", "Theme2", "Theme3"];
+        this.selectedScene = 'Theme1';
+        this.filenames = new Map();
+        this.filenames.set('Theme1', 'scene1.xml').set('Theme2', 'scene2.xml').set('Theme3', 'scene3.xml');
+        console.log(this.filenames.entries())
         
     }
 
@@ -68,11 +60,8 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        
-
-
         this.orchestrator = new GameOrchestrator(this.graph, this);
-
+        
     }
 
     /**
@@ -177,7 +166,7 @@ class XMLscene extends CGFscene {
     onGraphLoaded() {
         
         this.axis = new CGFaxis(this, this.graph.referenceLength);
-
+        console.log(this.graph)
         //default appearance
         this.gl.clearColor(...this.graph.background);
 
@@ -190,14 +179,18 @@ class XMLscene extends CGFscene {
         this.initXMLCameras();
 
         //initializing the interface elements
-        this.interface.createInterface(this.graph.views, null); 
-      
+        if(!this.sceneInited)
+            this.interface.createInterface(this.graph.views, this.themes); 
+        else
+            this.interface.updateInterface(this.graph.views);
         //lights
         this.initLights();
 
         this.setUpdatePeriod(100);
 
         this.sceneInited = true;
+        this.orchestrator.setTheme();
+
     }
 
      update(time){
@@ -221,13 +214,16 @@ class XMLscene extends CGFscene {
              for(let i = 0; i < this.graph.spriteanimations.length; i++){ //update spriteanimations
                  this.graph.spriteanimations[i].update(delta);
              }
+             this.orchestrator.update(delta);
          }
-
-         this.orchestrator.update(delta);
+         
+         
      }
 
-     changeTheme(themeName){
-        var theme = this.themes[themeName];
+     changeTheme(value){
+         console.log(value);
+         console.log(this.filenames["Theme2"]);
+        var theme = new MySceneGraph(this.filenames.get(value), this);
         this.orchestrator.changeTheme(theme);
      }
 
@@ -266,8 +262,9 @@ class XMLscene extends CGFscene {
             //set the active camera, necessary for being able to move the camera around
             this.interface.setActiveCamera(this.camera);
 
-            // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            // Displays the scene (MySceneGraph function).  
+            //  console.log(this.graph);
+            //this.graph.displayScene();
             this.orchestrator.display();
             
             

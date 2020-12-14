@@ -1101,7 +1101,6 @@ class MySceneGraph {
 
         for (let i = 0; i < PiecesNode.children.length; i++) {
             let pieceType = "cube";
-            let side = 1;
             let material = null;
             let texture = null;
             let playernodes = PiecesNode.children[i].children;
@@ -1110,28 +1109,23 @@ class MySceneGraph {
                 switch (playernodes[j].nodeName) {
                     case ("pieceType"):
                         pieceType = this.reader.getString(playernodes[j], "type");
-                        if(pieceType==null){
+                        if(pieceType == null){
                             this.onXMLError("No value defined for piece type, assuming cube")
+                            pieceType = "cube";
+                        }
+                        if(pieceType != "cube" && pieceType!="cylinder" && pieceType != "cone" && pieceType!="sphere"){
+                            this.onXMLError("Wrong value defined for piece type, assuming cube")
                             pieceType = "cube";
                         }
                         console.log(pieceType);
                         break;
 
-                    case ("pieceSide"):
-                        side = this.reader.getFloat(playernodes[j], "side");
-                        if(side==null||isNaN(side)||side<=0){
-                            this.onXMLError("Wrong value defined for piece side, assuming 1")
-                            side=1;
-                        }
-                        console.log(side);
-                        break;
-
                     case ("material"):
                         let mat = this.reader.getString(playernodes[j], "id");
                         material = this.materials[mat];
-                        if (material==null){
+                        if (material == null){
                             this.onXMLError("wrong value for material in piece, setting default");
-                            material=this.materials['default'];
+                            material = this.materials['default'];
                         }
                         break;
 
@@ -1140,10 +1134,27 @@ class MySceneGraph {
                         break;
                 }
             }
-            pieces.push([pieceType, side, material, texture]);
+            pieces.push([pieceType, material, texture]);
         }
 
         return pieces;
+    }
+    parseTiles(TilesNode) {
+        console.log(TilesNode.children);
+        let tiles = [];
+
+        for (let i = 0; i < TilesNode.children.length; i++) {
+            let material = null;
+            let mat = this.reader.getString(TilesNode.children[i], "id");
+            material = this.materials[mat];
+            if (material == null){
+                this.onXMLError("wrong value for material in piece, setting default");
+                material = this.materials['default'];
+            }           
+            tiles.push(material);    
+        }
+        console.log(tiles);
+        return tiles;
     }
     /**
    * Parses the <nodes> block.
@@ -1593,10 +1604,7 @@ class MySceneGraph {
         var boardSide = null;
         var boardMaterial = null;
         var boardTexture = null;
-        var piece1;
-        var piece2;
-
-
+        var piece1, piece2, tile1, tile2;
 
         for (var i = 0; i < children.length; i++) {
             switch (children[i].nodeName) {
@@ -1616,12 +1624,14 @@ class MySceneGraph {
                 case ("pieces"):
                     [piece1,piece2] = this.parsePieces(children[i]);
                     break;
-
+                case("tiles"):
+                    [tile1,tile2] = this.parseTiles(children[i]);
+                    break;
                 default:
                     this.onXMLError("Unknown tag name " + children[i].nodeName + " in Gameboard");
             }
         }
-        this.board = [boardMaterial, boardTexture, piece1, piece2];
+        this.board = [boardMaterial, boardTexture, piece1, piece2, tile1,tile2];
         console.log(this.board);
 
     }
@@ -1735,10 +1745,10 @@ class MySceneGraph {
      */
 
     displayScene() {
-        // //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        // var matId = this.nodes[this.idRoot].getMaterial();
-        // var texId = this.nodes[this.idRoot].getTexture();
-        // this.processNode(this.idRoot, texId, matId);
+        //To do: Create display loop for transversing the scene graph, calling the root node's display function
+       var matId = this.nodes[this.idRoot].getMaterial();
+        var texId = this.nodes[this.idRoot].getTexture();
+        this.processNode(this.idRoot, texId, matId);
     }
 
     /**

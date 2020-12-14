@@ -51,12 +51,15 @@ class MyInterface extends CGFinterface {
      * 
      * @param {*} views - views defined in the scene
      */
-    createInterface(views, themeNames){
+    createInterface(views, themes){
         this.addAxisCheckBox();
         this.addLightsCheckbox();
         this.addLightsFolder();
         this.addCamerasDropDown(views);
-        //this.addThemeDropDown(themeNames);
+        this.addThemeDropDown(themes);
+    }
+    updateInterface(views){
+        
     }
 
     addLightsFolder(){
@@ -89,13 +92,7 @@ class MyInterface extends CGFinterface {
     }
 
     addThemeDropDown(themes){
-        // console.log(themes);
-        var themeNames = [];
-        for(var key in themes){
-            themeNames.push(key.themeName);
-        }
-        // console.log(themeNames);
-        this.gui.add(this.scene, "themeName", themes).onChange(val => this.scene.changeTheme(val)).name("Choose a theme");
+        this.gui.add(this.scene, "selectedScene", themes).onChange(val => this.scene.changeTheme(val)).name("Selected theme");
 
     }
     addAxisCheckBox(){

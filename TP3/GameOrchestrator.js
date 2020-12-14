@@ -7,9 +7,8 @@
 class GameOrchestrator {
     constructor(theme, scene) {
         this.scene = scene;
-
-        this.theme = theme;
-        //this.gameBoard = new Board(this.scene, 3); 
+        this.theme = new MySceneGraph('scene1.xml', scene);
+        //this.gameBoard = new Board(this.scene, 10); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
@@ -18,15 +17,15 @@ class GameOrchestrator {
         this.previousObj = null
         let prolog = new MyPrologInterface(this);
         // let oldPos=[1,1];
-        this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
+        //this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
-        // prolog.boardRequest(3);
+         prolog.boardRequest(3);
         // this.sleep(3000);
         //prolog.moveRequest(this.gameBoard, 'black', 1, 2, null, null);
         //prolog.getMovablePiecesResquest(this.gameBoard, 'black');
         //prolog.getPieceMovesRequest(this.gameBoard, 'black', [1, 2]);
         //prolog.getcurrentscore(this.gameBoard, 'black');
-        prolog.getWinner(this.gameBoard,'black');
+        //prolog.getWinner(this.gameBoard,'black');
         //prolog.close();
 
     }
@@ -43,14 +42,14 @@ class GameOrchestrator {
     //updates the animator
     update(time) {
         this.animator.update(time);
-        this.gameBoard.update(time);
+        //this.gameBoard.update(time);
     }
-
-    changeTheme(newTheme) {
-        this.scene.sceneInited = false;
-        this.theme = newTheme;
-        this.scene.graph = this.theme;
-
+    setTheme(){
+        this.gameBoard.changeTheme(this.theme.board);
+    }
+    changeTheme(theme){
+        this.theme = theme;
+        this.gameBoard.changeTheme(theme.board);
     }
 
     undo() {
@@ -92,12 +91,13 @@ class GameOrchestrator {
             else if (!obj.isPicked()) { //a piece was chosen before, changes this piece color, applies the move and makes pieces color back to normal
                 obj.pick();
                 console.log("helloooo");
-                var move = new GameMove(this.scene, this.previousObj, this.gameBoard.tiles[this.previousPick - 1], this.gameBoard.tiles[customId - 1], this.gameBoard);
+                var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
                 this.gameSequence.addGameMove(move);
                 console.log(this.previousObj);
-                move.createAnimation();
-
-                this.gameBoard.movePiece(this.previousPick, customId);
+                move.createAnimation(this.previousPick, customId);
+                
+                //quando animaçao acabar
+                //this.gameBoard.movePiece(this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1],this.previousObj, obj);
                 this.previousObj.pick();
                 obj.pick();
                 this.previousPick = null;
@@ -123,7 +123,7 @@ class GameOrchestrator {
         this.scene.pushMatrix();
         //this.theme.display(); --> dado no xmlscene
         this.gameBoard.display();
-        //this.animator.display();
+        this.animator.display();
 
         this.scene.popMatrix();
     }

@@ -3,8 +3,8 @@
  * @constructor
  * @param scene - Reference to MyScene object
  * @param id
- * @param tile
- * @param player
+ * @param tile 
+ * @param player - number of the player
  */
 
 class Piece {
@@ -16,6 +16,9 @@ class Piece {
 
         this.type = 'cube';
         this.cube = new MyCube(this.scene, 0.5);
+        this.cylinder = new MyCylinder(this.scene, 0.2, 0.4,0.4, 16, 8);
+        this.sphere = new MySphere(this.scene,0.35,16,8);
+        this.cone = new MyCylinder(this.scene, 0.6, 0.01,0.4, 16, 8);
         this.initMaterials();
 
         //if player is 1 pieces are black, if player is 2 pieces are white
@@ -51,7 +54,15 @@ class Piece {
         this.pickedMaterial.setShininess(10.0);
     }
 
-    setType(type) {
+    changeTheme(themePiece){
+        //pieces.push([pieceType, material, texture]);
+        this.setType(themePiece[0]);
+        this.color = themePiece[1];
+        this.material = themePiece[1];
+
+    }
+
+    setType(type){
         this.type = type;
     }
 
@@ -77,7 +88,24 @@ class Piece {
             this.scene.translate(0, 1.5, 0);
         }
         this.displayPiece();
-        this.cube.display();
+        if(this.type == "cube")
+            this.cube.display();
+        else if(this.type == "cylinder"){
+            this.scene.pushMatrix();
+            this.scene.rotate(Math.PI/2.0, 1,0,0);
+            this.cylinder.display();
+            this.scene.popMatrix();
+        }
+        else if(this.type == "sphere")
+            this.sphere.display();
+        else if(this.type == "cone"){
+            this.scene.pushMatrix();
+            this.scene.translate(0,-0.30,0);
+            this.scene.rotate(-Math.PI/2.0, 1,0,0);
+            this.cone.display();
+            this.scene.popMatrix();
+        }
+            
 
         this.scene.popMatrix();
 
