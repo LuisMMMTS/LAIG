@@ -45,7 +45,7 @@ class KeyFrameAnimation extends Animation{
 
 
     update(currentTime){
-        //console.log(this.keyframes);
+        // console.log(this.keyframes);
         /*console.log("end time: "+this.endTime);
         console.log("current time: "+currentTime);
         console.log("last time: "+this.lastTime);

@@ -17,11 +17,11 @@ class BoardTile extends CGFobject {
 
         this.plane = new MyPlane(this.scene, size, size);
 
-        this.diferentiator = Math.trunc((this.id+x/1.15)%2+1)
+        //this.diferentiator = Math.trunc((this.id+x/1.15)%2+1)
         //console.log('id='+id);
         //console.log((this.id+x/1.15)%2+1);
 
-        this.piece = new Piece(this.scene, id, this, this.diferentiator);
+        this.piece = new Piece(this.scene, id, this, color);
 
     }
 
@@ -32,10 +32,10 @@ class BoardTile extends CGFobject {
         else if(this.piece.player == 2){
             this.piece.changeTheme(piece2);
         }
-        if(this.diferentiator == 1){
+        if(this.piece.player == 'black'){
             this.material = tile1;
         }
-        else if (this.diferentiator == 2){
+        else if (this.piece.player == 'white'){
             this.material = tile2;
         }
     }

@@ -29,13 +29,23 @@ class Piece {
 
         this.animation = null;
     }
-    
-    initMaterials(){
-        this.material = new CGFappearance(this.scene);
-        this.material.setAmbient(1.0, 1.0, 1.0, 1);
-        this.material.setDiffuse(1.0, 1.0, 1.0, 1);
-        this.material.setSpecular(1.0, 1.0, 1.0, 1);
-        this.material.setShininess(10.0);
+
+    initMaterials() {
+        console.log(this.player);
+        if (this.player == "black") {
+            this.material = new CGFappearance(this.scene);
+            this.material.setAmbient(0.0, 0.0, 0.0, 1);
+            this.material.setDiffuse(0.0, 0.0, 0.0, 1);
+            this.material.setSpecular(0.0, 0.0, 0.0, 1);
+            this.material.setShininess(10.0);
+        }
+        else if (this.player == "white") {
+            this.material = new CGFappearance(this.scene);
+            this.material.setAmbient(1.0, 1.0, 1.0, 1);
+            this.material.setDiffuse(1.0, 1.0, 1.0, 1);
+            this.material.setSpecular(1.0, 1.0, 1.0, 1);
+            this.material.setShininess(10.0);
+        }
 
         this.pickedMaterial = new CGFappearance(this.scene);
         this.pickedMaterial.setAmbient(1.0, 0.0, 0.0, 1);
