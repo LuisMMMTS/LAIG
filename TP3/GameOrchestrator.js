@@ -24,9 +24,12 @@ class GameOrchestrator {
         this.animator.update(time);
         //this.gameBoard.update(time);
     }
-
-    changeTheme(){
-        this.gameBoard.changeTheme(this.theme.board);        
+    setTheme(){
+        this.gameBoard.changeTheme(this.theme.board);
+    }
+    changeTheme(theme){
+        this.theme = theme;
+        this.gameBoard.changeTheme(theme.board);
     }
 
     undo(){
@@ -73,7 +76,8 @@ class GameOrchestrator {
                 console.log(this.previousObj);
                 move.createAnimation(this.previousPick, customId);
                 
-                this.gameBoard.movePiece(this.previousPick, customId);
+                //quando animaçao acabar
+                //this.gameBoard.movePiece(this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1],this.previousObj, obj);
                 this.previousObj.pick();
                 obj.pick();
                 this.previousPick = null;

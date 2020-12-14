@@ -270,7 +270,7 @@
         <pieces>
             <player1>
                 <pieceType  type= "cube"/>
-                <material id="white"/>
+                <material id="White"/>
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>

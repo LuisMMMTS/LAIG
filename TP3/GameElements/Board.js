@@ -15,13 +15,14 @@ class Board extends CGFobject {
         this.side = this.size;
         
         this.tiles = [];
-
+        
 		this.init();
 	}	
 	
 	init() {
         this.board = new MyPlane(this.scene, this.size, this.size);
         this.createBoardTiles();
+        this.boardMaterial = null;
 
     }
     changeTheme(theme){
@@ -73,10 +74,9 @@ class Board extends CGFobject {
 		
     }
     
-	movePiece(tile1, tile2){
-        
-        this.addPieceToTile(pieceDest, origin);
-        this.addPieceToTile(pieceOrig, dest);
+	movePiece(tile1, tile2, pieceDest, pieceOrig){
+        this.addPieceToTile(pieceDest, tile1);
+        this.addPieceToTile(pieceOrig, tile2);
         
 	}
     /*update(time){
@@ -92,7 +92,8 @@ class Board extends CGFobject {
     display(){
         let id = 1;
         this.scene.pushMatrix();
-        this.scene.translate(0.15, 0, 0.10);
+        this.scene.translate(0.15, 0, 0.10);;
+        this.scene.translate(this.side/2.0,-0.1,this.side/2.0);
         this.scene.scale(this.size+2, 1, this.size+2);
         this.boardMaterial.apply();
         this.board.display();
@@ -101,8 +102,7 @@ class Board extends CGFobject {
         
         
         this.scene.pushMatrix();
-        this.scene.translate(0,0.1,0);
-        this.scene.translate(-this.side/2.0,0,-this.side/2.0);
+        
             
         for (let cell = 0; cell < this.tiles.length; cell++){
             this.scene.registerForPick(id, this.tiles[cell]);

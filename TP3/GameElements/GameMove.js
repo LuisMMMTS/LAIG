@@ -15,6 +15,8 @@ class GameMove{
         this.destination = destination;
         this.gameBoard = gameBoard;
 
+        this.startPiece = startPiece;
+        this.endPiece = endPiece;
         this.active = true;
 
         this.animating1 = false;
@@ -22,35 +24,43 @@ class GameMove{
     }
 
     createAnimation(){
-        let speed = 0.5;
+        let speed = 0.9;
         console.log(this.destination);
-        let duration = Math.sqrt(Math.pow(this.destination.x - this.origin.x,2) + Math.pow(this.destination.y - this.origin.y,2))/speed;
+        let duration = Math.ceil(Math.sqrt(Math.pow(this.destination.x - this.origin.x,2) + Math.pow(this.destination.y - this.origin.y,2))/speed);
+        if (duration==0){duration+=1;}
         console.log("Duration: "+ duration);
-
+        console.log("x: ", this.destination.x );
+        console.log("z: ", this.destination.y );
+        console.log("x: ",  this.origin.x);
+        console.log("z: ",  this.origin.y);
         this.animationO = new KeyFrameAnimation(this.scene, null);
-        this.animationO.addKeyFrame(new KeyFrame()); //adds keyframe in the current position to start animation
+        let start = new KeyFrame()
+        start.translation = new vec3.fromValues(this.origin.x, 0.1, this.origin.y)
+        start.instant = 0;
+        this.animationO.addKeyFrame(start); //adds keyframe in the current position to start animation
         let end = new KeyFrame();
-        end.translation = new vec3.fromValues(this.destination.x - this.origin.x,0 ,this.destination.y - this.origin.y);
+        end.translation = new vec3.fromValues(this.destination.x,0.1 ,this.destination.y );
         end.instant = duration;
         this.animationO.addKeyFrame(end);
-        this.animationO.active=true;
-        //this.piece.animation = this.animationO;
-        //console.log("hello"+this.piece.animation);
+        this.animationO.active = true;
+
 
         this.animationD = new KeyFrameAnimation(this.scene, null);
-        let start = new KeyFrame();
-        start.translation = new vec3.fromValues(this.origin.x-this.destination.x, 0, this.origin.y- this.destination.y);
-        start.instant = 0;
-        this.animationD.addKeyFrame(start);
-        let end_2 = new KeyFrame();
-        end_2.instant = duration;
-        this.animationD.addKeyFrame(end_2);
+        let start2 = new KeyFrame()
+        start2.translation = new vec3.fromValues(this.destination.x, 0.1, this.destination.y)
+        start2.instant = 0;
+        this.animationD.addKeyFrame(start2);
+
+        let end2 = new KeyFrame();
+        end2.translation = new vec3.fromValues(this.origin.x, 0.1, this.origin.y);
+        end2.instant = duration;
+        this.animationD.addKeyFrame(end2);
 
         this.animating1 = true;
         this.animating2 = true;
 
-        this.removePieceFromTile(this.destination);
-        this.removePieceFromTile(this.origin);
+        this.gameBoard.removePieceFromTile(this.destination);
+        this.gameBoard.removePieceFromTile(this.origin);
     }
 
     update(time){

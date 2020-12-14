@@ -48,6 +48,7 @@ class Piece{
         //pieces.push([pieceType, material, texture]);
         this.setType(themePiece[0]);
         this.color = themePiece[1];
+        this.material = themePiece[1];
 
     }
 

@@ -10,6 +10,11 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+        this.themes = ["Theme1", "Theme2", "Theme3"];
+        this.selectedScene = 'Theme1';
+        this.filenames = new Map();
+        this.filenames.set('Theme1', 'scene1.xml').set('Theme2', 'scene2.xml').set('Theme3', 'scene3.xml');
+        console.log(this.filenames.entries())
         
     }
 
@@ -55,11 +60,8 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        this.filenames = ['scene1.xml', 'scene2.xml', 'scene3.xml'];
         this.orchestrator = new GameOrchestrator(this.graph, this);
         
-        
-
     }
 
     /**
@@ -164,7 +166,7 @@ class XMLscene extends CGFscene {
     onGraphLoaded() {
         
         this.axis = new CGFaxis(this, this.graph.referenceLength);
-
+        console.log(this.graph)
         //default appearance
         this.gl.clearColor(...this.graph.background);
 
@@ -177,15 +179,17 @@ class XMLscene extends CGFscene {
         this.initXMLCameras();
 
         //initializing the interface elements
-        this.interface.createInterface(this.graph.views, null); 
-      
+        if(!this.sceneInited)
+            this.interface.createInterface(this.graph.views, this.themes); 
+        else
+            this.interface.updateInterface(this.graph.views);
         //lights
         this.initLights();
 
         this.setUpdatePeriod(100);
 
         this.sceneInited = true;
-        this.orchestrator.changeTheme();
+        this.orchestrator.setTheme();
 
     }
 
@@ -216,10 +220,12 @@ class XMLscene extends CGFscene {
          
      }
 
-     /*changeTheme(themeName){
-        var theme = this.themes[themeName];
+     changeTheme(value){
+         console.log(value);
+         console.log(this.filenames["Theme2"]);
+        var theme = new MySceneGraph(this.filenames.get(value), this);
         this.orchestrator.changeTheme(theme);
-     }*/
+     }
 
 
     /**
