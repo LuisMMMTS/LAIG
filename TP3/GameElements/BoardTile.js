@@ -26,10 +26,10 @@ class BoardTile extends CGFobject {
     }
 
     changeTheme(piece1, piece2, tile1, tile2){
-        if(this.piece.player == 1){
+        if(this.piece.player == "black"){
             this.piece.changeTheme(piece1);
         }
-        else if(this.piece.player == 2){
+        else if(this.piece.player == "white"){
             this.piece.changeTheme(piece2);
         }
         if(this.piece.player == 'black'){

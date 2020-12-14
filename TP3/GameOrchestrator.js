@@ -19,7 +19,7 @@ class GameOrchestrator {
         // let oldPos=[1,1];
         //this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
-         prolog.boardRequest(3);
+         prolog.boardRequest(5);
         // this.sleep(3000);
         //prolog.moveRequest(this.gameBoard, 'black', 1, 2, null, null);
         //prolog.getMovablePiecesResquest(this.gameBoard, 'black');
