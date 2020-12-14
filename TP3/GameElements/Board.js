@@ -8,20 +8,20 @@
  * @param y2 - y coordinate corner 2
  */
 class Board extends CGFobject {
-	constructor(scene, size) {
-		super(scene);
-		
-        this.size = size;
+    constructor(scene, array) {
+        super(scene);
+
+        this.size = array.length;
         this.side = this.size;
-        
+
         this.tiles = [];
         
-		this.init();
+		this.init(array);
 	}	
 	
-	init() {
+	init(array) {
         this.board = new MyPlane(this.scene, this.size, this.size);
-        this.createBoardTiles();
+        this.createBoardTiles(array);
         this.boardMaterial = null;
 
     }
@@ -39,39 +39,39 @@ class Board extends CGFobject {
         }
         //falta tratar dos afs e aft
     }
-	createBoardTiles(){
+	createBoardTiles(array){
         let id = 1
         let nTiles = this.size;
-        console.log(nTiles*nTiles);
-        for (let i = 0; i < nTiles; i++){
-            for (let j = 0; j < nTiles; j++){
-                this.tiles.push(new BoardTile(this.scene, 2, i*1.15, j*1.15, id));
+        for (let i = 0; i < nTiles; i++) {
+            for (let j = 0; j < nTiles; j++) {
+                this.tiles.push(new BoardTile(this.scene, 2, i * 1.15, j * 1.15, id, array[i][j]));
                 id++;
             }
         }
-	}
+    }
 
-	addPieceToTile(piece, tile){
+
+    addPieceToTile(piece, tile) {
         tile.setPiece(piece);
     }
-    
-	removePieceFromTile(tile){
-		tile.unsetPiece();
+
+    removePieceFromTile(tile) {
+        tile.unsetPiece();
     }
-    
-	getPieceOfTile(tile){
-		return tile.getPiece();
+
+    getPieceOfTile(tile) {
+        return tile.getPiece();
     }
-    
-	getTileOfPiece(piece){
-		for(t in this.tiles){
-			if(t.piece == piece) return t;
-		}
+
+    getTileOfPiece(piece) {
+        for (t in this.tiles) {
+            if (t.piece == piece) return t;
+        }
     }
-    
-	getTileWithCoordinates(x,y){
+
+    getTileWithCoordinates(x, y) {
         return this.tiles(x * side + y)
-		
+
     }
     
 	movePiece(tile1, tile2, pieceDest, pieceOrig){
@@ -99,14 +99,14 @@ class Board extends CGFobject {
         this.board.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        
-        
+
+
         this.scene.pushMatrix();
         
             
         for (let cell = 0; cell < this.tiles.length; cell++){
             this.scene.registerForPick(id, this.tiles[cell]);
-            if(this.tiles[cell].piece != null){
+            if (this.tiles[cell].piece != null) {
                 this.scene.registerForPick(id, this.tiles[cell].piece);
                 id++;
             }
@@ -119,7 +119,7 @@ class Board extends CGFobject {
         
     }
 
-	
-	
+
+
 }
 

@@ -7,8 +7,8 @@
  * @param player - number of the player
  */
 
-class Piece{
-    constructor(scene, id, tile, player){
+class Piece {
+    constructor(scene, id, tile, player) {
         this.scene = scene;
         this.id = id;
         this.tile = tile;
@@ -41,7 +41,7 @@ class Piece{
         this.pickedMaterial.setAmbient(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setSpecular(1.0, 0.0, 0.0, 1);
-        this.pickedMaterial.setShininess(10.0);    
+        this.pickedMaterial.setShininess(10.0);
     }
 
     changeTheme(themePiece){
@@ -56,26 +56,26 @@ class Piece{
         this.type = type;
     }
 
-    getType(){
+    getType() {
         return this.type;
     }
-    pick(){
-        if(!this.picked){
+    pick() {
+        if (!this.picked) {
             this.color = this.pickedMaterial;
             this.picked = true;
         }
-        else{
+        else {
             this.color = this.material;
             this.picked = false
         }
     }
-    display(){
-    
+    display() {
+
         this.scene.pushMatrix();
         this.color.apply();
-        
-        if(this.picked){
-            this.scene.translate(0,1.5,0);
+
+        if (this.picked) {
+            this.scene.translate(0, 1.5, 0);
         }
         this.displayPiece();
         if(this.type == "cube")
@@ -98,19 +98,19 @@ class Piece{
             
 
         this.scene.popMatrix();
-        
+
     }
-    displayPiece(){
+    displayPiece() {
         //console.log("animation not applied\n");
         //console.log("this.animation " +this.animation);
-        if(this.animation != null && this.animation.active && !this.animation.ended){
+        if (this.animation != null && this.animation.active && !this.animation.ended) {
             console.log("animation applied\n");
             this.animation.apply();
         }
 
     }
 
-    isPicked(){
+    isPicked() {
         return this.picked;
     }
 }

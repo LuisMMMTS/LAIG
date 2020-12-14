@@ -2,23 +2,34 @@
 
 %Ronda de jogo de um jogador
 % Caso: jogador humano
-playerTurn(GameState, Player-'player'-_-_, ListOfMoves, NewState):-
-	printTurn(Player),
-	%gets moveable pieces and user chooses one
-	setof(OldPos, (NewPos-Val)^member(OldPos-NewPos-Val, ListOfMoves), OldMoves),
-	write('Choose one of the available pieces to move ([Row, Col]) :\n'),
-	printList(OldMoves),
-	readPos(Player, OldMoves, [Row, Column]),
-	%gets possible positions to move the selected piece to and user chooses one
-	findall(NewPos, member([Row, Column]-NewPos-_, ListOfMoves), NewMoves), 
-	write('Choose one of the possible positions to move to ([Row, Col]) :\n'),
-	printList(NewMoves),
-	readPos(Player, NewMoves, NewPos),
-	%moves piece getting the new game state
-	move(GameState, [Row, Column]-NewPos, NewState).
+getValidMovesforPiece(GameState, Player, [Row,Column], NewMoves):-
+	valid_moves(GameState, Player-_-_-_-_, ListOfMoves),
+	findall(NewPos, member([Row, Column]-NewPos-_, ListOfMoves), NewMoves).
+
+getMovablePieces(GameState, Player, OldMoves):-
+	valid_moves(GameState, Player-_-_-_-_, ListOfMoves),
+	setof(OldPos, (NewPos-Val)^member(OldPos-NewPos-Val, ListOfMoves), OldMoves).
+%after this we can move. js task nt t let choose wrong pieces???
+
+
+playerTurn(GameState, Player-'player'-_-_, OldPos, NewPos, NewState):-
+	% printTurn(Player),
+	% %gets moveable pieces and user chooses one
+	% setof(OldPos, (NewPos-Val)^member(OldPos-NewPos-Val, ListOfMoves), OldMoves),
+	% write('Choose one of the available pieces to move ([Row, Col]) :\n'),
+	% printList(OldMoves),
+	% readPos(Player, OldMoves, [Row, Column]),
+	% %gets possible positions to move the selected piece to and user chooses one
+	% findall(NewPos, member([Row, Column]-NewPos-_, ListOfMoves), NewMoves), 
+	% write('Choose one of the possible positions to move to ([Row, Col]) :\n'),
+	% printList(NewMoves),
+	% readPos(Player, NewMoves, NewPos),
+	
+	% %moves piece getting the new game state
+	move(GameState, OldPos-NewPos, NewState).
 % Caso: jogador computador
-playerTurn(GameState, Player-'computer'-Ai1-Ai2, _, NewState):-
-	printTurn(Player),
+playerTurn(GameState, Player-'computer'-Ai1-Ai2, _, Move, NewState):-
+	%printTurn(Player),
 	getLevel(Player, Ai1-Ai2, Level),
 	choose_move(GameState, Player, Level, Move),
 	move(GameState, Move, NewState).

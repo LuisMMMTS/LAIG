@@ -8,10 +8,10 @@
  * @param id - tile id
  */
 class BoardTile extends CGFobject {
-	constructor(scene, size, x, y, id) {
+    constructor(scene, size, x, y, id, color) {
         super(scene);
         this.size = size;
-		this.x = x;
+        this.x = x;
         this.y = y;
         this.id = id;
 
@@ -24,7 +24,6 @@ class BoardTile extends CGFobject {
         this.piece = new Piece(this.scene, id, this, this.diferentiator);
 
     }
-    
 
     changeTheme(piece1, piece2, tile1, tile2){
         if(this.piece.player == 1){
@@ -40,46 +39,46 @@ class BoardTile extends CGFobject {
             this.material = tile2;
         }
     }
-	
 
-    setPiece(piece){
+
+    setPiece(piece) {
         this.piece = piece;
     }
 
-    unsetPiece(){
+    unsetPiece() {
         this.piece = null;
     }
 
-    getPiece(){
+    getPiece() {
         return this.piece;
     }
 
-    display(){
-        
+    display() {
+
         this.scene.pushMatrix();
 
-        this.scene.translate(this.x,0,this.y); //move to its position    
+        this.scene.translate(this.x, 0, this.y); //move to its position    
 
         this.material.apply();
         this.plane.display();
 
 
-        if(this.piece != null){
+        if (this.piece != null) {
             this.scene.pushMatrix();
-            this.scene.translate(0,0.3,0);
+            this.scene.translate(0, 0.3, 0);
             this.piece.display();
             this.scene.popMatrix();
         }
-        
 
-        
+
+
 
         this.scene.popMatrix();
-           
+
 
     }
 
-	
-	
+
+
 }
 

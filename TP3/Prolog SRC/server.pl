@@ -59,7 +59,7 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 % Handles parsed HTTP requests
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
-handle_request(Request, MyReply, '200 OK') :- catch(parse_input(Request, MyReply),error(_,_),fail), !.
+handle_request(Request, MyReply, '200 OK') :-catch(parse_input(Request, MyReply),error(_,_),fail), !.
 handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
 handle_request(_, 'Bad Request', '400 Bad Request').
 
@@ -102,9 +102,18 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+:-use_module('emulsion.pl').
 
 parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
+parse_input(initialBoard(X), Res) :- fillBoard(Res, X).
+parse_input(valid_moves(GameState, Player),Res) :-valid_moves(GameState, Player-_-_-_-_, Res).
+parse_input(playerTurn(GameState, Player-Who-AiLevel1-AiLevel2,OldPos,NewPos),Res):-playerTurn(GameState, Player-Who-AiLevel1-AiLevel2,OldPos,NewPos,NewBoard), Res=[[OldPos,NewPos],NewBoard].
+parse_input(getMovablePieces(GameState,Player), Res):-getMovablePieces(GameState, Player, Res).
+parse_input(getValidMovesforPiece(GameState,Player,[Row,Column]),Res):-getValidMovesforPiece(GameState, Player, [Row,Column], Res).
+parse_input(value(GameState,Player),Res):-value(GameState,Player,Res).
+parse_input(checkEnd(GameState,Player),Res):-checkEnd(GameState, Player-_-_-_-_, Res).
+
 parse_input(quit, goodbye).
 
 test(_,[],N) :- N =< 0.
