@@ -7,7 +7,7 @@
 class GameOrchestrator {
     constructor(theme, scene) {
         this.scene = scene;
-        this.theme = new MySceneGraph('scene1.xml', scene);
+        this.theme = new MySceneGraph('scene1.xml', this);
         //this.gameBoard = new Board(this.scene, 10); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
@@ -17,9 +17,9 @@ class GameOrchestrator {
         this.previousObj = null
         let prolog = new MyPrologInterface(this);
         // let oldPos=[1,1];
-        //this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
+        this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
-         prolog.boardRequest(5);
+         //prolog.boardRequest(5);
         // this.sleep(3000);
         //prolog.moveRequest(this.gameBoard, 'black', 1, 2, null, null);
         //prolog.getMovablePiecesResquest(this.gameBoard, 'black');
@@ -94,10 +94,10 @@ class GameOrchestrator {
                 var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
                 this.gameSequence.addGameMove(move);
                 console.log(this.previousObj);
-                move.createAnimation(this.previousPick, customId);
+                move.createAnimation();
                 
                 //quando animaçao acabar
-                //this.gameBoard.movePiece(this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1],this.previousObj, obj);
+                
                 this.previousObj.pick();
                 obj.pick();
                 this.previousPick = null;

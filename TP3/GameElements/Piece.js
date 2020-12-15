@@ -111,12 +111,8 @@ class Piece {
 
     }
     displayPiece() {
-        //console.log("animation not applied\n");
-        //console.log("this.animation " +this.animation);
-        if (this.animation != null && this.animation.active && !this.animation.ended) {
-            console.log("animation applied\n");
-            this.animation.apply();
-        }
+
+  
 
     }
 

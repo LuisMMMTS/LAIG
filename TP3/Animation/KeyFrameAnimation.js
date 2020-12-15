@@ -14,6 +14,7 @@ class KeyFrameAnimation extends Animation{
 
         this.keyframes = [];
         
+        
         //variables where the current animation is being stored
         this.animationTranslation = vec3.create();
         this.animationRotation = vec3.create();
@@ -45,11 +46,7 @@ class KeyFrameAnimation extends Animation{
 
 
     update(currentTime){
-        // console.log(this.keyframes);
-        /*console.log("end time: "+this.endTime);
-        console.log("current time: "+currentTime);
-        console.log("last time: "+this.lastTime);
-        console.log("hello!!!");*/
+        console.log(this.elapsedTime)
         //if animation reached the end, return
         if(this.ended) return;
         
@@ -89,11 +86,15 @@ class KeyFrameAnimation extends Animation{
         }
 
         //find the keyframes to interpolate between
+       
         if(this.elapsedTime > this.keyframes[this.keyframeEndIndex].instant){
+            if(this.keyframes.length <= this.keyframeEndIndex+1){
+                this.ended = true;
+                return;
+            } 
             this.keyframeEndIndex++;
             this.keyframeStartIndex++;
         }    
-
         /* INTERPOLATION */
         //It's not the end so we need to do interpolation
 
