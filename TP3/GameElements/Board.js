@@ -44,7 +44,7 @@ class Board extends CGFobject {
         let nTiles = this.size;
         for (let i = 0; i < nTiles; i++) {
             for (let j = 0; j < nTiles; j++) {
-                this.tiles.push(new BoardTile(this.scene, 2, i * 1.15, j * 1.15, id, array[i][j]));
+                this.tiles.push(new BoardTile(this.scene, this, 2, i * 1.15, j * 1.15, id, array[i][j]));
                 id++;
             }
         }
@@ -79,16 +79,15 @@ class Board extends CGFobject {
         this.addPieceToTile(pieceOrig, tile2);
         
 	}
-    /*update(time){
+    update(time){
         for(var tile of this.tiles){
             if(tile.piece != null){
                 if(tile.piece.animation != null){
-                    console.log("update time board 3");
-                    tile.piece.animation.update(time);
+                    tile.piece.update(time);
                 }
             }
         }
-    }*/
+    }
     display(){
         let id = 1;
         this.scene.pushMatrix();

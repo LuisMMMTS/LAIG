@@ -23,7 +23,7 @@ class GameMove{
         this.animating2 = false;
     }
 
-    createAnimation(){
+    /*createAnimation(){
         let speed = 0.1;
         console.log(this.destination);
         let duration = Math.ceil(Math.sqrt(Math.pow(this.destination.x - this.origin.x,2) + Math.pow(this.destination.y - this.origin.y,2))/speed);
@@ -61,11 +61,11 @@ class GameMove{
         this.animating1 = true;
         this.animating2 = true;
 
-        this.gameBoard.removePieceFromTile(this.destination);
+        
         this.gameBoard.removePieceFromTile(this.origin);
-    }
+    }*/
 
-    update(time){
+    /*update(time){
         if( this.animating1){
             if(!this.animationO.ended)
             this.animationO.update(time);
@@ -87,8 +87,8 @@ class GameMove{
         }
         else this.animating2 = false;
 
-    }
-    animate(){
+    }*/
+   /* animate(){
         if(this.animating1){
             this.scene.pushMatrix();
             this.animationO.apply();
@@ -104,5 +104,5 @@ class GameMove{
         }
         
 
-    }
+    }*/
 }

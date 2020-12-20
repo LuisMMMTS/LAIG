@@ -46,7 +46,6 @@ class KeyFrameAnimation extends Animation{
 
 
     update(currentTime){
-        console.log(this.elapsedTime)
         //if animation reached the end, return
         if(this.ended) return;
         
@@ -56,6 +55,7 @@ class KeyFrameAnimation extends Animation{
 
         //check if the keyframe should be active or not
         if(!this.active){
+            
             if(this.elapsedTime >= this.startTime) // only becomes visible after first keyframe instant
                 this.active = true;
             else 
@@ -71,7 +71,8 @@ class KeyFrameAnimation extends Animation{
         }
         
 
-        
+        console.log("updating")
+        console.log(this.elapsedTime)
         if(this.elapsedTime == this.keyframes[this.keyframeStartIndex].instant){// no need for interpolation, its in a matching keyframe instant
             this.animationTranslation = this.keyframes[this.keyframeStartIndex].translation;
             this.animationRotation = new vec3.fromValues(this.keyframes[this.keyframeStartIndex].rotation[0],this.keyframes[this.keyframeStartIndex].rotation[1],this.keyframes[this.keyframeStartIndex].rotation[2]);
@@ -100,8 +101,11 @@ class KeyFrameAnimation extends Animation{
 
         let keyframeStartInstant = this.keyframes[this.keyframeStartIndex].instant;
         let keyframeEndInstant = this.keyframes[this.keyframeEndIndex].instant;
-
-        
+        /*console.log(keyframeStartInstant)
+        console.log(keyframeEndInstant)
+        console.log(this.keyframes[this.keyframeStartIndex])
+        console.log(this.keyframes[this.keyframeEndIndex])
+        */
         let interpolationAmount = (this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant);
 
         vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
@@ -109,11 +113,11 @@ class KeyFrameAnimation extends Animation{
         vec3.lerp(this.animationRotation,this.keyframes[this.keyframeStartIndex].rotation, this.keyframes[this.keyframeEndIndex].rotation,interpolationAmount);
         
         vec3.lerp(this.animationScale,this.keyframes[this.keyframeStartIndex].scale, this.keyframes[this.keyframeEndIndex].scale,interpolationAmount);
-        
+        console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
     }
 
     apply(){
-        
+
         this.scene.translate(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]);
         console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
         this.scene.rotate(this.animationRotation[0],1,0,0);

@@ -8,13 +8,13 @@
  * @param id - tile id
  */
 class BoardTile extends CGFobject {
-    constructor(scene, size, x, y, id, color) {
+    constructor(scene, gameBoard, size, x, y, id, color) {
         super(scene);
         this.size = size;
         this.x = x;
         this.y = y;
         this.id = id;
-
+        this.gameBoard = gameBoard;
         this.plane = new MyPlane(this.scene, size, size);
 
         //this.diferentiator = Math.trunc((this.id+x/1.15)%2+1)

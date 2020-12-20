@@ -7,7 +7,7 @@
 class GameOrchestrator {
     constructor(theme, scene) {
         this.scene = scene;
-        this.theme = new MySceneGraph('scene1.xml', this);
+        this.theme = new MySceneGraph('scene1.xml', scene);
         //this.gameBoard = new Board(this.scene, 10); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
@@ -41,8 +41,8 @@ class GameOrchestrator {
 
     //updates the animator
     update(time) {
-        this.animator.update(time);
-        //this.gameBoard.update(time);
+        //this.animator.update(time);
+        this.gameBoard.update(time);
     }
     setTheme(){
         this.gameBoard.changeTheme(this.theme.board);
@@ -81,7 +81,6 @@ class GameOrchestrator {
     pickedPiece(obj, customId) {
         if (obj instanceof Piece) {
             console.log("piece selected")
-            console.log(obj.isPicked());
             if (!obj.isPicked() && this.previousPick == null) { //if no piece was selected before only changes that piece color
                 this.previousPick = customId;
                 this.previousObj = obj;
@@ -90,16 +89,11 @@ class GameOrchestrator {
             }
             else if (!obj.isPicked()) { //a piece was chosen before, changes this piece color, applies the move and makes pieces color back to normal
                 obj.pick();
-                console.log("helloooo");
                 var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
                 this.gameSequence.addGameMove(move);
-                console.log(this.previousObj);
-                move.createAnimation();
+                this.previousObj.createAnimation(this.gameBoard.tiles[this.previousPick-1],this.gameBoard.tiles[customId-1])
+                obj.createAnimation(this.gameBoard.tiles[customId-1], this.gameBoard.tiles[this.previousPick-1])
                 
-                //quando animaçao acabar
-                
-                this.previousObj.pick();
-                obj.pick();
                 this.previousPick = null;
                 console.log("piece 2")
             }
@@ -123,7 +117,6 @@ class GameOrchestrator {
         this.scene.pushMatrix();
         //this.theme.display(); --> dado no xmlscene
         this.gameBoard.display();
-        this.animator.display();
 
         this.scene.popMatrix();
     }
