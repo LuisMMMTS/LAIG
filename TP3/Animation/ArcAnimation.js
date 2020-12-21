@@ -2,7 +2,7 @@
  * KeyFrameAnimation - class that stores the keyframe animation information
  */
 
-class KeyFrameAnimation extends Animation{
+class ArcAnimation extends Animation{
     /**
     * @constructor
     * @param scene - Reference to MyScene object
@@ -73,42 +73,17 @@ class KeyFrameAnimation extends Animation{
 
         console.log("updating")
         console.log(this.elapsedTime)
-        if(this.elapsedTime == this.keyframes[this.keyframeStartIndex].instant){// no need for interpolation, its in a matching keyframe instant
-            this.animationTranslation = this.keyframes[this.keyframeStartIndex].translation;
-            this.animationRotation = new vec3.fromValues(this.keyframes[this.keyframeStartIndex].rotation[0],this.keyframes[this.keyframeStartIndex].rotation[1],this.keyframes[this.keyframeStartIndex].rotation[2]);
-            this.animationScale = this.keyframes[this.keyframeStartIndex].scale;
-            return;
-        }
-        else if(this.elapsedTime == this.keyframes[this.keyframeEndIndex].instant){// no need for interpolation, its in a matching keyframe instant
-            this.animationTranslation = this.keyframes[this.keyframeEndIndex].translation;
-            this.animationRotation = new vec3.fromValues(this.keyframes[this.keyframeEndIndex].rotation[0],this.keyframes[this.keyframeEndIndex].rotation[1],this.keyframes[this.keyframeEndIndex].rotation[2]);
-            this.animationScale = this.keyframes[this.keyframeEndIndex].scale;
-            return;
-        }
-
-        //find the keyframes to interpolate between
-       
-        if(this.elapsedTime > this.keyframes[this.keyframeEndIndex].instant){
-            if(this.keyframes.length <= this.keyframeEndIndex+1){
-                this.ended = true;
-                return;
-            } 
-            this.keyframeEndIndex++;
-            this.keyframeStartIndex++;
-        }    
-        /* INTERPOLATION */
-        //It's not the end so we need to do interpolation
+    
 
         let keyframeStartInstant = this.keyframes[this.keyframeStartIndex].instant;
         let keyframeEndInstant = this.keyframes[this.keyframeEndIndex].instant;
+ 
         let interpolationAmount = (this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant);
 
-        vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
+        this.animationTranslation[0] = this.keyframes[this.keyframeEndIndex].translation[0]*interpolationAmount;
+        this.animationTranslation[1] = this.keyframes[this.keyframeEndIndex].translation[1]*(Math.pow(Math.sin(Math.PI*interpolationAmount),1)*0.8);
+        this.animationTranslation[2] = this.keyframes[this.keyframeEndIndex].translation[2]*interpolationAmount;
 
-        vec3.lerp(this.animationRotation,this.keyframes[this.keyframeStartIndex].rotation, this.keyframes[this.keyframeEndIndex].rotation,interpolationAmount);
-        
-        vec3.lerp(this.animationScale,this.keyframes[this.keyframeStartIndex].scale, this.keyframes[this.keyframeEndIndex].scale,interpolationAmount);
-        console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
     }
 
     apply(){

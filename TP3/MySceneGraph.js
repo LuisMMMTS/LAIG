@@ -1601,7 +1601,6 @@ class MySceneGraph {
 
     parseGameBoard(boardNodes) {
         var children = boardNodes.children;
-        var boardSide = null;
         var boardMaterial = null;
         var boardTexture = null;
         var piece1, piece2, tile1, tile2;
@@ -1758,92 +1757,92 @@ class MySceneGraph {
      * @param {CGFappearance} mat  
      */
     processNode(id, texId, matId) {
-        // let display = true;
-        // let node = this.nodes[id];
+        let display = true;
+        let node = this.nodes[id];
 
-        // if (node == null) { //node does not exist
-        //     return 1;
-        // }
+        if (node == null) { //node does not exist
+            return 1;
+        }
 
-        // this.scene.pushMatrix();
-        // if (node.animation != null) { //it has animation defined
-        //     display = this.animations[node.animation].active;
-        // }
+        this.scene.pushMatrix();
+        if (node.animation != null) { //it has animation defined
+            display = this.animations[node.animation].active;
+        }
 
-        // if (display) {
+        if (display) {
 
-        //     let materialID = node.getMaterial();
-        //     let textureID = node.getTexture();
-
-
-        //     if (materialID == "null") { // get parent's material 
-        //         if (matId != "null") {
-        //             materialID = matId;
-        //         }
-        //         else {
-        //             materialID = "default";
-        //             if (id !== this.idRoot) { //no need for warning if its the root without material
-        //                 console.warn("[PROCESS NODE] Using default material, consider checking material definitions in nodeId " + id);
-        //             }
-        //         }
-        //     }
-
-        //     if (this.materials[materialID] == -1) {//material does not exist
-        //         console.warn("[PROCESS NODE] Material non existent in nodeId " + id) + " using default";
-        //         materialID = "default";
-        //     }
+            let materialID = node.getMaterial();
+            let textureID = node.getTexture();
 
 
-        //     let material = this.materials[materialID];
-        //     if (textureID == "null") { // get parent's texture
-        //         if (texId != "null") {
-        //             textureID = texId;
-        //         }
-        //         else { // using default
-        //             textureID = "default";
-        //             console.warn("[PROCESS NODE] Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId " + id);
-        //         }
-        //     }
+            if (materialID == "null") { // get parent's material 
+                if (matId != "null") {
+                    materialID = matId;
+                }
+                else {
+                    materialID = "default";
+                    if (id !== this.idRoot) { //no need for warning if its the root without material
+                        console.warn("[PROCESS NODE] Using default material, consider checking material definitions in nodeId " + id);
+                    }
+                }
+            }
 
-        //     if (textureID == "clear") { //removing texture
-        //         material.setTexture(null);
-        //     }
-
-        //     let texture = this.textures[textureID];
-        //     material.setTexture(texture);
+            if (this.materials[materialID] == -1) {//material does not exist
+                console.warn("[PROCESS NODE] Material non existent in nodeId " + id) + " using default";
+                materialID = "default";
+            }
 
 
-        //     material.setTextureWrap('REPEAT', 'REPEAT');
-        //     material.apply();
+            let material = this.materials[materialID];
+            if (textureID == "null") { // get parent's texture
+                if (texId != "null") {
+                    textureID = texId;
+                }
+                else { // using default
+                    textureID = "default";
+                    console.warn("[PROCESS NODE] Using default texture, consider changing texture definitions or settings to \"clear\" in nodeId " + id);
+                }
+            }
 
-        //     this.scene.multMatrix(node.getTransformation()); //apply transformation
+            if (textureID == "clear") { //removing texture
+                material.setTexture(null);
+            }
 
-        //     if (node.animation != null) { //it has animation defined
-        //         this.animations[node.animation].apply();
-        //     }
+            let texture = this.textures[textureID];
+            material.setTexture(texture);
+
+
+            material.setTextureWrap('REPEAT', 'REPEAT');
+            material.apply();
+
+            this.scene.multMatrix(node.getTransformation()); //apply transformation
+
+            if (node.animation != null) { //it has animation defined
+                this.animations[node.animation].apply();
+            }
             
         
-        //     for (var i = 0; i < node.getLeafs().length; i++) { // if primitive, display 
-        //         if (node.getLeafs()[i] instanceof MySpriteText) {
-        //             this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext
-        //             node.getLeafs()[i].display();
-        //             this.scene.popMatrix();
-        //         }
-        //         else {
-        //             node.getLeafs()[i].display();
-        //         }
-        //     }
+            for (var i = 0; i < node.getLeafs().length; i++) { // if primitive, display 
+                if (node.getLeafs()[i] instanceof MySpriteText) {
+                    this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext
+                    node.getLeafs()[i].display();
+                    this.scene.popMatrix();
+                }
+                else {
+                    node.getLeafs()[i].display();
+                }
+            }
 
-        //     for (var i = 0; i < node.getChildren().length; i++) {// if node, recursive call
-        //         this.scene.pushMatrix();
-        //         let a = this.processNode(node.getChildren()[i], textureID, materialID);
-        //         if (a == 1) { //the node does not exist
-        //             this.onXMLError("[PROCESS NODE] NodeID " + id + " has non existent child with id: " + node.getChildren()[i]);
-        //             node.children.splice(i, i + 1); //removes this node from the children so it's not printing the same message over and over again
-        //         }
-        //         this.scene.popMatrix();
-        //     }
-        // }
-        // this.scene.popMatrix();
+            for (var i = 0; i < node.getChildren().length; i++) {// if node, recursive call
+                this.scene.pushMatrix();
+                let a = this.processNode(node.getChildren()[i], textureID, materialID);
+                if (a == 1) { //the node does not exist
+                    this.onXMLError("[PROCESS NODE] NodeID " + id + " has non existent child with id: " + node.getChildren()[i]);
+                    node.children.splice(i, i + 1); //removes this node from the children so it's not printing the same message over and over again
+                }
+                this.scene.popMatrix();
+            }
+        }
+        this.scene.popMatrix();
     }
 }

@@ -90,7 +90,7 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 0.9;
+        let speed = 0.1;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
         if (duration==0) duration+=1
 
@@ -100,9 +100,9 @@ class Piece {
         console.log("initialx: ",  initialTile.x);
         console.log("initialz: ",  initialTile.y);
 
-        this.animation = new KeyFrameAnimation(this.scene, "pieceAnimation");
+        this.animation = new ArcAnimation(this.scene, "pieceAnimation");
         let start = new KeyFrame()
-        start.translation = new vec3.fromValues(initialTile.x, 0.3, initialTile.y)
+        start.translation = new vec3.fromValues(initialTile.x, 1.8, initialTile.y)
         start.instant = 0;
         this.animation.addKeyFrame(start); 
 

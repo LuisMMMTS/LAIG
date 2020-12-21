@@ -11,12 +11,13 @@ class XMLscene extends CGFscene {
 
         this.interface = myinterface;
         this.themes = ["Theme1", "Theme2", "Theme3"];
+        this.modes = ['PlayervsPlayer', 'BotvsPlayer', 'PlayervsBot', 'BotvsBot'];
         this.selectedScene = 'Theme1';
+        this.gameMode = 'PlayervsPlayer';
         this.filenames = new Map();
-        this.filenames.set('Theme1', 'scene1.xml').set('Theme2', 'scene2.xml').set('Theme3', 'scene3.xml');
-        console.log(this.filenames.entries())
-        
-    }
+        this.filenames.set('Theme1', 'scene1.xml').set('Theme2', 'scene2.xml').set('Theme3', 'scene3.xml')
+       
+    }   
 
     /**
      * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
@@ -181,7 +182,7 @@ class XMLscene extends CGFscene {
 
         //initializing the interface elements
         if(!this.sceneInited)
-            this.interface.createInterface(this.graph.views, this.themes); 
+            this.interface.createInterface(this.graph.views, this.themes, this.modes); 
         else
             this.interface.updateInterface(this.graph.views);
         //lights
@@ -222,10 +223,13 @@ class XMLscene extends CGFscene {
      }
 
      changeTheme(value){
-         console.log(value);
-         console.log(this.filenames["Theme2"]);
         var theme = new MySceneGraph(this.filenames.get(value), this);
         this.orchestrator.changeTheme(theme);
+     }
+
+     changeMode(mode){
+         this.orchestrator.changeMode(mode);
+
      }
 
 
@@ -254,6 +258,7 @@ class XMLscene extends CGFscene {
         
    
         if (this.sceneInited) {
+            //this.orchestrator.ocrchestrate
             // Draw axis
             if(this.displayAxis)
                 this.axis.display();

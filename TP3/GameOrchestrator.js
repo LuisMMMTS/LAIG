@@ -28,6 +28,23 @@ class GameOrchestrator {
         //prolog.getWinner(this.gameBoard,'black');
         //prolog.close();
 
+        this.state = {
+            Animation: 1,
+            GameOver: 2,
+            Move: 3,
+            Ready: 4,
+            Replay: 5
+        }
+        this.mode = {
+            pvp: 1,
+            pvc: 2,
+            cvp: 3,
+            cvc: 4
+        }
+        this.difficult = {
+            easy: 1,
+            difficult: 2
+        }
     }
 
     sleep(milliseconds) {
@@ -39,17 +56,24 @@ class GameOrchestrator {
         }
     }
 
-    //updates the animator
-    update(time) {
-        //this.animator.update(time);
+    /**
+     * Updates animations
+     * @param {*} time 
+     */
+    update(time) { 
         this.gameBoard.update(time);
     }
+
     setTheme(){
         this.gameBoard.changeTheme(this.theme.board);
     }
+
     changeTheme(theme){
         this.theme = theme;
         this.gameBoard.changeTheme(theme.board);
+    }
+    changeMode(mode){
+        
     }
 
     undo() {
@@ -61,9 +85,13 @@ class GameOrchestrator {
 
     }
 
-    //manages Picking
+    /**
+     * Manages the picking
+     * @param {*} mode 
+     * @param {*} results 
+     */
     managePick(mode, results) {
-        if (mode == false /* && some other game conditions */) {
+        if (mode == false) {  /* && some other game conditions */
             if (results != null && results.length > 0) { // any results?
                 for (var i = 0; i < results.length; i++) {
                     var obj = results[i][0]; // get object from result
@@ -78,9 +106,14 @@ class GameOrchestrator {
             }
         }
     }
+
+    /**
+     * When picking is done, acts accordingly
+     * @param {*} obj 
+     * @param {*} customId 
+     */
     pickedPiece(obj, customId) {
         if (obj instanceof Piece) {
-            console.log("piece selected")
             if (!obj.isPicked() && this.previousPick == null) { //if no piece was selected before only changes that piece color
                 this.previousPick = customId;
                 this.previousObj = obj;
