@@ -29,6 +29,8 @@ class Piece {
 
         this.animation = null;
         this.firstInstant = false;
+
+        this.selectHight=1.5
     }
 
     initMaterials() {
@@ -90,8 +92,9 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 0.1;
+        let speed = 0.2;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
+        //this.picked=false;
         if (duration==0) duration+=1
 
         console.log("Duration: "+ duration);
@@ -100,16 +103,21 @@ class Piece {
         console.log("initialx: ",  initialTile.x);
         console.log("initialz: ",  initialTile.y);
 
-        this.animation = new ArcAnimation(this.scene, "pieceAnimation");
+        this.animation = new KeyFrameAnimation(this.scene, "pieceAnimation");
         let start = new KeyFrame()
-        start.translation = new vec3.fromValues(initialTile.x, 1.8, initialTile.y)
+        start.translation = new vec3.fromValues(0, 0, 0)
         start.instant = 0;
         this.animation.addKeyFrame(start); 
 
         let end = new KeyFrame();
-        end.translation = new vec3.fromValues(finalTile.x, 0.3,finalTile.y );
+        end.translation = new vec3.fromValues(finalTile.x-initialTile.x, 0,finalTile.y-initialTile.y);
         end.instant = duration;
         this.animation.addKeyFrame(end);
+
+        let putDown = new KeyFrame();
+        putDown.translation = new vec3.fromValues(finalTile.x-initialTile.x, -this.selectHight,finalTile.y-initialTile.y);
+        putDown.instant = this.selectHight/speed+duration;
+        this.animation.addKeyFrame(putDown);
     }
 
     update(time){
@@ -138,7 +146,7 @@ class Piece {
         this.color.apply();
 
         if (this.picked) {
-            this.scene.translate(0, 1.5, 0);
+            this.scene.translate(0, this.selectHight, 0);
         }
 
         this.displayPiece();

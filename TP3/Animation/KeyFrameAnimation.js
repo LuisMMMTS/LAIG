@@ -71,8 +71,8 @@ class KeyFrameAnimation extends Animation{
         }
         
 
-        console.log("updating")
-        console.log(this.elapsedTime)
+        //console.log("updating")
+        //console.log(this.elapsedTime)
         if(this.elapsedTime == this.keyframes[this.keyframeStartIndex].instant){// no need for interpolation, its in a matching keyframe instant
             this.animationTranslation = this.keyframes[this.keyframeStartIndex].translation;
             this.animationRotation = new vec3.fromValues(this.keyframes[this.keyframeStartIndex].rotation[0],this.keyframes[this.keyframeStartIndex].rotation[1],this.keyframes[this.keyframeStartIndex].rotation[2]);
@@ -108,21 +108,21 @@ class KeyFrameAnimation extends Animation{
         vec3.lerp(this.animationRotation,this.keyframes[this.keyframeStartIndex].rotation, this.keyframes[this.keyframeEndIndex].rotation,interpolationAmount);
         
         vec3.lerp(this.animationScale,this.keyframes[this.keyframeStartIndex].scale, this.keyframes[this.keyframeEndIndex].scale,interpolationAmount);
-        console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
+        //console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
     }
 
     apply(){
 
         this.scene.translate(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]);
-        console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
+        //console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
         this.scene.rotate(this.animationRotation[0],1,0,0);
-        console.log("rotação x: "+(this.animationRotation[0],1,0,0));
+        //console.log("rotação x: "+(this.animationRotation[0],1,0,0));
         this.scene.rotate(this.animationRotation[1],0,1,0);
-        console.log("rotação y: "+(this.animationRotation[1],0,1,0));
+        //console.log("rotação y: "+(this.animationRotation[1],0,1,0));
         this.scene.rotate(this.animationRotation[2],0,0,1);
-        console.log("rotação z: "+(this.animationRotation[2],0,0,1));
+        //console.log("rotação z: "+(this.animationRotation[2],0,0,1));
         this.scene.scale(this.animationScale[0],this.animationScale[1],this.animationScale[2]); 
-        console.log("escalamento: "+(this.animationScale[0],this.animationScale[1],this.animationScale[2]));
+        //console.log("escalamento: "+(this.animationScale[0],this.animationScale[1],this.animationScale[2]));
 
     }
     

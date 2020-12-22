@@ -167,7 +167,7 @@ class XMLscene extends CGFscene {
     onGraphLoaded() {
         
         this.axis = new CGFaxis(this, this.graph.referenceLength);
-        console.log(this.graph)
+        //console.log(this.graph)
         //default appearance
 
         this.gl.clearColor(...this.graph.background);
