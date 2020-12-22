@@ -1,9 +1,9 @@
 /**
- * MyPrologInterface
+ * PrologInterface
  * @constructor
  * @param scene - Reference to MyScene object
  */
-class MyPrologInterface {
+class PrologInterface {
     constructor(gameOrchestrator) {
         this.gameOrchestrator = gameOrchestrator;
     }
@@ -104,10 +104,11 @@ class MyPrologInterface {
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response = data.target.response;
         response = this.responsesToArrays(response);
+        this.gameOrchestrator.handleReply(response);
         console.log(response);
     }
 
-    getMovablePiecesResquest(board, player) {
+    getMovablePiecesResquest(board, player) { //which of the players pieces can be moved
         board = this.gameBoardtoString(board);
         console.log("boar is " + board);
         this.getPrologRequest("getMovablePieces(" + board + "," + player + ")", this.handleMovablePiecesReply.bind(this));
@@ -120,7 +121,7 @@ class MyPrologInterface {
         response = this.responsesToArrays(response);
         console.log(response);
     }
-    getPieceMovesRequest(board, player, pieceCoords) {
+    getPieceMovesRequest(board, player, pieceCoords) { //where can a piece be moved to
         board = this.gameBoardtoString(board);
         this.getPrologRequest("getValidMovesforPiece(" + board + "," + player + "," + "[" + pieceCoords + "])", this.handlePieceMovesReply.bind(this));
     }

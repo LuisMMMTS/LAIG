@@ -8,33 +8,13 @@ class GameOrchestrator {
     constructor(theme, scene) {
         this.scene = scene;
         this.theme = new MySceneGraph('scene1.xml', scene);
-        //this.gameBoard = new Board(this.scene, 10); 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
-        //this.themeId = 0;
         this.previousPick = null;
         this.previousObj = null
-        let prolog = new MyPrologInterface(this);
-        // let oldPos=[1,1];
+        this.prolog = new PrologInterface(this);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
-        //let boards=prolog.moveRequest("[[white,black,white,black],[black,white,black,white],[white,black,white,black],[black,white,black,white]]","black",null, null,"["+oldPos+"]","[2,1]");
-         //prolog.boardRequest(5);
-        // this.sleep(3000);
-        //prolog.moveRequest(this.gameBoard, 'black', 1, 2, null, null);
-        //prolog.getMovablePiecesResquest(this.gameBoard, 'black');
-        //prolog.getPieceMovesRequest(this.gameBoard, 'black', [1, 2]);
-        //prolog.getcurrentscore(this.gameBoard, 'black');
-        //prolog.getWinner(this.gameBoard,'black');
-        //prolog.close();
-
-        this.state = {
-            Animation: 1,
-            GameOver: 2,
-            Move: 3,
-            Ready: 4,
-            Replay: 5
-        }
         this.mode = {
             pvp: 1,
             pvc: 2,
@@ -45,6 +25,18 @@ class GameOrchestrator {
             easy: 1,
             difficult: 2
         }
+        this.currentPlayer = "black";
+        this.changeState(new ReadyState(this))
+    }
+
+
+    changeState(state){
+        this.state = state;
+    }
+
+    handleReply(response){
+        console.log("hello")
+        this.state.handleReply(response)
     }
 
     sleep(milliseconds) {
@@ -73,11 +65,12 @@ class GameOrchestrator {
         this.gameBoard.changeTheme(theme.board);
     }
     changeMode(mode){
-        
+        this.mode = mode;
+        console.log(mode)
     }
 
     undo() {
-
+        console.log("undo")
     }
 
 
@@ -113,7 +106,8 @@ class GameOrchestrator {
      * @param {*} customId 
      */
     pickedPiece(obj, customId) {
-        if (obj instanceof Piece) {
+        this.state.pickPiece(obj, customId);
+        /*if (obj instanceof Piece) {
             if (!obj.isPicked() && this.previousPick == null) { //if no piece was selected before only changes that piece color
                 this.previousPick = customId;
                 this.previousObj = obj;
@@ -126,9 +120,9 @@ class GameOrchestrator {
                 this.gameSequence.addGameMove(move);
                 this.previousObj.createAnimation(this.gameBoard.tiles[this.previousPick-1],this.gameBoard.tiles[customId-1])//creates animation of first piece. custom id is the id of the last picked piece
                 obj.createAnimation(this.gameBoard.tiles[customId-1], this.gameBoard.tiles[this.previousPick-1])
-                
                 this.previousPick = null;
                 console.log("piece 2")
+                
             }
             else {
                 obj.pick();
@@ -140,18 +134,19 @@ class GameOrchestrator {
         else {
             console.log("error");
             // error ?
-        }
+        }*/
     }
 
 
     //displays the board and animator
     display() {
+        //this.theme.displayScene()--> tirar do xmlscene
 
         this.scene.pushMatrix();
-        //this.theme.display(); --> dado no xmlscene
         this.gameBoard.display();
-
         this.scene.popMatrix();
+
+        //this.animator.display()
     }
 
 

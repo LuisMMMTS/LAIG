@@ -30,7 +30,7 @@ class Piece {
         this.animation = null;
         this.firstInstant = false;
 
-        this.selectHight=1.5
+        this.selectHeight=1.5
     }
 
     initMaterials() {
@@ -92,9 +92,8 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 0.2;
+        let speed = 0.4;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
-        //this.picked=false;
         if (duration==0) duration+=1
 
         console.log("Duration: "+ duration);
@@ -115,8 +114,8 @@ class Piece {
         this.animation.addKeyFrame(end);
 
         let putDown = new KeyFrame();
-        putDown.translation = new vec3.fromValues(finalTile.x-initialTile.x, -this.selectHight,finalTile.y-initialTile.y);
-        putDown.instant = this.selectHight/speed+duration;
+        putDown.translation = new vec3.fromValues(finalTile.x-initialTile.x, -this.selectHeight,finalTile.y-initialTile.y);
+        putDown.instant = this.selectHeight/speed;
         this.animation.addKeyFrame(putDown);
     }
 
@@ -126,10 +125,11 @@ class Piece {
         if(this.animation.active){
             if(this.animation.ended){
                 this.animation.active = false
-                this.tile.gameBoard.removePieceFromTile(this.initialTile);
-                this.tile.gameBoard.addPieceToTile(this, this.finalTile)
+                this.tile.gameBoard.switchTiles(this.initialTile, this.finalTile)
+            
                 console.log("removed")
                 console.log("added")
+
                 this.pick()
             }
         }
@@ -146,7 +146,7 @@ class Piece {
         this.color.apply();
 
         if (this.picked) {
-            this.scene.translate(0, this.selectHight, 0);
+            this.scene.translate(0, this.selectHeight, 0);
         }
 
         this.displayPiece();

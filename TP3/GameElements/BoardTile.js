@@ -22,7 +22,7 @@ class BoardTile extends CGFobject {
         //console.log((this.id+x/1.15)%2+1);
 
         this.piece = new Piece(this.scene, id, this, color);
-
+        this.removed = null
     }
 
     changeTheme(piece1, piece2, tile1, tile2){
@@ -42,10 +42,13 @@ class BoardTile extends CGFobject {
 
 
     setPiece(piece) {
+        if(this.removed == null) this.removed = this.piece;
         this.piece = piece;
+
     }
 
     unsetPiece() {
+        this.removed = this.piece;
         this.piece = null;
     }
 

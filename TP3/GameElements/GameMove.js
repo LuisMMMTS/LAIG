@@ -18,9 +18,6 @@ class GameMove{
         this.startPiece = startPiece;
         this.endPiece = endPiece;
         this.active = true;
-
-        this.animating1 = false;
-        this.animating2 = false;
     }
 
     /*createAnimation(){

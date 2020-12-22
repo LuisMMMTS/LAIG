@@ -51,14 +51,22 @@ class Board extends CGFobject {
     }
 
 
-    addPieceToTile(piece, tile) {
+    addPieceToTile(piece, tile) {  
         tile.setPiece(piece);
     }
 
     removePieceFromTile(tile) {
         tile.unsetPiece();
     }
+    switchTiles(initial, final){
+        console.log("hello")
+        this.removePieceFromTile(initial)
+        this.removePieceFromTile(final);
+        console.log(initial.removed)
+        this.addPieceToTile(initial.removed, final)
 
+        
+    }
     getPieceOfTile(tile) {
         return tile.getPiece();
     }
