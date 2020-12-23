@@ -80,6 +80,15 @@ class PrologInterface {
         let response = data.target.response;
         console.log(response);
         response = this.responsesToArrays(response);
+        for (let i=0;i<response.length;i++){
+            for(let j = 0; j < response[i].length; j++){
+                let number = parseInt(response[i][j],10);
+                if (!isNaN(number)){
+                    number -= 1;
+                    response[i][j] = number;
+                }
+            } 
+        }
         console.log(response);
         let OldPos = response[1].slice(0, 2);
         let NewPos = response[2].slice(0, 2);
@@ -91,6 +100,8 @@ class PrologInterface {
 
     moveRequest(board, player, AiLevel1 = null, AiLevel2 = null, OldPos = null, NewPos = null) {
         board = this.gameBoardtoString(board);
+        if (!isNan(OldPos)){OldPos+=1};
+        if (!isNan(NewPos)){NewPos+=1};
         if (AiLevel1 == null && AiLevel2 == null) {//human
             this.getPrologRequest("playerTurn(" + board + "," + player + "-'player'-" + AiLevel1 + "-" + AiLevel2 + "," + OldPos + "," + NewPos + ")", this.handleMoveReply.bind(this));
         } else {//computer
@@ -104,13 +115,22 @@ class PrologInterface {
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response = data.target.response;
         response = this.responsesToArrays(response);
+        for (let i=0;i<response.length;i++){
+            for(let j = 0; j < response[i].length; j++){
+                let number = parseInt(response[i][j],10);
+                if (!isNaN(number)){
+                    number -= 1;
+                    response[i][j] = number;
+                }
+            } 
+        }
         this.gameOrchestrator.handleReply(response);
         console.log(response);
     }
 
     getMovablePiecesResquest(board, player) { //which of the players pieces can be moved
         board = this.gameBoardtoString(board);
-        console.log("boar is " + board);
+        console.log("board is " + board);
         this.getPrologRequest("getMovablePieces(" + board + "," + player + ")", this.handleMovablePiecesReply.bind(this));
     }
 
@@ -119,10 +139,23 @@ class PrologInterface {
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response = data.target.response;
         response = this.responsesToArrays(response);
+        for (let i=0;i<response.length;i++){
+            for(let j = 0; j < response[i].length; j++){
+                let number = parseInt(response[i][j],10);
+                if (!isNaN(number)){
+                    number -= 1;
+                    response[i][j] = number;
+                }
+            } 
+        }
+        this.gameOrchestrator.handleReply(response)
         console.log(response);
     }
     getPieceMovesRequest(board, player, pieceCoords) { //where can a piece be moved to
         board = this.gameBoardtoString(board);
+        for (let i=0;i<pieceCoords.length;i++){
+            pieceCoords[i]=pieceCoords[i]+1;
+        }
         this.getPrologRequest("getValidMovesforPiece(" + board + "," + player + "," + "[" + pieceCoords + "])", this.handlePieceMovesReply.bind(this));
     }
 

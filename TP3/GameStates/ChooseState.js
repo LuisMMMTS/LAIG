@@ -2,10 +2,15 @@ class ChooseState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
         //highligh the enemys pieces 
-
-    pieceCoords=[this.gameBoard.previousObj.id%this.gameBoard.Board.side, Math.floor(this.gameBoard.previousObj.id/this.gameBoard.Board.side)];
-    this.pickable=this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, pieceCoords);
+        this.pieceCoords = [this.orchestrator.previousPick % this.orchestrator.gameBoard.side, Math.floor(this.orchestrator.previousPick / this.orchestrator.gameBoard.side)];
+        this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
     }
+    handleReply(response){
+        this.pickable = response;
+        console.log(this.pickable)
+    }
+
+
     /**
      * Checks if the next choosen piece is valid and if so creates the pieces animations and goes to animation state
      * If the same piece is selected goes, unpicks the piece and goes back to ready State
@@ -15,11 +20,15 @@ class ChooseState extends GameState{
      */
 
     pickPiece(obj, customId){
-        if (obj == this.gameBoard.previousObj){//se a peça selecionada for a que já havia sido selecionada antes
+        console.log("hello")
+        /*if (obj == this.orchestrator.previousObj){//se a peça selecionada for a que já havia sido selecionada antes
             obj.pick();
             this.orchestrator.changeState(new ReadyState(this.orchestrator))
         }
-        if(this.pickable.find([j.id % this.orchestrator.gameBoard.side, Math.floor(obj.id/this.orchestrator.gameBoard.side)]) != undefined){//se a peça selecionada for válida
+        if(obj.player == this.orchestrator.currentPlayer) return;*/
+       
+        if((searchForArray([customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side)], this.pickable) != -1)||(searchForArray([customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side),""], this.pickable) != -1)){//se a peça selecionada for válida
+            console.log("hi")
             var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
             this.orchestrator.gameSequence.addGameMove(move);
             this.orchestrator.previousObj.createAnimation(this.gameBoard.tiles[this.previousPick-1],this.gameBoard.tiles[customId-1])//creates animation of first piece. custom id is the id of the last picked piece

@@ -101,14 +101,13 @@ class KeyFrameAnimation extends Animation{
 
         let keyframeStartInstant = this.keyframes[this.keyframeStartIndex].instant;
         let keyframeEndInstant = this.keyframes[this.keyframeEndIndex].instant;
-        let interpolationAmount = (this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant);
+        let interpolationAmount = Math.max((this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant),1);
 
         vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
 
         vec3.lerp(this.animationRotation,this.keyframes[this.keyframeStartIndex].rotation, this.keyframes[this.keyframeEndIndex].rotation,interpolationAmount);
         
         vec3.lerp(this.animationScale,this.keyframes[this.keyframeStartIndex].scale, this.keyframes[this.keyframeEndIndex].scale,interpolationAmount);
-        //console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
     }
 
     apply(){

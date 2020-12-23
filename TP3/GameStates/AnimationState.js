@@ -12,7 +12,7 @@ class AnimationState extends GameState{
     }
 
     animationEnd(){
-
+        
         //fazer as mudanças necessarias nas peças
         //verificar se terminou o jogo --> se sim, gameOver State
     }

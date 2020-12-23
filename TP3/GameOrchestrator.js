@@ -8,7 +8,6 @@ class GameOrchestrator {
     constructor(theme, scene) {
         this.scene = scene;
         this.theme = new MySceneGraph('scene1.xml', scene);
-        //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
         this.previousPick = null;
@@ -25,6 +24,7 @@ class GameOrchestrator {
             easy: 1,
             difficult: 2
         }
+        //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.currentPlayer = "black";
         this.changeState(new ReadyState(this))
     }
@@ -35,7 +35,6 @@ class GameOrchestrator {
     }
 
     handleReply(response){
-        console.log("hello")
         this.state.handleReply(response)
     }
 
@@ -54,6 +53,7 @@ class GameOrchestrator {
      */
     update(time) { 
         this.gameBoard.update(time);
+        //this.animator.update(time)
     }
 
     setTheme(){

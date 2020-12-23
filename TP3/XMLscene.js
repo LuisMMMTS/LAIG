@@ -258,7 +258,6 @@ class XMLscene extends CGFscene {
         
    
         if (this.sceneInited) {
-            //this.orchestrator.ocrchestrate
             // Draw axis
             if(this.displayAxis)
                 this.axis.display();

@@ -34,7 +34,6 @@ class Piece {
     }
 
     initMaterials() {
-        console.log(this.player);
         if (this.player == "black") {
             this.material = new CGFappearance(this.scene);
             this.material.setAmbient(0.0, 0.0, 0.0, 1);
@@ -126,7 +125,6 @@ class Piece {
             if(this.animation.ended){
                 this.animation.active = false
                 this.tile.gameBoard.switchTiles(this.initialTile, this.finalTile)
-            
                 console.log("removed")
                 console.log("added")
 

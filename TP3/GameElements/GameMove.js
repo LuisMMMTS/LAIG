@@ -85,8 +85,8 @@ class GameMove{
         else this.animating2 = false;
 
     }*/
-   /* animate(){
-        if(this.animating1){
+    animate(){
+       /* if(this.animating1){
             this.scene.pushMatrix();
             this.animationO.apply();
             this.startPiece.display();
@@ -100,6 +100,6 @@ class GameMove{
             this.scene.popMatrix();
         }
         
-
-    }*/
+*/
+    }
 }
