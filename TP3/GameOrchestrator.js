@@ -5,9 +5,8 @@
  */
 
 class GameOrchestrator {
-    constructor(theme, scene) {
+    constructor(scene) {
         this.scene = scene;
-        this.theme = new MySceneGraph('scene1.xml', scene);
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
         this.previousPick = null;
@@ -26,7 +25,7 @@ class GameOrchestrator {
         }
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.currentPlayer = "black";
-        this.changeState(new ReadyState(this))
+        this.changeState(new LoadingState(this))
     }
 
 
@@ -52,12 +51,12 @@ class GameOrchestrator {
      * @param {*} time 
      */
     update(time) { 
-        this.gameBoard.update(time);
+         this.gameBoard.update(time);
         //this.animator.update(time)
     }
 
-    setTheme(){
-        this.gameBoard.changeTheme(this.theme.board);
+    setTheme(theme){
+        this.gameBoard.changeTheme(theme.board);
     }
 
     changeTheme(theme){

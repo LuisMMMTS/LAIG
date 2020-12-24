@@ -14,9 +14,13 @@ class XMLscene extends CGFscene {
         this.modes = ['PlayervsPlayer', 'BotvsPlayer', 'PlayervsBot', 'BotvsBot'];
         this.selectedScene = 'Theme1';
         this.gameMode = 'PlayervsPlayer';
+        this.selectedTheme = "Theme1";
         this.filenames = new Map();
+        this.themeGraphs = new Map();
         this.filenames.set('Theme1', 'scene1.xml').set('Theme2', 'scene2.xml').set('Theme3', 'scene3.xml')
-       
+        for(let [key, value] of this.filenames.entries()){
+            this.themeGraphs[key] = new MySceneGraph(value, this)
+        }
     }   
 
     /**
@@ -61,7 +65,7 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        this.orchestrator = new GameOrchestrator(this.graph, this);
+        this.orchestrator = new GameOrchestrator(this);
         
     }
 
@@ -77,8 +81,8 @@ class XMLscene extends CGFscene {
      */
 
     initXMLCameras(){
-        this.cameraID=this.graph.defaultCameraId;
-        this.camera = this.graph.views[this.graph.defaultCameraId];
+        this.cameraID = this.themeGraphs[this.selectedTheme].defaultCameraId;
+        this.camera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId];
         this.interface.setActiveCamera(this.default);
     }
 
@@ -96,13 +100,13 @@ class XMLscene extends CGFscene {
         // Lights index.
         
         // Reads the lights from the scene graph.
-        for (var key in this.graph.lights) {
+        for (var key in this.themeGraphs[this.selectedTheme].lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebCGF on default shaders.
                 
-            if (this.graph.lights.hasOwnProperty(key)) {
+            if (this.themeGraphs[this.selectedTheme].hasOwnProperty(key)) {
                 
-                var graphLight = this.graph.lights[key];
+                var graphLight = this.themeGraphs[this.selectedTheme].lights[key];
 
                 this.lights[i].setPosition(...graphLight[1]);
                 this.lights[i].setAmbient(...graphLight[2]);
@@ -166,13 +170,12 @@ class XMLscene extends CGFscene {
      */
     onGraphLoaded() {
         
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
-        //console.log(this.graph)
+        this.axis = new CGFaxis(this, this.themeGraphs[this.selectedTheme].referenceLength);
+
         //default appearance
+        this.gl.clearColor(...this.themeGraphs[this.selectedTheme].background)
 
-        this.gl.clearColor(...this.graph.background);
-
-        this.setGlobalAmbientLight(...this.graph.ambient);  
+        this.setGlobalAmbientLight(...this.themeGraphs[this.selectedTheme].ambient);  
 
         
         //cameras
@@ -180,18 +183,20 @@ class XMLscene extends CGFscene {
 
         this.initXMLCameras();
 
-        //initializing the interface elements
-        if(!this.sceneInited)
-            this.interface.createInterface(this.graph.views, this.themes, this.modes); 
-        else
-            this.interface.updateInterface(this.graph.views);
-        //lights
+          //lights
         this.initLights();
 
-        this.setUpdatePeriod(100);
+        //initializing the interface elements
+        if(!this.sceneInited)
+            this.interface.createInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views, this.themes, this.modes); 
+    
+      
 
+        this.setUpdatePeriod(100);
+        if(!this.sceneInited)
+        this.orchestrator.setTheme(this.themeGraphs[this.selectedTheme]);
         this.sceneInited = true;
-        this.orchestrator.setTheme();
+        
 
     }
 
@@ -205,16 +210,16 @@ class XMLscene extends CGFscene {
         //updates animations based on current time
          if(this.sceneInited){
 
-             if(this.graph.animations == undefined) return;
+             if(this.themeGraphs[this.selectedTheme].animations == undefined) return;
 
-             for(let animation in this.graph.animations){ //update keyframeanimations
-                this.graph.animations[animation].update(delta); // delta is the time in seconds since the beginning of the program
+             for(let animation in this.themeGraphs[this.selectedTheme].animations){ //update keyframeanimations
+                this.themeGraphs[this.selectedTheme].animations[animation].update(delta); // delta is the time in seconds since the beginning of the program
              }
 
-             if(this.graph.spriteanimations == undefined) return;
+             if(this.themeGraphs[this.selectedTheme].spriteanimations == undefined) return;
              
-             for(let i = 0; i < this.graph.spriteanimations.length; i++){ //update spriteanimations
-                 this.graph.spriteanimations[i].update(delta);
+             for(let i = 0; i < this.themeGraphs[this.selectedTheme].spriteanimations.length; i++){ //update spriteanimations
+                this.themeGraphs[this.selectedTheme].spriteanimations[i].update(delta);
              }
              this.orchestrator.update(delta);
          }
@@ -223,7 +228,7 @@ class XMLscene extends CGFscene {
      }
 
      changeTheme(value){
-        var theme = new MySceneGraph(this.filenames.get(value), this);
+        var theme = this.themeGraphs[value]
         this.orchestrator.changeTheme(theme);
      }
 

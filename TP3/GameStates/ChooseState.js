@@ -20,14 +20,17 @@ class ChooseState extends GameState{
      */
 
     pickPiece(obj, customId){
-        console.log("hello")
-        /*if (obj == this.orchestrator.previousObj){//se a peça selecionada for a que já havia sido selecionada antes
+        if (obj == this.orchestrator.previousObj){//se a peça selecionada for a que já havia sido selecionada antes
             obj.pick();
             this.orchestrator.changeState(new ReadyState(this.orchestrator))
         }
-        if(obj.player == this.orchestrator.currentPlayer) return;*/
-       
-        if((searchForArray([customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side)], this.pickable) != -1)||(searchForArray([customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side),""], this.pickable) != -1)){//se a peça selecionada for válida
+        if(obj.player == this.orchestrator.currentPlayer) return;
+        let picked = [customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side), ""]
+        console.log(this.pickable)
+        console.log(picked)
+        console.log(searchForArray(picked,this.pickable))
+        if((searchForArray(picked, this.pickable) != -1)||(searchForArray([customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side)], this.pickable) != -1)){//se a peça selecionada for válida
+            obj.pick()
             console.log("hi")
             var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
             this.orchestrator.gameSequence.addGameMove(move);

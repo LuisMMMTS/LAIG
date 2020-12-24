@@ -29,7 +29,6 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         
-        scene.graph = this;
 
         this.nodes = []; //all nodes of the scene
 

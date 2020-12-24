@@ -27,11 +27,10 @@ class ReadyState extends GameState{
         let comparableArray2 = [this.x,this.y];
         console.log(comparableArray)    
         console.log(this.pickable)
-        
         if((searchForArray(this.pickable,comparableArray) != -1)||(searchForArray(this.pickable,comparableArray2)!=-1)){
+            obj.pick();
             this.orchestrator.previousPick = customId;
             this.orchestrator.previousObj = obj;
-            obj.pick();
             this.orchestrator.changeState(new ChooseState(this.orchestrator))
         }
     }

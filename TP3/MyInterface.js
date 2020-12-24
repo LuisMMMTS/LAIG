@@ -51,23 +51,20 @@ class MyInterface extends CGFinterface {
      * 
      * @param {*} views - views defined in the scene
      */
-    createInterface(views, themes, modes){
+    createInterface(lights, views, themes, modes){
         this.addAxisCheckBox();
         this.addLightsCheckbox();
-        this.addLightsFolder();
+        this.addLightsFolder(lights);
         this.addCamerasDropDown(views);
         this.addThemeDropDown(themes);
         this.addModeDropDown(modes);
         this.addUndo()
     }
-    updateInterface(views){
-        
-    }
 
-    addLightsFolder(){
+    addLightsFolder(lights){
         var  group = this.gui.addFolder("Lights");
         //group.open(), is comment for preference, can be uncommented
-        const lights = this.scene.graph.lights;
+        
         for(var key in lights){
             if(lights.hasOwnProperty(key)){
                 /*Forming a map this.scene.lightValues that store in the enable value of a given key */

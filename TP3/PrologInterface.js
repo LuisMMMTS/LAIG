@@ -65,7 +65,7 @@ class PrologInterface {
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response = data.target.response;
         response = this.responsesToArrays(response);
-        this.gameOrchestrator.gameBoard = new Board(this.gameOrchestrator.scene, response);
+        this.gameOrchestrator.handleReply(response)
     }
 
     async boardRequest(size) {
@@ -125,7 +125,6 @@ class PrologInterface {
             } 
         }
         this.gameOrchestrator.handleReply(response);
-        console.log(response);
     }
 
     getMovablePiecesResquest(board, player) { //which of the players pieces can be moved
@@ -149,7 +148,6 @@ class PrologInterface {
             } 
         }
         this.gameOrchestrator.handleReply(response)
-        console.log(response);
     }
     getPieceMovesRequest(board, player, pieceCoords) { //where can a piece be moved to
         board = this.gameBoardtoString(board);
@@ -165,7 +163,6 @@ class PrologInterface {
         //response=this.responsesToArrays(response);
         response=response.replaceAll(']', '').replaceAll('[', '').split(",").map(Number);
         response=response.reduce(function(a,b){return Math.max(a,b)});
-        console.log(response);
     }
 
     getcurrentscore(board, player) {
