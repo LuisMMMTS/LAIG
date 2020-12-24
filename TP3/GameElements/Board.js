@@ -88,13 +88,13 @@ class Board extends CGFobject {
         
 	}
     update(time){
-        for(var tile of this.tiles){
+        /*for(var tile of this.tiles){
             if(tile.piece != null){
                 if(tile.piece.animation != null){
                     tile.piece.update(time);
                 }
             }
-        }
+        }*/
     }
     display(){
         let id = 1;

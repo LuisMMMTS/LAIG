@@ -36,13 +36,15 @@ class ChooseState extends GameState{
             this.orchestrator.gameSequence.addGameMove(move);
             this.orchestrator.previousObj.createAnimation(this.gameBoard.tiles[this.previousPick-1],this.gameBoard.tiles[customId-1])//creates animation of first piece. custom id is the id of the last picked piece
             obj.createAnimation(this.gameBoard.tiles[customId-1], this.gameBoard.tiles[this.previousPick-1])
-            this.previousPick = null;
+            this.orchestrator.finalPick = customId
+            this.orchestrator.finalObj = obj
+            this.orchestrator.finalTile = obj.tile
             this.orchestrator.changeState(new AnimationState())
         }
         
     }
 
-    animationEnd(){
+    animationEnd(time){
         return;
     }
 }

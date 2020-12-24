@@ -14,4 +14,8 @@
        
         
     }
+
+    animationEnd(time){
+        
+    }
  }

@@ -121,16 +121,7 @@ class Piece {
     update(time){
         if(this.animation != null)
             this.animation.update(time)
-        if(this.animation.active){
-            if(this.animation.ended){
-                this.animation.active = false
-                this.tile.gameBoard.switchTiles(this.initialTile, this.finalTile)
-                console.log("removed")
-                console.log("added")
-
-                this.pick()
-            }
-        }
+        
         if(this.animation.ended && !this.animation.active){
             this.animation = null;
             console.log("making it null")

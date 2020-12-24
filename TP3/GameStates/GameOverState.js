@@ -8,7 +8,7 @@ class GameOverState extends GameState{
         return;
     }
 
-    animationEnd(){
+    animationEnd(time){
         return; 
     }
     

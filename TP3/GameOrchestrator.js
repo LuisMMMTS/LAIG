@@ -9,8 +9,12 @@ class GameOrchestrator {
         this.scene = scene;
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
-        this.previousPick = null;
+        this.previousPick = null
         this.previousObj = null
+        this.finalPick = null
+        this.finalObj = null
+        this.startTile = null
+        this.finalTile = null
         this.prolog = new PrologInterface(this);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         this.mode = {
@@ -51,7 +55,8 @@ class GameOrchestrator {
      * @param {*} time 
      */
     update(time) { 
-         this.gameBoard.update(time);
+        this.state.animationEnd(time)
+        this.gameBoard.update(time);
         //this.animator.update(time)
     }
 
@@ -106,34 +111,6 @@ class GameOrchestrator {
      */
     pickedPiece(obj, customId) {
         this.state.pickPiece(obj, customId);
-        /*if (obj instanceof Piece) {
-            if (!obj.isPicked() && this.previousPick == null) { //if no piece was selected before only changes that piece color
-                this.previousPick = customId;
-                this.previousObj = obj;
-                obj.pick();
-                console.log("piece 1")
-            }
-            else if (!obj.isPicked()) { //a piece was chosen before, changes this piece color, applies the move and makes pieces color back to normal
-                obj.pick();
-                var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
-                this.gameSequence.addGameMove(move);
-                this.previousObj.createAnimation(this.gameBoard.tiles[this.previousPick-1],this.gameBoard.tiles[customId-1])//creates animation of first piece. custom id is the id of the last picked piece
-                obj.createAnimation(this.gameBoard.tiles[customId-1], this.gameBoard.tiles[this.previousPick-1])
-                this.previousPick = null;
-                console.log("piece 2")
-                
-            }
-            else {
-                obj.pick();
-                this.previousObj = null;
-                this.previousPick = null;
-            }
-        }
-        else if (obj instanceof BoardTile) console.log("tile selected");
-        else {
-            console.log("error");
-            // error ?
-        }*/
     }
 
 

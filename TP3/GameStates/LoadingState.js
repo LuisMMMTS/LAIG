@@ -28,7 +28,7 @@ class LoadingState extends GameState{
         return;   
     }
 
-    animationEnd(){
+    animationEnd(time){
         return;
     }
 }

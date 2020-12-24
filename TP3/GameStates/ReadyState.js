@@ -9,7 +9,6 @@ class ReadyState extends GameState{
     }
     handleReply(response){
         this.pickable = response;
-        console.log(this.pickable)
     }
 
     /**
@@ -31,10 +30,11 @@ class ReadyState extends GameState{
             obj.pick();
             this.orchestrator.previousPick = customId;
             this.orchestrator.previousObj = obj;
+            this.orchestrator.startTile = obj.tile;
             this.orchestrator.changeState(new ChooseState(this.orchestrator))
         }
     }
-    animationEnd(){
+    animationEnd(time){
         return;
     }
 
