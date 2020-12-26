@@ -5,7 +5,7 @@ class ReadyState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
         this.orchestrator.prolog.getMovablePiecesResquest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
-        
+        this.orchestrator.updateInfo("Choose one of your pieces")
     }
 
     handleReply(response){
@@ -21,8 +21,10 @@ class ReadyState extends GameState{
      */
     pickPiece(obj, customId){   
         /*In this state player can only choose a piece that belongs to him */
-        if(this.orchestrator.currentPlayer != obj.player) return;
-        console.log("OBJECT BELONGS TO CURRENT PLAYER");
+        if(this.orchestrator.currentPlayer != obj.player){
+            console.log("Can't choose this piece, this belongs to the other player")
+            return;
+        } 
         
         this.x = Math.floor((customId-1) / this.orchestrator.gameBoard.side);
         this.y = (customId-1) % this.orchestrator.gameBoard.side;

@@ -21,6 +21,8 @@ class XMLscene extends CGFscene {
         for(let [key, value] of this.filenames.entries()){
             this.themeGraphs[key] = new MySceneGraph(value, this)
         }
+
+        this.boardSize = 10
     }   
 
     /**
@@ -65,7 +67,7 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        this.orchestrator = new GameOrchestrator(this);
+        this.orchestrator = new GameOrchestrator(this, this.boardSize);
         
     }
 
@@ -137,7 +139,7 @@ class XMLscene extends CGFscene {
      */
     updateCamera(newCamera) {
         this.cameraID = newCamera;
-        this.camera = this.graph.views[this.cameraID];
+        this.camera = this.themeGraphs[this.selectedTheme].views[this.cameraID];
         this.interface.setActiveCamera(this.camera);
     }
     /**
@@ -164,6 +166,7 @@ class XMLscene extends CGFscene {
             }
         }
     }
+
 
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
@@ -237,6 +240,10 @@ class XMLscene extends CGFscene {
 
      }
 
+     setBoardSize(val){
+        console.log(val)
+        this.boardSize = val
+     }
 
     /**
      * Displays the scene.
