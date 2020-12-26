@@ -14,8 +14,9 @@ class AnimationState extends GameState{
     animationEnd(time){
         //fazer as mudanças necessarias nas peças
         //verificar se terminou o jogo --> se sim, gameOver State
-        this.previousObj.update(time)
-        this.finalObj.update(time)
+        console.log(this.orchestrator);
+        this.orchestrator.previousObj.update(time)
+        this.orchestrator.finalObj.update(time)
 
         if(this.orchestrator.previousObj.animation.active){
             if(this.orchestrator.previousObj.animation.ended){
@@ -35,7 +36,7 @@ class AnimationState extends GameState{
             }
         } 
         
-        this.orchestrator.changeState(new ReadyState())//maybe here should be checking if game is over
+        this.orchestrator.changeState(new ReadyState(this.orchestrator));//maybe here should be checking if game is over
     }
     
 

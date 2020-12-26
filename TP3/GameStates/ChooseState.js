@@ -43,7 +43,7 @@ class ChooseState extends GameState {
             this.orchestrator.finalPick = customId;
             this.orchestrator.finalObj = obj;
             this.orchestrator.finalTile = obj.tile;
-            this.orchestrator.changeState(new AnimationState())
+            this.orchestrator.changeState(new AnimationState(this.orchestrator))
         }
 
     }
