@@ -33,6 +33,12 @@ class GameOrchestrator {
         this.changeState(new ReadyState(this))
     }
 
+    changePlayer(){
+        if (this.currentPlayer=="black")
+            this.currentPlayer="white";
+        else
+            this.currentPlayer="black";
+    }
 
     changeState(state){
         this.state = state;

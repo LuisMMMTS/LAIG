@@ -31,10 +31,13 @@ class AnimationState extends GameState{
             this.orchestrator.previousObj.animation=null
             this.orchestrator.finalObj.animation=null
             this.orchestrator.gameBoard.switchTiles(this.orchestrator.startTile,this.orchestrator.finalTile);
+        
+            //this.orchestrator.prolog.getWinner(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
+
+
+            this.orchestrator.changePlayer();//switchplayer?
 
             this.orchestrator.changeState(new ReadyState(this.orchestrator));//maybe here should be checking if game is over
-            
-            //this.orchestrator.prolog.getWinner(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
         }
     }
     
