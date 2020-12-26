@@ -2,7 +2,7 @@ class ChooseState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
         //highligh the enemys pieces 
-        this.pieceCoords = [this.orchestrator.previousPick % this.orchestrator.gameBoard.side, Math.floor(this.orchestrator.previousPick / this.orchestrator.gameBoard.side)];
+        this.pieceCoords = [Math.floor((this.orchestrator.previousPick-1) / this.orchestrator.gameBoard.side), (this.orchestrator.previousPick-1) % this.orchestrator.gameBoard.side];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
     }
     handleReply(response){
@@ -24,12 +24,16 @@ class ChooseState extends GameState{
             obj.pick();
             this.orchestrator.changeState(new ReadyState(this.orchestrator))
         }
-        if(obj.player == this.orchestrator.currentPlayer) return;
-        let picked = [customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side), ""]
+        if(obj.player == this.orchestrator.currentPlayer) return; //not allowed move
+        this.x = Math.floor((customId-1) / this.orchestrator.gameBoard.side);
+        this.y = (customId-1) % this.orchestrator.gameBoard.side;
+        let comparableArray = [this.x,this.y,""];
+        let comparableArray2 = [this.x,this.y];
+
+        console.log(comparableArray)    
         console.log(this.pickable)
-        console.log(picked)
-        console.log(searchForArray(picked,this.pickable))
-        if((searchForArray(picked, this.pickable) != -1)||(searchForArray([customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side)], this.pickable) != -1)){//se a peça selecionada for válida
+
+        if((searchForArray(this.pickable,comparableArray) != -1)||(searchForArray(this.pickable,comparableArray2)!=-1)){//se a peça selecionada for válida
             obj.pick()
             console.log("hi")
             var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
