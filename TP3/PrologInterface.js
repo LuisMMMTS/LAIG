@@ -163,6 +163,7 @@ class PrologInterface {
         //response=this.responsesToArrays(response);
         response=response.replaceAll(']', '').replaceAll('[', '').split(",").map(Number);
         response=response.reduce(function(a,b){return Math.max(a,b)});
+        this.gameOrchestrator.handleReply(response);
     }
 
     getcurrentscore(board, player) {

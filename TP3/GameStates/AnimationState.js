@@ -21,7 +21,7 @@ class AnimationState extends GameState{
                 this.orchestrator.previousObj.pick()
             }
         } 
-
+                
         if(this.orchestrator.finalObj.animation.active){
             if(this.orchestrator.finalObj.animation.ended){
                 this.orchestrator.finalObj.pick()
