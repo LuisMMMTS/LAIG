@@ -280,7 +280,7 @@ class XMLscene extends CGFscene {
 
             // Displays the scene (MySceneGraph function).  
             //  console.log(this.graph);
-            //this.graph.displayScene();
+            //this.themeGraphs[this.selectedTheme].displayScene();
             this.orchestrator.display();
             
             

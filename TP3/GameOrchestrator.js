@@ -18,6 +18,7 @@ class GameOrchestrator {
         this.finalTile = null
         this.prolog = new PrologInterface(this);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
+        //this.gameBoard = new Board(this.scene, [["white","black"],["white", "black"]]);
         this.mode = {
             pvp: 1,
             pvc: 2,
@@ -34,6 +35,12 @@ class GameOrchestrator {
         this.changeState(new ReadyState(this))
     }
 
+    changePlayer(){
+        if (this.currentPlayer=="black")
+            this.currentPlayer="white";
+        else
+            this.currentPlayer="black";
+    }
 
     changeState(state){
         this.state = state;

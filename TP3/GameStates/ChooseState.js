@@ -1,13 +1,13 @@
-class ChooseState extends GameState{
-    constructor(orchestrator){
+class ChooseState extends GameState {
+    constructor(orchestrator) {
         super(orchestrator)
         //highligh the enemys pieces 
-        this.pieceCoords = [this.orchestrator.previousPick % this.orchestrator.gameBoard.side, Math.floor(this.orchestrator.previousPick / this.orchestrator.gameBoard.side)];
+        this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.side), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.side];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
         this.orchestrator.updateErrors("")
     }
-    handleReply(response){
+    handleReply(response) {
         this.pickable = response;
     }
 
@@ -20,31 +20,35 @@ class ChooseState extends GameState{
      * @param {*} customId 
      */
 
-    pickPiece(obj, customId){
-        if (obj == this.orchestrator.previousObj){//se a peça selecionada for a que já havia sido selecionada antes
+    pickPiece(obj, customId) {
+        if (obj == this.orchestrator.previousObj) {//se a peça selecionada for a que já havia sido selecionada antes
             obj.pick();
             this.orchestrator.updateErrors("Unpicked previous choosen piece")
             this.orchestrator.changeState(new ReadyState(this.orchestrator))
             return;
         }
-        else if(obj.player == this.orchestrator.currentPlayer){
+        if (obj.player == this.orchestrator.currentPlayer) return; //not allowed move
+        this.x = Math.floor((customId - 1) / this.orchestrator.gameBoard.side);
+        this.y = (customId - 1) % this.orchestrator.gameBoard.side;
+        let comparableArray = [this.x, this.y, ""];
+        let comparableArray2 = [this.x, this.y];
+
+        console.log(comparableArray)
+        if(obj.player == this.orchestrator.currentPlayer){
             this.orchestrator.updateErrors("Can't choose your own piece, choose one of your oponents")
             return;
         } 
-        let picked = [customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side), ""]
-        console.log(this.pickable)
-        console.log(picked)
-        console.log(searchForArray(picked,this.pickable))
-        if((searchForArray(picked, this.pickable) != -1)||(searchForArray([customId % this.orchestrator.gameBoard.side, Math.floor(customId/this.orchestrator.gameBoard.side)], this.pickable) != -1)){//se a peça selecionada for válida
+        if ((searchForArray(this.pickable, comparableArray) != -1) || (searchForArray(this.pickable, comparableArray2) != -1)) {//se a peça selecionada for válida
             obj.pick()
             console.log("hi")
-            var move = new GameMove(this.scene,this.previousObj,obj, this.gameBoard.tiles[this.previousPick-1], this.gameBoard.tiles[customId-1], this.gameBoard);
+            var move = new GameMove(this.scene, this.previousObj, obj, this.orchestrator.gameBoard.tiles[this.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard);
             this.orchestrator.gameSequence.addGameMove(move);
-            this.orchestrator.previousObj.createAnimation(this.gameBoard.tiles[this.previousPick-1],this.gameBoard.tiles[customId-1])//creates animation of first piece. custom id is the id of the last picked piece
-            obj.createAnimation(this.gameBoard.tiles[customId-1], this.gameBoard.tiles[this.previousPick-1])
-            this.orchestrator.finalPick = customId
-            this.orchestrator.finalObj = obj
-            this.orchestrator.finalTile = obj.tile
+            this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
+            obj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1]);
+            this.orchestrator.finalPick = customId;
+            this.orchestrator.finalObj = obj;
+            this.orchestrator.finalTile = obj.tile;
+            
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
         }
         else{
@@ -53,7 +57,7 @@ class ChooseState extends GameState{
         
     }
 
-    animationEnd(time){
+    animationEnd(time) {
         return;
     }
 }
