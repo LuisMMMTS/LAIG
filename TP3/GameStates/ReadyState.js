@@ -7,8 +7,11 @@ class ReadyState extends GameState{
         this.orchestrator.prolog.getMovablePiecesResquest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
         
     }
+
     handleReply(response){
         this.pickable = response;
+        console.log(this.orchestrator.currentPlayer);
+        console.log(this.pickable);
     }
 
     /**
@@ -19,9 +22,10 @@ class ReadyState extends GameState{
     pickPiece(obj, customId){   
         /*In this state player can only choose a piece that belongs to him */
         if(this.orchestrator.currentPlayer != obj.player) return;
+        console.log("OBJECT BELONGS TO CURRENT PLAYER");
         
-        this.x = customId % this.orchestrator.gameBoard.side;
-        this.y = Math.floor(customId / this.orchestrator.gameBoard.side);
+        this.x = Math.floor((customId-1) / this.orchestrator.gameBoard.side);
+        this.y = (customId-1) % this.orchestrator.gameBoard.side;
         let comparableArray = [this.x,this.y,""];
         let comparableArray2 = [this.x,this.y];
         console.log(comparableArray)    

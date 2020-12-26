@@ -264,20 +264,20 @@
             <amplification afs="1" aft="1" />
         </boardTexture>
         <tiles>
-            <material1 id ="black"/>
-            <material2 id ="White"/>
+            <material1 id ="White"/>
+            <material2 id ="black"/>
         </tiles>
         <pieces>
             <player1>
-                <pieceType  type= "sphere"/>
-                <material id="green"/>
+                <pieceType  type= "cone"/>
+                <material id="navy_blue"/>
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player1>
             <player2>
-                <pieceType  type= "cone"/>
-                <material id="navy_blue"/>
+                <pieceType  type= "sphere"/>
+                <material id="green"/>
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>
