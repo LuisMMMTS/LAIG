@@ -5,8 +5,9 @@
  */
 
 class GameOrchestrator {
-    constructor(scene) {
+    constructor(scene, boardSize) {
         this.scene = scene;
+        this.boardSize = boardSize;
         this.gameSequence = new GameSequence(this.scene);
         this.animator = new GameAnimator(this, this.gameSequence);
         this.previousPick = null
@@ -29,7 +30,7 @@ class GameOrchestrator {
         }
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.currentPlayer = "black";
-        this.changeState(new LoadingState(this))
+        this.changeState(new ReadyState(this))
     }
 
 
@@ -81,6 +82,19 @@ class GameOrchestrator {
     gameMovie() {
 
     }
+
+    updateErrors(error){
+        document.getElementById("errors").innerText = error
+    }
+    updateInfo(info){
+        document.getElementById("info").innerText = info
+    }
+    updateScore(){
+
+    }
+
+
+
 
     /**
      * Manages the picking

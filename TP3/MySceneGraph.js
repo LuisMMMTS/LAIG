@@ -1095,7 +1095,6 @@ class MySceneGraph {
     }
 
     parsePieces(PiecesNode) {
-        console.log(PiecesNode.children);
         let pieces = [];
 
         for (let i = 0; i < PiecesNode.children.length; i++) {
@@ -1104,7 +1103,6 @@ class MySceneGraph {
             let texture = null;
             let playernodes = PiecesNode.children[i].children;
             for (let j = 0; j < playernodes.length; j++) {
-                console.log(playernodes[j].nodeName);
                 switch (playernodes[j].nodeName) {
                     case ("pieceType"):
                         pieceType = this.reader.getString(playernodes[j], "type");
@@ -1116,7 +1114,6 @@ class MySceneGraph {
                             this.onXMLError("Wrong value defined for piece type, assuming cube")
                             pieceType = "cube";
                         }
-                        console.log(pieceType);
                         break;
 
                     case ("material"):
@@ -1139,7 +1136,6 @@ class MySceneGraph {
         return pieces;
     }
     parseTiles(TilesNode) {
-        console.log(TilesNode.children);
         let tiles = [];
 
         for (let i = 0; i < TilesNode.children.length; i++) {
@@ -1152,7 +1148,6 @@ class MySceneGraph {
             }           
             tiles.push(material);    
         }
-        console.log(tiles);
         return tiles;
     }
     /**
@@ -1630,7 +1625,6 @@ class MySceneGraph {
             }
         }
         this.board = [boardMaterial, boardTexture, piece1, piece2, tile1,tile2];
-        console.log(this.board);
 
     }
 

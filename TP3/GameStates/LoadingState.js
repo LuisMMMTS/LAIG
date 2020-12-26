@@ -6,7 +6,7 @@ class LoadingState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
         //asks for board
-        this.orchestrator.prolog.boardRequest(3)
+        this.orchestrator.prolog.boardRequest(this.orchestrator.boardSize)
     }
     handleReply(response){
         //receives board and saves it on game Orchestrator 

@@ -59,6 +59,7 @@ class MyInterface extends CGFinterface {
         this.addThemeDropDown(themes);
         this.addModeDropDown(modes);
         this.addUndo()
+        this.addBoardSize();
     }
 
     addLightsFolder(lights){
@@ -108,5 +109,9 @@ class MyInterface extends CGFinterface {
 
     addUndo(){
         this.gui.add(this.scene.orchestrator, 'undo').name('Undo')
+    }
+
+    addBoardSize(){
+        this.gui.add(this.scene, 'boardSize', 2, 20, 1).name("Board Size").onChange(val=>this.scene.setBoardSize(val));
     }
 }
