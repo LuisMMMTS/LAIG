@@ -25,7 +25,7 @@ class AnimationState extends GameState{
                 this.previousObj.pick()
             }
         } 
-
+                
         if(this.orchestrator.finalObj.animation.active){
             if(this.orchestrator.finalObj.animation.ended){
                 this.orchestrator.finalObj.active = false
@@ -35,7 +35,7 @@ class AnimationState extends GameState{
             }
         } 
         
-        this.orchestrator.changeState(new ReadyState())//maybe here should be checking if game is over
+        this.orchestrator.changeState(new ReadyState(this.orchestrator))//maybe here should be checking if game is over
     }
     
 

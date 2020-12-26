@@ -10,11 +10,21 @@
     /**
      * @abstract
      */
+    handleReply(response){
+        
+    }
+
+    /**
+     * @abstract
+     */
     pickPiece(){
        
         
     }
 
+    /**
+     * @abstract
+     */
     animationEnd(time){
         
     }

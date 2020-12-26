@@ -231,8 +231,7 @@ class XMLscene extends CGFscene {
      }
 
      changeTheme(value){
-        var theme = this.themeGraphs[value]
-        this.orchestrator.changeTheme(theme);
+        this.orchestrator.changeTheme(this.themeGraphs[value]);
      }
 
      changeMode(mode){

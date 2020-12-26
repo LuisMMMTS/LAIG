@@ -40,7 +40,6 @@ class Board extends CGFobject {
         //falta tratar dos afs e aft
     }
 	createBoardTiles(array){
-        //On odd-sized boards, the center square is occupied by White.
         let id = 1
         let nTiles = this.size;
         for (let i = 0; i < nTiles; i++) {
@@ -98,6 +97,7 @@ class Board extends CGFobject {
         }*/
     }
     display(){
+        
         let id = 1;
         this.scene.pushMatrix();
         this.scene.translate(0.15, 0, 0.10);;
@@ -106,7 +106,6 @@ class Board extends CGFobject {
         this.boardMaterial.apply();
         this.board.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
 
 
         this.scene.pushMatrix();

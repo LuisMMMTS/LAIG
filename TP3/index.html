@@ -1,72 +1,79 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title>LAIG - Parser Example</title>
     <link rel="icon" href="data:,">
 
-<style>
-body, html {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-}
+    <style>
+        body,
+        html {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
 
-canvas {
-    width: 100%;
-    height: 100%;
-}
-#infoPanel{
-  position: absolute;
-  width: 20%;
-  padding: 1em;
-  margin: 2em 0 0 2em;
-  text-align: center;
-  color:white;
-  background-color: rgba(0, 100, 200, 0.2);
-  border-radius: 10%;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
 
-#infoPanel h1{
-    font-size:30px;
-    margin:0;
-    padding-bottom: 5px;
-}
-#infoPanel div{
-    font-size: 15px;
-}
+        #infoPanel {
+            position: absolute;
+            width: 20%;
+            padding: 1em;
+            margin: 2em 0 0 2em;
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 100, 200, 0.2);
+            border-radius: 10%;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
 
-#infoPanel p{
-    font-size:13px;
-}
+        #infoPanel h1 {
+            font-size: 30px;
+            margin: 0;
+            padding-bottom: 5px;
+        }
 
-#infoPanel #info{
-    font-weight: bold;
-    margin-top:40px;
-}
+        #infoPanel div {
+            font-size: 15px;
+        }
 
-#infoPanel #errors{
-    font-size:13px;
-    margin-top: 20px;
-    color:red;
-}
+        #infoPanel span {
+            font-size: 13px;
+        }
 
-</style>
+        #infoPanel #info {
+            font-weight: bold;
+            margin-top: 40px;
+            color: rgba(0,100,200,1);
+        }
+
+        #infoPanel #errors {
+            font-size: 10px;
+            margin-top: 20px;
+            color: black;
+            font-weight: 800;
+        }
+    </style>
 </head>
+
 <body>
 
-<script src="main.js"></script>
-<div id="infoPanel">
-    <h1>Emulsion</h1>
-    <div>Player: <span id="player">None</span></div>
-    <div>Player1 score: <span id="player1-score">0</span></div>
-    <div>Player2 score: <span id="player2-score">0</span></div>
-    <div>Remaining time: <span id="time">0</span></div>
-    <div id ="info"><span id="info"></span></div>
-    <div id="errors"><span id="errors"></span></div>
-</div>
+    <script src="main.js"></script>
+    <div id="infoPanel">
+        <h1>Emulsion</h1>
+        <div>Player: <span id="player">None</span></div>
+        <div>Player1 score: <span id="player1-score">0</span></div>
+        <div>Player2 score: <span id="player2-score">0</span></div>
+        <div>Remaining time: <span id="time">0</span></div>
+        <div id="info"><span id="info"></span></div>
+        <div id="errors"><span id="errors"></span></div>
+    </div>
 
 </body>
+
 </html>

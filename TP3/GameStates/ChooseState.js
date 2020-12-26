@@ -5,10 +5,10 @@ class ChooseState extends GameState{
         this.pieceCoords = [this.orchestrator.previousPick % this.orchestrator.gameBoard.side, Math.floor(this.orchestrator.previousPick / this.orchestrator.gameBoard.side)];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
+        this.orchestrator.updateErrors("")
     }
     handleReply(response){
         this.pickable = response;
-        console.log(this.pickable)
     }
 
 
@@ -25,8 +25,9 @@ class ChooseState extends GameState{
             obj.pick();
             this.orchestrator.updateErrors("Unpicked previous choosen piece")
             this.orchestrator.changeState(new ReadyState(this.orchestrator))
+            return;
         }
-        if(obj.player == this.orchestrator.currentPlayer){
+        else if(obj.player == this.orchestrator.currentPlayer){
             this.orchestrator.updateErrors("Can't choose your own piece, choose one of your oponents")
             return;
         } 
@@ -44,7 +45,7 @@ class ChooseState extends GameState{
             this.orchestrator.finalPick = customId
             this.orchestrator.finalObj = obj
             this.orchestrator.finalTile = obj.tile
-            this.orchestrator.changeState(new AnimationState())
+            this.orchestrator.changeState(new AnimationState(this.orchestrator))
         }
         else{
             this.orchestrator.updateErrors("This piece does not answer to the rule that you need to increase your piece value.")
