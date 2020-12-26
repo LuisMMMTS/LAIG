@@ -8,7 +8,7 @@ getValidMovesforPiece(GameState, Player, [Row,Column], NewMoves):-
 
 getMovablePieces(GameState, Player, OldMoves):-
 	valid_moves(GameState, Player-_-_-_-_, ListOfMoves),
-	setof(OldPos, (NewPos-Val)^member(OldPos-NewPos-Val, ListOfMoves), OldMoves).
+	((setof(OldPos, (NewPos-Val)^member(OldPos-NewPos-Val, ListOfMoves), OldMoves));(OldMoves=[])).
 %after this we can move. js task nt t let choose wrong pieces???
 
 
