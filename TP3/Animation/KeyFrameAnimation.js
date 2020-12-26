@@ -49,6 +49,10 @@ class KeyFrameAnimation extends Animation{
         //if animation reached the end, return
         if(this.ended) return;
         
+        if (this.lastTime==0){
+            this.lastTime=currentTime;
+        }
+
         //update elapsedTime based on lastTime and update lastTime
         this.elapsedTime += (currentTime - this.lastTime);
         this.lastTime = currentTime;
@@ -58,7 +62,7 @@ class KeyFrameAnimation extends Animation{
             
             if(this.elapsedTime >= this.startTime){ // only becomes visible after first keyframe instant
                 this.active = true;
-                this.elapsedTime=0;
+                // this.elapsedTime=0;
                 return;
             }
             else 
