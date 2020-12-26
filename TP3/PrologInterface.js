@@ -174,7 +174,7 @@ class PrologInterface {
         let response = data.target.response;
         console.log(response);
     }
-    getWinner(board,Player){//player é o penúltimo jogador (o jogador que atualmetne não tem jogadas)
+    getWinner(board,Player){
         board=this.gameBoardtoString(board);
         this.getPrologRequest("checkEnd("+board+","+Player+")",this.handleWinner.bind(this));
     }

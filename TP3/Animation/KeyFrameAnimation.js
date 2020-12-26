@@ -56,8 +56,11 @@ class KeyFrameAnimation extends Animation{
         //check if the keyframe should be active or not
         if(!this.active){
             
-            if(this.elapsedTime >= this.startTime) // only becomes visible after first keyframe instant
+            if(this.elapsedTime >= this.startTime){ // only becomes visible after first keyframe instant
                 this.active = true;
+                this.elapsedTime=0;
+                return;
+            }
             else 
                 return;
         }
@@ -101,7 +104,7 @@ class KeyFrameAnimation extends Animation{
 
         let keyframeStartInstant = this.keyframes[this.keyframeStartIndex].instant;
         let keyframeEndInstant = this.keyframes[this.keyframeEndIndex].instant;
-        let interpolationAmount = Math.max((this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant),1);
+        let interpolationAmount = Math.min((this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant),1);
 
         vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
 

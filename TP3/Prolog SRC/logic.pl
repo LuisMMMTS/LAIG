@@ -3,11 +3,19 @@
 % Verifica se o jogo chegou ao fim	
 % Caso: Fim de jogo, já não há moves possíveis
 checkEnd(GameState, Player-_-_-_-_, Winner1):-
+	getMovablePieces(GameState, Player1, Res),!,
+	((Res==[],
+	opposite(Player, Player1),
+	getWinner(GameState, Player1-_-_-_-_, Winner1));(Winner1='')).
+	
+getWinner(GameState, Player-_-_-_-_, Winner1):-
 	game_over(GameState, Winner),
 	(
 		(Winner='both', opposite(Player, Winner1), write(Winner1), write(' won!!\n')); %no caso de não ser possível desempatar, ganha o ultimo jogador a mover uma peça
 		(write('\n!! '), Winner1=Winner, write(Winner), write(' won !!\n'))
 	).
+
+
 % Caso: AI vs AI or Human vs Human, o modo de jogo não troca
 /*checkEnd(GameState, Color-Mode-0-Ai1-Ai2, ListOfMoves):-
 	playerTurn(GameState, Color-Mode-Ai1-Ai2, ListOfMoves, NewState),
