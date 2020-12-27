@@ -1,6 +1,7 @@
 class CheckGameOverState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
+        this.orchestrator.updatePlayTime(0)
         /* Update score */
         this.orchestrator.prolog.getcurrentscore(this.orchestrator.gameBoard,"black")
         this.orchestrator.prolog.getcurrentscore(this.orchestrator.gameBoard,"white")
@@ -35,6 +36,8 @@ class CheckGameOverState extends GameState{
     animationEnd(time){
         return; 
     }
+
+    checkTimeOut(time){}
     
 
 }

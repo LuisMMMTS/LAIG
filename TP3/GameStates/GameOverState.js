@@ -1,7 +1,7 @@
 class GameOverState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
-        
+        this.orchestrator.updatePlayTime(0)
         this.orchestrator.prolog.getWinner(this.orchestrator.gameBoard, this.orchestrator.currentPlayer)
         console.log("hello")
     }
@@ -18,5 +18,5 @@ class GameOverState extends GameState{
         return; 
     }
     
-
+    checkTimeOut(time){}
 }

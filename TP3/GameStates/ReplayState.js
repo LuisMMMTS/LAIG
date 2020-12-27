@@ -1,7 +1,7 @@
 class CheckGameOverState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
-    
+        this.orchestrator.updatePlayTime(0)
     }
 
     handleReply(response){
@@ -21,5 +21,6 @@ class CheckGameOverState extends GameState{
         return; 
     }
     
+    checkTimeOut(time){}
 
 }

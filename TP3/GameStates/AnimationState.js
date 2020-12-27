@@ -6,6 +6,7 @@ class AnimationState extends GameState{
         super(orchestrator)
         this.orchestrator.updateInfo("Moving Pieces")
         this.orchestrator.updateErrors("")
+        this.orchestrator.updatePlayTime(0)
     }
 
 
@@ -50,6 +51,8 @@ class AnimationState extends GameState{
         }
 
     }
+
+    checkTimeOut(time){}
     
 
 }

@@ -53,4 +53,7 @@
     animationEnd(time){
         
     }
+
+    checkTimeOut(time){}
+
  }

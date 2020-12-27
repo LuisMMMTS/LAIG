@@ -94,4 +94,17 @@ class ChooseState extends GameState {
     animationEnd(time) {
         return;
     }
+
+    checkTimeOut(time){
+        this.orchestrator.timeLeft -= (time - this.orchestrator.lastTime)
+        
+        if(this.orchestrator.timeLeft < 0){
+            this.orchestrator.updateErrors("You just lost your turn")
+            this.orchestrator.previousObj.pick()
+            this.orchestrator.updatePlayTime(0)
+            this.orchestrator.changePlayer()
+            this.orchestrator.changeState(new ReadyState(this.orchestrator))
+        }
+        else this.orchestrator.updatePlayTime((this.orchestrator.timeLeft).toFixed(2))
+    }
 }

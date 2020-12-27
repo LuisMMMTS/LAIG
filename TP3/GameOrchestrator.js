@@ -37,8 +37,9 @@ class GameOrchestrator {
         this.changeState(new ReadyState(this))
         this.init()
 
-        this.playTime = 60
-        this.time = 0
+        this.playTime = 10
+        this.timeLeft = this.playTime
+        this.lastTime = 0
     }
     init(){
         this.currentPlayer = "black";
@@ -54,7 +55,8 @@ class GameOrchestrator {
     changePlayer(){
         this.currentPlayer = this.currentPlayer == "black"? "white":"black"
         this.updateCurrentPlayer(this.currentPlayer)
-        this.time = 0
+        this.timeLeft = this.playTime
+        this.updatePlayTime(this.timeLeft)
     }
 
     changeState(state){
@@ -81,8 +83,9 @@ class GameOrchestrator {
     update(time) { 
         this.state.animationEnd(time)
         this.gameBoard.update(time);
-        this.updatePlayTime(time)
+        this.checkTimeOut(time)
         //this.animator.update(time)
+        this.lastTime = time
     }
 
     setTheme(theme){
@@ -146,17 +149,11 @@ class GameOrchestrator {
     }
 
     updatePlayTime(time){
-        //this.playTime -= time
-        //this.checkTimeOut()
-        document.getElementById("time").innerText = Math.round(this.playTime)
+        document.getElementById("time").innerText = time
     }
 
-    checkTimeOut(){
-        if(this.playTime <=0){
-            this.updateErrors("You just lost your turn")
-            this.changePlayer()
-        }
-            
+    checkTimeOut(time){
+        this.state.checkTimeOut(time)  
     }
 
 

@@ -5,6 +5,7 @@
 class LoadingState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
+        this.orchestrator.updatePlayTime(0)
         //asks for board
         this.orchestrator.prolog.boardRequest(this.orchestrator.boardSize)
     }
@@ -34,4 +35,6 @@ class LoadingState extends GameState{
     animationEnd(time){
         return;
     }
+
+    checkTimeOut(time){}
 }
