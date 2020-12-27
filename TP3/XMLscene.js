@@ -23,6 +23,7 @@ class XMLscene extends CGFscene {
         }
 
         this.boardSize = 10
+        this.playTime = 30
     }   
 
     /**
@@ -242,6 +243,10 @@ class XMLscene extends CGFscene {
      setBoardSize(val){
         console.log(val)
         this.boardSize = val
+     }
+     setPlayTime(val){
+        console.log(val)
+        this.orchestrator.setPlayTime(val)
      }
 
     /**

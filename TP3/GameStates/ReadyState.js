@@ -43,6 +43,37 @@ class ReadyState extends GameState{
             this.orchestrator.changeState(new ChooseState(this.orchestrator))
         }
     }
+
+    pickButton(obj, customId){
+        if(customId == 501){
+
+            obj.pick()
+            let move = this.orchestrator.gameSequence.getLastMove()
+            if(move == -1){
+                this.orchestrator.updateErrors("No more plays to undo")
+                return
+            }
+            move.startPiece.floating()
+            move.endPiece.floating()
+            move.startPiece.createAnimation(move.endPiece.tile, move.startPiece.tile)
+            move.endPiece.createAnimation(move.startPiece.tile, move.endPiece.tile)
+            this.orchestrator.undo()
+            this.orchestrator.changeState(new AnimationState(this.orchestrator))
+
+        } 
+        else if(customId == 502){
+            obj.pick()
+            this.orchestrator.reset()
+        }
+        else if(customId == 503){
+            if(obj.getText() == "Pause") obj.changeButtonText("Play")
+            else if(obj.getText() == "Play") obj.changeButtonText("Pause")
+            obj.pick()
+            this.orchestrator.pause()
+        } 
+        return
+    }
+
     animationEnd(time){
         return;
     }

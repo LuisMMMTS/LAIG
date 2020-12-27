@@ -24,14 +24,15 @@ class GameSequence {
         if(this.moves.length !== 0)
             return this.currentMove;
     }
+    getLastMove(){
+        if(this.moves.length !== 0)
+            return this.moves[this.currentMove]
+        return -1
+    }
     undo() {
-        console.log(this.moves[0])
         if(this.moves.length < 1) return -1
-        this.currentMove -= 1
-        return this.moves.pop()
-        //let previousMove = this.moves.pop();
-        //se calhar acrescentar o tile à origem do movimento
-        //previousMove.gameBoard.removePieceFromTile(previousMove.destination);
+        this.moves.pop()
+        this.currentMove = this.currentMove == 0? 0:this.currentMove-1
     }
 
     reset(){

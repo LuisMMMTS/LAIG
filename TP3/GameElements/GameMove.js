@@ -20,6 +20,7 @@ class GameMove{
         this.active = true;
     }
 
+
     update(time){
         
     }

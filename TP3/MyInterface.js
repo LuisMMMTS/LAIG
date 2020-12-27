@@ -52,14 +52,15 @@ class MyInterface extends CGFinterface {
      * @param {*} views - views defined in the scene
      */
     createInterface(lights, views, themes, modes){
-        this.addAxisCheckBox();
-        this.addLightsCheckbox();
-        this.addLightsFolder(lights);
-        this.addCamerasDropDown(views);
-        this.addThemeDropDown(themes);
-        this.addModeDropDown(modes);
+        this.addAxisCheckBox()
+        this.addLightsCheckbox()
+        this.addLightsFolder(lights)
+        this.addCamerasDropDown(views)
+        this.addThemeDropDown(themes)
+        this.addModeDropDown(modes)
         this.addQuit()
-        this.addBoardSize();
+        this.addBoardSize()
+        this.addPlayTime()
     }
 
     addLightsFolder(lights){
@@ -112,6 +113,10 @@ class MyInterface extends CGFinterface {
     }
 
     addBoardSize(){
-        this.gui.add(this.scene, 'boardSize', 2, 20, 1).name("Board Size").onChange(val=>this.scene.setBoardSize(val));
+        this.gui.add(this.scene, 'boardSize', 2, 20, 1).name("Board Size (n x n)").onChange(val=>this.scene.setBoardSize(val))
+    }
+
+    addPlayTime(){
+        this.gui.add(this.scene, 'playTime',29, 120, 1).name("Play Time (s)").onChange(val=>this.scene.setPlayTime(val))
     }
 }

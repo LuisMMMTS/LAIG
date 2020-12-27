@@ -50,6 +50,10 @@ class Board extends CGFobject {
         }
     }
 
+    setTiles(tiles){
+        this.tiles = tiles
+        console.log(tiles == this.tiles)
+    }
 
     addPieceToTile(piece, tile) {  
         tile.setPiece(piece);
@@ -107,8 +111,7 @@ class Board extends CGFobject {
 
 
         this.scene.pushMatrix();
-        
-            
+     
         for (let cell = 0; cell < this.tiles.length; cell++){
             this.scene.registerForPick(id, this.tiles[cell]);
             if (this.tiles[cell].piece != null) {

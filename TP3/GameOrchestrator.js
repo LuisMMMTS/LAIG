@@ -36,6 +36,9 @@ class GameOrchestrator {
         this.currentPlayer = "black";
         this.changeState(new ReadyState(this))
         this.init()
+
+        this.playTime = 60
+        this.time = 0
     }
     init(){
         this.currentPlayer = "black";
@@ -45,11 +48,13 @@ class GameOrchestrator {
         this.menu = new Menu(this.scene)
         this.endMenu = new EndMenu(this.scene)
         this.paused = false
+        
     }
 
     changePlayer(){
         this.currentPlayer = this.currentPlayer == "black"? "white":"black"
         this.updateCurrentPlayer(this.currentPlayer)
+        this.time = 0
     }
 
     changeState(state){
@@ -76,11 +81,16 @@ class GameOrchestrator {
     update(time) { 
         this.state.animationEnd(time)
         this.gameBoard.update(time);
+        this.updatePlayTime(time)
         //this.animator.update(time)
     }
 
     setTheme(theme){
-        this.gameBoard.changeTheme(theme.board);
+        this.gameBoard.changeTheme(theme.board)
+    }
+
+    setPlayTime(time){
+        this.playTime = time
     }
 
     changeTheme(theme){
@@ -95,6 +105,7 @@ class GameOrchestrator {
     undo() {
         console.log("undo")
         let res = this.gameSequence.undo()
+
         if(res == -1) this.updateErrors("No moves to undo")
     }
 
@@ -132,6 +143,20 @@ class GameOrchestrator {
     updateCurrentPlayer(player){
         let p = player == "black"? 1:2
         document.getElementById("player").innerText = p
+    }
+
+    updatePlayTime(time){
+        //this.playTime -= time
+        //this.checkTimeOut()
+        document.getElementById("time").innerText = Math.round(this.playTime)
+    }
+
+    checkTimeOut(){
+        if(this.playTime <=0){
+            this.updateErrors("You just lost your turn")
+            this.changePlayer()
+        }
+            
     }
 
 

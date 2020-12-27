@@ -25,6 +25,7 @@ class Piece {
         this.color = this.material;
 
         this.picked = false;
+        this.float = false
         this.previousColor = null;
 
         this.animation = null;
@@ -76,11 +77,17 @@ class Piece {
         if (!this.picked) {
             this.color = this.pickedMaterial;
             this.picked = true;
+            
         }
         else {
             this.color = this.material;
             this.picked = false
         }
+        this.floating()
+    }
+
+    floating(){
+        this.float = !this.float
     }
 
     createAnimation(initialTile, finalTile){
@@ -131,7 +138,7 @@ class Piece {
         this.scene.pushMatrix();
         this.color.apply();
 
-        if (this.picked) {
+        if (this.float) {
             this.scene.translate(0, this.selectHeight, 0);
         }
 
