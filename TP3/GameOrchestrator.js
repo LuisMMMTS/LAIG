@@ -8,14 +8,6 @@ class GameOrchestrator {
     constructor(scene, boardSize) {
         this.scene = scene;
         this.boardSize = boardSize;
-        this.gameSequence = new GameSequence(this.scene);
-        this.animator = new GameAnimator(this, this.gameSequence);
-        this.previousPick = null
-        this.previousObj = null
-        this.finalPick = null
-        this.finalObj = null
-        this.startTile = null
-        this.finalTile = null
         this.prolog = new PrologInterface(this);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //this.gameBoard = new Board(this.scene, [["white","black"],["white", "black"]]);
@@ -30,17 +22,33 @@ class GameOrchestrator {
             difficult: 2
         }
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
+        this.loaded = false
+        
+       
+        this.previousPick = null
+        this.previousObj = null
+        this.finalPick = null
+        this.finalObj = null
+        this.startTile = null
+        this.finalTile = null
+        
+        
         this.currentPlayer = "black";
-        this.menu = new Menu(this.scene)
-        this.updateCurrentPlayer(this.currentPlayer)
         this.changeState(new ReadyState(this))
+        this.init()
+    }
+    init(){
+        this.currentPlayer = "black";
+        this.updateCurrentPlayer(this.currentPlayer)
+        this.gameSequence = new GameSequence(this.scene)
+        this.animator = new GameAnimator(this, this.gameSequence)
+        this.menu = new Menu(this.scene)
+        this.endMenu = new EndMenu(this.scene)
+        this.paused = false
     }
 
     changePlayer(){
-        if (this.currentPlayer=="black")
-            this.currentPlayer="white";
-        else
-            this.currentPlayer="black";
+        this.currentPlayer = this.currentPlayer == "black"? "white":"black"
         this.updateCurrentPlayer(this.currentPlayer)
     }
 
@@ -86,7 +94,8 @@ class GameOrchestrator {
 
     undo() {
         console.log("undo")
-        this.gameSequence.undo()
+        let res = this.gameSequence.undo()
+        if(res == -1) this.updateErrors("No moves to undo")
     }
 
     reset(){
@@ -95,10 +104,13 @@ class GameOrchestrator {
 
     quit(){
         console.log("quit")
+        this.prolog.close()
     }
 
     pause(){
         console.log("pause")
+        this.paused = !this.paused
+        console.log(this.paused)
     }
 
 
@@ -121,8 +133,6 @@ class GameOrchestrator {
         let p = player == "black"? 1:2
         document.getElementById("player").innerText = p
     }
-
-
 
 
     /**

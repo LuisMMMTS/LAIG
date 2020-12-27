@@ -58,7 +58,7 @@ class MyInterface extends CGFinterface {
         this.addCamerasDropDown(views);
         this.addThemeDropDown(themes);
         this.addModeDropDown(modes);
-        this.addUndo()
+        this.addQuit()
         this.addBoardSize();
     }
 
@@ -107,8 +107,8 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, "gameMode", modes).onChange(val => this.scene.changeMode(val)).name("Game Mode");
     }
 
-    addUndo(){
-        this.gui.add(this.scene.orchestrator, 'undo').name('Undo')
+    addQuit(){
+        this.gui.add(this.scene.orchestrator, 'quit').name('Quit')
     }
 
     addBoardSize(){

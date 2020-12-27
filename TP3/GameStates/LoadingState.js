@@ -12,9 +12,8 @@ class LoadingState extends GameState{
         //receives board and saves it on game Orchestrator 
         //this.orchestrator.gameBoard = new Board(this.orchestrator.scene, response)
         this.orchestrator.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
-        
+
         this.orchestrator.changeState(new ReadyState(this.orchestrator))
-        console.log("hello")
     }
 
 

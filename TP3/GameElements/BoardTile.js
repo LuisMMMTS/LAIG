@@ -17,12 +17,14 @@ class BoardTile extends CGFobject {
         this.gameBoard = gameBoard;
         this.plane = new MyPlane(this.scene, size, size);
 
-        //this.diferentiator = Math.trunc((this.id+x/1.15)%2+1)
-        //console.log('id='+id);
-        //console.log((this.id+x/1.15)%2+1);
-
         this.piece = new Piece(this.scene, id, this, color);
         this.removed = null
+        this.highlight = false
+        this.pickedMaterial = new CGFappearance(this.scene);
+        this.pickedMaterial.setAmbient(1.0, 0.0, 0.0, 1);
+        this.pickedMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
+        this.pickedMaterial.setSpecular(1.0, 0.0, 0.0, 1);
+        this.pickedMaterial.setShininess(10.0);
     }
 
     changeTheme(piece1, piece2, tile1, tile2){
@@ -56,13 +58,17 @@ class BoardTile extends CGFobject {
         return this.piece;
     }
 
+    highlight() {
+        this.highlight = !this.highlight
+    }
     display() {
 
         this.scene.pushMatrix();
 
         this.scene.translate(this.x, 0, this.y); //move to its position    
 
-        this.material.apply();
+        if(!this.highlight)this.material.apply()
+        else this.pickedMaterial.apply()
         this.plane.display();
 
 

@@ -64,17 +64,13 @@ class Piece {
 
     }
 
-    setType(type){
-        this.type = type;
-    }
+    setType(type){ this.type = type;}
 
-    getType() {
-        return this.type;
-    }
+    getType() { return this.type;}
 
-    getPlayer(){
-        return this.player;
-    }
+    getPlayer(){ return this.player;}
+
+    isPicked() { return this.picked;}
 
     pick() {
         if (!this.picked) {
@@ -91,9 +87,9 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 0.1;
+        let speed = 0.3;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
-        if (duration==0) duration+=1
+        if (duration == 0) duration += 1
 
         console.log("Duration: "+ duration);
         console.log("finalx: ", finalTile.x );
@@ -108,14 +104,14 @@ class Piece {
         this.animation.addKeyFrame(start); 
 
         let end = new KeyFrame();
-        end.translation = new vec3.fromValues(finalTile.x-initialTile.x, 0,finalTile.y-initialTile.y);
+        end.translation = new vec3.fromValues(finalTile.x - initialTile.x, 0, finalTile.y - initialTile.y);
         end.instant = duration;
         this.animation.addKeyFrame(end);
 
-        // let putDown = new KeyFrame();
-        // putDown.translation = new vec3.fromValues(finalTile.x-initialTile.x, -this.selectHeight,finalTile.y-initialTile.y);
-        // putDown.instant = this.selectHeight/speed;
-        // this.animation.addKeyFrame(putDown);
+         let putDown = new KeyFrame();
+         putDown.translation = new vec3.fromValues(finalTile.x - initialTile.x, -this.selectHeight, finalTile.y - initialTile.y);
+         putDown.instant = this.selectHeight/speed;
+        this.animation.addKeyFrame(putDown);
     }
 
     update(time){
@@ -163,13 +159,12 @@ class Piece {
         this.scene.popMatrix();
 
     }
+
     displayPiece() {
         if(this.animation != null){
             this.animation.apply()
         } 
     }
 
-    isPicked() {
-        return this.picked;
-    }
+   
 }

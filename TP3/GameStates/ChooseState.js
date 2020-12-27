@@ -1,14 +1,16 @@
 class ChooseState extends GameState {
     constructor(orchestrator) {
         super(orchestrator)
-        //highligh the enemys pieces 
+
         this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.side), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.side];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
+
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
         this.orchestrator.updateErrors("")
     }
     handleReply(response) {
         this.pickable = response;
+                //highligh the enemys pieces 
     }
 
 
@@ -21,27 +23,28 @@ class ChooseState extends GameState {
      */
 
     pickPiece(obj, customId) {
-        if (obj == this.orchestrator.previousObj) {//se a peça selecionada for a que já havia sido selecionada antes
+        if (obj == this.orchestrator.previousObj) { //if the selected piece is the same as the previous one we unselect it
             obj.pick();
             this.orchestrator.updateErrors("Unpicked previous choosen piece")
             this.orchestrator.changeState(new ReadyState(this.orchestrator))
             return;
         }
-        if (obj.player == this.orchestrator.currentPlayer) return; //not allowed move
+        if (obj.player == this.orchestrator.currentPlayer){ //trying to choose its own piece
+            this.orchestrator.updateErrors("Can't choose your own piece, choose one of your oponents")
+            return; 
+        } 
+
         this.x = Math.floor((customId - 1) / this.orchestrator.gameBoard.side);
         this.y = (customId - 1) % this.orchestrator.gameBoard.side;
+
         let comparableArray = [this.x, this.y, ""];
         let comparableArray2 = [this.x, this.y];
 
         console.log(comparableArray)
-        if(obj.player == this.orchestrator.currentPlayer){
-            this.orchestrator.updateErrors("Can't choose your own piece, choose one of your oponents")
-            return;
-        } 
+      
         if ((searchForArray(this.pickable, comparableArray) != -1) || (searchForArray(this.pickable, comparableArray2) != -1)) {//se a peça selecionada for válida
             obj.pick()
-
-            this.orchestrator.gameSequence.addGameMove(new GameMove(this.scene, this.previousObj, obj, this.orchestrator.gameBoard.tiles[this.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard));
+            this.orchestrator.gameSequence.addGameMove(new GameMove(this.orchestrator.scene, this.orchestrator.previousObj, obj, this.orchestrator.gameBoard.tiles[this.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard));
 
             this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
             obj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1]);
