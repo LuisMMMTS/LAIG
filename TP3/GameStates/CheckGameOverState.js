@@ -1,26 +1,31 @@
 class CheckGameOverState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
-
+        //update score
         this.orchestrator.prolog.getcurrentscore(this.orchestrator.gameBoard,"black")
         this.orchestrator.prolog.getcurrentscore(this.orchestrator.gameBoard,"white")
-        //checkGameOver
+        this.orchestrator.prolog.getGameOver(this.orchestrator.gameBoard,this.orchestrator.currentPlayer)//check if game is over
         this.aux = 1
     }
 
     handleReply(response){
-        if(aux <=2) this.orchestrator.updateScore(this.aux,response)
+        if(this.aux <=2) this.orchestrator.updateScore(this.aux,response)
         else this.checkGameOver(response)
         this.aux++
         
     }
 
     checkGameOver(response){
-        //if response is null goes back to ready state
-        //if there is a winner goes to gameover state
+        console.log("heelo ")
+        if(response == ''){ //if response is null goes back to ready state
+            this.orchestrator.changePlayer();//switchplayer
+            this.orchestrator.changeState(new ReadyState(this.orchestrator))
+        }
+        else //if there is a winner goes to gameover state
+            this.orchestrator.changeState(new GameOverState(this.orchestrator)) 
     }
 
-    pickPiece(){
+    pickPiece(obj, customId){
         return;
     }
 

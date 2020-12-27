@@ -32,6 +32,7 @@ class GameOrchestrator {
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.currentPlayer = "black";
         this.menu = new Menu(this.scene)
+        this.updateCurrentPlayer(this.currentPlayer)
         this.changeState(new ReadyState(this))
     }
 
@@ -40,6 +41,7 @@ class GameOrchestrator {
             this.currentPlayer="white";
         else
             this.currentPlayer="black";
+        this.updateCurrentPlayer(this.currentPlayer)
     }
 
     changeState(state){
@@ -84,6 +86,19 @@ class GameOrchestrator {
 
     undo() {
         console.log("undo")
+        this.gameSequence.undo()
+    }
+
+    reset(){
+        console.log("reset")
+    }
+
+    quit(){
+        console.log("quit")
+    }
+
+    pause(){
+        console.log("pause")
     }
 
 
@@ -100,6 +115,11 @@ class GameOrchestrator {
     updateScore(player, score){ 
         if(player == 1) document.getElementById("player1-score").innerText = score
         else if(player == 2) document.getElementById("player2-score").innerText = score 
+    }
+
+    updateCurrentPlayer(player){
+        let p = player == "black"? 1:2
+        document.getElementById("player").innerText = p
     }
 
 
@@ -119,6 +139,7 @@ class GameOrchestrator {
                         var customId = results[i][1] // get id
                         console.log("Picked object: " + obj + ", with pick id " + customId);
                         this.pickedPiece(obj, customId);
+                       
                     }
                 }
                 // clear results
@@ -133,14 +154,14 @@ class GameOrchestrator {
      * @param {*} customId 
      */
     pickedPiece(obj, customId) {
-        this.state.pickPiece(obj, customId);
+        if(obj instanceof Piece) this.state.pickPiece(obj, customId);
+        else if(obj instanceof Button) this.state.pickButton(obj, customId)
     }
 
 
     //displays the board and animator
     display() {
         //this.theme.displayScene()--> tirar do xmlscene
-
         this.scene.pushMatrix();
         this.gameBoard.display();
         this.scene.popMatrix();

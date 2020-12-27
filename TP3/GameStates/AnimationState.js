@@ -4,10 +4,12 @@
 class AnimationState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
+        this.orchestrator.updateInfo("Moving Pieces")
+        this.orchestrator.updateErrors("")
     }
 
 
-    pickPiece(){
+    pickPiece(obj, customId){
         return;
     }
 
@@ -34,11 +36,9 @@ class AnimationState extends GameState{
         
             //this.orchestrator.prolog.getWinner(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
 
-
-            this.orchestrator.changePlayer();//switchplayer?
-
-            this.orchestrator.changeState(new ReadyState(this.orchestrator));//maybe here should be checking if game is over
+            this.orchestrator.changeState(new CheckGameOverState(this.orchestrator));//maybe here should be checking if game is over
         }
+
     }
     
 

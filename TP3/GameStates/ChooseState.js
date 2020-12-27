@@ -40,9 +40,9 @@ class ChooseState extends GameState {
         } 
         if ((searchForArray(this.pickable, comparableArray) != -1) || (searchForArray(this.pickable, comparableArray2) != -1)) {//se a peça selecionada for válida
             obj.pick()
-            console.log("hi")
-            var move = new GameMove(this.scene, this.previousObj, obj, this.orchestrator.gameBoard.tiles[this.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard);
-            this.orchestrator.gameSequence.addGameMove(move);
+
+            this.orchestrator.gameSequence.addGameMove(new GameMove(this.scene, this.previousObj, obj, this.orchestrator.gameBoard.tiles[this.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard));
+
             this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
             obj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1]);
             this.orchestrator.finalPick = customId;

@@ -4,7 +4,7 @@ class GameOverState extends GameState{
     }
 
 
-    pickPiece(){
+    pickPiece(obj, customId){
         return;
     }
 

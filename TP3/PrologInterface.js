@@ -173,18 +173,17 @@ class PrologInterface {
     
     handleWinner(data){
         let response = data.target.response;
-        console.log(response);
+        console.log(response)
+        this.gameOrchestrator.handleReply(response)
     }
     getWinner(board,Player){
-        board=this.gameBoardtoString(board);
-        this.getPrologRequest("checkEnd("+board+","+Player+")",this.handleWinner.bind(this));
+        board = this.gameBoardtoString(board);
+        this.getPrologRequest("checkEnd(" + board + "," + Player + ")",this.handleWinner.bind(this));
     }
 
-    
-    getGameOver(board, player){
-        this.getMovablePiecesResquest(board, player)
-
-        movablepieces=0;
+    getGameOver(board, Player){
+        board = this.gameBoardtoString(board);
+        this.getPrologRequest("checkEnd(" + board + "," + Player + ")",this.handleWinner.bind(this));
     }
 
     close() {

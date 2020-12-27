@@ -5,10 +5,10 @@ class CheckGameOverState extends GameState{
     }
 
     handleReply(response){
-        
+
     }
 
-    pickPiece(){
+    pickPiece(obj, customId){
         return;
     }
 
