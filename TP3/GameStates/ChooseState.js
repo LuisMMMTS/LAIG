@@ -2,12 +2,17 @@ class ChooseState extends GameState {
     constructor(orchestrator) {
         super(orchestrator)
 
+    }
+
+    init(){
         this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.side), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.side];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
 
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
         this.orchestrator.updateErrors("")
+        return;
     }
+
     handleReply(response) {
         this.pickable = response;
                 //highligh the enemys pieces 

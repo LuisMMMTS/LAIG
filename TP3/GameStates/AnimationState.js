@@ -9,6 +9,10 @@ class AnimationState extends GameState{
         this.orchestrator.updatePlayTime(0)
     }
 
+    init(){
+        return;
+    }
+
 
     pickPiece(obj, customId){
         return;

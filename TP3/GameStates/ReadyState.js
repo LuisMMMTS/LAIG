@@ -4,6 +4,10 @@
 class ReadyState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
+        
+    }
+
+    init(){
         this.orchestrator.prolog.getMovablePiecesResquest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
         this.orchestrator.updateInfo("Choose one of your pieces")
         this.orchestrator.updateErrors("")

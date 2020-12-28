@@ -96,12 +96,14 @@ class PrologInterface {
         let newBoard = response.slice(4);
         //compare to board now and/or save in states?
         console.log(newBoard);
+        response=[OldPos,NewPos,newBoard];
+        this.gameOrchestrator.handleReply(response);
     }
 
     moveRequest(board, player, AiLevel1 = null, AiLevel2 = null, OldPos = null, NewPos = null) {
         board = this.gameBoardtoString(board);
-        if (!isNan(OldPos)){OldPos+=1};
-        if (!isNan(NewPos)){NewPos+=1};
+        if (!isNaN(OldPos)){OldPos+=1};
+        if (!isNaN(NewPos)){NewPos+=1};
         if (AiLevel1 == null && AiLevel2 == null) {//human
             this.getPrologRequest("playerTurn(" + board + "," + player + "-'player'-" + AiLevel1 + "-" + AiLevel2 + "," + OldPos + "," + NewPos + ")", this.handleMoveReply.bind(this));
         } else {//computer

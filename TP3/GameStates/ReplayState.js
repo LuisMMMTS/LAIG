@@ -1,7 +1,10 @@
 class CheckGameOverState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
-        this.orchestrator.updatePlayTime(0)
+    }
+
+    init(){
+        this.orchestrator.updatePlayTime(0);
     }
 
     handleReply(response){
