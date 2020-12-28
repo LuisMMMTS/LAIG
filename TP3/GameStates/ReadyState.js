@@ -57,6 +57,10 @@ class ReadyState extends GameState{
                 this.orchestrator.updateErrors("No more plays to undo")
                 return
             }
+
+            this.orchestrator.previousObj = move.endPiece;
+            this.orchestrator.finalObj=move.startPiece;
+
             move.startPiece.floating()
             move.endPiece.floating()
             move.startPiece.createAnimation(move.endPiece.tile, move.startPiece.tile)

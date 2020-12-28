@@ -104,7 +104,7 @@ class Piece {
         console.log("initialx: ",  initialTile.x);
         console.log("initialz: ",  initialTile.y);
 
-        this.animation = new KeyFrameAnimation(this.scene, "pieceAnimation");
+        this.animation = new BezierAnimation(this.scene, "pieceAnimation");
         let start = new KeyFrame()
         start.translation = new vec3.fromValues(0, 0, 0)
         start.instant = begin;
