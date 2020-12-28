@@ -90,7 +90,7 @@ class Piece {
         this.float = !this.float
     }
 
-    createAnimation(initialTile, finalTile){
+    createAnimation(initialTile, finalTile,begin=0){
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
@@ -107,18 +107,19 @@ class Piece {
         this.animation = new KeyFrameAnimation(this.scene, "pieceAnimation");
         let start = new KeyFrame()
         start.translation = new vec3.fromValues(0, 0, 0)
-        start.instant = 0;
+        start.instant = begin;
         this.animation.addKeyFrame(start); 
 
         let end = new KeyFrame();
         end.translation = new vec3.fromValues(finalTile.x - initialTile.x, 0, finalTile.y - initialTile.y);
-        end.instant = duration;
+        end.instant = begin+duration;
         this.animation.addKeyFrame(end);
 
-         let putDown = new KeyFrame();
-         putDown.translation = new vec3.fromValues(finalTile.x - initialTile.x, -this.selectHeight, finalTile.y - initialTile.y);
-         putDown.instant = this.selectHeight/speed;
-        this.animation.addKeyFrame(putDown);
+        //  let putDown = new KeyFrame();
+        //  putDown.translation = new vec3.fromValues(finalTile.x - initialTile.x, -this.selectHeight, finalTile.y - initialTile.y);
+        //  putDown.instant = this.selectHeight/speed;
+        // this.animation.addKeyFrame(putDown);
+        return duration;
     }
 
     update(time){
@@ -139,7 +140,7 @@ class Piece {
         this.color.apply();
 
         if (this.float) {
-            this.scene.translate(0, this.selectHeight, 0);
+            //this.scene.translate(0, this.selectHeight, 0);
         }
 
         this.displayPiece();

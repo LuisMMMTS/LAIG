@@ -67,6 +67,8 @@ class Board extends CGFobject {
         this.removePieceFromTile(final);
         this.addPieceToTile(initial.removed, final);
         this.addPieceToTile(final.removed, initial);
+        initial.removed=null;
+        final.removed=null;
         
     }
     getPieceOfTile(tile) {
