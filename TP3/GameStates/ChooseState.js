@@ -14,8 +14,9 @@ class ChooseState extends GameState {
     }
 
     handleReply(response) {
+        unColorTiles(this.orchestrator);
         this.pickable = response;
-                //highligh the enemys pieces 
+        colorTiles(this.orchestrator, response) //highligh the enemys pieces 
     }
 
 

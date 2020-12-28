@@ -21,7 +21,7 @@ class GameOrchestrator {
             easy: 1,
             difficult: 2
         }
-        this.changeMode(this.mode.cvp);
+        this.changeMode(this.mode.pvp);
         this.AiLevel1=this.difficult.easy;
         this.AiLevel2=this.difficult.difficult;
 

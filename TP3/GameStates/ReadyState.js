@@ -14,9 +14,9 @@ class ReadyState extends GameState{
     }
 
     handleReply(response){
+        unColorTiles(this.orchestrator);
         this.pickable = response;
-        console.log(this.orchestrator.currentPlayer);
-        console.log(this.pickable);
+        colorTiles(this.orchestrator, response)
     }
 
     /**
