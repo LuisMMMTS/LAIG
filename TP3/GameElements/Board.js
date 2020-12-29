@@ -17,6 +17,7 @@ class Board extends CGFobject {
         this.tiles = [];
         
         this.init(array);
+        
 	}	
 	
 	init(array) {
