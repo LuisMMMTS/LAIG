@@ -47,6 +47,8 @@ class MyInterface extends CGFinterface {
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
     };
+
+
     /**
      * 
      * @param {*} views - views defined in the scene
@@ -57,10 +59,7 @@ class MyInterface extends CGFinterface {
         this.addLightsFolder(lights)
         this.addCamerasDropDown(views)
         this.addThemeDropDown(themes)
-        this.addModeDropDown(modes)
         this.addQuit()
-        this.addBoardSize()
-        this.addPlayTime()
     }
 
     addLightsFolder(lights){
@@ -104,19 +103,9 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene,'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
     }
 
-    addModeDropDown(modes){
-        this.gui.add(this.scene, "gameMode", modes).onChange(val => this.scene.changeMode(val)).name("Game Mode");
-    }
 
     addQuit(){
         this.gui.add(this.scene.orchestrator, 'quit').name('Quit')
     }
 
-    addBoardSize(){
-        this.gui.add(this.scene, 'boardSize', 2, 20, 1).name("Board Size (n x n)").onChange(val=>this.scene.setBoardSize(val))
-    }
-
-    addPlayTime(){
-        this.gui.add(this.scene, 'playTime',29, 120, 1).name("Play Time (s)").onChange(val=>this.scene.setPlayTime(val))
-    }
 }

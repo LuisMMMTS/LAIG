@@ -5,7 +5,7 @@
  */
 
 class GameOrchestrator {
-    constructor(scene, boardSize) {
+    constructor(scene, boardSize, playTime) {
         this.scene = scene;
         this.boardSize = boardSize;
         this.prolog = new PrologInterface(this);
@@ -37,7 +37,7 @@ class GameOrchestrator {
         this.changeState(new ReadyState(this))
         this.init()
 
-        this.playTime = 10
+        this.playTime = playTime
         this.timeLeft = this.playTime
         this.lastTime = 0
     }

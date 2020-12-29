@@ -6,12 +6,18 @@ class XMLscene extends CGFscene {
      * @constructor
      * @param {MyInterface} myinterface 
      */
-    constructor(myinterface) {
+    constructor(myinterface, player1, player2, boardSize, playTime) {
         super();
 
         this.interface = myinterface;
         this.themes = ["Theme1", "Theme2", "Theme3"];
-        this.modes = ['PlayervsPlayer', 'BotvsPlayer', 'PlayervsBot', 'BotvsBot'];
+        this.boardSize = boardSize;
+        this.playTime = playTime;
+        if(player1.type == "p" && player2.type == "p") this.mode = "pvp";
+        else if (player1.type == "c" && player2.type == "p") this.mode ="cvp"
+        else if (player1.type == "p" && player2.type == "c") this.mode ="pvc"
+        else if (player1.type == "c" && player2.type == "c") this.mode ="cvc"
+
         this.selectedScene = 'Theme1';
         this.gameMode = 'PlayervsPlayer';
         this.selectedTheme = "Theme1";
@@ -22,8 +28,8 @@ class XMLscene extends CGFscene {
             this.themeGraphs[key] = new MySceneGraph(value, this)
         }
 
-        this.boardSize = 10
-        this.playTime = 30
+        //this.boardSize = 10
+        //this.playTime = 30
     }   
 
     /**
@@ -68,7 +74,7 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        this.orchestrator = new GameOrchestrator(this, this.boardSize);
+        this.orchestrator = new GameOrchestrator(this, this.boardSize, this.playTime);
         
     }
 
@@ -235,19 +241,6 @@ class XMLscene extends CGFscene {
         this.orchestrator.changeTheme(this.themeGraphs[value]);
      }
 
-     changeMode(mode){
-         this.orchestrator.changeMode(mode);
-
-     }
-
-     setBoardSize(val){
-        console.log(val)
-        this.boardSize = val
-     }
-     setPlayTime(val){
-        console.log(val)
-        this.orchestrator.setPlayTime(val)
-     }
 
     /**
      * Displays the scene.
