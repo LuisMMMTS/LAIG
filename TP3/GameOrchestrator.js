@@ -13,22 +13,6 @@ class GameOrchestrator {
         this.auxiliarBoard=new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);//new MyCube(this.scene,5);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //this.gameBoard = new Board(this.scene, [["white","black"],["white", "black"]]);
-<<<<<<< HEAD
-        this.mode = {
-            pvp: 1,
-            pvc: 2,
-            cvp: 3,
-            cvc: 4
-        }
-        this.difficult = {
-            easy: 1,
-            difficult: 2
-        }
-        this.changeMode(this.mode.pvp);
-        this.AiLevel1=this.difficult.easy;
-        this.AiLevel2=this.difficult.difficult;
-        
-=======
         this.mode = { pvp: 1, pvc: 2, cvp: 3,cvc: 4}
 
         if(player1.type == "p" && player2.type == "p") this.changeMode(this.mode.pvp);
@@ -49,7 +33,6 @@ class GameOrchestrator {
             else if(player2.difficulty == "difficult") this.AiLevel2 = (this.difficulty.difficult)    
         } 
         else this.AiLevel2 = null
->>>>>>> e934c7d0a886ee0e41de629e2dada6c7ce2f3627
 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.loaded = true;
