@@ -53,6 +53,8 @@ class GameOrchestrator {
         this.timeLeft = this.playTime
         this.lastTime = 0
 
+        this.gameOver = false
+
     }
     init(){
         this.currentPlayer = "black";
@@ -229,7 +231,8 @@ class GameOrchestrator {
         this.scene.translate(-1.15,2.4,1.75)
         this.scene.rotate(Math.PI/2.0,0,1,0)
         this.scene.scale(0.98,1, 0.2)
-        this.menu.display()
+        if(this.gameOver) this.endMenu.display
+        else this.menu.display()
         this.scene.popMatrix()
         //this.animator.display()
     }

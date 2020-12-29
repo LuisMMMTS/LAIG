@@ -87,6 +87,8 @@ class ReadyState extends GameState{
     }
 
     checkTimeOut(time){
+        if(this.orchestrator.paused) return
+        
         this.orchestrator.timeLeft -= (time - this.orchestrator.lastTime)
         
         if(this.orchestrator.timeLeft < 0){

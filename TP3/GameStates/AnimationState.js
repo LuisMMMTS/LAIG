@@ -33,6 +33,8 @@ class AnimationState extends GameState{
     animationEnd(time){
         console.log(this.orchestrator.previousObj);
         console.log(this.orchestrator.finalObj);
+        if(this.orchestrator.paused) return
+        
         this.orchestrator.previousObj.update(time)
         this.orchestrator.finalObj.update(time)
 

@@ -19,6 +19,7 @@ class AnimationCamera extends CGFcamera{
     activateCamera(){
         this.elapsedTime = 0
         this.angle = 0
+        this.lastTime = 0
         this.active = true
     }
 
@@ -30,7 +31,6 @@ class AnimationCamera extends CGFcamera{
                 this.lastTime = currentTime;
             }
             this.elapsedTime += (currentTime - this.lastTime)
-
             if(this.elapsedTime >= this.animationTime){
                 this.orbit(CGFcameraAxis.Y, Math.PI*2 - this.angle)
                 this.active = false
