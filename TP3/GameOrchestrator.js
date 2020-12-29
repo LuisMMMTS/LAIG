@@ -5,30 +5,36 @@
  */
 
 class GameOrchestrator {
-    constructor(scene, boardSize, playTime) {
+    constructor(scene, player1, player2, boardSize, playTime) {
         this.scene = scene;
         this.boardSize = boardSize;
         this.prolog = new PrologInterface(this);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //this.gameBoard = new Board(this.scene, [["white","black"],["white", "black"]]);
-        this.mode = {
-            pvp: 1,
-            pvc: 2,
-            cvp: 3,
-            cvc: 4
-        }
-        this.difficult = {
-            easy: 1,
-            difficult: 2
-        }
-        this.changeMode(this.mode.pvp);
-        this.AiLevel1=this.difficult.easy;
-        this.AiLevel2=this.difficult.difficult;
+        this.mode = { pvp: 1, pvc: 2, cvp: 3,cvc: 4}
+
+        if(player1.type == "p" && player2.type == "p") this.changeMode(this.mode.pvp);
+        else if (player1.type == "c" && player2.type == "p") this.changeMode(this.mode.cvp);
+        else if (player1.type == "p" && player2.type == "c") this.changeMode(this.mode.pvc);
+        else if (player1.type == "c" && player2.type == "c") this.changeMode(this.mode.cvc);
+
+        console.log(this.mode)
+        this.difficulty = { easy: 1, difficult: 2}
+
+        if(player1.type == "c"){
+            if(player1.difficulty == "easy") this.AiLevel1 = (this.difficulty.easy)
+            else if(player1.difficulty == "difficult") this.AiLevel1 = (this.difficulty.difficult)
+        } 
+        else this.AiLevel1 = null
+        if(player2.type == "c"){
+            if(player2.difficulty == "easy") this.AiLevel2 = (this.difficulty.easy)
+            else if(player2.difficulty == "difficult") this.AiLevel2 = (this.difficulty.difficult)    
+        } 
+        else this.AiLevel2 = null
 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.loaded = false
         
-       
         this.previousPick = null
         this.previousObj = null
         this.finalPick = null
@@ -68,16 +74,16 @@ class GameOrchestrator {
 
     changeState(state){
         if (state instanceof ReadyState){
-            if(this.mode==2){
-                if (this.currentPlayer=="white"){
-                    state=new BotState(this)
+            if(this.mode == 2){
+                if (this.currentPlayer == "white"){
+                    state = new BotState(this)
                 }
-            }else if (this.mode==3){
-                if (this.currentPlayer=="black"){
-                    state=new BotState(this)
+            }else if (this.mode == 3){
+                if (this.currentPlayer == "black"){
+                    state = new BotState(this)
                 }
-            }else if (this.mode==4){
-                state=new BotState(this)
+            }else if (this.mode == 4){
+                state = new BotState(this)
             }
         }
         this.state = state;
@@ -124,6 +130,7 @@ class GameOrchestrator {
     changeMode(mode){
         this.mode = mode;
     }
+
 
     undo() {
         console.log("undo")

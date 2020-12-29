@@ -11,12 +11,11 @@ class XMLscene extends CGFscene {
 
         this.interface = myinterface;
         this.themes = ["Theme1", "Theme2", "Theme3"];
+
         this.boardSize = boardSize;
         this.playTime = playTime;
-        if(player1.type == "p" && player2.type == "p") this.mode = "pvp";
-        else if (player1.type == "c" && player2.type == "p") this.mode ="cvp"
-        else if (player1.type == "p" && player2.type == "c") this.mode ="pvc"
-        else if (player1.type == "c" && player2.type == "c") this.mode ="cvc"
+        this.player1 = player1
+        this.player2 = player2
 
         this.selectedScene = 'Theme1';
         this.gameMode = 'PlayervsPlayer';
@@ -74,7 +73,7 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance = new CGFappearance(this);
 
-        this.orchestrator = new GameOrchestrator(this, this.boardSize, this.playTime);
+        this.orchestrator = new GameOrchestrator(this, this.player1, this.player2, this.boardSize, this.playTime);
         
     }
 
