@@ -61,15 +61,15 @@ class PrologInterface {
         document.querySelector("#query_result").innerHTML = data.target.response;
     }
 
-    async handleBoardReply(data) {
+    handleBoardReply(data) {
         //document.querySelector("#query_result").innerHTML=data.target.response;
         let response = data.target.response;
         response = this.responsesToArrays(response);
         this.gameOrchestrator.handleReply(response)
     }
 
-    async boardRequest(size) {
-        await this.getPrologRequest("initialBoard(" + size + ")", this.handleBoardReply.bind(this));
+    boardRequest(size) {
+        this.getPrologRequest("initialBoard(" + size + ")", this.handleBoardReply.bind(this));
         //let board=data.target.response;
         //console.log("board is: "+this);
     }

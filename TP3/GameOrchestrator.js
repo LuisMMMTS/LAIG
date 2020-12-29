@@ -9,6 +9,8 @@ class GameOrchestrator {
         this.scene = scene;
         this.boardSize = boardSize;
         this.prolog = new PrologInterface(this);
+
+        this.auxiliarBoard=new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);//new MyCube(this.scene,5);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //this.gameBoard = new Board(this.scene, [["white","black"],["white", "black"]]);
         this.mode = {
@@ -24,9 +26,11 @@ class GameOrchestrator {
         this.changeMode(this.mode.pvp);
         this.AiLevel1=this.difficult.easy;
         this.AiLevel2=this.difficult.difficult;
+        
 
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
-        this.loaded = false
+        this.loaded = true;
+        this.tilesLoaded=false;
         
        
         this.previousPick = null
@@ -40,6 +44,7 @@ class GameOrchestrator {
         this.currentPlayer = "black";
 
         this.changeState(new ReadyState(this));
+        //this.changeState(new LoadingState(this));
             
         this.init()
 
@@ -111,6 +116,7 @@ class GameOrchestrator {
 
     setTheme(theme){
         this.gameBoard.changeTheme(theme.board)
+        this.auxiliarBoard.changeTheme(theme.board);
     }
 
     setPlayTime(time){
@@ -120,6 +126,7 @@ class GameOrchestrator {
     changeTheme(theme){
         this.theme = theme;
         this.gameBoard.changeTheme(theme.board);
+        this.auxiliarBoard.changeTheme(theme.board);
     }
     changeMode(mode){
         this.mode = mode;
@@ -215,8 +222,17 @@ class GameOrchestrator {
     display() {
         //this.theme.displayScene()--> tirar do xmlscene
         this.scene.pushMatrix();
+        //this.scene.translate(0,0,10);
+        //this.auxiliarBoard.display();
+        this.scene.popMatrix();
+
+        if (this.loaded){
+        this.scene.pushMatrix();
+        // console.log("This gameboard")
+        // console.log(this.gameBoard)
         this.gameBoard.display();
         this.scene.popMatrix();
+    }
         this.scene.pushMatrix();
         this.scene.translate(-1.15,2.4,1.75)
         this.scene.rotate(Math.PI/2.0,0,1,0)

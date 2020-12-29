@@ -94,14 +94,14 @@ class KeyFrameAnimation extends Animation{
         }
 
         //find the keyframes to interpolate between
-       
-        if(this.elapsedTime > this.keyframes[this.keyframeEndIndex].instant){
-            if(this.keyframes.length <= this.keyframeEndIndex+1){
+
+        if (this.elapsedTime > this.keyframes[this.keyframeEndIndex].instant) {
+            if (this.keyframes.length <= this.keyframeEndIndex + 1) {
                 this.ended = true;
-                return;
-            } 
-            this.keyframeEndIndex++;
-            this.keyframeStartIndex++;
+            } else {
+                this.keyframeEndIndex++;
+                this.keyframeStartIndex++;
+            }
         }    
         /* INTERPOLATION */
         //It's not the end so we need to do interpolation

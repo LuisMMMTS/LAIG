@@ -8,16 +8,19 @@
  * @param id - tile id
  */
 class BoardTile extends CGFobject {
-    constructor(scene, gameBoard, size, x, y, id, color) {
+    constructor(scene, gameBoard, size, x, y, id, PieceColor,z=0) {
         super(scene);
         this.size = size;
         this.x = x;
         this.y = y;
+        this.z=z;
         this.id = id;
         this.gameBoard = gameBoard;
         this.plane = new MyPlane(this.scene, size, size);
+        this.PieceColor=PieceColor;
 
-        this.piece = new Piece(this.scene, id, this, color);
+        //this.piece = null;//new Piece(this.scene, id, this, PieceColor);
+        this.piece=new Piece(this.scene, id, this, PieceColor);
         this.removed = null
         this.highlight = false
         this.pickedMaterial = new CGFappearance(this.scene);
@@ -25,27 +28,42 @@ class BoardTile extends CGFobject {
         this.pickedMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setSpecular(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setShininess(10.0);
+        this.pieceMaterials=[]
     }
 
     changeTheme(piece1, piece2, tile1, tile2){
-        if(this.piece.player == "black"){
+        this.pieceMaterials.push(piece1);
+        this.pieceMaterials.push(piece2);
+        if(this.PieceColor == "black" && this.piece!=null){
             this.piece.changeTheme(piece1);
         }
-        else if(this.piece.player == "white"){
+        else if(this.PieceColor == "white" && this.piece!=null){
             this.piece.changeTheme(piece2);
         }
-        if(this.piece.player == 'black'){
+        if(this.PieceColor == 'black'){
             this.material = tile1;
         }
-        else if (this.piece.player == 'white'){
+        else if (this.PieceColor == 'white'){
             this.material = tile2;
         }
     }
 
+    insertPiece(piece){
+        if(this.PieceColor == 'black'){
+            piece.changeTheme(this.pieceMaterials[0]);
+        }
+        else if (this.PieceColor == 'white'){
+            piece.changeTheme(this.pieceMaterials[1]);
+        }
+        this.piece = piece;
+        piece.tile=this;
+
+    }
 
     setPiece(piece) {
         if(this.removed == null) this.removed = this.piece;
         this.piece = piece;
+        piece.tile=this;
 
     }
 
@@ -66,7 +84,7 @@ class BoardTile extends CGFobject {
 
         this.scene.pushMatrix();
 
-        this.scene.translate(this.x, 0, this.y); //move to its position    
+        this.scene.translate(this.x, this.z, this.y); //move to its position    
 
         if(!this.highlight)this.material.apply()
         else this.pickedMaterial.apply()
