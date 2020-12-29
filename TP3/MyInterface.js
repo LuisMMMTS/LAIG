@@ -47,31 +47,45 @@ class MyInterface extends CGFinterface {
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
     };
+
+
     /**
      * 
      * @param {*} views - views defined in the scene
      */
-    createInterface(lights, views, themes, modes){
+    createInterface(lights, views, themes){
         this.addAxisCheckBox()
+        this.addQuit()
+        this.addThemeDropDown(themes)
         this.addLightsCheckbox()
         this.addLightsFolder(lights)
         this.addCamerasDropDown(views)
-        this.addThemeDropDown(themes)
-        this.addModeDropDown(modes)
-        this.addQuit()
-        this.addBoardSize()
-        this.addPlayTime()
+        
+        
+    }
+
+    updateInterface(lights, views){
+        if(this.group){
+            this.gui.removeFolder(this.group)
+            this.addLightsFolder(lights)
+        }
+        if(this.camerasDropDown){
+            this.gui.remove(this.camerasDropDown)
+            this.addCamerasDropDown(views)  
+        } 
+        
+        
     }
 
     addLightsFolder(lights){
-        var  group = this.gui.addFolder("Lights");
+        this.group = this.gui.addFolder("Lights");
         //group.open(), is comment for preference, can be uncommented
         
         for(var key in lights){
             if(lights.hasOwnProperty(key)){
                 /*Forming a map this.scene.lightValues that store in the enable value of a given key */
                 this.scene.lightValues[key] = lights[key][0];
-                group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
+                this.group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
             }
         }   
         
@@ -88,7 +102,7 @@ class MyInterface extends CGFinterface {
             }   
         }
         //setting the cameras dropdown 
-        this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera(val)).name("Camera");
+        this.camerasDropDown = this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera()).name("Camera")
         //this.gui.add(this.scene, 'camera', this.scene.objectIDs).name('Selected Object').onChange(this.scene.updateObjectComplexity.bind(this.scene));
     }
 
@@ -104,19 +118,9 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene,'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
     }
 
-    addModeDropDown(modes){
-        this.gui.add(this.scene, "gameMode", modes).onChange(val => this.scene.changeMode(val)).name("Game Mode");
-    }
 
     addQuit(){
         this.gui.add(this.scene.orchestrator, 'quit').name('Quit')
     }
 
-    addBoardSize(){
-        this.gui.add(this.scene, 'boardSize', 2, 20, 1).name("Board Size (n x n)").onChange(val=>this.scene.setBoardSize(val))
-    }
-
-    addPlayTime(){
-        this.gui.add(this.scene, 'playTime',29, 120, 1).name("Play Time (s)").onChange(val=>this.scene.setPlayTime(val))
-    }
 }

@@ -23,7 +23,7 @@ class CheckGameOverState extends GameState{
         console.log("heelo ")
         if(response == ''){ //if response is null goes back to ready state
             this.orchestrator.changePlayer();
-            this.orchestrator.changeState(new ReadyState(this.orchestrator))
+            this.orchestrator.changeState(new CameraAnimationState(this.orchestrator));
         }
         else //if there is a winner goes to gameover state
             this.orchestrator.changeState(new GameOverState(this.orchestrator)) 

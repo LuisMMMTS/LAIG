@@ -6,6 +6,7 @@ class GameOverState extends GameState{
     init(){
         this.orchestrator.updatePlayTime(0)
         this.orchestrator.prolog.getWinner(this.orchestrator.gameBoard, this.orchestrator.currentPlayer)
+        this.orchestrator.updateInfo("Player won")
         console.log("hello")
         return;
     }
