@@ -2,15 +2,21 @@ class ChooseState extends GameState {
     constructor(orchestrator) {
         super(orchestrator)
 
+    }
+
+    init(){
         this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.side), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.side];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
 
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
         this.orchestrator.updateErrors("")
+        return;
     }
+
     handleReply(response) {
+        unColorTiles(this.orchestrator);
         this.pickable = response;
-                //highligh the enemys pieces 
+        colorTiles(this.orchestrator, response) //highligh the enemys pieces 
     }
 
 
@@ -47,8 +53,8 @@ class ChooseState extends GameState {
             this.orchestrator.gameSequence.addGameMove(new GameMove(this.orchestrator.scene, this.orchestrator.previousObj, obj, this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard));
             console.log(customId)
             console.log(this.orchestrator.gameBoard.tiles.length)
-            this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
-            obj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1]);
+            let duration=this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
+            obj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1],duration);
             this.orchestrator.finalPick = customId;
             this.orchestrator.finalObj = obj;
             this.orchestrator.finalTile = obj.tile;

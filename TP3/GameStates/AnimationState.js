@@ -9,6 +9,11 @@ class AnimationState extends GameState{
         this.orchestrator.updatePlayTime(0)
     }
 
+    init(){
+        unColorTiles(this.orchestrator);
+        return;
+    }
+
 
     pickPiece(obj, customId){
         return;
@@ -26,6 +31,8 @@ class AnimationState extends GameState{
     }
 
     animationEnd(time){
+        console.log(this.orchestrator.previousObj);
+        console.log(this.orchestrator.finalObj);
         this.orchestrator.previousObj.update(time)
         this.orchestrator.finalObj.update(time)
 
@@ -45,6 +52,8 @@ class AnimationState extends GameState{
         if (this.orchestrator.previousObj.animation.ended && this.orchestrator.finalObj.animation.ended){
             this.orchestrator.previousObj.animation = null
             this.orchestrator.finalObj.animation = null
+            console.log(this.orchestrator.startTile)
+            console.log(this.orchestrator.finalTile)
             this.orchestrator.gameBoard.switchTiles(this.orchestrator.startTile,this.orchestrator.finalTile);
 
             this.orchestrator.changeState(new CheckGameOverState(this.orchestrator));

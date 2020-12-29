@@ -10,6 +10,13 @@
     /**
      * @abstract
      */
+    init(){
+        
+    }
+
+    /**
+     * @abstract
+     */
     handleReply(response){
         
     }

@@ -21,6 +21,10 @@ class GameOrchestrator {
             easy: 1,
             difficult: 2
         }
+        this.changeMode(this.mode.pvp);
+        this.AiLevel1=this.difficult.easy;
+        this.AiLevel2=this.difficult.difficult;
+
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
         this.loaded = false
         
@@ -34,12 +38,15 @@ class GameOrchestrator {
         
         
         this.currentPlayer = "black";
-        this.changeState(new ReadyState(this))
+
+        this.changeState(new ReadyState(this));
+            
         this.init()
 
         this.playTime = playTime
         this.timeLeft = this.playTime
         this.lastTime = 0
+
     }
     init(){
         this.currentPlayer = "black";
@@ -60,7 +67,21 @@ class GameOrchestrator {
     }
 
     changeState(state){
+        if (state instanceof ReadyState){
+            if(this.mode==2){
+                if (this.currentPlayer=="white"){
+                    state=new BotState(this)
+                }
+            }else if (this.mode==3){
+                if (this.currentPlayer=="black"){
+                    state=new BotState(this)
+                }
+            }else if (this.mode==4){
+                state=new BotState(this)
+            }
+        }
         this.state = state;
+        this.state.init();
     }
 
     handleReply(response){
@@ -102,7 +123,6 @@ class GameOrchestrator {
     }
     changeMode(mode){
         this.mode = mode;
-        console.log(mode)
     }
 
     undo() {

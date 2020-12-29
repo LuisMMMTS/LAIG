@@ -4,15 +4,19 @@
 class ReadyState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
+        
+    }
+
+    init(){
         this.orchestrator.prolog.getMovablePiecesResquest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
         this.orchestrator.updateInfo("Choose one of your pieces")
         this.orchestrator.updateErrors("")
     }
 
     handleReply(response){
+        unColorTiles(this.orchestrator);
         this.pickable = response;
-        console.log(this.orchestrator.currentPlayer);
-        console.log(this.pickable);
+        colorTiles(this.orchestrator, response)
     }
 
     /**
@@ -53,6 +57,10 @@ class ReadyState extends GameState{
                 this.orchestrator.updateErrors("No more plays to undo")
                 return
             }
+
+            this.orchestrator.previousObj = move.endPiece;
+            this.orchestrator.finalObj=move.startPiece;
+
             move.startPiece.floating()
             move.endPiece.floating()
             move.startPiece.createAnimation(move.endPiece.tile, move.startPiece.tile)

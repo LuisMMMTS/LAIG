@@ -2,7 +2,7 @@
  * KeyFrameAnimation - class that stores the keyframe animation information
  */
 
-class KeyFrameAnimation extends Animation{
+class BezierAnimation extends Animation{
     /**
     * @constructor
     * @param scene - Reference to MyScene object

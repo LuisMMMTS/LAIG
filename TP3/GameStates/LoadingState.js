@@ -5,10 +5,16 @@
 class LoadingState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
+        
+    }
+
+    init(){
         this.orchestrator.updatePlayTime(0)
         //asks for board
         this.orchestrator.prolog.boardRequest(this.orchestrator.boardSize)
+        return;
     }
+
     handleReply(response){
         //receives board and saves it on game Orchestrator 
         //this.orchestrator.gameBoard = new Board(this.orchestrator.scene, response)

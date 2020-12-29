@@ -61,6 +61,7 @@ class BoardTile extends CGFobject {
     highlight() {
         this.highlight = !this.highlight
     }
+    
     display() {
 
         this.scene.pushMatrix();
