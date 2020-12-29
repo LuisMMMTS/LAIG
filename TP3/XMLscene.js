@@ -77,22 +77,6 @@ class XMLscene extends CGFscene {
         
     }
 
-    /**
-     * Initializes the default camera.
-     */
-    initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-        this.interface.setActiveCamera(this.camera);
-    }
-    /**
-     * Initializes the scene cameras.
-     */
-
-    initXMLCameras(){
-        this.cameraID = this.themeGraphs[this.selectedTheme].defaultCameraId;
-        this.camera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId];
-        this.interface.setActiveCamera(this.default);
-    }
 
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -140,14 +124,7 @@ class XMLscene extends CGFscene {
             }
         }
     }
-    /**
-     * Update the current camera according to a change in the  cameras dropdown in the interface
-     */
-    updateCamera(newCamera) {
-        this.cameraID = newCamera;
-        this.camera = this.themeGraphs[this.selectedTheme].views[this.cameraID];
-        this.interface.setActiveCamera(this.camera);
-    }
+    
     /**
      * Enables the lights accordingly to the lights chosen in the interface
      */
@@ -173,6 +150,60 @@ class XMLscene extends CGFscene {
         }
     }
 
+    /**
+     * Initializes the default camera.
+     */
+    initCameras() {
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    }
+    /**
+     * Initializes the scene cameras.
+     */
+
+    initXMLCameras(){
+        this.cameraID = this.themeGraphs[this.selectedTheme].defaultCameraId;
+        this.camera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId];
+        this.interface.setActiveCamera(this.default);
+        this.updateCamera()
+    }
+
+    /**
+     * Update the current camera according to a change in the  cameras dropdown in the interface
+     */
+    updateCamera() {
+        this.camera = this.themeGraphs[this.selectedTheme].views[this.cameraID];
+        if(this.cameraID != this.themeGraphs[this.selectedTheme].defaultCameraId){
+            this.interface.setActiveCamera(this.camera);
+        }
+    }
+
+    getCurrentCamera(){
+        return this.cameraID
+    }
+
+    getDefaultCamera(){
+        return this.themeGraphs[this.selectedTheme].defaultCameraId
+    }
+
+    animateCamera(){
+        if(this.cameraID == this.themeGraphs[this.selectedTheme].defaultCameraId){
+            this.camera.activateCamera()
+        }
+    }
+
+
+    changeTheme(value){
+        this.selectedTheme = value
+        this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
+        this.orchestrator.changeTheme(this.themeGraphs[value]);
+        let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
+        this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator,defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
+        this.initLights()
+        this.updateCamera()
+     }
+
+
+
 
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
@@ -192,18 +223,21 @@ class XMLscene extends CGFscene {
 
         this.initXMLCameras();
 
+        let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
+        this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator,defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
+        console.log(this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId])
           //lights
         this.initLights();
 
         //initializing the interface elements
         if(!this.sceneInited)
-            this.interface.createInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views, this.themes, this.modes); 
+            this.interface.createInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views, this.themes); 
     
       
 
         this.setUpdatePeriod(100);
         if(!this.sceneInited)
-        this.orchestrator.setTheme(this.themeGraphs[this.selectedTheme]);
+        this.orchestrator.setTheme(this.themeGraphs[this.selectedTheme])
         this.sceneInited = true;
         
 
@@ -236,11 +270,7 @@ class XMLscene extends CGFscene {
          
      }
 
-     changeTheme(value){
-        this.orchestrator.changeTheme(this.themeGraphs[value]);
-     }
-
-
+    
     /**
      * Displays the scene.
      */
@@ -276,7 +306,6 @@ class XMLscene extends CGFscene {
             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).  
-            //  console.log(this.graph);
             //this.themeGraphs[this.selectedTheme].displayScene();
             this.orchestrator.display();
             

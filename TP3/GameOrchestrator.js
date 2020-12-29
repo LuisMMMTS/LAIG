@@ -141,6 +141,7 @@ class GameOrchestrator {
 
     reset(){
         console.log("reset")
+        location.reload()
     }
 
     quit(){

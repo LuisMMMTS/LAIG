@@ -94,7 +94,7 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 0.3;
+        let speed = 0.6;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
         if (duration == 0) duration += 1
 

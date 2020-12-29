@@ -53,24 +53,39 @@ class MyInterface extends CGFinterface {
      * 
      * @param {*} views - views defined in the scene
      */
-    createInterface(lights, views, themes, modes){
+    createInterface(lights, views, themes){
         this.addAxisCheckBox()
+        this.addQuit()
+        this.addThemeDropDown(themes)
         this.addLightsCheckbox()
         this.addLightsFolder(lights)
         this.addCamerasDropDown(views)
-        this.addThemeDropDown(themes)
-        this.addQuit()
+        
+        
+    }
+
+    updateInterface(lights, views){
+        if(this.group){
+            this.gui.removeFolder(this.group)
+            this.addLightsFolder(lights)
+        }
+        if(this.camerasDropDown){
+            this.gui.remove(this.camerasDropDown)
+            this.addCamerasDropDown(views)  
+        } 
+        
+        
     }
 
     addLightsFolder(lights){
-        var  group = this.gui.addFolder("Lights");
+        this.group = this.gui.addFolder("Lights");
         //group.open(), is comment for preference, can be uncommented
         
         for(var key in lights){
             if(lights.hasOwnProperty(key)){
                 /*Forming a map this.scene.lightValues that store in the enable value of a given key */
                 this.scene.lightValues[key] = lights[key][0];
-                group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
+                this.group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
             }
         }   
         
@@ -87,7 +102,7 @@ class MyInterface extends CGFinterface {
             }   
         }
         //setting the cameras dropdown 
-        this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera(val)).name("Camera");
+        this.camerasDropDown = this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera()).name("Camera")
         //this.gui.add(this.scene, 'camera', this.scene.objectIDs).name('Selected Object').onChange(this.scene.updateObjectComplexity.bind(this.scene));
     }
 

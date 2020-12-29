@@ -1,5 +1,5 @@
 /** 
- * KeyFrameAnimation - class that stores the keyframe animation information
+ * BezierAnimation - class that stores the keyframe animation information
  */
 
 class BezierAnimation extends Animation{
