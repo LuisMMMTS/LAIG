@@ -94,7 +94,7 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 0.6;
+        let speed = 1;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
         if (duration == 0) duration += 1
 
@@ -124,8 +124,11 @@ class Piece {
 
     update(time){
         console.log("time is "+time)
-        if(this.animation != null)
+        if(this.animation != null){
             this.animation.update(time)
+            console.log("UPDATED")
+            console.log(this.animation)
+        }
         
         if(this.animation.ended && !this.animation.active){
             this.animation = null;

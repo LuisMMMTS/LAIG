@@ -10,8 +10,8 @@ class GameOrchestrator {
         this.boardSize = boardSize;
         this.prolog = new PrologInterface(this);
 
-        this.auxiliarBoard=new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);//new MyCube(this.scene,5);
-        this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
+        this.auxiliarBoard = null;//=new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);//new MyCube(this.scene,5);
+        this.gameBoard = null;//new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //this.gameBoard = new Board(this.scene, [["white","black"],["white", "black"]]);
         this.mode = { pvp: 1, pvc: 2, cvp: 3,cvc: 4}
 
@@ -20,7 +20,7 @@ class GameOrchestrator {
         else if (player1.type == "p" && player2.type == "c") this.changeMode(this.mode.pvc);
         else if (player1.type == "c" && player2.type == "c") this.changeMode(this.mode.cvc);
 
-        console.log(this.mode)
+        
         this.difficulty = { easy: 1, difficult: 2}
 
         if(player1.type == "c"){
@@ -34,8 +34,10 @@ class GameOrchestrator {
         } 
         else this.AiLevel2 = null
 
+    
+
         //this.auxBoard = new Board(this.scene, x1,y1,x2,y2);
-        this.loaded = true;
+        this.loaded = false;
         this.tilesLoaded=false;
         
         this.previousPick = null
@@ -44,12 +46,13 @@ class GameOrchestrator {
         this.finalObj = null
         this.startTile = null
         this.finalTile = null
+        this.auxiliarBoardOffset=10;
         
         
         this.currentPlayer = "black";
 
-        this.changeState(new ReadyState(this));
-        //this.changeState(new LoadingState(this));
+        //this.changeState(new ReadyState(this));
+        this.changeState(new LoadingState(this));
             
         this.init()
 
@@ -122,8 +125,7 @@ class GameOrchestrator {
     }
 
     setTheme(theme){
-        this.gameBoard.changeTheme(theme.board)
-        this.auxiliarBoard.changeTheme(theme.board);
+        this.theme = theme;
     }
 
     setPlayTime(time){
@@ -141,26 +143,21 @@ class GameOrchestrator {
 
 
     undo() {
-        console.log("undo")
         let res = this.gameSequence.undo()
 
         if(res == -1) this.updateErrors("No moves to undo")
     }
 
     reset(){
-        console.log("reset")
         location.reload()
     }
 
     quit(){
-        console.log("quit")
         this.prolog.close()
     }
 
     pause(){
-        console.log("pause")
         this.paused = !this.paused
-        console.log(this.paused)
     }
 
 
@@ -230,12 +227,13 @@ class GameOrchestrator {
     //displays the board and animator
     display() {
         //this.theme.displayScene()--> tirar do xmlscene
+        if (this.loaded){
         this.scene.pushMatrix();
-        //this.scene.translate(0,0,10);
-        //this.auxiliarBoard.display();
+        this.scene.translate(0,0,this.auxiliarBoardOffset);
+        this.auxiliarBoard.display();
         this.scene.popMatrix();
 
-        if (this.loaded){
+        
         this.scene.pushMatrix();
         // console.log("This gameboard")
         // console.log(this.gameBoard)
