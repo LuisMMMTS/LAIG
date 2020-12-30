@@ -6,11 +6,11 @@ class GameAnimator{
     }
 
     reset(){
-
+        this.gameSequence.reset()
     }
 
     start(){
-
+        this.gameSequence.moveReplay()
     }
 
     update(time){

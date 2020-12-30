@@ -10,25 +10,34 @@ class GameSequence {
         this.moves = [];
         this.currentMove = 0;
     }
-
-    update(time){
-        for(var move of this.moves){
-            move.update(time);
-        }
-    }
     addGameMove(move) {
         this.moves.push(move);
         this.currentMove = this.moves.length-1;
     }
+
+    setCurrentMove(currentMove){
+        this.currentMove = currentMove
+    }
+
     getCurrentMove(){
         if(this.moves.length !== 0)
-            return this.currentMove;
+            return this.moves[this.currentMove];
     }
+
     getLastMove(){
         if(this.moves.length !== 0)
             return this.moves[this.currentMove]
         return -1
     }
+    updateCurrentMove(){
+        this.currentMove++
+    }
+
+    update(time){
+        if(this.currentMove == this.moves.length || this.moves.length == 0) return
+        this.moves[this.currentMove].update(time)
+    }
+
     undo() {
         if(this.moves.length < 1) return -1
         this.moves.pop()
@@ -41,7 +50,10 @@ class GameSequence {
     }
     
     moveReplay(){
-
+        this.moves.forEach(move => {
+            move.resetAnimation()
+        });
+        this.currentMove = 0
     }
 
     getMoveByIndex(i){

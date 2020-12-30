@@ -55,7 +55,7 @@ class ReadyState extends GameState{
             let move = this.orchestrator.gameSequence.getLastMove()
             
             if(move == -1){
-                this.orchestrator.updateErrors("No more plays to undo")
+                this.orchestrator.updateErrors("No more moves to undo")
                 return
             }
 

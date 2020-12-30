@@ -14,11 +14,7 @@ class Piece {
         this.tile = tile;
         this.player = player;
 
-        this.type = 'cube';
-        this.cube = new MyCube(this.scene, 0.5);
-        this.cylinder = new MyCylinder(this.scene, 0.2, 0.4,0.4, 16, 8);
-        this.sphere = new MySphere(this.scene,0.35,16,8);
-        this.cone = new MyCylinder(this.scene, 0.6, 0.01,0.4, 16, 8);
+        this.type = null;
         this.initMaterials();
 
         //if player is 1 pieces are black, if player is 2 pieces are white
@@ -122,7 +118,6 @@ class Piece {
     }
 
     update(time){
-        console.log("time is "+time)
         if(this.animation != null)
             this.animation.update(time)
         
@@ -143,24 +138,15 @@ class Piece {
         }
 
         this.displayPiece();
-
-        if(this.type == "cube")
-            this.cube.display();
-        else if(this.type == "cylinder"){
-            this.scene.pushMatrix();
-            this.scene.rotate(Math.PI/2.0, 1,0,0);
-            this.cylinder.display();
-            this.scene.popMatrix();
-        }
-        else if(this.type == "sphere")
-            this.sphere.display();
-        else if(this.type == "cone"){
-            this.scene.pushMatrix();
+        this.scene.pushMatrix();
+        if(this.type instanceof MyCylinder){
             this.scene.translate(0,-0.30,0);
             this.scene.rotate(-Math.PI/2.0, 1,0,0);
-            this.cone.display();
-            this.scene.popMatrix();
-        }
+            //this.scene.rotate(Math.PI/2.0, 1,0,0); real cylinder
+        }  
+        this.type.display()
+        this.scene.popMatrix();
+        
             
 
         this.scene.popMatrix();

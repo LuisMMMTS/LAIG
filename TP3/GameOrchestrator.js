@@ -9,8 +9,8 @@ class GameOrchestrator {
         this.scene = scene;
         this.boardSize = boardSize;
         this.prolog = new PrologInterface(this);
-
-        this.auxiliarBoard=new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);//new MyCube(this.scene,5);
+        this.boardRepresentation = [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]];
+        this.auxiliarBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);//new MyCube(this.scene,5);
         this.gameBoard = new Board(this.scene, [["white", "black", "white", "black"], ["black", "white", "black", "white"], ["white", "black", "white", "black"], ["black", "white", "black", "white"]]);
         //this.gameBoard = new Board(this.scene, [["white","black"],["white", "black"]]);
         this.mode = { pvp: 1, pvc: 2, cvp: 3,cvc: 4}
@@ -57,6 +57,7 @@ class GameOrchestrator {
         this.lastTime = 0
 
         this.gameOver = false
+        this.playingMovie = false
 
     }
     init(){
@@ -138,6 +139,9 @@ class GameOrchestrator {
         this.mode = mode;
     }
 
+    resetBoardTiles(){
+        this.gameBoard.createBoardTiles(this.boardRepresentation)
+    }
 
     undo() {
         console.log("undo")
@@ -158,7 +162,9 @@ class GameOrchestrator {
 
     pause(){
         console.log("pause")
+        if(!this.paused) this.info = document.getElementById("info").textContent
         this.paused = !this.paused
+        this.paused?this.updateInfo("Game is paused"):this.updateInfo(info)
         console.log(this.paused)
     }
 

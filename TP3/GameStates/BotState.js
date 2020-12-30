@@ -9,6 +9,7 @@
 
     init(){
         this.orchestrator.prolog.moveRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.orchestrator.AiLevel1, this.orchestrator.AiLevel1);
+        this.orchestrator.updateInfo("Bot is choosing its next move")
         return;
     }
 

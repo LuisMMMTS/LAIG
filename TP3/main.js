@@ -15,7 +15,8 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
 './Sprites/MySpriteAnimation.js', './Sprites/MySpritesheet.js', './Sprites/MySpriteText.js', './Primitives/MyPlane.js', './Primitives/MyDefBarrel.js', './Primitives/MyPatch.js','./Primitives/My2SideRectangle.js',
 './GameElements/Board.js', './GameElements/BoardTile.js', './GameElements/Piece.js', 'PrologInterface.js', 'GameOrchestrator.js','./Primitives/MyCube.js','./GameElements/GameSequence.js', './GameElements/GameAnimator.js','./GameElements/GameMove.js','./GameElements/Menu/Menu.js',
 './GameStates/GameState.js','./GameStates/AnimationState.js', './GameStates/ChooseState.js',  './GameStates/ReadyState.js', './GameStates/GameOverState.js','./GameStates/LoadingState.js','./GameStates/BotState.js','./utils.js','./GameStates/CheckGameOverState.js','./GameElements/Menu/Button.js','./GameElements/Menu/EndMenu.js',
- './GameElements/AnimationCamera.js','./GameStates/CameraAnimationState.js',
+ './GameElements/AnimationCamera.js','./GameStates/CameraAnimationState.js','./GameStates/MovieState.js',
+ 
  main=function(){
    let selected1 = 5
    let selected2 = 60
