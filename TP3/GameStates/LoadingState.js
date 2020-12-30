@@ -72,9 +72,7 @@ class LoadingState extends GameState{
        return;
     }
 
-    pickButton(obj, customId){
-        
-    }
+
 
     /**
      * @abstract

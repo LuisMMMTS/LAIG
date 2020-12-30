@@ -51,9 +51,7 @@ class CreateGameState extends GameState{
        return;
     }
 
-    pickButton(obj, customId){
-        
-    }
+
 
     /**
      * @abstract

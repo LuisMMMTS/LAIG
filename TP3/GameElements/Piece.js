@@ -7,6 +7,7 @@
  * @param player - number of the player
  */
 
+ this.aux = 1
 class Piece {
     constructor(scene, id, tile, player) {
         this.scene = scene;
@@ -14,11 +15,7 @@ class Piece {
         this.tile = tile;
         this.player = player;
 
-        this.type = 'cube';
-        this.cube = new MyCube(this.scene, 0.5);
-        this.cylinder = new MyCylinder(this.scene, 0.2, 0.4,0.4, 16, 8);
-        this.sphere = new MySphere(this.scene,0.35,16,8);
-        this.cone = new MyCylinder(this.scene, 0.6, 0.01,0.4, 16, 8);
+        this.type = null;
         this.initMaterials();
 
         //if player is 1 pieces are black, if player is 2 pieces are white
@@ -109,6 +106,12 @@ class Piece {
         start.instant = begin;
         this.animation.addKeyFrame(start); 
 
+        /*let middle = new KeyFrame()
+        middle.translation = new vec3.fromValues((finalTile.x-initialTile.x)/2.0, this.aux, (finalTile.y-initialTile.y)/2.0)
+        middle.instant = begin;
+        this.animation.addKeyFrame(middle); 
+
+        this.aux == 1? this.aux =0: this.aux = 1*/
         let end = new KeyFrame();
         end.translation = new vec3.fromValues(finalTile.x - initialTile.x, 0, finalTile.y - initialTile.y);
         end.instant = begin+duration;
@@ -122,8 +125,7 @@ class Piece {
     }
 
     update(time){
-        console.log("time is "+time)
-        if(this.animation != null){
+        if(this.animation != null)
             this.animation.update(time)
             console.log("UPDATED")
             console.log(this.animation)
@@ -133,7 +135,7 @@ class Piece {
             this.animation = null;
             console.log("making it null")
         }*/
-    }
+    
 
 
     display() {
@@ -146,24 +148,15 @@ class Piece {
         }
 
         this.displayPiece();
-
-        if(this.type == "cube")
-            this.cube.display();
-        else if(this.type == "cylinder"){
-            this.scene.pushMatrix();
-            this.scene.rotate(Math.PI/2.0, 1,0,0);
-            this.cylinder.display();
-            this.scene.popMatrix();
-        }
-        else if(this.type == "sphere")
-            this.sphere.display();
-        else if(this.type == "cone"){
-            this.scene.pushMatrix();
+        this.scene.pushMatrix();
+        if(this.type instanceof MyCylinder){
             this.scene.translate(0,-0.30,0);
             this.scene.rotate(-Math.PI/2.0, 1,0,0);
-            this.cone.display();
-            this.scene.popMatrix();
-        }
+            //this.scene.rotate(Math.PI/2.0, 1,0,0); real cylinder
+        }  
+        this.type.display()
+        this.scene.popMatrix();
+        
             
 
         this.scene.popMatrix();

@@ -56,7 +56,7 @@ class ChooseState extends GameState {
             this.orchestrator.finalPick = customId;
             this.orchestrator.finalObj = obj;
             this.orchestrator.finalTile = obj.tile;
-            let duration=this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
+            let duration = this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
             this.orchestrator.finalObj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1],duration);
             
             
@@ -73,13 +73,18 @@ class ChooseState extends GameState {
             obj.pick()
             this.orchestrator.previousObj.pick()
             let move = this.orchestrator.gameSequence.getLastMove()
+
             if(move == -1){
-                this.orchestrator.updateErrors("No more plays to undo")
+                this.orchestrator.updateErrors("No more moves to undo")
                 return
             }
 
-            move.startPiece.createAnimation(move.endPiece.tile, move.startPiece.tile)
-            move.endPiece.createAnimation(move.startPiece.tile, move.endPiece.tile)
+            this.orchestrator.previousObj = move.endPiece;
+            this.orchestrator.finalObj = move.startPiece;
+
+            move.startPiece.createAnimation(move.destination, move.origin)
+            move.endPiece.createAnimation(move.origin, move.destination)
+
             this.orchestrator.undo()
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
 
@@ -94,6 +99,7 @@ class ChooseState extends GameState {
             obj.pick()
             this.orchestrator.pause()
         } 
+        else this.orchestrator.updateErrors("This button is unavailable in this moment")
         return
     }
 

@@ -13,7 +13,7 @@ class BoardTile extends CGFobject {
         this.size = size;
         this.x = x;
         this.y = y;
-        this.z=z;
+        this.z = z;
         this.id = id;
         this.gameBoard = gameBoard;
         this.plane = new MyPlane(this.scene, size, size);
@@ -34,10 +34,10 @@ class BoardTile extends CGFobject {
     changeTheme(piece1, piece2, tile1, tile2){
         this.pieceMaterials.push(piece1);
         this.pieceMaterials.push(piece2);
-        if(this.PieceColor == "black" && this.piece!=null){
+        if(this.PieceColor == "black" && this.piece != null){
             this.piece.changeTheme(piece1);
         }
-        else if(this.PieceColor == "white" && this.piece!=null){
+        else if(this.PieceColor == "white" && this.piece != null){
             this.piece.changeTheme(piece2);
         }
         if(this.PieceColor == 'black'){

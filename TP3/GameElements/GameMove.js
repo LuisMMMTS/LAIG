@@ -20,11 +20,15 @@ class GameMove{
         this.active = true;
     }
 
+    resetAnimation(){
+        this.startPiece.animation = null
+        this.endPiece.animation = null
+    }
 
     update(time){
-        
+
     }
     animate(){
-      
+
     }
 }

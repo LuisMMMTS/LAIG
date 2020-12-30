@@ -26,7 +26,7 @@ class AnimationState extends GameState{
             obj.pick()
             this.orchestrator.pause()
         } 
-        else return
+        else this.orchestrator.updateErrors("This button is unavailable in this moment")
 
     }
 
@@ -52,11 +52,13 @@ class AnimationState extends GameState{
             }
         } 
         if (this.orchestrator.previousObj.animation.ended && this.orchestrator.finalObj.animation.ended){
+            //this.orchestrator.gameSequence.resetAnimations()
             this.orchestrator.previousObj.animation = null
             this.orchestrator.finalObj.animation = null
             this.orchestrator.gameBoard.switchTiles(this.orchestrator.previousObj.initialTile,this.orchestrator.previousObj.finalTile);
-
-            this.orchestrator.changeState(new CheckGameOverState(this.orchestrator));
+            if(!this.orchestrator.playingMovie)
+                this.orchestrator.changeState(new CheckGameOverState(this.orchestrator));
+            else  this.orchestrator.changeState(new MovieState(this.orchestrator));
         }
 
     }

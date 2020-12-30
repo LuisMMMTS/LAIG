@@ -60,6 +60,7 @@ class GameOrchestrator {
         this.lastTime = 0
 
         this.gameOver = false
+        this.playingMovie = false
 
     }
     init(){
@@ -141,6 +142,9 @@ class GameOrchestrator {
         this.mode = mode;
     }
 
+    resetBoardTiles(){
+        this.gameBoard.createBoardTiles(this.boardRepresentation)
+    }
 
     undo() {
         let res = this.gameSequence.undo()
@@ -157,7 +161,11 @@ class GameOrchestrator {
     }
 
     pause(){
+        console.log("pause")
+        if(!this.paused) this.info = document.getElementById("info").textContent
         this.paused = !this.paused
+        this.paused?this.updateInfo("Game is paused"):this.updateInfo(info)
+        console.log(this.paused)
     }
 
 

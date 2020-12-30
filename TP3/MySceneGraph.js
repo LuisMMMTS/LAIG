@@ -1098,21 +1098,33 @@ class MySceneGraph {
         let pieces = [];
 
         for (let i = 0; i < PiecesNode.children.length; i++) {
-            let pieceType = "cube";
+            let pieceType = null;
             let material = null;
             let texture = null;
             let playernodes = PiecesNode.children[i].children;
             for (let j = 0; j < playernodes.length; j++) {
                 switch (playernodes[j].nodeName) {
                     case ("pieceType"):
-                        pieceType = this.reader.getString(playernodes[j], "type");
-                        if(pieceType == null){
-                            this.onXMLError("No value defined for piece type, assuming cube")
-                            pieceType = "cube";
-                        }
-                        if(pieceType != "cube" && pieceType!="cylinder" && pieceType != "cone" && pieceType!="sphere"){
-                            this.onXMLError("Wrong value defined for piece type, assuming cube")
-                            pieceType = "cube";
+                        let type = this.reader.getString(playernodes[j], "type");
+                        switch(type){
+                            case("cube"):
+                                pieceType = new MyCube(this.scene, 0.5);
+                                break
+                            case("cylinder"):
+                                pieceType = new MyCylinder(this.scene, 0.2, 0.4,0.4, 16, 8);
+                                break
+                            case("cone"):
+                                pieceType = new MyCylinder(this.scene, 0.6, 0.01,0.4, 16, 8);
+                                break
+                            case("sphere"):
+                                pieceType = new MySphere(this.scene, 0.35, 16, 8);
+                                break
+                            case(null):
+                                this.onXMLError("No value or wrong defined for piece type, assuming cube")
+                            default:
+                                pieceType = new MyCube(this.scene, 0.5);
+                                break
+
                         }
                         break;
 

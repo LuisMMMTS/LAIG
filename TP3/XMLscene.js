@@ -200,6 +200,9 @@ class XMLscene extends CGFscene {
         this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator,defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
         this.initLights()
         this.updateCamera()
+        this.axis = new CGFaxis(this, this.themeGraphs[this.selectedTheme].referenceLength);
+        this.gl.clearColor(...this.themeGraphs[this.selectedTheme].background)
+        this.setGlobalAmbientLight(...this.themeGraphs[this.selectedTheme].ambient);  
      }
 
 
