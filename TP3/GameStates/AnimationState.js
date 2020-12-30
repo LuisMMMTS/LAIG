@@ -26,7 +26,7 @@ class AnimationState extends GameState{
             obj.pick()
             this.orchestrator.pause()
         } 
-        else return
+        else this.orchestrator.updateErrors("This button is unavailable in this moment")
 
     }
 

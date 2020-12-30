@@ -37,7 +37,7 @@ class GameOverState extends GameState{
             console.log("restart")
             this.orchestrator.reset()
         }
-        
+        else this.orchestrator.updateErrors("This button is unavailable in this moment")
         return
     }
 

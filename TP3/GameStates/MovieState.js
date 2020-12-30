@@ -28,7 +28,7 @@ class MovieState extends GameState{
      */
     pickPiece(obj, customId){}
 
-    pickButton(obj, customId){}
+
 
     animationEnd(time){
         let move = this.gameSequence.getCurrentMove()

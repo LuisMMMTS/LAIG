@@ -78,6 +78,7 @@ class ReadyState extends GameState{
             obj.pick()
             this.orchestrator.pause()
         } 
+        else this.orchestrator.updateErrors("This button is unavailable in this moment")
         return
     }
 

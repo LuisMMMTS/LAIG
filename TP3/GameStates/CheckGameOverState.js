@@ -35,9 +35,6 @@ class CheckGameOverState extends GameState{
         return;
     }
 
-    pickButton(obj, customId){
-        return
-    }
 
     animationEnd(time){
         return; 

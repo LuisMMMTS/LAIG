@@ -7,6 +7,7 @@
  * @param player - number of the player
  */
 
+ this.aux = 1
 class Piece {
     constructor(scene, id, tile, player) {
         this.scene = scene;
@@ -105,6 +106,12 @@ class Piece {
         start.instant = begin;
         this.animation.addKeyFrame(start); 
 
+        /*let middle = new KeyFrame()
+        middle.translation = new vec3.fromValues((finalTile.x-initialTile.x)/2.0, this.aux, (finalTile.y-initialTile.y)/2.0)
+        middle.instant = begin;
+        this.animation.addKeyFrame(middle); 
+
+        this.aux == 1? this.aux =0: this.aux = 1*/
         let end = new KeyFrame();
         end.translation = new vec3.fromValues(finalTile.x - initialTile.x, 0, finalTile.y - initialTile.y);
         end.instant = begin+duration;

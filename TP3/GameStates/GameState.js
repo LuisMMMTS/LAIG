@@ -52,6 +52,7 @@
             console.log("restart")
             //same as reset, goes back to init
         }
+        else this.orchestrator.updateErrors("This button is unavailable in this moment")
     }
 
     /**

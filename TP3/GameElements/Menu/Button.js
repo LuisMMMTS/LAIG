@@ -16,7 +16,9 @@ class Button{
         this.buttonText = new MySpriteText(this.scene,text)
         this.picked = false;
         this.large = large;
+
     }
+
     pick(){
         this.picked = !this.picked
 
@@ -30,6 +32,10 @@ class Button{
         this.buttonText.text = text
     }
 
+    setAvailability(availability){
+        this.availability = availability
+    }
+
     display(){
         this.scene.pushMatrix()
         this.scene.translate(1,0,1)
@@ -38,7 +44,6 @@ class Button{
         else this.scene.scale(2.9,0.65,1)
 
         if(this.picked) this.scene.scale(1,1,5)
-
         this.button.display()
         this.scene.popMatrix()
 

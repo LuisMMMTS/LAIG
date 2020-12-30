@@ -73,14 +73,7 @@
             obj.pick()
             this.orchestrator.pause()
         } 
-        else if(customId == 504){
-            console.log("replay")
-            //game movie
-        }
-        else if(customId == 505){
-            console.log("restart")
-            //same as reset, goes back to init
-        }
+        else this.orchestrator.updateErrors("This button is unavailable in this moment")
     }
 
     /**
