@@ -10,6 +10,7 @@ class LoadingState extends GameState{
     init(){
         console.log("init loading state");
         this.orchestrator.prolog.boardRequest(4);
+        
     }
 
     /**

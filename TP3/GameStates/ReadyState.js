@@ -53,18 +53,17 @@ class ReadyState extends GameState{
 
             obj.pick()
             let move = this.orchestrator.gameSequence.getLastMove()
+            
             if(move == -1){
                 this.orchestrator.updateErrors("No more plays to undo")
                 return
             }
 
             this.orchestrator.previousObj = move.endPiece;
-            this.orchestrator.finalObj=move.startPiece;
+            this.orchestrator.finalObj = move.startPiece;
 
-            move.startPiece.floating()
-            move.endPiece.floating()
-            move.startPiece.createAnimation(move.endPiece.tile, move.startPiece.tile)
-            move.endPiece.createAnimation(move.startPiece.tile, move.endPiece.tile)
+            move.startPiece.createAnimation(move.destination, move.origin)
+            move.endPiece.createAnimation(move.origin, move.destination)
             this.orchestrator.undo()
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
 

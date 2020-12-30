@@ -63,11 +63,12 @@
         #Board, #Time{
             display: flex;
             flex-direction: row;
-            color:white;
+            color:Black;
+            margin-bottom: 10px;
         }
         
         #Board label, #Time label{
-            color:white;
+            color:black;
             margin-left:100px;
         }
         #Board output, #Time output{
@@ -76,11 +77,11 @@
         }
 
         #Board .slider{
-            margin-right: 70px;
+            margin-right: 80px;
         }
 
         #Time .slider{
-            margin-right: 60px;
+            margin-right: 70px;
         }
 
         .slider {
@@ -101,7 +102,7 @@
             width: 25px;
             height: 25px;
             border-radius: 50%; 
-            background: white;
+            background: black;
             cursor: pointer;
         }
 
@@ -109,7 +110,7 @@
             width: 25px;
             height: 25px;
             border-radius: 50%;
-            background: white;
+            background: black;
             cursor: pointer;
         }
         .slider:hover{
@@ -129,9 +130,10 @@
 
        
         .mainMenu {
-            margin-top:100px;
+            height: 100vh;
             display: flex;
             align-items: center;
+            background-color: black;
         }
 
         #menu {
@@ -141,18 +143,21 @@
             justify-content: center;
             align-items: center;
             align-content: center;
-            background-color: black;
-            width: 33em;
+            background-color: #728ab0;
+            width: 600px;
             padding: 2em;
             border-radius: 10%;
         }
 
         #menu h1{
             font-size:50px;
-            color:white;
+        }
+        #menu  h1, h3{
             text-align: center;
+            color:white;
         }
         
+
         #menu article {
             margin-top:20px;
             flex-basis: 40%;
@@ -161,10 +166,9 @@
             flex-wrap: wrap;
             color:white;
         }
-
-        #menu  span{
+        #menu  h3{
             color:white;
-            margin-right: 30px;
+            margin-left:40px;
         }
 
     
@@ -173,41 +177,33 @@
             display: none;
         }
 
+
         #menu > div {
             flex-basis: 100%;
         }
 
+   
         #menu > div > input {
             display: block;
             margin: auto;
             margin-bottom:10px;
         }
 
-        #menu > div > select {
-        margin: auto;
-        display: block;
-        margin-bottom: 1em;
+        select {
+            margin: auto;
+            display: block;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
         }
 
-        #menu > div > img {
-        margin: auto;
-        display: block;
-        margin-bottom: 5em;
+        #menu article:nth-child(2) *, #menu article:nth-child(1) *{
+            margin-left: auto;
         }
-
-        #menu article:nth-child(2) * {
-        margin-left: auto;
-        margin-right: 1em;
+        #menu article {
+            margin-left: auto;
+            
         }
-        #menu article:nth-child(4) * {
-        margin-left: 1em;
-        margin-right: auto;
-        }
-
-        #menu > div > h3 {
-        margin: auto;
-        text-align: center;
-        }
+        
 
         #menu article > div:last-child {
             flex-basis: 100%;
@@ -216,21 +212,20 @@
         }
 
         #menu article label {
-        font-size: 1.1em;
-        font-weight: bold;
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        #menu #player1 div select {
-            width: 10em;
-            margin-right: 2em;
+        #menu div select{
+            width: 100px;
         }
-
-        #menu #player2 div select {
-            width: 10em;
-            margin-left: 2em;
+        
+        #menu article select {
+            display: none;
+            border:none;
+            border-radius: 5px;
         }
-
-
+ 
         #menu select {
             font-size: 0.8em;
             font-weight: 700;
@@ -240,15 +235,9 @@
             border: 1px solid #aaa;
             box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
             border-radius: 0.5em;
-            -moz-appearance: none;
-            -webkit-appearance: none;
             appearance: none;
             background-color: #c5c5c5;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-                linear-gradient(to bottom, #ffffff 0%, #c5c5c5 100%);
-            background-repeat: no-repeat, repeat;
-            background-position: right 0.7em top 50%, 0 0;
-            background-size: 0.65em auto, 100%;
+            content: "\f33d";
         }
 
         #menu select::-ms-expand {
@@ -262,16 +251,12 @@
 
         #menu select:focus {
             border-color: #aaa;
-            box-shadow: 0 0 1px 3px #0099cc;
-            box-shadow: 0 0 0 3px -moz-mac-focusring;
             outline: none;
         }
 
         #menu select option {
             font-weight: normal;
         }
-
-     
         
         input[type=radio] {
             opacity: 0;
@@ -280,9 +265,9 @@
         }
 
         input[type=radio]:checked+label {
-            background-color: gainsboro;
+            background-color: black;
             outline: black auto 6px;
-            color: black;
+            color: white;
             opacity: 1;
             font-size: 17px;
         }
@@ -300,8 +285,8 @@
             margin-bottom: 0px !important;
             cursor: pointer;
             border: none;
-            background-color: white;
-            color: black;
+            background-color: black;
+            color: white;
             width: 14em;
             padding-top: 0.5em;
             padding-bottom: 0.5em;
@@ -310,6 +295,7 @@
             text-align: center;
             text-decoration: none;
         }
+
     </style>
 </head>
 
@@ -344,7 +330,7 @@
                     </select>
                 </div>
             </article>
-            <span>Vs</span>
+            <h3>Vs</h3>
             <article id="player2">
                 <div>
                     <input type="radio" id="H2" name="player2" value="H" checked/>

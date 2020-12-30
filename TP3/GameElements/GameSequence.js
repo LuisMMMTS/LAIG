@@ -37,8 +37,7 @@ class GameSequence {
 
     reset(){
         this.moves = []
-        this.currentMove = 0
-        //go back to start 
+        this.currentMove = 0 
     }
     
     moveReplay(){

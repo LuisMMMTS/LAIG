@@ -76,8 +76,7 @@ class Piece {
     pick() {
         if (!this.picked) {
             this.color = this.pickedMaterial;
-            this.picked = true;
-            
+            this.picked = true;    
         }
         else {
             this.color = this.material;
@@ -98,11 +97,11 @@ class Piece {
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
         if (duration == 0) duration += 1
 
-        console.log("Duration: "+ duration);
+        /*console.log("Duration: "+ duration);
         console.log("finalx: ", finalTile.x );
         console.log("finalz: ", finalTile.y );
         console.log("initialx: ",  initialTile.x);
-        console.log("initialz: ",  initialTile.y);
+        console.log("initialz: ",  initialTile.y);*/
 
         this.animation = new BezierAnimation(this.scene, "pieceAnimation");
         let start = new KeyFrame()
@@ -127,10 +126,10 @@ class Piece {
         if(this.animation != null)
             this.animation.update(time)
         
-        if(this.animation.ended && !this.animation.active){
+        /*if(this.animation.ended && !this.animation.active){
             this.animation = null;
             console.log("making it null")
-        }
+        }*/
     }
 
 

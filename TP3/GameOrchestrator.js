@@ -19,8 +19,7 @@ class GameOrchestrator {
         else if (player1.type == "c" && player2.type == "p") this.changeMode(this.mode.cvp);
         else if (player1.type == "p" && player2.type == "c") this.changeMode(this.mode.pvc);
         else if (player1.type == "c" && player2.type == "c") this.changeMode(this.mode.cvc);
-
-        console.log(this.mode)
+        
         this.difficulty = { easy: 1, difficult: 2}
 
         if(player1.type == "c"){
@@ -246,7 +245,7 @@ class GameOrchestrator {
         this.scene.translate(-1.15,2.4,1.75)
         this.scene.rotate(Math.PI/2.0,0,1,0)
         this.scene.scale(0.98,1, 0.2)
-        if(this.gameOver) this.endMenu.display
+        if(this.gameOver) this.endMenu.display()
         else this.menu.display()
         this.scene.popMatrix()
         //this.animator.display()
