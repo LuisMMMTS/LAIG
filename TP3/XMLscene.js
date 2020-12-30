@@ -306,7 +306,7 @@ class XMLscene extends CGFscene {
             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).  
-            //this.themeGraphs[this.selectedTheme].displayScene();
+            this.themeGraphs[this.selectedTheme].displayScene();
             this.orchestrator.display();
             
             

@@ -80,7 +80,9 @@ class LoadingState extends GameState{
      * @abstract
      */
     animationEnd(time){
-
+        if (!this.orchestrator.loaded){
+            return;
+        }
         let anyActive=false;
         if(this.orchestrator.paused) return
         

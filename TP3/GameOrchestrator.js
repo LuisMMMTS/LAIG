@@ -116,11 +116,12 @@ class GameOrchestrator {
      * @param {*} time 
      */
     update(time) { 
+        if(this.loaded){
         this.state.animationEnd(time)
         this.gameBoard.update(time);
         this.checkTimeOut(time)
         //this.animator.update(time)
-        this.lastTime = time
+        this.lastTime = time}
     }
 
     setTheme(theme){

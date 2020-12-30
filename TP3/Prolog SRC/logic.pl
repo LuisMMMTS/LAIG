@@ -3,12 +3,11 @@
 % Verifica se o jogo chegou ao fim	
 % Caso: Fim de jogo, já não há moves possíveis
 checkEnd(GameState, Player-_-_-_-_, Winner1):-
-	checkEnd(GameState, Player----, Winner1):-
     opposite(Player, Player1),
     getMovablePieces(GameState, Player1, Res),!,
     ((Res==[],
     opposite(Player, Player1),
-    getWinner(GameState, Player1----, Winner1));(Winner1='')).
+    getWinner(GameState, Player1-_-_-_-_, Winner1));(Winner1='')).
 	
 getWinner(GameState, Player-_-_-_-_, Winner1):-
 	game_over(GameState, Winner),
