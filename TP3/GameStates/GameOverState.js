@@ -20,6 +20,19 @@ class GameOverState extends GameState{
         return;
     }
 
+    pickButton(obj, customId){
+        if(customId == 505){
+            //replay 
+            console.log("replay")
+        } 
+        else if(customId == 506){
+            //restart
+            console.log("restart")
+        }
+        
+        return
+    }
+
     animationEnd(time){
         return; 
     }

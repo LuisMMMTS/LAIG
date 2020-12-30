@@ -49,8 +49,8 @@ class BezierAnimation extends Animation{
         //if animation reached the end, return
         if(this.ended) return;
         
-        if (this.lastTime==0){
-            this.lastTime=currentTime;
+        if (this.lastTime == 0){
+            this.lastTime = currentTime;
         }
 
         //update elapsedTime based on lastTime and update lastTime
@@ -77,9 +77,6 @@ class BezierAnimation extends Animation{
             this.ended = true; //the animation has ended but the object remains with the values of the geometric transformations of the  last keyframe
         }
         
-
-        //console.log("updating")
-        //console.log(this.elapsedTime)
         if(this.elapsedTime == this.keyframes[this.keyframeStartIndex].instant){// no need for interpolation, its in a matching keyframe instant
             this.animationTranslation = this.keyframes[this.keyframeStartIndex].translation;
             this.animationRotation = new vec3.fromValues(this.keyframes[this.keyframeStartIndex].rotation[0],this.keyframes[this.keyframeStartIndex].rotation[1],this.keyframes[this.keyframeStartIndex].rotation[2]);
@@ -94,7 +91,6 @@ class BezierAnimation extends Animation{
         }
 
         //find the keyframes to interpolate between
-       
         if(this.elapsedTime > this.keyframes[this.keyframeEndIndex].instant){
             if (this.keyframes.length <= this.keyframeEndIndex + 1) {
                 this.ended = true;
@@ -102,7 +98,8 @@ class BezierAnimation extends Animation{
                 this.keyframeEndIndex++;
                 this.keyframeStartIndex++;
             }
-        }    
+        }   
+         
         /* INTERPOLATION */
         //It's not the end so we need to do interpolation
 
@@ -124,15 +121,10 @@ class BezierAnimation extends Animation{
     apply(){
 
         this.scene.translate(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]);
-        //console.log("Translação: "+(this.animationTranslation[0],this.animationTranslation[1],this.animationTranslation[2]));
         this.scene.rotate(this.animationRotation[0],1,0,0);
-        //console.log("rotação x: "+(this.animationRotation[0],1,0,0));
         this.scene.rotate(this.animationRotation[1],0,1,0);
-        //console.log("rotação y: "+(this.animationRotation[1],0,1,0));
         this.scene.rotate(this.animationRotation[2],0,0,1);
-        //console.log("rotação z: "+(this.animationRotation[2],0,0,1));
         this.scene.scale(this.animationScale[0],this.animationScale[1],this.animationScale[2]); 
-        //console.log("escalamento: "+(this.animationScale[0],this.animationScale[1],this.animationScale[2]));
 
     }
     

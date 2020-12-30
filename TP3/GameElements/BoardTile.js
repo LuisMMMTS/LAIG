@@ -28,7 +28,7 @@ class BoardTile extends CGFobject {
         this.pickedMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setSpecular(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setShininess(10.0);
-        this.pieceMaterials=[]
+        this.pieceMaterials = []
     }
 
     changeTheme(piece1, piece2, tile1, tile2){
@@ -56,7 +56,7 @@ class BoardTile extends CGFobject {
             piece.changeTheme(this.pieceMaterials[1]);
         }
         this.piece = piece;
-        piece.tile=this;
+        piece.tile = this;
 
     }
 
@@ -88,8 +88,8 @@ class BoardTile extends CGFobject {
 
         if(!this.highlight)this.material.apply()
         else this.pickedMaterial.apply()
-        this.plane.display();
 
+        this.plane.display();
 
         if (this.piece != null) {
             this.scene.pushMatrix();

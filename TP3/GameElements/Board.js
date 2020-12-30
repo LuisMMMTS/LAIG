@@ -24,8 +24,8 @@ class Board extends CGFobject {
         this.board = new MyPlane(this.scene, this.size, this.size);
         this.createBoardTiles(array);
         this.boardMaterial = null;
-
     }
+
     changeTheme(theme){
         this.boardMaterial = theme[0];
         this.boardTexture = theme[1][0];
@@ -40,6 +40,7 @@ class Board extends CGFobject {
         }
         //falta tratar dos afs e aft
     }
+
 	createBoardTiles(array){
         let id = 1
         let nTiles = this.size;
@@ -68,8 +69,8 @@ class Board extends CGFobject {
         this.removePieceFromTile(final);
         this.addPieceToTile(initial.removed, final);
         this.addPieceToTile(final.removed, initial);
-        initial.removed=null;
-        final.removed=null;
+        initial.removed = null;
+        final.removed = null;
         
     }
     getPieceOfTile(tile) {
@@ -84,7 +85,6 @@ class Board extends CGFobject {
 
     getTileWithCoordinates(x, y) {
         return this.tiles(x * side + y)
-
     }
     
 	movePiece(tile1, tile2, pieceDest, pieceOrig){
@@ -122,7 +122,7 @@ class Board extends CGFobject {
                 id++;
             }
             else id++;
-            this.tiles[cell].display();//each tile 
+            this.tiles[cell].display(); //each tile 
         }
 
         this.scene.popMatrix();

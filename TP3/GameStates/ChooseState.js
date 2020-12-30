@@ -50,14 +50,15 @@ class ChooseState extends GameState {
       
         if ((searchForArray(this.pickable, comparableArray) != -1) || (searchForArray(this.pickable, comparableArray2) != -1)) {//se a peça selecionada for válida
             obj.pick()
+            
             this.orchestrator.gameSequence.addGameMove(new GameMove(this.orchestrator.scene, this.orchestrator.previousObj, obj, this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard));
-            console.log(customId)
-            console.log(this.orchestrator.gameBoard.tiles.length)
-            let duration=this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
-            obj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1],duration);
+
             this.orchestrator.finalPick = customId;
             this.orchestrator.finalObj = obj;
             this.orchestrator.finalTile = obj.tile;
+            let duration=this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
+            this.orchestrator.finalObj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1],duration);
+            
             
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
         }
@@ -69,15 +70,14 @@ class ChooseState extends GameState {
 
     pickButton(obj, customId){
         if(customId == 501){
-
             obj.pick()
+            this.orchestrator.previousObj.pick()
             let move = this.orchestrator.gameSequence.getLastMove()
             if(move == -1){
                 this.orchestrator.updateErrors("No more plays to undo")
                 return
             }
-            move.startPiece.floating()
-            move.endPiece.floating()
+
             move.startPiece.createAnimation(move.endPiece.tile, move.startPiece.tile)
             move.endPiece.createAnimation(move.startPiece.tile, move.endPiece.tile)
             this.orchestrator.undo()

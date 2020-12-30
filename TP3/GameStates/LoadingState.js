@@ -87,6 +87,7 @@ class LoadingState extends GameState{
         for (let i of this.orchestrator.auxiliarBoard.tiles){
             if (i.piece==null)
                 continue;
+            anyActive=true;
             i.piece.update(time);
             if (i.piece.animation.active){
                 if(i.piece.animation.ended){
@@ -101,7 +102,7 @@ class LoadingState extends GameState{
                 }
             }
         }
-        if (this.orchestrator.auxiliarBoard.tiles.length==0)
+        if (!anyActive)
             this.orchestrator.changeState(new ReadyState(this.orchestrator));
 
     }
