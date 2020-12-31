@@ -813,7 +813,7 @@
                 <amplification afs="4.0" aft="4.0" />
             </texture>
             <transformations>
-                <translation x="-5" y="5" z="0.1" />
+                <translation x="-7" y="8" z="0.1" />
                 <rotation axis="x" angle="90" />
                 <scale sx="10" sy="0.05" sz="20"/>        
             </transformations>
@@ -1021,7 +1021,7 @@
         <node id="frontFace">     
             <material id="null" />
             <texture id="null">
-                <amplification afs="1" aft="1" />
+                <amplification afs="2" aft="1" />
             </texture>
             <transformations>
                 <translation x="0.0" y="0.0" z="1.0" />
@@ -1034,7 +1034,7 @@
         <node id="bottomFace"> 
             <material id="null" />
             <texture id="null">
-                <amplification afs="1" aft="1" />
+                <amplification afs="2" aft="1" />
             </texture>
             <transformations>
                 <rotation axis="x" angle="90"/> 
@@ -1047,7 +1047,7 @@
         <node id="backFace">   
             <material id="null" />
             <texture id="null">
-                <amplification afs="1" aft="1" />
+                <amplification afs="2" aft="1" />
             </texture>
             <transformations>
                 <translation x="0.0" y="1.0" z="0.0" />
@@ -1061,7 +1061,7 @@
         <node id="topFace">        
             <material id="null" />
             <texture id="null">
-                <amplification afs="1" aft="1" />
+                <amplification afs="2" aft="1" />
             </texture>
             <transformations>
                 <translation x="0.0" y="1.0" z="1.0" />
