@@ -55,7 +55,6 @@ class LoadingState extends GameState{
                     this.orchestrator.previousObj=p;
                 if (j==response.length-1)
                     this.orchestrator.finalObj=p;
-                console.log(p.animation);
                 id++;
             }
         }

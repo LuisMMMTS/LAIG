@@ -36,6 +36,34 @@
     </illumination>
 
 
+    <gameBoard>
+        <boardMaterial id= "Porcelain_Grey"/>
+        <boardTexture id = "floorTexture">
+            <amplification afs="1" aft="1" />
+        </boardTexture>
+        <tiles>
+            <material1 id ="White"/>
+            <material2 id ="black"/>
+        </tiles>
+        <pieces>
+            <player1>
+                <pieceType  type= "cone"/>
+                <material id="navy_blue"/>
+                <texture id="floorTexture">
+                    <amplification afs="1" aft="1" />
+                </texture>
+            </player1>
+            <player2>
+                <pieceType  type= "sphere"/>
+                <material id="green"/>
+                <texture id="floorTexture">
+                    <amplification afs="1" aft="1" />
+                </texture>
+            </player2>
+        </pieces>
+    </gameBoard>
+
+
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
         <light id="LightRight">

@@ -127,8 +127,6 @@ class Piece {
     update(time){
         if(this.animation != null)
             this.animation.update(time)
-            console.log("UPDATED")
-            console.log(this.animation)
         }
         
         /*if(this.animation.ended && !this.animation.active){
