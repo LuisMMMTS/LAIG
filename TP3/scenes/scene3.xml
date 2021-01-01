@@ -267,9 +267,13 @@
         </boardTexture>
         <tiles>
             <material1 id ="White"/>
-            <texture1 id="lightBrown"/>
+            <texture1 id="lightBrown">
+                <amplification afs="1" aft="1" />
+            </texture1>
             <material2 id ="black"/>
-            <texture2 id="darkBrown"/>
+            <texture2 id="darkBrown">
+                <amplification afs="1" aft="1" />
+            </texture2>
         </tiles>
         <pieces>
             <player1>
