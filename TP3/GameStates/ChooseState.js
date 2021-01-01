@@ -5,7 +5,7 @@ class ChooseState extends GameState {
     }
 
     init(){
-        this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.side), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.side];
+        this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.size), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.size];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
 
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
@@ -40,8 +40,8 @@ class ChooseState extends GameState {
             return; 
         } 
 
-        this.x = Math.floor((customId - 1) / this.orchestrator.gameBoard.side);
-        this.y = (customId - 1) % this.orchestrator.gameBoard.side;
+        this.x = Math.floor((customId - 1) / this.orchestrator.gameBoard.size);
+        this.y = (customId - 1) % this.orchestrator.gameBoard.size;
 
         let comparableArray = [this.x, this.y, ""];
         let comparableArray2 = [this.x, this.y];

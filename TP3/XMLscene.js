@@ -27,8 +27,6 @@ class XMLscene extends CGFscene {
             this.themeGraphs[key] = new MySceneGraph(value, this)
         }
 
-        //this.boardSize = 10
-        //this.playTime = 30
     }   
 
     /**
@@ -194,7 +192,7 @@ class XMLscene extends CGFscene {
 
     changeTheme(value){
         this.selectedTheme = value
-        this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
+        //this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
         this.orchestrator.changeTheme(this.themeGraphs[value]);
         let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
         this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator,defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
@@ -205,8 +203,13 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(...this.themeGraphs[this.selectedTheme].ambient);  
      }
 
+     getCurrentTheme(){
+        return this.themeGraphs[this.selectedTheme]
+     }
 
-
+     updatePlayTime(){
+        this.orchestrator.setPlayTime(this.playTime)
+     }
 
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop

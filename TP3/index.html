@@ -16,6 +16,10 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
+        *{
+            color: white;
+        }
+
         canvas {
             width: 100%;
             height: 100%;
@@ -29,7 +33,6 @@
             padding: 1em;
             margin: 2em 0 0 2em;
             text-align: center;
-            color: white;
             background-color: rgba(0, 100, 200, 0.2);
             border-radius: 11%;        
         }
@@ -61,30 +64,6 @@
             font-weight: 800;
         }
 
-        #Board, #Time{
-            display: flex;
-            flex-direction: row;
-            color:Black;
-            margin-bottom: 10px;
-        }
-        
-        #Board label, #Time label{
-            color:black;
-            margin-left:100px;
-        }
-        #Board output, #Time output{
-            margin-left: 0px;
-            margin-right: 80px;
-        }
-
-        #Board .slider{
-            margin-right: 80px;
-        }
-
-        #Time .slider{
-            margin-right: 70px;
-        }
-
         .slider {
             -webkit-appearance: none;
             width: 30%;
@@ -96,6 +75,7 @@
             opacity: 0.7;
             -webkit-transition: .2s;
             transition: opacity .2s;
+            cursor: pointer;
         }
         .slider::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -119,16 +99,21 @@
         }
 
         #Board, #Time {
+            display: flex;
+            flex-direction: row;
+            color:Black;
+            margin-bottom: 10px;
             -webkit-appearance: none;  
             appearance: none;
             width: 300px; 
-            height: 25px; 
             outline: none;
-            opacity: 0.7; 
             -webkit-transition: .2s; 
             transition: opacity .2s;
         }
 
+        #Time{
+            margin-top: 5px;
+        }
        
         .mainMenu {
             height: 100vh;
@@ -144,10 +129,27 @@
             justify-content: center;
             align-items: center;
             align-content: center;
-            background-color: #728ab0;
+            background-color: #122644;
             width: 600px;
             padding: 2em;
-            border-radius: 10%;
+            border-radius: 5%;
+            border: 2px solid white;
+        }
+
+        .container_row{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .container_column{
+            display: flex;
+            flex-direction: column;
+        }
+
+        #titlePlayer{
+            margin: 0.5em auto;
+            text-align: center;
+            color: black;
         }
 
         #menu h1{
@@ -155,39 +157,27 @@
         }
         #menu  h1, h3{
             text-align: center;
-            color:white;
         }
         
-
         #menu article {
-            margin-top:20px;
-            flex-basis: 40%;
-            min-height: 200px;
             display: flex;
             flex-wrap: wrap;
-            color:white;
         }
-        #menu  h3{
-            color:white;
-            margin-left:40px;
+        #menu h3{
+            margin-top: 4em;
+            width: 5em;
         }
-
     
         #menu article select {
             margin-left:30px;
-            display: none;
         }
-
 
         #menu > div {
             flex-basis: 100%;
         }
 
-   
         #menu > div > input {
             display: block;
-            margin: auto;
-            margin-bottom:10px;
         }
 
         select {
@@ -197,15 +187,10 @@
             padding-bottom: 10px;
         }
 
-        #menu article:nth-child(2) *, #menu article:nth-child(1) *{
-            margin-left: auto;
-        }
-        #menu article {
-            margin-left: auto;
-            
+        #player1, #player2{
+            background-color: #125375;
         }
         
-
         #menu article > div:last-child {
             flex-basis: 100%;
             margin: auto;
@@ -213,8 +198,7 @@
         }
 
         #menu article label {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 16px;
         }
 
         #menu div select{
@@ -222,7 +206,6 @@
         }
         
         #menu article select {
-            display: none;
             border:none;
             border-radius: 5px;
         }
@@ -257,6 +240,7 @@
 
         #menu select option {
             font-weight: normal;
+            color: black;
         }
         
         input[type=radio] {
@@ -265,36 +249,54 @@
             border-radius: 6px;
         }
 
-        input[type=radio]:checked+label {
+        input[type=radio]:checked+label, input[type=radio]:not(:checked)+label {
             background-color: black;
             outline: black auto 6px;
-            color: white;
-            opacity: 1;
             font-size: 17px;
-        }
+        } 
+
+        input[type=radio]:not(:checked)+label {opacity: 0.5;}
+        input[type=radio]:checked+label{opacity: 1;}
 
         input[type=radio]+label {
-            width: 80px;
-            font-size: 15px;
-            padding: 10px;
             cursor: pointer;
         }
 
 
         input[type="submit"] {
             margin-top: 40px !important;
-            margin-bottom: 0px !important;
             cursor: pointer;
-            border: none;
+            border: 1px solid white;
             background-color: black;
-            color: white;
             width: 14em;
             padding-top: 0.5em;
             padding-bottom: 0.5em;
-            border-radius: 10px;
+            border-radius: 5px;
             font-weight: bold;
             text-align: center;
-            text-decoration: none;
+        }
+
+        input[type="submit"]:hover{
+            background-color: white;
+            color: black;
+        }
+
+        #amount, #t, #BoardSize_info, #PlayTime_info{
+            position: absolute;
+        }
+
+        #amount, #t{
+            margin-left: 31em;
+        }
+
+        #BoardSize_info, #PlayTime_info{
+            margin-left: 5em;
+        }
+
+        #PlayTime, #BoardSize{
+            margin-left: 15em;
+            margin-right: auto;
+            width: 20em;
         }
 
     </style>
@@ -316,49 +318,64 @@
         <div id ="menu">
             <div id ="header">
                 <h1>EMULSION</h1>
-               </div> 
-            <article id="player1">
-                <div>
-                    <input type="radio" id="H1" name="player1" value="H" checked/>
-                    <label for="H1">Player</label>
-                    <input type="radio" id="B1" name="player1" value="B" />
-                    <label for="B1">Bot</label>
+               </div>
+            <div class = "container_row" style="flex-basis:auto;">
+                <div class = "container_column">
+                    <div style="background-color: #ffffff;">
+                        <div id="titlePlayer">Player 1</div>
+                    </div>
+                    <article id="player1">
+                        <div class="container_row" style="margin:1.5em auto;">
+                            <input type="radio" id="H1" name="player1" value="H" checked/>
+                            <label style="padding: 1em 1.7em" for="H1">Player</label>
+                            <input type="radio" id="B1" name="player1" value="B" />
+                            <label style="padding: 1em 2.2em" for="B1">Bot</label>
+                        </div>
+                        <div>
+                            <select style="margin:0em auto 3.2em auto; opacity: 0.3;" name="Difficulty" disabled>
+                                <option value="easy">Easy</option>
+                                <option value="difficult">Difficult</option>
+                            </select>
+                        </div>
+                    </article>
                 </div>
-                <div>
-                    <select name="Difficulty">
-                        <option value="easy">Easy</option>
-                        <option value="difficult">Difficult</option>
-                    </select>
+                
+                <h3>Vs</h3>
+
+                <div class = "container_column">
+                    <div style="background-color: #ffffff;">
+                        <div id="titlePlayer">Player 2</div>
+                    </div>
+                    <article id="player2">
+                        <div class="container_row" style="margin:1.5em auto;">
+                            <input type="radio" id="H2" name="player2" value="H" checked/>
+                            <label style="padding: 1em 1.7em" for="H2">Player</label>
+                            <input type="radio" id="B2" name="player2" value="B" />
+                            <label style="padding: 1em 2.2em" for="B2">Bot</label> 
+                        </div>
+                        <div>
+                            <select style="margin:0em auto 3.2em auto; opacity: 0.3;" name="Difficulty" disabled>
+                                <option value="easy">Easy</option>
+                                <option value="difficult">Difficult</option>
+                            </select>
+                        </div>
+                    </article>
                 </div>
-            </article>
-            <h3>Vs</h3>
-            <article id="player2">
-                <div>
-                    <input type="radio" id="H2" name="player2" value="H" checked/>
-                    <label for="H2">Player</label>
-                    <input type="radio" id="B2" name="player2" value="B" />
-                    <label for="B2">Bot</label>
-                    
-                </div>
-                <div>
-                    <select name="Difficulty">
-                        <option value="easy">Easy</option>
-                        <option value="difficult">Difficult</option>
-                    </select>
-                </div>
-            </article>
-        
-        <div id="Board">
-            <label for="BoardSize">Board Size </label>
-            <input type="range" min="4" max="8" value="5" class="slider" id="BoardSize" >
-            <output id="amount" name="amount" for="BoardSize">5</output><br><br>
+            </div> 
+
+        <div id="Board" class="container_row" style="margin-top:3em;">
+            <label id="BoardSize_info" for="BoardSize">Board Size </label>
+            <input id="BoardSize" type="range" min="4" max="8" value="5" class="slider">
+            <output id="amount" name="amount" for="BoardSize">5</output>
         </div>
-        <div id="Time">
-            <label for="PlayTime">Play Time</label>
-            <input type="range" min="10" max="120" value="60" class="slider" id="PlayTime" >
+
+        <div id="Time" class="container_row">
+            <label id="PlayTime_info" for="PlayTime">Play Time</label>
+            <input id="PlayTime" type="range" min="10" max="120" value="60" class="slider">
             <output id="t" name="t" for="PlayTime">60</output>   
         </div>
-        <div>
+
+        <div style="flex-basis:auto;">
             <input type="submit" value="Play" id="submit">
         </div>
     </div>

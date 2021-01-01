@@ -8,14 +8,14 @@ class MovieState extends GameState{
     }
 
     init(){
-        this.orchestrator.resetBoardTiles()
-        this.orchestrator.playingMovie = true
+        if(!this.orchestrator.playingMovie){
+            this.orchestrator.playingMovie = true
+            this.orchestrator.gameMovie()
+        }
+        
         this.orchestrator.updateInfo("Playing game movie")
         this.orchestrator.updateErrors("")
-        //reset do tabuleiro para a representaçao inicial
-        //this.orchestrator.animator.start()
         //se calhar mudar para uma top view
-        this.gameSequence.moveReplay()
         console.log(this.orchestrator.gameSequence.moves)
     }
 
@@ -31,17 +31,20 @@ class MovieState extends GameState{
 
 
     animationEnd(time){
-        let move = this.gameSequence.getCurrentMove()
+        let move = this.orchestrator.gameSequence.getCurrentMove()
         if(move){
-            this.orchestrator.previousObj = move.endPiece;
-            this.orchestrator.finalObj = move.startPiece;
+            this.orchestrator.previousObj = move.startPiece;
+            this.orchestrator.finalObj = move.endPiece;
 
             move.startPiece.createAnimation(move.origin, move.destination)
             move.endPiece.createAnimation(move.destination, move.origin)
-            this.orchestrator.gameSequence.updateCurrentMove() //passa para o proximo move
+            this.orchestrator.gameSequence.updateCurrentMove()
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
         }
-        else this.orchestrator.changeState(new GameOverState(this.orchestrator))
+        else{
+            this.orchestrator.playingMovie = false
+            this.orchestrator.changeState(new GameOverState(this.orchestrator))
+        } 
         
         return;
     }

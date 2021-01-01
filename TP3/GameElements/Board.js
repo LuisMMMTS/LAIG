@@ -11,19 +11,16 @@ class Board extends CGFobject {
     constructor(scene, array) {
         super(scene);
 
+        this.boardRepresentation = array
         this.size = array.length;
-        this.side = this.size;
-
+        this.board = new GameBoard(this.scene, this.size)
         this.tiles = [];
-        
+
         this.init(array);
-        
 	}	
 	
 	init(array) {
-        this.board = new MyPlane(this.scene, this.size, this.size);
         this.createBoardTiles(array);
-        this.boardMaterial = null;
     }
 
     changeTheme(theme){
@@ -35,10 +32,7 @@ class Board extends CGFobject {
         let piece2 = theme[3];
         let tile1 = theme[4];
         let tile2 = theme[5];
-        for(let tile of this.tiles){
-            tile.changeTheme(piece1, piece2, tile1, tile2);
-        }
-        //falta tratar dos afs e aft
+        for(let tile of this.tiles) tile.changeTheme(piece1, piece2, tile1, tile2);
     }
 
 	createBoardTiles(array){
@@ -54,7 +48,6 @@ class Board extends CGFobject {
 
     setTiles(tiles){
         this.tiles = tiles
-        console.log(tiles == this.tiles)
     }
 
     addPieceToTile(piece, tile) {  
@@ -84,7 +77,7 @@ class Board extends CGFobject {
     }
 
     getTileWithCoordinates(x, y) {
-        return this.tiles(x * side + y)
+        return this.tiles(x * this.size + y)
     }
     
 	movePiece(tile1, tile2, pieceDest, pieceOrig){
@@ -101,20 +94,26 @@ class Board extends CGFobject {
             }
         }*/
     }
+
+    clone(){
+        let k = 0
+        for(let i = 0; i < this.boardRepresentation.length; i++){
+            for(let j = 0; j < this.boardRepresentation.length; j++){
+                this.tiles[k].piece = new Piece(this.scene, this.tiles[k].id, this.tiles[k],this.boardRepresentation[i][j])
+            }
+        }
+    }
+
     display(){
-        
         let id = 1;
-        this.scene.pushMatrix();
-        this.scene.translate(0.15, 0, 0.10);;
-        this.scene.translate((this.side)/2.0-0.45,-0.1,(this.side/2.0)-0.35);
-        this.scene.scale(this.size*1.15+0.3, 1, this.size*1.15+0.3);
-        this.boardMaterial.apply();
-        this.board.display();
+
         this.scene.popMatrix();
-
-
+        this.scene.pushMatrix()
+        this.boardMaterial.apply()
+        this.board.display()
+        this.scene.popMatrix()
+        
         this.scene.pushMatrix();
-     
         for (let cell = 0; cell < this.tiles.length; cell++){
             this.scene.registerForPick(id, this.tiles[cell]);
             if (this.tiles[cell].piece != null) {
@@ -125,12 +124,10 @@ class Board extends CGFobject {
             this.tiles[cell].display(); //each tile 
         }
 
-        this.scene.popMatrix();
         
         
-    }
-
-
+        
+    }  
 
 }
 

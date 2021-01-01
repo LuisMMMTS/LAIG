@@ -28,7 +28,7 @@ class Piece {
         this.animation = null;
         this.firstInstant = false;
 
-        this.selectHeight=1.5
+        this.selectHeight = 0.5
     }
 
     initMaterials() {
@@ -90,7 +90,7 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 1;
+        let speed = 1.7;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
         if (duration == 0) duration += 1
 
@@ -141,8 +141,8 @@ class Piece {
         this.scene.pushMatrix();
         this.color.apply();
 
-        if (this.float) {
-            //this.scene.translate(0, this.selectHeight, 0);
+        if (this.picked) {
+            this.scene.translate(0, this.selectHeight, 0);
         }
 
         this.displayPiece();

@@ -1108,7 +1108,7 @@ class MySceneGraph {
                         let type = this.reader.getString(playernodes[j], "type");
                         switch(type){
                             case("cube"):
-                                pieceType = new MyCube(this.scene, 0.5);
+                                pieceType = new MyCube(this.scene, 0.6);
                                 break
                             case("cylinder"):
                                 pieceType = new MyCylinder(this.scene, 0.2, 0.4,0.4, 16, 8);
@@ -1148,19 +1148,35 @@ class MySceneGraph {
         return pieces;
     }
     parseTiles(TilesNode) {
-        let tiles = [];
-
+        let tile1 = []
+        let tile2 = []
         for (let i = 0; i < TilesNode.children.length; i++) {
             let material = null;
-            let mat = this.reader.getString(TilesNode.children[i], "id");
-            material = this.materials[mat];
-            if (material == null){
-                this.onXMLError("wrong value for material in piece, setting default");
-                material = this.materials['default'];
-            }           
-            tiles.push(material);    
+            let texture = null
+            let id = this.reader.getString(TilesNode.children[i], "id");
+            if(TilesNode.children[i].nodeName == "material1" || TilesNode.children[i].nodeName == "material2"){
+                material = this.materials[id];
+                if (material == null){
+                    this.onXMLError("wrong value for material in tile, setting default");
+                    material = this.materials['default'];
+                }  
+                if(TilesNode.children[i].nodeName == "material1") tile1.push(material)
+                else tile2.push(material)
+            }
+            else if(TilesNode.children[i].nodeName == "texture1" || TilesNode.children[i].nodeName =="texture2"){
+                texture = this.getTextures(TilesNode.children[i]);
+                if(texture == null){
+                    this.onXMLError("wrong value for texture in tile, setting default");
+                    texture = this.textures['default']
+                }
+                if(TilesNode.children[i].nodeName == "texture1") tile1.push(texture)
+                else tile2.push(texture)
+            }   
+            else console.log(id)
+                     
+                
         }
-        return tiles;
+        return [tile1, tile2];
     }
     /**
    * Parses the <nodes> block.

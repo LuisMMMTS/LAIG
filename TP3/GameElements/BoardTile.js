@@ -41,10 +41,12 @@ class BoardTile extends CGFobject {
             this.piece.changeTheme(piece2);
         }
         if(this.PieceColor == 'black'){
-            this.material = tile1;
+            this.material = tile1[0];
+            this.texture = tile1[1][0]
         }
         else if (this.PieceColor == 'white'){
-            this.material = tile2;
+            this.material = tile2[0];
+            this.texture = tile2[1][0]
         }
     }
 
@@ -86,7 +88,11 @@ class BoardTile extends CGFobject {
 
         this.scene.translate(this.x, this.z, this.y); //move to its position    
 
-        if(!this.highlight)this.material.apply()
+        if(!this.highlight){
+            this.material.setTexture(this.texture)
+            this.material.setTextureWrap('WRAP', 'WRAP')
+            this.material.apply()
+        }
         else this.pickedMaterial.apply()
 
         this.plane.display();

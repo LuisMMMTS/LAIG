@@ -88,6 +88,9 @@
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="danger" path="danger.png" />
         <texture id="floorTexture" path="chao4.jpg" />
+        <texture id="lightBrown" path="light_brown.jpeg" />
+        <texture id="darkBrown" path="dark_brown.jpg" />
+        <texture id="base" path="base.jpg" />
     </textures>
 
 
@@ -389,20 +392,26 @@
         </boardTexture>
         <tiles>
             <material1 id ="White"/>
+            <texture1 id="base">
+                <amplification afs="1" aft="1" />
+            </texture1>
             <material2 id ="black"/>
+            <texture2 id="base">
+                <amplification afs="1" aft="1" />
+            </texture2>
         </tiles>
         <pieces>
             <player1>
-                <pieceType  type= "sphere"/>
-                <material id="navy_blue"/>
-                <texture id="floorTexture">
+                <pieceType  type= "cube"/>
+                <material id="black"/>
+                <texture id="base">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player1>
             <player2>
-                <pieceType  type= "sphere"/>
-                <material id="transparent"/>
-                <texture id="floorTexture">
+                <pieceType  type= "cube"/>
+                <material id="White"/>
+                <texture id="base">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player2>

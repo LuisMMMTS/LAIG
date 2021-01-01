@@ -57,6 +57,7 @@ class MyInterface extends CGFinterface {
         this.addAxisCheckBox()
         this.addQuit()
         this.addThemeDropDown(themes)
+        //this.addPlayTime()
         this.addLightsCheckbox()
         this.addLightsFolder(lights)
         this.addCamerasDropDown(views)
@@ -122,5 +123,9 @@ class MyInterface extends CGFinterface {
     addQuit(){
         this.gui.add(this.scene.orchestrator, 'quit').name('Quit')
     }
+
+   /* addPlayTime(){
+        this.gui.add(this.scene, 'playTime', 10, 120, 10).name("Play Time").onChange(this.scene.updatePlayTime.bind(this.scene));
+    }*/
 
 }

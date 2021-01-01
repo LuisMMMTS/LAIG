@@ -44,11 +44,11 @@
             obj.pick()
             this.orchestrator.pause()
         } 
-        else if(customId == 504){
+        else if(customId == 505){
             console.log("replay")
             //game movie
         }
-        else if(customId == 505){
+        else if(customId == 506){
             console.log("restart")
             //same as reset, goes back to init
         }

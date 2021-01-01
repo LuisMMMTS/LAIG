@@ -13,8 +13,8 @@ function searchForArray(haystack, needle){
 
   function colorTiles(orchestrator, coordinates){
     for (let i in orchestrator.gameBoard.tiles){
-      this.x = Math.floor((orchestrator.gameBoard.tiles[i].id-1) / orchestrator.gameBoard.side);
-      this.y = (orchestrator.gameBoard.tiles[i].id-1) % orchestrator.gameBoard.side;
+      this.x = Math.floor((orchestrator.gameBoard.tiles[i].id-1) / orchestrator.gameBoard.size);
+      this.y = (orchestrator.gameBoard.tiles[i].id-1) % orchestrator.gameBoard.size;
 
       let comparableArray = [this.x,this.y,""];
       let comparableArray2 = [this.x,this.y];
