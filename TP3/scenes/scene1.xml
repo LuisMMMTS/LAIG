@@ -8,25 +8,28 @@
         <themename name = "Initial"/>
     </initials>
 
-    <views default="Side">
+    <views default="player1">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="Side" near="0.1" far="500" angle="23">
-            <from x="30" y="5" z="7" />
-            <to x="0" y="5" z="7" />
+        <perspective id="player1" near="0.1" far="500" angle="30">
+            <from x="20" y="7" z="20" />
+            <to x="-3" y="0" z="-3" />
         </perspective>
-        <perspective id="Front" near="7" far="500" angle="15">
-            <from x="1" y="5" z="45" />
-            <to x="0" y="3.5" z="0" />
+        <perspective id="player2" near="7" far="500" angle="30">
+            <from x="17" y="7" z="-13" />
+            <to x="-3" y="0" z="7" />
         </perspective>
-        <perspective id="Top" near="0.1" far="500" angle="27">
-            <from x="3" y="30" z="5" />
-            <to x="-1.5" y="0" z="5" />
+        <perspective id="Top" near="0.1" far="500" angle="23">
+            <from x="10" y="40" z="1" />
+            <to x="5" y="2" z="1" />
         </perspective>
-        <ortho id="Ortho" near="0" far="50" left="-10" right="10" top="10" bottom="-1">
-            <from x="6" y="3" z="15" />
-            <to x="0" y="-1.5" z="2" />
-            <up x="0" y="1" z="0" /> <!-- optional, default 0,1,0 -->
-        </ortho>
+        <perspective id="Menu" near="0.1" far="500" angle="23">
+            <from x="30" y="10" z="1" />
+            <to x="0" y="0" z="1" />
+        </perspective>
+        <perspective id="perpective" near="0.1" far="500" angle="90">
+            <from x="-20" y="20" z="20" />
+            <to x="-3" y="0" z="-3" />
+        </perspective>
     </views>
 
 
@@ -41,10 +44,10 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="LightRight">
+        <light id="fireplace">
             <!-- light identifier -->
             <enable value="0" /> <!-- enable/disable -->
-            <position x="20" y="20" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="0" y="10" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
             <specular r="0.8" g="0.8" b="0.8" a="0.8" /> <!-- specular component -->
@@ -625,8 +628,9 @@
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
 
             <transformations>
-                <translation x="-12" y="0.3" z="-3" />
-                <scale sx="1.3" sy="1.3" sz="1.3" />
+                <translation x="-5" y="0" z="18.25" />
+                <rotation axis="y" angle="90"/>
+                <scale sx="1.4" sy="1.4" sz="1.4" />
             </transformations>
 
 
@@ -814,6 +818,8 @@
                 <noderef id="sofa"/>
                 <noderef id="tapete"/>
                 <noderef id="mesa"/>
+                <noderef id="person1"/>
+                <noderef id="person2"/>
             </descendants>
         </node>
         
@@ -1109,41 +1115,38 @@
             </descendants>
         </node>
 
-        <node id="leftSphere">
-
-            <material id="green" />
-            <texture id="clear">
+        <node id="person1">
+            <material id="null" />
+            <texture id="null">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <translation x="-2" y="10.5" z="1.1" />
-                <scale sx="1" sy="1" sz="0.4" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+                <translation x="-5" y="22" z="0" />
+                <rotation axis="x" angle="90" />
             </transformations>
 
-            <animationref id="sphereAnimationGreen" />
-
             <descendants>
-                <leaf type="sphere" radius="0.25" slices="16" stacks="8" />
+                <noderef id="person" />
             </descendants>
 
         </node>
-
-        <node id="rightSphere">
-            <material id="red" />
-            <texture id="clear">
+        <node id="person2">
+            <material id="null" />
+            <texture id="null">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <translation x="2" y="10.5" z="1.1" />
-                <scale sx="1" sy="1" sz="0.4" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+                <translation x="10" y="-22.5" z="0" />
+                <rotation axis="z" angle="180"/>
+                <rotation axis="x" angle="90" />
             </transformations>
 
-            <animationref id="sphereAnimationRed" />
-
             <descendants>
-                <leaf type="sphere" radius="0.25" slices="16" stacks="8" />
+                <noderef id="person" />
             </descendants>
 
         </node>
@@ -1155,13 +1158,13 @@
             </texture>
 
             <transformations>
-                <translation x="5" y="-0.5" z="27.0" />
+                <translation x="5" y="-2.89" z="27.0" />
                 <scale sx="1" sy="1" sz="1" />
                 <rotation axis="y" angle="0" />
                 <translation x="2.5" y="0" z="0" />
             </transformations>
 
-            <animationref id="personBody" />
+            <!-- <animationref id="personBody" /> -->
 
             <descendants>
                 <noderef id="headBody" />
@@ -1198,8 +1201,8 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="0" />
-                <rotation axis="y" angle="0" />
+                <translation x="0" y="2.5" z="-5" />
+                <rotation axis="x" angle="90" />
                 <scale sx="1" sy="1" sz="1" />
             </transformations>
 
@@ -1218,8 +1221,8 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="0" />
-                <rotation axis="y" angle="0" />
+                <translation x="0" y="3.5" z="-5" />
+                <rotation axis="x" angle="90" />
                 <scale sx="1" sy="1" sz="1" />
             </transformations>
 
@@ -1274,7 +1277,8 @@
 
             <transformations>
 
-                <translation x="-1.3" y="5.5" z="0" />
+                <rotation axis="y" angle="-25" />
+                <translation x="-2" y="5.5" z="0" />
                 <scale sx="1" sy="1" sz="1" />
                 <rotation axis="y" angle="180" />
                 <!-- <rotation axis="x" angle="-90" />
@@ -1283,7 +1287,7 @@
             <translation x="0.0001" y="1.5" z="-2.5"/> -->
             </transformations>
 
-            <animationref id="armsPosition" />
+            <!-- <animationref id="armsPosition" /> -->
 
             <descendants>
                 <leaf type="cylinder" height="2.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24" />
@@ -1296,7 +1300,8 @@
             </texture>
 
             <transformations>
-                <translation x="1.5" y="5.5" z="0" />
+                <rotation axis="y" angle="25" />
+                <translation x="2" y="5.5" z="0" />
                 <scale sx="1" sy="1" sz="1" />
                 <rotation axis="y" angle="180" />
                 <!-- <rotation axis="x" angle="-90" />
@@ -1305,7 +1310,7 @@
             <translation x="0.0001" y="1.5" z="-2.5"/> -->
             </transformations>
 
-            <animationref id="armsPosition" />
+            <!-- <animationref id="armsPosition" /> -->
 
             <descendants>
                 <leaf type="cylinder" height="2.5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24" />
@@ -1317,7 +1322,7 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <animationref id="personLegs" />
+            <!-- <animationref id="personLegs" /> -->
 
             <transformations>
                 <translation x="-0.55" y="0.75" z="00" />
@@ -1335,7 +1340,7 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <animationref id="personLegs" />
+            <!-- <animationref id="personLegs" /> -->
 
             <transformations>
                 <translation x="+0.75" y="5.75" z="00" />

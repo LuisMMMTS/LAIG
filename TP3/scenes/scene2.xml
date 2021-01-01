@@ -12,6 +12,7 @@
 
     <views default="Side">
         <!-- at least one of the following type of cameras must be declared -->
+        <!-- default-player1, player 2, menu, top -->
         <perspective id="Side" near="0.1" far="500" angle="23">
             <from x="30" y="5" z="7" />
             <to x="0" y="5" z="7" />
@@ -256,7 +257,130 @@
             </descendants>
         </node>
 
+        <node id="cubeMap">
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
+            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <noderef id="sky"/>
+                <noderef id="ground"/>
+                <noderef id="left"/>
+                <noderef id="right"/>
+                <noderef id="front"/>
+                <noderef id="back"/>
+            </descendants>
+        </node>
+
+        <node id="sky">
+            <material id="Off_white_emissive" />
+
+            <texture id="sky">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
+            </descendants>
+        </node>
+
+        <node id="ground">
+            <material id="Off_white_emissive" />
+
+            <texture id="ground">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
+            </descendants>
+        </node>
+
+        <node id="left">
+            <material id="Off_white_emissive" />
+
+            <texture id="left">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
+            </descendants>
+        </node>
+
+        <node id="right">
+            <material id="Off_white_emissive" />
+
+            <texture id="right">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
+            </descendants>
+        </node>
+
+        <node id="front">
+            <material id="Off_white_emissive" />
+
+            <texture id="front">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
+            </descendants>
+        </node>
+
+        <node id="back">
+            <material id="Off_white_emissive" />
+
+            <texture id="back">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <transformations>
+
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
+            </descendants>
+        </node>
 
     </nodes>
 
