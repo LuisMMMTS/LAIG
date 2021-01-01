@@ -26,10 +26,11 @@ class Menu{
         this.buttonMaterial.setShininess(10.0);
 
         this.menuMaterial = new CGFappearance(this.scene);
-        this.menuMaterial.setAmbient(1.0, 1.0, 1.0, 1);
-        this.menuMaterial.setDiffuse(1.0, 1.0, 1.0, 1);
-        this.menuMaterial.setSpecular(1.0, 1.0, 1.0, 1);
-        this.menuMaterial.setShininess(10.0);
+        this.menuMaterial.setShininess(1.0);
+        this.menuMaterial.setSpecular(1, 1, 1, 0.5);
+        this.menuMaterial.setDiffuse(1, 1, 1, 0.5);
+        this.menuMaterial.setAmbient(1, 1, 1, 0.5);
+        this.menuMaterial.setEmission(0.5, 0.5, 0.5, 1.0);
 
     }
 

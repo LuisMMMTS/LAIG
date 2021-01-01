@@ -30,8 +30,8 @@ class ReadyState extends GameState{
             return;
         } 
 
-        this.x = Math.floor((customId-1) / this.orchestrator.gameBoard.side);
-        this.y = (customId-1) % this.orchestrator.gameBoard.side;
+        this.x = Math.floor((customId-1) / this.orchestrator.gameBoard.size);
+        this.y = (customId-1) % this.orchestrator.gameBoard.size;
 
         let comparableArray = [this.x,this.y,""];
         let comparableArray2 = [this.x,this.y];

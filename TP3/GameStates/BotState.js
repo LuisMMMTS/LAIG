@@ -25,12 +25,12 @@
         for(let i in this.orchestrator.gameBoard.tiles){
             let id=this.orchestrator.gameBoard.tiles[i].id;
             let piece=this.orchestrator.gameBoard.tiles[i].piece;
-            if (((Math.floor((id-1) / this.orchestrator.gameBoard.side))==response[0][0])&&(((id-1) % this.orchestrator.gameBoard.side)==response[0][1])){
+            if (((Math.floor((id-1) / this.orchestrator.gameBoard.size))==response[0][0])&&(((id-1) % this.orchestrator.gameBoard.size)==response[0][1])){
                 this.orchestrator.previousPick=id;
                 this.orchestrator.previousObj=piece;
                 this.orchestrator.startTile = piece.tile;
             }
-            if (((Math.floor((id-1) / this.orchestrator.gameBoard.side))==response[1][0])&&(((id-1) % this.orchestrator.gameBoard.side)==response[1][1])){
+            if (((Math.floor((id-1) / this.orchestrator.gameBoard.size))==response[1][0])&&(((id-1) % this.orchestrator.gameBoard.size)==response[1][1])){
                 customId=id;
                 obj=piece;
                 this.orchestrator.finalPick = customId;

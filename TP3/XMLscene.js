@@ -205,8 +205,13 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(...this.themeGraphs[this.selectedTheme].ambient);  
      }
 
+     getCurrentTheme(){
+        return this.themeGraphs[this.selectedTheme]
+     }
 
-
+     updatePlayTime(){
+        this.orchestrator.setPlayTime(this.playTime)
+     }
 
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
@@ -309,7 +314,7 @@ class XMLscene extends CGFscene {
             this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).  
-            this.themeGraphs[this.selectedTheme].displayScene();
+            //this.themeGraphs[this.selectedTheme].displayScene();
             this.orchestrator.display();
             
             

@@ -85,8 +85,10 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="danger" path="danger.png" />
         <texture id="floorTexture" path="chao4.jpg" />
+        <texture id="lightBrown" path="light_brown.jpeg" />
+        <texture id="darkBrown" path="dark_brown.jpg" />
+        <texture id="board" path="board4.jpg" />
     </textures>
 
 
@@ -110,6 +112,13 @@
             <diffuse r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- diffuse reflection -->
             <ambient r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- ambient reflection -->
             <emissive r="0.6" g="0.6" b="0.6" a="1.0" /> <!-- emissive component -->
+        </material>
+       <material id="underTexture">
+            <shininess value="1" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" /> <!-- emissive component -->
         </material>
         <material id="emissive">
             <!--cilindros dos tapetes-->
@@ -237,7 +246,7 @@
             <!-- next two lines are mandatory -->
             <material id="Porcelain_Grey" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="danger"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="board"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -259,26 +268,28 @@
     </nodes>
 
     <gameBoard>
-        <boardMaterial id= "Porcelain_Grey"/>
-        <boardTexture id = "floorTexture">
-            <amplification afs="1" aft="1" />
+        <boardMaterial id= "underTexture"/>
+        <boardTexture id = "board">
+            <amplification afs="20" aft="20" />
         </boardTexture>
         <tiles>
-            <material1 id ="White"/>
-            <material2 id ="black"/>
+            <material1 id ="underTexture"/>
+            <texture1 id="lightBrown"/>
+            <material2 id ="underTexture"/>
+            <texture2 id="darkBrown"/>
         </tiles>
         <pieces>
             <player1>
                 <pieceType  type= "cone"/>
-                <material id="navy_blue"/>
-                <texture id="floorTexture">
+                <material id="black"/>
+                <texture id="darkBrown">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player1>
             <player2>
                 <pieceType  type= "sphere"/>
-                <material id="green"/>
-                <texture id="floorTexture">
+                <material id="White"/>
+                <texture id="lightBrown">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player2>

@@ -46,7 +46,7 @@ class GameOrchestrator {
         this.startTile = null
         this.finalTile = null
         this.auxiliarBoardOffset=10;
-        
+
         
         this.currentPlayer = "black";
 
@@ -142,9 +142,6 @@ class GameOrchestrator {
         this.mode = mode;
     }
 
-    resetBoardTiles(){
-        this.gameBoard.createBoardTiles(this.boardRepresentation)
-    }
 
     undo() {
         let res = this.gameSequence.undo()
@@ -170,7 +167,13 @@ class GameOrchestrator {
 
 
     gameMovie() {
-
+        this.gameBoard.clone()
+        this.changeTheme(this.scene.getCurrentTheme())
+        console.log(this.gameBoard)
+        //auxiliarboard.init
+        this.gameSequence.moveReplay()
+         //reset do tabuleiro para a representaçao inicial
+        //this.orchestrator.animator.start()
     }
 
     updateErrors(error){
@@ -238,7 +241,7 @@ class GameOrchestrator {
         if (this.loaded){
         this.scene.pushMatrix();
         this.scene.translate(0,0,this.auxiliarBoardOffset);
-        this.auxiliarBoard.display();
+        //this.auxiliarBoard.display();
         this.scene.popMatrix();
 
         
@@ -249,9 +252,9 @@ class GameOrchestrator {
         this.scene.popMatrix();
     }
         this.scene.pushMatrix();
-        this.scene.translate(-1.15,2.4,1.75)
+        this.scene.translate(-1.80,2.8,2.1)
         this.scene.rotate(Math.PI/2.0,0,1,0)
-        this.scene.scale(0.98,1, 0.2)
+        this.scene.scale(0.98,1, 0.14)
         if(this.gameOver) this.endMenu.display()
         else this.menu.display()
         this.scene.popMatrix()
@@ -259,5 +262,6 @@ class GameOrchestrator {
     }
 
 
+    
 
 }
