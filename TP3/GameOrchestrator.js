@@ -59,9 +59,6 @@ class GameOrchestrator {
         this.timeLeft = this.playTime
         this.lastTime = 0
 
-        this.gameOver = false
-        this.playingMovie = false
-
     }
     init(){
         this.currentPlayer = "black";
@@ -71,6 +68,9 @@ class GameOrchestrator {
         this.menu = new Menu(this.scene)
         this.endMenu = new EndMenu(this.scene)
         this.paused = false
+        this.gameOver = false
+        this.playingMovie = false
+        this.lastTime = 0
         
     }
 
@@ -145,7 +145,6 @@ class GameOrchestrator {
 
     undo() {
         let res = this.gameSequence.undo()
-
         if(res == -1) this.updateErrors("No moves to undo")
     }
 
@@ -165,6 +164,14 @@ class GameOrchestrator {
         console.log(this.paused)
     }
 
+    restart(){
+        this.gameBoard.clone()
+        this.gameBoard.unpick()
+        this.changeTheme(this.scene.getCurrentTheme())
+        this.init()
+        this.changeState(new ReadyState(this))
+    }
+
 
     gameMovie() {
         this.gameBoard.clone()
@@ -172,7 +179,7 @@ class GameOrchestrator {
         console.log(this.gameBoard)
         //auxiliarboard.init
         this.gameSequence.moveReplay()
-         //reset do tabuleiro para a representaçao inicial
+         
         //this.orchestrator.animator.start()
     }
 
@@ -241,13 +248,10 @@ class GameOrchestrator {
         if (this.loaded){
         this.scene.pushMatrix();
         this.scene.translate(0,0,this.auxiliarBoardOffset);
-        //this.auxiliarBoard.display();
         this.scene.popMatrix();
 
         
         this.scene.pushMatrix();
-        // console.log("This gameboard")
-        // console.log(this.gameBoard)
         this.gameBoard.display();
         this.scene.popMatrix();
     }
@@ -258,7 +262,6 @@ class GameOrchestrator {
         if(this.gameOver) this.endMenu.display()
         else this.menu.display()
         this.scene.popMatrix()
-        //this.animator.display()
     }
 
 

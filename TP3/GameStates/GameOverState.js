@@ -25,14 +25,16 @@ class GameOverState extends GameState{
     }
 
     pickButton(obj, customId){
-        if(customId == 505){
-            //replay 
+        if(customId == 505){//play movie
             console.log("replay")
             this.orchestrator.changeState(new MovieState(this.orchestrator))
         } 
-        else if(customId == 506){
-            //restart
+        else if(customId == 506){//restart game
             console.log("restart")
+            this.orchestrator.restart()
+        }
+        else if(customId == 507){//new game
+            console.log("reset")
             this.orchestrator.reset()
         }
         else this.orchestrator.updateErrors("This button is unavailable in this moment")

@@ -41,7 +41,7 @@ class Button{
         this.scene.translate(1,0,1)
 
         if(!this.large)this.scene.scale(2,0.65,1)
-        else this.scene.scale(2.9,0.65,1)
+        else this.scene.scale(3.9,0.65,1)
 
         if(this.picked) this.scene.scale(1,1,5)
         this.button.display()

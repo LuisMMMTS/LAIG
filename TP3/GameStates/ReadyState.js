@@ -59,11 +59,14 @@ class ReadyState extends GameState{
                 return
             }
 
-            this.orchestrator.previousObj = move.endPiece;
-            this.orchestrator.finalObj = move.startPiece;
+            this.orchestrator.previousObj = move.origin.piece;
+            this.orchestrator.finalObj = move.destination.piece;
+            this.orchestrator.initialTile = move.origin
+            this.orchestrator.finalTile = move.destination
 
-            move.startPiece.createAnimation(move.destination, move.origin)
-            move.endPiece.createAnimation(move.origin, move.destination)
+
+            move.destination.piece.createAnimation(move.destination, move.origin)
+            move.origin.piece.createAnimation(move.origin, move.destination)
             this.orchestrator.undo()
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
 
@@ -78,6 +81,10 @@ class ReadyState extends GameState{
             obj.pick()
             this.orchestrator.pause()
         } 
+        else if(customId == 504){
+            obj.pick()
+            this.orchestrator.restart()
+        }
         else this.orchestrator.updateErrors("This button is unavailable in this moment")
         return
     }

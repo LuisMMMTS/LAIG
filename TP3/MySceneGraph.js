@@ -1052,9 +1052,7 @@ class MySceneGraph {
         let afs = 1;
         let aft = 1; //if amplification is not defined, the next cycle wont run and this will be the default values
 
-
         textureId = this.reader.getString(texNode, "id");
-
         if (textureId == null) {//case material parameter does not exist
             this.onXMLMinorError("[NODE] texture ID is not valid on node ID: " + nodeID + " setting default texture");
             textureId = 'default';
@@ -1090,7 +1088,7 @@ class MySceneGraph {
             }
 
         }
-
+        
         return [this.textures[textureId], afs, aft];
     }
 
@@ -1111,10 +1109,10 @@ class MySceneGraph {
                                 pieceType = new MyCube(this.scene, 0.6);
                                 break
                             case("cylinder"):
-                                pieceType = new MyCylinder(this.scene, 0.2, 0.4,0.4, 16, 8);
+                                pieceType = new MyCylinder(this.scene, 0.1, 0.4,0.4, 16, 24);
                                 break
                             case("cone"):
-                                pieceType = new MyCylinder(this.scene, 0.6, 0.01,0.4, 16, 8);
+                                pieceType = new MyCylinder(this.scene, 0.6, 0.01,0.4, 16,24 );
                                 break
                             case("sphere"):
                                 pieceType = new MySphere(this.scene, 0.35, 16, 8);

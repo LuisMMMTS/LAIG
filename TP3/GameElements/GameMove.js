@@ -8,21 +8,17 @@
  * @param gameBoard
  */
 class GameMove{
-    constructor(scene, startPiece, endPiece, origin, destination, gameBoard){
+    constructor(scene,origin, destination, gameBoard){
         this.scene = scene;
         
         this.origin = origin;
         this.destination = destination;
-        this.gameBoard = gameBoard;
-
-        this.startPiece = startPiece;
-        this.endPiece = endPiece;
         this.active = true;
     }
 
     resetAnimation(){
-        this.startPiece.animation = null
-        this.endPiece.animation = null
+        this.origin.piece.animation = null
+        this.destination.piece.animation = null
     }
 
     update(time){

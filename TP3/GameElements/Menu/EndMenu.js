@@ -14,9 +14,11 @@ class EndMenu{
     init(){
         this.name = new MySpriteText(this.scene, "Menu")
 
-        this.replay = new Button(this.scene, "Replay", true)      
+        this.replay = new Button(this.scene, "Play Movie", true)      
 
         this.newgame = new Button(this.scene, "Restart", true)
+
+        this.main = new Button(this.scene, "Main Menu", true)
 
         this.buttonMaterial = new CGFappearance(this.scene);
         this.buttonMaterial.setAmbient(1.0, 0.0, 0.0, 1);
@@ -49,10 +51,17 @@ class EndMenu{
        
 
         this.scene.pushMatrix()
-        this.scene.translate(-1,-1,1.5)
+        this.scene.translate(-1,-0.8,1.5)
         this.buttonMaterial.apply()
         this.scene.registerForPick(506, this.newgame)
         this.newgame.display()
+        this.scene.popMatrix()
+
+        this.scene.pushMatrix()
+        this.scene.translate(-1,-1.8,1.5)
+        this.buttonMaterial.apply()
+        this.scene.registerForPick(507, this.main)
+        this.main.display()
         this.scene.popMatrix()
         
         this.scene.pushMatrix()
