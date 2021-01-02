@@ -32,7 +32,13 @@ class AnimationCamera extends CGFcamera{
             }
             this.elapsedTime += (currentTime - this.lastTime)
             if(this.elapsedTime >= this.animationTime){
-                this.orbit(CGFcameraAxis.Y, Math.PI*2 - this.angle)
+                if(this.orchestrator.currentPlayer=="black"){
+                    this.setPosition(this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player1"].position)
+                    this.setTarget(this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player1"].target)
+                }else if(this.orchestrator.currentPlayer=="white"){
+                    this.setPosition(this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player2"].position)
+                    this.setTarget(this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player2"].target)
+                }
                 this.active = false
                 return
             }
@@ -40,9 +46,25 @@ class AnimationCamera extends CGFcamera{
             let interpolationAmount = Math.min(this.elapsedTime/this.animationTime,1)
             let easingFactor = easeInOutCubic(interpolationAmount)
 
-            let i = Math.PI *2* easingFactor - this.angle
+            let i = Math.PI * easingFactor - this.angle
+            let finalpos;
+            let finaltarget;
+            let translatePos=[0,0,0,0];
+            let translateTarget=[0,0,0,0];
 
-            this.orbit(CGFcameraAxis.Y, i)
+            if(this.orchestrator.currentPlayer=="black"){
+                finalpos=this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player1"].position;
+                finaltarget=this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player1"].target;
+            }else if(this.orchestrator.currentPlayer=="white"){
+                finalpos=this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player2"].position;
+                finaltarget=this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player2"].target;
+            }
+
+            vec4.lerp(translatePos,this.position,finalpos,interpolationAmount);
+            vec4.lerp(translateTarget, this.target,finaltarget,interpolationAmount);
+
+            this.setPosition(translatePos);
+            this.setTarget(translateTarget);
             this.angle += i
         }
       

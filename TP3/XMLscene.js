@@ -172,6 +172,8 @@ class XMLscene extends CGFscene {
         this.camera = this.themeGraphs[this.selectedTheme].views[this.cameraID];
         if(this.cameraID != this.themeGraphs[this.selectedTheme].defaultCameraId){
             this.interface.setActiveCamera(this.camera);
+        }else{
+            this.interface.setActiveCamera(null);
         }
     }
 
