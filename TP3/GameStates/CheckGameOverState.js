@@ -8,9 +8,9 @@ class CheckGameOverState extends GameState{
         /* Update score */
         this.orchestrator.prolog.getcurrentscore(this.orchestrator.gameBoard,"black")
         this.orchestrator.prolog.getcurrentscore(this.orchestrator.gameBoard,"white")
-        this.orchestrator.prolog.getGameOver(this.orchestrator.gameBoard,this.orchestrator.currentPlayer)//check if game is over
+        this.orchestrator.prolog.getGameOver(this.orchestrator.gameBoard,this.orchestrator.currentPlayer) //check if game is over
         this.aux = 1
-        return;
+        availableButtons(this.orchestrator, [])
     }
 
     handleReply(response){
@@ -30,17 +30,5 @@ class CheckGameOverState extends GameState{
         } 
             
     }
-
-    pickPiece(obj, customId){
-        return;
-    }
-
-
-    animationEnd(time){
-        return; 
-    }
-
-    checkTimeOut(time){}
-    
 
 }

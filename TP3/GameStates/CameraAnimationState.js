@@ -11,21 +11,14 @@ class CameraAnimationState extends GameState{
         
     }
 
-
     init(){
         unColorTiles(this.orchestrator);
-        return;
+        if(this.orchestrator.playingMovie) endavailableButtons(this.orchestrator, [])
+        else availableButtons(this.orchestrator, [])
     }
-
-
-    pickPiece(obj, customId){
-        return;
-    }
-
-
 
     animationEnd(time){
-
+        if(this.orchestrator.paused) return
         if(this.orchestrator.scene.getCurrentCamera() == "player1"||this.orchestrator.scene.getCurrentCamera() == "player2"){
             let p1=this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player1"];
             let p2=this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player2"];
@@ -43,8 +36,5 @@ class CameraAnimationState extends GameState{
             
         
     }
-
-    checkTimeOut(time){}
-    
 
 }

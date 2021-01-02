@@ -17,7 +17,7 @@ class BoardTile extends CGFobject {
         this.id = id;
         this.gameBoard = gameBoard;
         this.plane = new MyPlane(this.scene, size, size);
-        this.PieceColor=PieceColor;
+        this.PieceColor = PieceColor;
 
         this.piece = null;//new Piece(this.scene, id, this, PieceColor);
         //this.piece=new Piece(this.scene, id, this, PieceColor);

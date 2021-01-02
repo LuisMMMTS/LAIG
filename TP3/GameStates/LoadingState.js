@@ -12,9 +12,7 @@ class LoadingState extends GameState{
         this.orchestrator.prolog.boardRequest(this.orchestrator.boardSize);
     }
 
-    /**
-     * @abstract
-     */
+   
     handleReply(response){
         this.orchestrator.gameBoard=new Board(this.orchestrator.scene,response);
         this.orchestrator.auxiliarBoard = new Board(this.orchestrator.scene, response);
@@ -47,7 +45,7 @@ class LoadingState extends GameState{
 
                 //meter as peças no board auxiliar antes de fazer o movimento
 
-                let p=new Piece(this.orchestrator.scene, id, this, response[i][j]);
+                let p = new Piece(this.orchestrator.scene, id, this, response[i][j]);
                 this.orchestrator.auxiliarBoard.tiles[id-1].insertPiece(p);
                 
                 p.createAnimation(auxiliarTiles[id-1],this.orchestrator.gameBoard.tiles[id-1]);
@@ -64,18 +62,6 @@ class LoadingState extends GameState{
         
     }
 
-    /**
-     * @abstract
-     */
-    pickPiece(obj, customId){
-       return;
-    }
-
-
-
-    /**
-     * @abstract
-     */
     animationEnd(time){
         if (!this.orchestrator.loaded){
             return;
@@ -106,8 +92,4 @@ class LoadingState extends GameState{
 
     }
         
-    
-
-    checkTimeOut(time){}
-
 }

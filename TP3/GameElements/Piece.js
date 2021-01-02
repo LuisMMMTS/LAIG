@@ -28,7 +28,7 @@ class Piece {
         this.animation = null;
         this.firstInstant = false;
 
-        this.selectHeight = 0.5
+        this.selectHeight = 0.4
     }
 
     initMaterials() {
@@ -89,24 +89,26 @@ class Piece {
         this.float = !this.float
     }
 
-    createAnimation(initialTile, finalTile,begin=0){
+    createAnimation(initialTile, finalTile){
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 2.5;
-        let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
+        let speed = 3.0;
+        let duration = Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed;
+        console.log(duration)
         if (duration == 0) duration += 1
 
-        this.animation = new BezierAnimation(this.scene, "pieceAnimation", this.player);
+
+        this.animation = new PieceAnimation(this.scene, "pieceAnimation", this.player);
         let start = new KeyFrame()
         start.translation = new vec3.fromValues(0, this.selectHeight, 0)
-        start.instant = begin;
+        start.instant = 0;
         this.animation.addKeyFrame(start); 
 
         
         let end = new KeyFrame();
         end.translation = new vec3.fromValues(finalTile.x - initialTile.x, 0, finalTile.y - initialTile.y);
-        end.instant = begin+duration;
+        end.instant = duration;
         this.animation.addKeyFrame(end);
 
         return duration;

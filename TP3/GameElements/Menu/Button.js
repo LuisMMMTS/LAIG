@@ -16,12 +16,29 @@ class Button{
         this.buttonText = new MySpriteText(this.scene,text)
         this.picked = false;
         this.large = large;
+        
+        this.init()
 
+    }
+    init(){
+        this.buttonMaterial = new CGFappearance(this.scene);
+        this.buttonMaterial.setAmbient(1.0, 0.0, 0.0, 1);
+        this.buttonMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
+        this.buttonMaterial.setSpecular(1.0, 0.0, 0.0, 1);
+        this.buttonMaterial.setShininess(10.0);
+
+        this.unavailableMaterial = new CGFappearance(this.scene);
+        this.unavailableMaterial.setAmbient(0.92, 0.93, 0.95, 1);
+        this.unavailableMaterial.setDiffuse(0.92, 0.93, 0.95, 1);
+        this.unavailableMaterial.setSpecular(0.92, 0.93, 0.95, 1);
+        this.unavailableMaterial.setEmission(0.0, 0.0, 0.0, 1);
+        this.unavailableMaterial.setShininess(10.0);
+
+        this.material = this.unavailableMaterial
     }
 
     pick(){
         this.picked = !this.picked
-
     }
 
     getText(){
@@ -34,6 +51,8 @@ class Button{
 
     setAvailability(availability){
         this.availability = availability
+        if(this.availability) this.material = this.buttonMaterial
+        else this.material = this.unavailableMaterial
     }
 
     display(){
@@ -44,6 +63,7 @@ class Button{
         else this.scene.scale(3.9,0.65,1)
 
         if(this.picked) this.scene.scale(1,1,5)
+        this.material.apply()
         this.button.display()
         this.scene.popMatrix()
 

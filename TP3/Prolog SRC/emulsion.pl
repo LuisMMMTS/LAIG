@@ -1,9 +1,9 @@
-:- consult('display.pl').
-:- consult('moves.pl').
-:- consult('utils.pl').
-:- consult('logic.pl').
-:- consult('menus.pl').
-:- consult('computer.pl').
+:- compile('display.pl').
+:- compile('moves.pl').
+:- compile('utils.pl').
+:- compile('logic.pl').
+:- compile('menus.pl').
+:- compile('computer.pl').
 :- use_module(library(lists)).
 :- use_module(library(samsort)).
 :- use_module(library(system)).

@@ -1,8 +1,8 @@
 /** 
- * BezierAnimation - class that stores the keyframe animation information
+ * imation - class that stores the keyframe animation information
  */
 
-class BezierAnimation extends Animation{
+class PieceAnimation extends Animation{
     /**
     * @constructor
     * @param scene - Reference to MyScene object
@@ -13,8 +13,10 @@ class BezierAnimation extends Animation{
         super(scene, animationID);
 
         this.keyframes = [];
-        player == "black"?this.height=1.6:this.height=0.6
+        player == "black"?this.height=1.6:this.height=0.4
         player == "black"?this.am = 1.0:this.am=0.01
+        console.log(player)
+        console.log(this.height)
 
         //variables where the current animation is being stored
         this.animationTranslation = vec3.create();

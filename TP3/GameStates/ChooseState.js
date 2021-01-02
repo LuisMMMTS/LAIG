@@ -7,10 +7,9 @@ class ChooseState extends GameState {
     init(){
         this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.size), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.size];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
-
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
         this.orchestrator.updateErrors("")
-        return;
+        availableButtons(this.orchestrator, ["Undo","Reset", "Pause","Play", "Restart"])
     }
 
     handleReply(response) {
@@ -37,7 +36,7 @@ class ChooseState extends GameState {
         }
         if (obj.player == this.orchestrator.currentPlayer){ //trying to choose its own piece
             this.orchestrator.updateErrors("Can't choose your own piece, choose one of your oponents")
-            return; 
+            return;     
         } 
 
         this.x = Math.floor((customId - 1) / this.orchestrator.gameBoard.size);
@@ -69,7 +68,8 @@ class ChooseState extends GameState {
     }
 
     pickButton(obj, customId){
-        if(customId == 501){
+        if(customId == 501){ //undo
+            if(this.orchestrator.paused) return
             obj.pick()
             this.orchestrator.previousObj.pick()
             let move = this.orchestrator.gameSequence.getLastMove()
@@ -92,24 +92,24 @@ class ChooseState extends GameState {
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
 
         } 
-        else if(customId == 502){
+        else if(customId == 502){ //reset
             obj.pick()
             this.orchestrator.reset()
         }
-        else if(customId == 503){
+        else if(customId == 503){ //pause/play
             if(obj.getText() == "Pause") obj.changeButtonText("Play")
             else if(obj.getText() == "Play") obj.changeButtonText("Pause")
             obj.pick()
             this.orchestrator.pause()
         } 
-        else this.orchestrator.updateErrors("This button is unavailable in this moment")
-        return
+        else if(customId == 504){ //restart
+            obj.pick()
+            this.orchestrator.previousObj.pick()
+            this.orchestrator.restart()
+        }
+        else return
     }
-
-    animationEnd(time) {
-        return;
-    }
-
+    
     checkTimeOut(time){
         if(this.orchestrator.paused) return
         
