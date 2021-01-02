@@ -46,7 +46,7 @@ class GameOrchestrator {
         this.startTile = null
         this.finalTile = null
         this.auxiliarBoardOffset=[10,0,0];
-
+        this.menu = null
         
         this.currentPlayer = "black";
 
@@ -71,6 +71,7 @@ class GameOrchestrator {
         this.gameOver = false
         this.playingMovie = false
         this.lastTime = 0
+        this.winner = null
         
     }
 
@@ -141,8 +142,6 @@ class GameOrchestrator {
     changeMode(mode){
         this.mode = mode;
     }
-
-
     undo() {
         let res = this.gameSequence.undo()
         if(res == -1) this.updateErrors("No moves to undo")
@@ -157,11 +156,9 @@ class GameOrchestrator {
     }
 
     pause(){
-        console.log("pause")
-        if(!this.paused) this.info = document.getElementById("info").textContent
+        if(!this.paused) this.info = document.querySelector('div #info').textContent
         this.paused = !this.paused
-        this.paused?this.updateInfo("Game is paused"):this.updateInfo(info)
-        console.log(this.paused)
+        this.paused?this.updateInfo("Game is paused"):this.updateInfo(this.info)
     }
 
     restart(){
@@ -175,8 +172,8 @@ class GameOrchestrator {
 
     gameMovie() {
         this.gameBoard.clone()
+        this.playingMovie = true
         this.changeTheme(this.scene.getCurrentTheme())
-        console.log(this.gameBoard)
         //auxiliarboard.init
         this.gameSequence.moveReplay()
          

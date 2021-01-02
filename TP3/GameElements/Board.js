@@ -115,11 +115,14 @@ class Board extends CGFobject {
      */
     clone(){
         let k = 0
-        for(let i = 0; i < this.boardRepresentation.length; i++){
-            for(let j = 0; j < this.boardRepresentation.length; j++){
+        for(let i = 0; i < this.size; i++){
+            for(let j = 0; j < this.size; j++){
                 this.tiles[k].piece = new Piece(this.scene, this.tiles[k].id, this.tiles[k],this.boardRepresentation[i][j])
+                k++
+                
             }
         }
+        
     }
 
     display(){

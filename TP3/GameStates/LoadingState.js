@@ -13,9 +13,7 @@ class LoadingState extends GameState{
         this.orchestrator.prolog.boardRequest(this.orchestrator.boardSize);
     }
 
-    /**
-     * @abstract
-     */
+   
     handleReply(response){
         this.orchestrator.gameBoard=new Board(this.orchestrator.scene,response);
         this.orchestrator.auxiliarBoard = new AuxiliarBoard(this.orchestrator.scene, response);
@@ -37,8 +35,9 @@ class LoadingState extends GameState{
                     }
                      console.log("hhhhh5");
         //auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5 , this.orchestrator.auxiliarBoardOffset[1], id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]));
-                      auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5+i , this.orchestrator.auxiliarBoardOffset[1]-0.5+k, id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]-0.5+j));
-                     let p=new Piece(this.orchestrator.scene, id, this, response[id-1]);
+                    auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5+i , this.orchestrator.auxiliarBoardOffset[1]-0.5+k, id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]-0.5+j));
+
+                    let p=new Piece(this.orchestrator.scene, id, this.orchestrator.gameBoard.tiles[id-1], response[parseInt((id-1)/response.length)][(id-1)%response.length]);
                      this.orchestrator.auxiliarBoard.tiles[id-1].insertPiece(p);
                      id++;
                  }
@@ -58,18 +57,6 @@ class LoadingState extends GameState{
         
     }
 
-    /**
-     * @abstract
-     */
-    pickPiece(obj, customId){
-       return;
-    }
-
-
-
-    /**
-     * @abstract
-     */
     animationEnd(time){
         if (!this.orchestrator.loaded){
             return;
@@ -110,8 +97,4 @@ class LoadingState extends GameState{
 
     }
         
-    
-
-    checkTimeOut(time){}
-
 }

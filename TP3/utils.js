@@ -34,4 +34,17 @@ function searchForArray(haystack, needle){
 
   function easeInOutCubic(x){
     return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3)/2
-}
+  }
+
+  function availableButtons(orchestrator, buttons){
+    orchestrator.menu.resetButtons()
+    for(let i = 0; i < buttons.length; i++)
+      orchestrator.menu.makeAvailable(buttons[i])
+  }
+
+  function endavailableButtons(orchestrator, buttons){
+    orchestrator.endMenu.resetButtons()
+    for(let i = 0; i < buttons.length; i++)
+      orchestrator.endMenu.makeAvailable(buttons[i])
+  }
+

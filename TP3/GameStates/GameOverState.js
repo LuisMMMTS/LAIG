@@ -7,7 +7,7 @@ class GameOverState extends GameState{
         this.orchestrator.updatePlayTime(0)
         this.orchestrator.prolog.getWinner(this.orchestrator.gameBoard, this.orchestrator.currentPlayer)
         this.orchestrator.updateErrors("")
-        return;
+        endavailableButtons(this.orchestrator, ["Play Movie", "Main Menu", "Restart"]) 
     }
 
     handleReply(response) {
@@ -20,25 +20,24 @@ class GameOverState extends GameState{
 
     }
 
-    pickPiece(obj, customId){
-        return;
-    }
-
     pickButton(obj, customId){
         if(customId == 505){//play movie
+            obj.pick()
             console.log("replay")
+            obj.changeButtonText("Pause")
             this.orchestrator.changeState(new MovieState(this.orchestrator))
         } 
         else if(customId == 506){//restart game
             console.log("restart")
+            obj.pick()
             this.orchestrator.restart()
         }
         else if(customId == 507){//new game
+            obj.pick()
             console.log("reset")
             this.orchestrator.reset()
         }
-        else this.orchestrator.updateErrors("This button is unavailable in this moment")
-        return
+        else return
     }
 
     animationEnd(time){

@@ -33,8 +33,6 @@ class PrologInterface {
     }
 
     gameBoardtoString(board) {
-        console.log("")
-        console.log(board);
         let final_array = "["
         for (let i = 0; i < board.size; i++) {
             let row = "["

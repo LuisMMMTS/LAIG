@@ -12,6 +12,7 @@ class ReadyState extends GameState{
         this.orchestrator.prolog.getMovablePiecesResquest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer);
         this.orchestrator.updateInfo("Choose one of your pieces")
         this.orchestrator.updateErrors("")
+        availableButtons(this.orchestrator, ["Undo","Reset", "Pause","Play", "Restart"])
     }
 
     handleReply(response){
@@ -47,11 +48,12 @@ class ReadyState extends GameState{
             this.orchestrator.startTile = obj.tile;
             this.orchestrator.changeState(new ChooseState(this.orchestrator))
         }
+        
     }
 
     pickButton(obj, customId){
-        if(customId == 501){
-
+        if(customId == 501){ //undo
+            if(this.orchestrator.paused) return
             obj.pick()
             let move = this.orchestrator.gameSequence.getLastMove()
             
@@ -68,30 +70,26 @@ class ReadyState extends GameState{
 
             move.destination.piece.createAnimation(move.destination, move.origin)
             move.origin.piece.createAnimation(move.origin, move.destination)
+
             this.orchestrator.undo()
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
 
         } 
-        else if(customId == 502){
+        else if(customId == 502){ //reset
             obj.pick()
             this.orchestrator.reset()
         }
-        else if(customId == 503){
+        else if(customId == 503){ //pause/play
+            obj.pick()
             if(obj.getText() == "Pause") obj.changeButtonText("Play")
             else if(obj.getText() == "Play") obj.changeButtonText("Pause")
-            obj.pick()
             this.orchestrator.pause()
         } 
-        else if(customId == 504){
+        else if(customId == 504){ //restart
             obj.pick()
             this.orchestrator.restart()
         }
-        else this.orchestrator.updateErrors("This button is unavailable in this moment")
-        return
-    }
-
-    animationEnd(time){
-        return;
+        else return
     }
 
     checkTimeOut(time){
@@ -103,7 +101,7 @@ class ReadyState extends GameState{
             this.orchestrator.updateErrors("You just lost your turn")
             this.orchestrator.updatePlayTime(0)
             this.orchestrator.changePlayer()
-            this.orchestrator.changeState(new ReadyState(this.orchestrator))
+            this.orchestrator.changeState(new ReadyState(this.orchestrator)) //this is necessary to asks for the new choosable pieces
         }
         else this.orchestrator.updatePlayTime((this.orchestrator.timeLeft).toFixed(2))
     }

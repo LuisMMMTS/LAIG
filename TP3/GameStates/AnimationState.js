@@ -4,29 +4,49 @@
 class AnimationState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
-        this.orchestrator.updateInfo("Moving Pieces")
+
+        if(!this.orchestrator.playingMovie) this.orchestrator.updateInfo("Moving Pieces")
         this.orchestrator.updateErrors("")
         this.orchestrator.updatePlayTime(0)
     }
 
     init(){
         unColorTiles(this.orchestrator);
-        return;
-    }
-
-
-    pickPiece(obj, customId){
-        return;
+        if(this.orchestrator.playingMovie) endavailableButtons(this.orchestrator, ["Pause", "Play", "Restart", "Main Menu"])
+        availableButtons(this.orchestrator,["Pause","Play", "Restart", "Reset"])
     }
 
     pickButton(obj, customId){
-        if(customId == 503){
-            if(obj.getText() == "Pause") obj.changeButtonText("Play")
-            else if(obj.getText() == "Play") obj.changeButtonText("Pause")
-            obj.pick()
-            this.orchestrator.pause()
-        } 
-        else this.orchestrator.updateErrors("This button is unavailable in this moment")
+        if(!this.orchestrator.playingMovie){
+            if(customId == 503){
+                if(obj.getText() == "Pause") obj.changeButtonText("Play")
+                else if(obj.getText() == "Play") obj.changeButtonText("Pause")
+                obj.pick()
+                this.orchestrator.pause()
+            } 
+            else return
+        }
+        else{
+            if(customId == 505){//play/pause
+                obj.pick()
+                console.log("replay")
+                if(obj.getText() == "Pause") obj.changeButtonText("Play")
+                else if(obj.getText() == "Play") obj.changeButtonText("Pause")
+                this.orchestrator.pause()
+            } 
+            else if(customId == 506){//restart game
+                console.log("restart")
+                obj.pick()
+                this.orchestrator.restart()
+            }
+            else if(customId == 507){//new game
+                obj.pick()
+                console.log("reset")
+                this.orchestrator.reset()
+            }
+            else return
+        }
+        
 
     }
 
@@ -52,7 +72,6 @@ class AnimationState extends GameState{
             }
         } 
         if (this.orchestrator.previousObj.animation.ended && this.orchestrator.finalObj.animation.ended){
-            //this.orchestrator.gameSequence.resetAnimations()
             this.orchestrator.previousObj.animation = null
             this.orchestrator.finalObj.animation = null
             this.orchestrator.gameBoard.switchTiles(this.orchestrator.previousObj.initialTile,this.orchestrator.previousObj.finalTile);
@@ -63,7 +82,6 @@ class AnimationState extends GameState{
 
     }
 
-    checkTimeOut(time){}
     
 
 }
