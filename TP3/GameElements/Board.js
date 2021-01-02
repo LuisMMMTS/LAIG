@@ -115,15 +115,13 @@ class Board extends CGFobject {
      */
     clone(){
         let k = 0
-        console.log(this.boardRepresentation)
-        for(let i = 0; i < this.boardSize; i++){
-            for(let j = 0; j < this.boardSize; j++){
+        for(let i = 0; i < this.size; i++){
+            for(let j = 0; j < this.size; j++){
                 this.tiles[k].piece = new Piece(this.scene, this.tiles[k].id, this.tiles[k],this.boardRepresentation[i][j])
-                this.tiles[k].PieceColor = this.tiles[k].piece.player
-                console.log(this.tiles[k].piece.player)
+                k++
+                
             }
         }
-        console.log(this.scene.orchestrator.prolog.gameBoardtoString(this))
         
     }
 

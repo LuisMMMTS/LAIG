@@ -172,10 +172,8 @@ class GameOrchestrator {
 
     gameMovie() {
         this.gameBoard.clone()
-        console.log(this.prolog.gameBoardtoString(this.gameBoard))
         this.playingMovie = true
         this.changeTheme(this.scene.getCurrentTheme())
-        console.log(this.gameBoard)
         //auxiliarboard.init
         this.gameSequence.moveReplay()
          

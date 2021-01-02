@@ -42,8 +42,6 @@ class MovieState extends GameState{
     animationEnd(time){
         if(!this.orchestrator.playingMovie) return
         let move = this.orchestrator.gameSequence.getCurrentMove()
-        console.log(this.orchestrator.prolog.gameBoardtoString(this.orchestrator.gameBoard))
-        console.log(this.orchestrator.playingMovie)
         if(move){
             this.orchestrator.previousObj = move.origin.piece;
             this.orchestrator.finalObj = move.destination.piece;
