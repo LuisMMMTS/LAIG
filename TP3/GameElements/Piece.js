@@ -90,10 +90,11 @@ class Piece {
     }
 
     createAnimation(initialTile, finalTile,begin=0){
+        console.log(initialTile, finalTile)
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 2.5;
+        let speed = 1;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
         if (duration == 0) duration += 1
 
@@ -105,7 +106,7 @@ class Piece {
 
         
         let end = new KeyFrame();
-        end.translation = new vec3.fromValues(finalTile.x - initialTile.x, 0, finalTile.y - initialTile.y);
+        end.translation = new vec3.fromValues(finalTile.x - initialTile.x, finalTile.z-initialTile.z, finalTile.y - initialTile.y);
         end.instant = begin+duration;
         this.animation.addKeyFrame(end);
 

@@ -111,7 +111,7 @@ class BezierAnimation extends Animation{
         //vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
 
         this.animationTranslation[0]=this.keyframes[this.keyframeEndIndex].translation[0]*interpolationAmount;
-        this.animationTranslation[1]=this.keyframes[this.keyframeEndIndex].translation[1]+(Math.pow(Math.sin(Math.PI*interpolationAmount),this.height)*this.am);
+        this.animationTranslation[1]=this.keyframes[this.keyframeEndIndex].translation[1]*interpolationAmount+(Math.pow(Math.sin(Math.PI*interpolationAmount),this.height)*this.am);
         this.animationTranslation[2]=this.keyframes[this.keyframeEndIndex].translation[2]*interpolationAmount;
 
         vec3.lerp(this.animationRotation,this.keyframes[this.keyframeStartIndex].rotation, this.keyframes[this.keyframeEndIndex].rotation,interpolationAmount);

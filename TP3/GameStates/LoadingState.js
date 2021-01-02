@@ -5,6 +5,7 @@
 class LoadingState extends GameState{
     constructor(orchestrator){
         super(orchestrator);
+        this.boxOpen=false;
     }
 
     init(){
@@ -17,50 +18,43 @@ class LoadingState extends GameState{
      */
     handleReply(response){
         this.orchestrator.gameBoard=new Board(this.orchestrator.scene,response);
-        this.orchestrator.auxiliarBoard = new Board(this.orchestrator.scene, response);
+        this.orchestrator.auxiliarBoard = new AuxiliarBoard(this.orchestrator.scene, response);
+        
         this.orchestrator.changeTheme(this.orchestrator.scene.getCurrentTheme());
-        this.orchestrator.loaded=true;
-        let id=1;
-        let numberPieces=Math.pow(response.length,2);
-        let auxiliarSize=Math.ceil(Math.pow(numberPieces,(1/3)));
-        let auxiliarTiles=[]
-        for (let i=0;i<auxiliarSize;i++){
-            for (let j=0;j<auxiliarSize;j++){
-                for (let k=0;k<auxiliarSize;k++){
-                    if ((i+1)*auxiliarSize+(j+1)*auxiliarSize+k+1>=Math.pow(response.length,2)){
+         let id=1;
+        
+
+         let nTiles = response.length;
+         let auxTiles=[];
+        for (let i = 0; i < nTiles; i++) {
+            console.log("hhhhh2");
+            for (let j = 0; j < nTiles; j++) {
+                console.log("hhhhh3");
+                for (let k = 0; k < nTiles; k++) {
+                    console.log("hhhhh6");
+                    if((id)>Math.pow(response.length,2)){
                         break;
                     }
-                    auxiliarTiles.push(new BoardTile(this.orchestrator.scene, null, 1, j, this.orchestrator.auxiliarBoardOffset+k,id, "black",i));
-                    id++;
-                }
-            }
-        }
-        //console.log(auxiliarTiles);
-        this.lastanimation;
-        id=1;
+                     console.log("hhhhh5");
+        //auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5 , this.orchestrator.auxiliarBoardOffset[1], id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]));
+                      auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5+i , this.orchestrator.auxiliarBoardOffset[1]-0.5+k, id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]-0.5+j));
+                     let p=new Piece(this.orchestrator.scene, id, this, response[id-1]);
+                     this.orchestrator.auxiliarBoard.tiles[id-1].insertPiece(p);
+                     id++;
+                 }
+             }
+         }
+         this.orchestrator.loaded=true;
+        // //console.log(auxiliarTiles);
+         id=1;
+         //this.orchestrator.auxiliarBoard.tiles[id-1].piece.createAnimation(auxTiles[id-1],this.orchestrator.gameBoard.tiles[id-1]);
         for (let i=0;i<response.length;i++){
             //console.log("i is" + i);
             for (let j=0;j<response.length;j++){
-                // console.log(j)
-                // console.log(auxiliarTiles[id-1]);
-                // console.log(this.orchestrator.gameBoard.tiles[id-1])
-
-                //meter as peças no board auxiliar antes de fazer o movimento
-
-                let p=new Piece(this.orchestrator.scene, id, this, response[i][j]);
-                this.orchestrator.auxiliarBoard.tiles[id-1].insertPiece(p);
-                
-                p.createAnimation(auxiliarTiles[id-1],this.orchestrator.gameBoard.tiles[id-1]);
-                if (j==response.length-2)
-                    this.orchestrator.previousObj=p;
-                if (j==response.length-1)
-                    this.orchestrator.finalObj=p;
+                this.orchestrator.auxiliarBoard.tiles[id-1].piece.createAnimation(auxTiles[id-1],this.orchestrator.gameBoard.tiles[id-1], id);
                 id++;
             }
         }
-        //this.orchestrator.changeState(new AnimationState(this.orchestrator))
-        // while(!p.ended){
-        // }
         
     }
 
@@ -80,6 +74,16 @@ class LoadingState extends GameState{
         if (!this.orchestrator.loaded){
             return;
         }
+        if(!this.boxOpen){
+            this.orchestrator.auxiliarBoard.board.open++;
+            console.log(this.orchestrator.auxiliarBoard.board.open);
+            if (this.orchestrator.auxiliarBoard.board.open==50){
+                this.boxOpen=true;
+            }
+            return;
+        }
+
+
         let anyActive=false;
         if(this.orchestrator.paused) return
         

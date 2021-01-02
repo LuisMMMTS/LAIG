@@ -45,7 +45,7 @@ class GameOrchestrator {
         this.finalObj = null
         this.startTile = null
         this.finalTile = null
-        this.auxiliarBoardOffset=10;
+        this.auxiliarBoardOffset=[10,0,0];
 
         
         this.currentPlayer = "black";
@@ -245,9 +245,11 @@ class GameOrchestrator {
     //displays the board and animator
     display() {
         //this.theme.displayScene()--> tirar do xmlscene
+        this.scene.pushMatrix();
         if (this.loaded){
         this.scene.pushMatrix();
-        this.scene.translate(0,0,this.auxiliarBoardOffset);
+        this.scene.translate(this.auxiliarBoardOffset[0],this.auxiliarBoardOffset[1],this.auxiliarBoardOffset[2]);
+        this.auxiliarBoard.display();
         this.scene.popMatrix();
 
         
@@ -261,6 +263,7 @@ class GameOrchestrator {
         this.scene.scale(0.98,1, 0.14)
         if(this.gameOver) this.endMenu.display()
         else this.menu.display()
+        this.scene.popMatrix()
         this.scene.popMatrix()
     }
 

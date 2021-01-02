@@ -1,35 +1,35 @@
-
 <lsf>
 
     <initials>
-        <reference length="5" /> <!-- axis length; "0" means no axis displayed -->
+        <reference length="0" /> <!-- axis length; "0" means no axis displayed -->
 
         <root id="root" /> <!-- identifier of root node of the scene graph; this node -->
-
-        <themename name = "Theme2"/>
         <!-- must be defined in one of the following NODE declarations -->
+        <themename name = "Initial"/>
     </initials>
 
-    <views default="Side">
+    <views default="player1">
         <!-- at least one of the following type of cameras must be declared -->
-        <!-- default-player1, player 2, menu, top -->
-        <perspective id="Side" near="0.1" far="500" angle="23">
-            <from x="30" y="5" z="7" />
-            <to x="0" y="5" z="7" />
+        <perspective id="player1" near="0.1" far="500" angle="30">
+            <from x="20" y="10" z="22" />
+            <to x="-3" y="0" z="-3" />
         </perspective>
-        <perspective id="Front" near="7" far="500" angle="15">
-            <from x="1" y="5" z="45" />
-            <to x="0" y="3.5" z="0" />
+        <perspective id="player2" near="7" far="500" angle="30">
+            <from x="17" y="7" z="-13" />
+            <to x="-3" y="0" z="7" />
         </perspective>
-        <perspective id="Top" near="0.1" far="500" angle="27">
-            <from x="3" y="30" z="5" />
-            <to x="-1.5" y="0" z="5" />
+        <perspective id="Top" near="0.1" far="500" angle="23">
+            <from x="10" y="40" z="1" />
+            <to x="5" y="2" z="1" />
         </perspective>
-        <ortho id="Ortho" near="0" far="50" left="-10" right="10" top="10" bottom="-1">
-            <from x="6" y="3" z="15" />
-            <to x="0" y="-1.5" z="2" />
-            <up x="0" y="1" z="0" /> <!-- optional, default 0,1,0 -->
-        </ortho>
+        <perspective id="Menu" near="0.1" far="500" angle="23">
+            <from x="30" y="10" z="1" />
+            <to x="0" y="0" z="1" />
+        </perspective>
+        <perspective id="perpective" near="0.1" far="500" angle="90">
+            <from x="-20" y="20" z="20" />
+            <to x="-3" y="0" z="-3" />
+        </perspective>
     </views>
 
 
@@ -39,12 +39,15 @@
     </illumination>
 
 
+    
+
+
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="LightRight">
+        <light id="fireplace">
             <!-- light identifier -->
             <enable value="0" /> <!-- enable/disable -->
-            <position x="20" y="20" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
+            <position x="0" y="10" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
             <specular r="0.8" g="0.8" b="0.8" a="0.8" /> <!-- specular component -->
@@ -86,12 +89,16 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="floorTexture" path="chao4.jpg" />
-        <texture id="lightBrown" path="light_brown.jpeg" />
-        <texture id="darkBrown" path="dark_brown.jpg" />
-        <texture id="base" path="base.jpg" />
+        <texture id="sky" path="sky.jpeg" />
+        <texture id="ground" path="ground.jpeg" />
+        <texture id="right" path="right.jpeg" />
+        <texture id="left" path="left.jpeg" />
+        <texture id="front" path="front.jpeg" />
+        <texture id="back" path="back.jpeg" />
+        <texture id="ballTexture" path="ball.jpg" />
+        <texture id="donutTexture" path="donut.jpg" />
+        <texture id="roopTexture" path="roop.png" />
     </textures>
-
 
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
@@ -113,6 +120,13 @@
             <diffuse r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- diffuse reflection -->
             <ambient r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- ambient reflection -->
             <emissive r="0.6" g="0.6" b="0.6" a="1.0" /> <!-- emissive component -->
+        </material>
+       <material id="underTexture">
+            <shininess value="1" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" /> <!-- emissive component -->
         </material>
         <material id="emissive">
             <!--cilindros dos tapetes-->
@@ -166,257 +180,486 @@
             <ambient r="1" g="0" b="0" a="0.0" /> <!-- ambient reflection -->
             <emissive r="0.5" g="0" b="0" a="0.0" /> <!-- emissive component -->
         </material>
+        <material id="bege">
+            <shininess value="1.0" />
+            <specular r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- specular reflection -->
+            <diffuse r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- diffuse reflection -->
+            <ambient r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- ambient reflection -->
+            <emissive r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- emissive component -->
+        </material>
     </materials>
     <animations>
-        <!-- This is optional and can be empty-->
-        <animation id="sphereAnimationGreen">
-            <!-- The animation starts in the time of the first keyframe, until then the object is invisible. There must be at least
-    one keyframe. Instant is time expressed in seconds since the beginning of the animation.
-        Keyframes must be declared in ascending order of time -->
-            <keyframe instant="0">
-
-                <!-- translate, rotate e scale representam as -->
-                <!-- quantidades das transformações -->
-                <!-- correspondentes, medidas em relação à -->
-                <!-- situação inicial (instante zero) -->
-                <!-- Para uma mesma keyframe, os elementos -->
-                <!-- translate, rotate e scale sao obrigatorios -->
-                <!-- e fornecidos por esta ordem -->
-
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-            <keyframe instant="20">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1" sy="1" sz="1" />
-            </keyframe>
-            <keyframe instant="25">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="2" sy="2" sz="2" />
-            </keyframe>
-            <keyframe instant="27">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="2" sy="2" sz="2" />
-            </keyframe>
-            <keyframe instant="29">
-                <translation x="1" y="0" z="1" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="3" sy="3" sz="3" />
-            </keyframe>
-
-
-        </animation>
     </animations>
 
     <!-- spritesheets -->
     <!-- o bloco "spritesheets" deve ser declarado -->
     <!-- imediatamente após o bloco "textures" -->
     <spritesheets>
-        <!-- Semelhante à declaração de textura,  mas inclui a definição do nº de colunas e linhas -->
-        <spritesheet id="sprite1" path="walking.jpg" sizeM="9" sizeN="2" />
-        <spritesheet id="boardSprite" path="board_nowhite.png" sizeM="1" sizeN="4" />
-        <spritesheet id="xraySprite" path="xray.png" sizeM="1" sizeN="36" />
-        <spritesheet id="groundArrow" path="arrow.png" sizeM="3" sizeN="1" />
     </spritesheets>
 
+        <nodes>
+
+            <node id="root">            <!-- defines one intermediate node; may be repeated as necessary -->
+                <!-- next two lines are mandatory -->
+                <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
     
-    <nodes>
-
-        <node id="root">            <!-- defines one intermediate node; may be repeated as necessary -->
-            <!-- next two lines are mandatory -->
-            <material id="Porcelain_Grey" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
-
-            <texture id="danger"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
-                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
-            </texture>
-
-            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
-            <transformations>
-
-
-            </transformations>
-
-            <!-- declaring descendants, at least one node or one leaf must be present
-             descendants may be mixed, nodes and leafs -->
-            <descendants>
-            <leaf type="cylinder" height="5" topRadius="0.5" bottomRadius="0.5" stacks="8" slices="24" />
-            </descendants>
-        </node>
-
-        <node id="cubeMap">
-            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
-
-            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
-                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
-            </texture>
-
-            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
-            <transformations>
-            </transformations>
-
-            <!-- declaring descendants, at least one node or one leaf must be present
-             descendants may be mixed, nodes and leafs -->
-            <descendants>
-                <noderef id="sky"/>
-                <noderef id="ground"/>
-                <noderef id="left"/>
-                <noderef id="right"/>
-                <noderef id="front"/>
-                <noderef id="back"/>
-            </descendants>
-        </node>
-
-        <node id="sky">
-            <material id="Off_white_emissive" />
-
-            <texture id="sky">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
-
-            <transformations>
-
-
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
-            </descendants>
-        </node>
-
-        <node id="ground">
-            <material id="Off_white_emissive" />
-
-            <texture id="ground">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
-
-            <transformations>
-
-
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
-            </descendants>
-        </node>
-
-        <node id="left">
-            <material id="Off_white_emissive" />
-
-            <texture id="left">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
-
-            <transformations>
-
-
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
-            </descendants>
-        </node>
-
-        <node id="right">
-            <material id="Off_white_emissive" />
-
-            <texture id="right">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
-
-            <transformations>
-
-
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
-            </descendants>
-        </node>
-
-        <node id="front">
-            <material id="Off_white_emissive" />
-
-            <texture id="front">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
-
-            <transformations>
-
-
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
-            </descendants>
-        </node>
-
-        <node id="back">
-            <material id="Off_white_emissive" />
-
-            <texture id="back">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
-
-            <transformations>
-
-
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-30" y1="30" x2="30" y2="30" />
-            </descendants>
-        </node>
-
-    </nodes>
-
-    <gameBoard>
-        <boardMaterial id= "Porcelain_Grey"/>
-        <boardTexture id = "floorTexture">
-            <amplification afs="1" aft="1" />
-        </boardTexture>
-        <tiles>
-            <material1 id ="White"/>
-            <texture1 id="base">
-                <amplification afs="1" aft="1" />
-            </texture1>
-            <material2 id ="black"/>
-            <texture2 id="base">
-                <amplification afs="1" aft="1" />
-            </texture2>
-        </tiles>
-        <pieces>
-            <player1>
-                <pieceType  type= "cube"/>
-                <material id="black"/>
-                <texture id="base">
-                    <amplification afs="1" aft="1" />
+                <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                    <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
                 </texture>
-            </player1>
-            <player2>
-                <pieceType  type= "cube"/>
-                <material id="White"/>
-                <texture id="base">
-                    <amplification afs="1" aft="1" />
+    
+                <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+                <transformations>
+                    <translation x="0.0" y="-10.0" z="1.0" />
+    
+                </transformations>
+    
+                <!-- declaring descendants, at least one node or one leaf must be present
+                 descendants may be mixed, nodes and leafs -->
+                <descendants>
+                    <noderef id="cubeMap"/>
+                </descendants>
+            </node>
+    
+            <node id="cubeMap">
+                <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+    
+                <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                    <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
                 </texture>
-            </player2>
-            
-        </pieces>
-    </gameBoard>
+    
+                <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+                <transformations>
+                    <translation x="0" y="29" z="0" />
+                    <scale sx="2" sy="2" sz="2"/> 
+                </transformations>
+    
+                <!-- declaring descendants, at least one node or one leaf must be present
+                 descendants may be mixed, nodes and leafs -->
+                <descendants>
+                    <noderef id="sky"/>
+                    <noderef id="ground"/>
+                    <noderef id="left"/>
+                    <noderef id="right"/>
+                    <noderef id="front"/>
+                    <noderef id="back"/>
+                </descendants>
+            </node>
+    
+            <node id="sky">
+                <material id="Off_white_emissive" />
+    
+                <texture id="sky">
+                    <amplification afs="60.0" aft="60.0" />
+                </texture>
+    
+                <transformations>
+                    <translation x="0" y="29.9" z="0" />
+                    <rotation axis="z" angle="-90" />
+                    <rotation axis="y" angle="90" />
+    
+                </transformations>
+    
+                <descendants>
+                    <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                </descendants>
+            </node>
+    
+            <node id="ground">
+                <material id="Off_white_emissive" />
+    
+                <texture id="ground">
+                    <amplification afs="60.0" aft="60.0" />
+                </texture>
+    
+                <transformations>
+                    <translation x="0" y="-10" z="0" />
+                    <rotation axis="z" angle="90" />
+                    <rotation axis="y" angle="90" />
+    
+                </transformations>
+    
+                <descendants>
+                    <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                    <noderef id="toalha"/>
+                    <noderef id="ball"/>
+                    <noderef id="picnicBasket"/>
+                    <noderef id="lake"/>
+                </descendants>
+            </node>
+    
+            <node id="left">
+                <material id="Off_white_emissive" />
+    
+                <texture id="left">
+                    <amplification afs="60.0" aft="60.0" />
+                </texture>
+    
+                <transformations>
+                    <translation x="0" y="0" z="30" />
+                    <rotation axis="y" angle="180" />
+    
+                </transformations>
+    
+                <descendants>
+                    <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                </descendants>
+            </node>
+    
+            <node id="right">
+                <material id="Off_white_emissive" />
+    
+                <texture id="right">
+                    <amplification afs="60.0" aft="60.0" />
+                </texture>
+    
+                <transformations>
+                    <translation x="0" y="0" z="-30" />
+    
+                </transformations>
+    
+                <descendants>
+                    <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                </descendants>
+            </node>
+    
+            <node id="front">
+                <material id="Off_white_emissive" />
+    
+                <texture id="front">
+                    <amplification afs="60.0" aft="60.0" />
+                </texture>
+    
+                <transformations>
+                    <translation x="-30" y="0" z="0" />
+                    <rotation axis="y" angle="90" />
+                </transformations>
+    
+                <descendants>
+                    <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                </descendants>
+            </node>
+    
+            <node id="back">
+                <material id="Off_white_emissive" />
+    
+                <texture id="back">
+                    <amplification afs="60.0" aft="60.0" />
+                </texture>
+    
+                <transformations>
+                    <translation x="30" y="0" z="0" />
+                    <rotation axis="y" angle="-90" />
+    
+                </transformations>
+    
+                <descendants>
+                    <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                </descendants>
+            </node>
+
+            <node id="toalha">       
+                <material id="red" />
+                <texture id="clear">
+                    <amplification afs="4.0" aft="4.0" />
+                </texture>
+                <transformations>
+                    <translation x="-7" y="-1" z="-7" />
+                    <scale sx="10" sy="0.05" sz="20"/>
+                    <rotation axis="z" angle="-90" />
+                </transformations>
+                <descendants>
+                    <leaf type="patch" npointsU="5" npointsV="2" npartsU="20" npartsV="20">
+                        <controlpoint x="-1.0" y="0.0" z="1.0" />
+                        <controlpoint x="-1.0" y="0.0" z="-1.0" />
+
+                        <controlpoint x="0.0" y="1.0" z="0.5" />
+                        <controlpoint x="0.0" y="1.0" z="-1.5" />
+
+                        <controlpoint x="1.0" y="0.0" z="1.0" />
+                        <controlpoint x="1.0" y="0.0" z="-1.0" />
+
+                        <controlpoint x="2.0" y="0.0" z="1." />
+                        <controlpoint x="2.0" y="0.0" z="-0.5" />
+
+                        <controlpoint x="3.0" y="0.0" z="1.0" />
+                        <controlpoint x="3.0" y="0.0" z="-1.0" />
+
+                    </leaf>
+                </descendants>            
+            </node> 
+
+            <node id="lake">       
+                <material id="navy_blue" />
+                <texture id="clear">
+                    <amplification afs="4.0" aft="4.0" />
+                </texture>
+                <transformations>
+                    <translation x="-7" y="-1" z="-7" />
+                    <scale sx="10" sy="0.05" sz="20"/>        
+                </transformations>
+                <descendants>
+                    <leaf type="patch" npointsU="8" npointsV="2" npartsU="20" npartsV="20">
+                        <controlpoint x="-0.62" y="0.0" z="2.85" />
+                        <controlpoint x="-1.3" y="0.0" z="2.23" />
+
+                        <controlpoint x="0" y="1.0" z="3.29" />
+                        <controlpoint x="-1.44" y="1.0" z="1.77" />
+
+                        <controlpoint x="0.94" y="0.0" z="3.23" />
+                        <controlpoint x="-1.0" y="0.0" z="1.0" />
+
+                        <controlpoint x="1.6" y="0.0" z="2.61" />
+                        <controlpoint x="-0.26" y="0" z="0.37" />
+
+                        <controlpoint x="0.8" y="0.0" z="2.27" />
+                        <controlpoint x="-0.22" y="0.0" z="0" />
+
+                        <controlpoint x="0.6" y="0.0" z="1.75" />
+                        <controlpoint x="0.24" y="0.0" z="-0.77" />
+
+                        <controlpoint x="0.64" y="0.0" z="1.29" />
+                        <controlpoint x="0.7" y="0.0" z="-0.51" />
+
+                        <controlpoint x="1.3" y="0.0" z="1.03" />
+                        <controlpoint x="0.98" y="0.0" z="-0.31" />
+
+                    </leaf>
+                </descendants>            
+            </node> 
+
+         
+            <node id="ball">            <!-- defines one intermediate node; may be repeated as necessary -->
+                <!-- next two lines are mandatory -->
+               <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+    
+                <texture id="ballTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                    <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+                </texture>
+    
+                <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+                <transformations>
+                    <translation x="6" y="10.0" z="3" />
+                    <scale sx="0.25" sy="0.25" sz="0.25" />
+                    <rotation axis="x" angle="90" />
+                </transformations>
+    
+                <animationref id="ballAnimation" />
+    
+                <!-- declaring descendants, at least one node or one leaf must be present
+                 descendants may be mixed, nodes and leafs -->
+                <descendants>
+                    <leaf type="sphere" radius="3.0" slices="10" stacks="10"/>
+                    <!-- x y z coordinates of each vertex -->
+                </descendants>
+            </node>
+
+            <node id="picnicBasket">            
+                   
+                <material id="null" />
+
+                <texture id="picnicBasketTexture">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <translation x="2" y="0.0" z="0.0" />
+                </transformations>
+
+                <descendants>
+                    <noderef id="frontSide" />
+                    <noderef id="backSide" />
+                    <noderef id="leftSide" />
+                    <noderef id="rightSide" />
+                    <noderef id="bottom" />
+                    <noderef id="topRight" />
+                    <noderef id="topLeft" />
+                    <noderef id="holder" />
+                </descendants>
+    </node>
+
+    <node id="frontSide">            
+               
+                <material id="navy_blue" />
+
+                <texture id="null">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <translation x="2.0" y="0.0" z="0.0" />
+                    <rotation axis="y" angle="90" />
+                    <rotation axis="z" angle="90" />
+                </transformations>
+
+                <descendants>
+                    <leaf type="rectangle" x1="0" y1="0" x2="1.0" y2="1.0" />
+                </descendants>
+    </node>
+
+    <node id="backSide">            
+               
+                <material id="navy_blue" />
+
+                <texture id="null">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <rotation axis="y" angle="-90" />
+                </transformations>
+
+                <descendants>
+                    <leaf type="rectangle" x1="0" y1="0" x2="1.0" y2="1.0" />
+                </descendants>
+    </node>
+
+    <node id="leftSide">            
+               
+                <material id="navy_blue" />
+
+                <texture id="null">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <rotation axis="x" angle="90" />
+                </transformations>
+
+                <descendants>
+                    <leaf type="rectangle" x1="0" y1="0" x2="2.0" y2="1.0" />
+                </descendants>
+    </node>
+
+    <node id="rightSide">            
+               
+                <material id="navy_blue" />
+
+                <texture id="null">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <translation x="0.0" y="1.0" z="1.0" />
+                    <rotation axis="x" angle="-90" />
+                </transformations>
+
+                <descendants>
+                    <leaf type="rectangle" x1="0" y1="0" x2="2.0" y2="1.0" />
+                </descendants>
+    </node>
+
+    <node id="bottom">            
+               
+                <material id="navy_blue" />
+
+                <texture id="null">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <translation x="0.0" y="0.0" z="0.01" />
+                </transformations>
+
+                <descendants>
+                    <leaf type="rectangle" x1="0" y1="0" x2="2.0" y2="1.0" />
+                </descendants>
+    </node>
+
+    <node id="topRight">            
+               
+                <material id="navy_blue" />
+
+                <texture id="null">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <translation x="0.0" y="0.0" z="1.0" />
+                </transformations>
+
+                <descendants>
+                    <leaf type="rectangle" x1="0" y1="0" x2="1.0" y2="1.0" />
+                </descendants>
+    </node>
+
+    <node id="topLeft">            
+               
+                <material id="navy_blue" />
+
+                <texture id="null">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <translation x="1.0" y="0.0" z="1.0" />
+                    <rotation axis="y" angle="0" />
+                </transformations>
+
+                <!-- o elemento "animationref" é opcional; deve -->
+                <!-- declarar-se imediatamente após as transformacoes -->
+                <!-- geométricas do componente -->
+
+                <animationref id="openPicnikBasketAnimation" />
+
+                <descendants>
+                    <leaf type="rectangle" x1="0" y1="0" x2="1.0" y2="1.0" />
+                </descendants>
+    </node>
+
+    <node id="holder">            
+               
+                <material id="brownMaterial" />
+
+                <texture id="clear">
+                    <amplification afs="2.0" aft="2.0" />
+                </texture>
+
+                <transformations>
+                    <rotation axis="x" angle="90" />
+                    <scale sx="0.5" sy="0.5" sz="1.1" />
+                    <translation x="2.0" y="2.0" z="-0.95" />
+                </transformations>
+
+                <descendants>
+                    <leaf type="cylinder" height="1.0" topRadius="0.25" bottomRadius="0.25" stacks="16" slices="16"/>
+                </descendants>
+    </node>
+
+        </nodes>
+    
+        <gameBoard>
+            <boardMaterial id= "Porcelain_Grey"/>
+            <boardTexture id = "floorTexture">
+                <amplification afs="1" aft="1" />
+            </boardTexture>
+            <tiles>
+                <material1 id ="White"/>
+                <texture1 id="base">
+                    <amplification afs="1" aft="1" />
+                </texture1>
+                <material2 id ="black"/>
+                <texture2 id="base">
+                    <amplification afs="1" aft="1" />
+                </texture2>
+            </tiles>
+            <pieces>
+                <player1>
+                    <pieceType  type= "cube"/>
+                    <material id="black"/>
+                    <texture id="base">
+                        <amplification afs="1" aft="1" />
+                    </texture>
+                </player1>
+                <player2>
+                    <pieceType  type= "cube"/>
+                    <material id="White"/>
+                    <texture id="base">
+                        <amplification afs="1" aft="1" />
+                    </texture>
+                </player2>
+                
+            </pieces>
+        </gameBoard>
 
     <suroundingScene>
         <cubeBox path=""/>
@@ -424,5 +667,6 @@
 
     <auxiliarBoard>
     </auxiliarBoard>
+
 
 </lsf>

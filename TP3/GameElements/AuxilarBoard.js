@@ -7,13 +7,17 @@
  * @param x2 - x coordinate corner 2
  * @param y2 - y coordinate corner 2
  */
-class Board extends CGFobject {
+class AuxiliarBoard extends CGFobject {
     constructor(scene, array) {
         super(scene);
 
         this.boardRepresentation = array
-        this.size = array.length;
-        this.board = new GameBoard(this.scene, this.size)
+
+        let numberPieces=Math.pow(array.length,2);
+        this.size=Math.ceil(Math.pow(numberPieces,(1/3)));
+        //this.size = array.length;
+
+        this.board = new MyHalfCube(this.scene, 1.6);
         this.tiles = [];
 
         this.init(array);
@@ -50,9 +54,18 @@ class Board extends CGFobject {
         let id = 1
         let nTiles = this.size;
         for (let i = 0; i < nTiles; i++) {
+            console.log("hhhhh2");
             for (let j = 0; j < nTiles; j++) {
-                this.tiles.push(new BoardTile(this.scene, this, 2, i * 1.15, j * 1.15, id, array[i][j]));
-                id++;
+                console.log("hhhhh3");
+                for (let k = 0; k < nTiles; k++) {
+                    console.log("hhhhh6");
+                    if((id)>Math.pow(array.length,2)){
+                        break;
+                    }
+                    console.log("hhhhh5");
+                    this.tiles.push(new BoardTile(this.scene, this, 2, k-0.5 , j-0.5, id, array[parseInt((id-1)/array.length)][(id-1)%array.length],i));
+                    id++;
+                }
             }
         }
     }
@@ -124,9 +137,12 @@ class Board extends CGFobject {
 
     display(){
         let id = 1;
-
+        this.scene.pushMatrix();
+        this.scene.translate(3.5,0,1);
         this.scene.pushMatrix()
         this.boardMaterial.apply()
+        this.scene.scale(this.size,this.size,this.size)  
+        this.scene.translate(0,-0.25,0);
         this.board.display()
         this.scene.popMatrix()
         
@@ -143,6 +159,7 @@ class Board extends CGFobject {
 
         
         this.scene.popMatrix()
+        this.scene.popMatrix();
         
     }  
 

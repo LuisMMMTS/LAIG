@@ -11,7 +11,7 @@
     <views default="player1">
         <!-- at least one of the following type of cameras must be declared -->
         <perspective id="player1" near="0.1" far="500" angle="30">
-            <from x="20" y="10" z="20" />
+            <from x="20" y="10" z="22" />
             <to x="-3" y="0" z="-3" />
         </perspective>
         <perspective id="player2" near="7" far="500" angle="30">
@@ -934,9 +934,9 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
             <transformations>
-                <translation x="-5" y="5.0" z="0.1" /> 
+                <translation x="-7" y="5.0" z="0.1" /> 
                 <rotation axis="x" angle="90" />
-                <scale sx="8" sy="5" sz="10" />
+                <scale sx="9" sy="5" sz="10" />
             </transformations>
             <descendants>
                 <noderef id="tampo" />
