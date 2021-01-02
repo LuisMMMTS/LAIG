@@ -63,6 +63,8 @@ class GameOrchestrator {
     init(){
         this.currentPlayer = "black";
         this.updateCurrentPlayer(this.currentPlayer)
+        this.updateScore(1,0)
+        this.updateScore(2,0)
         this.gameSequence = new GameSequence(this.scene)
         this.animator = new GameAnimator(this, this.gameSequence)
         this.menu = new Menu(this.scene)
@@ -71,6 +73,7 @@ class GameOrchestrator {
         this.gameOver = false
         this.playingMovie = false
         this.lastTime = 0
+        this.timeLeft = this.playTime
         this.winner = null
         
     }
@@ -165,8 +168,9 @@ class GameOrchestrator {
         this.gameBoard.clone()
         this.gameBoard.unpick()
         this.changeTheme(this.scene.getCurrentTheme())
+        let c = (this.currentPlayer == "white") 
         this.init()
-        this.changeState(new ReadyState(this))
+        c?this.changeState(new CameraAnimationState(this)):this.changeState(new ReadyState(this))
     }
 
 
