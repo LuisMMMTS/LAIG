@@ -19,6 +19,8 @@ class Menu{
 
         this.pause = new Button(this.scene, "Pause", false)
 
+        this.restart = new Button(this.scene, "Restart", true)
+
         this.buttonMaterial = new CGFappearance(this.scene);
         this.buttonMaterial.setAmbient(1.0, 0.0, 0.0, 1);
         this.buttonMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
@@ -60,12 +62,22 @@ class Menu{
 
 
         this.scene.pushMatrix()
-        this.scene.translate(-1,-1,1.5)
+        this.scene.translate(-1,-0.7,1.5)
         this.buttonMaterial.apply()
         this.scene.registerForPick(503, this.pause)
         this.pause.display()
         this.scene.popMatrix()
         
+        this.scene.pushMatrix()
+        //this.scene.scale(3,3,3)
+        this.scene.translate(-1.0,-1.6,1.5)
+        this.buttonMaterial.apply()
+        this.scene.registerForPick(504, this.restart)
+        this.restart.display()
+        this.scene.popMatrix()
+
+
+
         this.scene.pushMatrix()
         this.scene.translate(0.5,2,3)
         this.name.display()

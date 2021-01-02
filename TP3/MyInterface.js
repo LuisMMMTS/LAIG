@@ -56,9 +56,8 @@ class MyInterface extends CGFinterface {
     createInterface(lights, views, themes){
         this.addAxisCheckBox()
         this.addQuit()
+        this.addPlayTime()
         this.addThemeDropDown(themes)
-        //this.addPlayTime()
-        this.addLightsCheckbox()
         this.addLightsFolder(lights)
         this.addCamerasDropDown(views)
         
@@ -71,15 +70,14 @@ class MyInterface extends CGFinterface {
             this.addLightsFolder(lights)
         }
         if(this.camerasDropDown){
-            this.gui.remove(this.camerasDropDown)
+            this.gui.remove(this.group2)
             this.addCamerasDropDown(views)  
-        } 
-        
-        
+        }  
     }
 
     addLightsFolder(lights){
         this.group = this.gui.addFolder("Lights");
+        this.addLightsCheckbox()
         //group.open(), is comment for preference, can be uncommented
         
         for(var key in lights){
@@ -96,6 +94,7 @@ class MyInterface extends CGFinterface {
      * @param {*} views - views defined in the scene
      */
     addCamerasDropDown(views){
+        this.group2 = this.gui.addFolder("Views");
         var viewValues = [];
         for(var key in views){
             if(views.hasOwnProperty(key)){
@@ -103,8 +102,7 @@ class MyInterface extends CGFinterface {
             }   
         }
         //setting the cameras dropdown 
-        this.camerasDropDown = this.gui.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera()).name("Camera")
-        //this.gui.add(this.scene, 'camera', this.scene.objectIDs).name('Selected Object').onChange(this.scene.updateObjectComplexity.bind(this.scene));
+        this.group2.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera()).name("Camera")
     }
 
     addThemeDropDown(themes){
@@ -116,7 +114,7 @@ class MyInterface extends CGFinterface {
     }
     addLightsCheckbox(){
         //setting the displaylights checkbox
-        this.gui.add(this.scene,'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
+        this.group.add(this.scene,'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
     }
 
 
@@ -124,8 +122,8 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene.orchestrator, 'quit').name('Quit')
     }
 
-   /* addPlayTime(){
+    addPlayTime(){
         this.gui.add(this.scene, 'playTime', 10, 120, 10).name("Play Time").onChange(this.scene.updatePlayTime.bind(this.scene));
-    }*/
+    }
 
 }

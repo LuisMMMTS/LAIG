@@ -32,6 +32,7 @@ class BoardTile extends CGFobject {
     }
 
     changeTheme(piece1, piece2, tile1, tile2){
+        this.pieceMaterials = []
         this.pieceMaterials.push(piece1);
         this.pieceMaterials.push(piece2);
         if(this.PieceColor == "black" && this.piece != null){
@@ -46,8 +47,9 @@ class BoardTile extends CGFobject {
         }
         else if (this.PieceColor == 'white'){
             this.material = tile2[0];
-            this.texture = tile2[1][0]
+            this.texture = tile2[1][0]           
         }
+        
     }
 
     insertPiece(piece){
@@ -65,7 +67,7 @@ class BoardTile extends CGFobject {
     setPiece(piece) {
         if(this.removed == null) this.removed = this.piece;
         this.piece = piece;
-        piece.tile=this;
+        this.piece.tile = this;
 
     }
 
@@ -80,6 +82,10 @@ class BoardTile extends CGFobject {
 
     highlight() {
         this.highlight = !this.highlight
+    }
+    unpick(){
+        this.highlight = false
+        this.piece.unpick()
     }
     
     display() {

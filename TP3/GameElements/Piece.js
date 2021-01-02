@@ -72,7 +72,7 @@ class Piece {
 
     pick() {
         if (!this.picked) {
-            this.color = this.pickedMaterial;
+            //this.color = this.pickedMaterial;
             this.picked = true;    
         }
         else {
@@ -82,6 +82,9 @@ class Piece {
         this.floating()
     }
 
+    unpick(){
+        this.picked = false
+    }
     floating(){
         this.float = !this.float
     }
@@ -90,51 +93,29 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 1.7;
+        let speed = 2.5;
         let duration = Math.ceil(Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed);
         if (duration == 0) duration += 1
 
-        /*console.log("Duration: "+ duration);
-        console.log("finalx: ", finalTile.x );
-        console.log("finalz: ", finalTile.y );
-        console.log("initialx: ",  initialTile.x);
-        console.log("initialz: ",  initialTile.y);*/
-
-        this.animation = new BezierAnimation(this.scene, "pieceAnimation");
+        this.animation = new BezierAnimation(this.scene, "pieceAnimation", this.player);
         let start = new KeyFrame()
-        start.translation = new vec3.fromValues(0, 0, 0)
+        start.translation = new vec3.fromValues(0, this.selectHeight, 0)
         start.instant = begin;
         this.animation.addKeyFrame(start); 
 
-        /*let middle = new KeyFrame()
-        middle.translation = new vec3.fromValues((finalTile.x-initialTile.x)/2.0, this.aux, (finalTile.y-initialTile.y)/2.0)
-        middle.instant = begin;
-        this.animation.addKeyFrame(middle); 
-
-        this.aux == 1? this.aux =0: this.aux = 1*/
+        
         let end = new KeyFrame();
         end.translation = new vec3.fromValues(finalTile.x - initialTile.x, 0, finalTile.y - initialTile.y);
         end.instant = begin+duration;
         this.animation.addKeyFrame(end);
 
-        //  let putDown = new KeyFrame();
-        //  putDown.translation = new vec3.fromValues(finalTile.x - initialTile.x, -this.selectHeight, finalTile.y - initialTile.y);
-        //  putDown.instant = this.selectHeight/speed;
-        // this.animation.addKeyFrame(putDown);
         return duration;
     }
 
     update(time){
         if(this.animation != null)
             this.animation.update(time)
-        }
-        
-        /*if(this.animation.ended && !this.animation.active){
-            this.animation = null;
-            console.log("making it null")
-        }*/
-    
-
+    }
 
     display() {
 
@@ -150,13 +131,10 @@ class Piece {
         if(this.type instanceof MyCylinder){
             this.scene.translate(0,-0.30,0);
             this.scene.rotate(-Math.PI/2.0, 1,0,0);
-            //this.scene.rotate(Math.PI/2.0, 1,0,0); real cylinder
         }  
         this.type.display()
         this.scene.popMatrix();
         
-            
-
         this.scene.popMatrix();
 
     }

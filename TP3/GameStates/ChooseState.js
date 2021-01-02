@@ -51,13 +51,13 @@ class ChooseState extends GameState {
         if ((searchForArray(this.pickable, comparableArray) != -1) || (searchForArray(this.pickable, comparableArray2) != -1)) {//se a peça selecionada for válida
             obj.pick()
             
-            this.orchestrator.gameSequence.addGameMove(new GameMove(this.orchestrator.scene, this.orchestrator.previousObj, obj, this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard));
+            this.orchestrator.gameSequence.addGameMove(new GameMove(this.orchestrator.scene,this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]));
 
             this.orchestrator.finalPick = customId;
             this.orchestrator.finalObj = obj;
             this.orchestrator.finalTile = obj.tile;
-            let duration = this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
-            this.orchestrator.finalObj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1],duration);
+            this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
+            this.orchestrator.finalObj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1]);
             
             
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
@@ -79,11 +79,14 @@ class ChooseState extends GameState {
                 return
             }
 
-            this.orchestrator.previousObj = move.endPiece;
-            this.orchestrator.finalObj = move.startPiece;
+            this.orchestrator.previousObj = move.origin.piece;
+            this.orchestrator.finalObj = move.destination.piece;
+            this.orchestrator.initialTile = move.origin
+            this.orchestrator.finalTile = move.destination
 
-            move.startPiece.createAnimation(move.destination, move.origin)
-            move.endPiece.createAnimation(move.origin, move.destination)
+
+            move.destination.piece.createAnimation(move.destination, move.origin)
+            move.origin.piece.createAnimation(move.origin, move.destination)
 
             this.orchestrator.undo()
             this.orchestrator.changeState(new AnimationState(this.orchestrator))

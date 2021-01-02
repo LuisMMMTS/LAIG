@@ -21,18 +21,29 @@ class Board extends CGFobject {
 	
 	init(array) {
         this.createBoardTiles(array);
+        this.boardMaterial = new CGFappearance(this.scene);
+        this.boardMaterial.setShininess(1.0);
+        this.boardMaterial.setSpecular(1, 1, 1, 0.5);
+        this.boardMaterial.setDiffuse(1, 1, 1, 0.5);
+        this.boardMaterial.setAmbient(1, 1, 1, 0.5);
+        this.boardMaterial.setEmission(0.5, 0.5, 0.5, 1.0);
+        this.boardMaterial.loadTexture('./scenes/images/board6.jpg');
+        this.boardMaterial.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     changeTheme(theme){
-        this.boardMaterial = theme[0];
-        this.boardTexture = theme[1][0];
-        this.boardMaterial.setTexture(this.boardTexture);
-        this.boardMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        
+        //this.boardMaterial = theme[0];
+        //this.boardTexture = theme[1][0];
+        //this.boardMaterial.setTexture(this.boardTexture);
+        //this.boardMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
         let piece1 = theme[2];
         let piece2 = theme[3];
         let tile1 = theme[4];
         let tile2 = theme[5];
         for(let tile of this.tiles) tile.changeTheme(piece1, piece2, tile1, tile2);
+
     }
 
 	createBoardTiles(array){
@@ -84,7 +95,12 @@ class Board extends CGFobject {
         this.addPieceToTile(pieceDest, tile1);
         this.addPieceToTile(pieceOrig, tile2);
         
-	}
+    }
+    unpick(){
+        this.tiles.forEach(element => {
+            element.unpick()
+        });
+    }
     update(time){
         /*for(var tile of this.tiles){
             if(tile.piece != null){
@@ -94,7 +110,9 @@ class Board extends CGFobject {
             }
         }*/
     }
-
+    /**
+     * Resets the board to its initial state
+     */
     clone(){
         let k = 0
         for(let i = 0; i < this.boardRepresentation.length; i++){
@@ -107,7 +125,6 @@ class Board extends CGFobject {
     display(){
         let id = 1;
 
-        this.scene.popMatrix();
         this.scene.pushMatrix()
         this.boardMaterial.apply()
         this.board.display()

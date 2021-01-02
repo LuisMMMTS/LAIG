@@ -17,8 +17,8 @@ class LoadingState extends GameState{
      */
     handleReply(response){
         this.orchestrator.gameBoard=new Board(this.orchestrator.scene,response);
-        this.orchestrator.auxiliarBoard=new Board(this.orchestrator.scene, response);
-        this.orchestrator.changeTheme(this.orchestrator.theme);
+        this.orchestrator.auxiliarBoard = new Board(this.orchestrator.scene, response);
+        this.orchestrator.changeTheme(this.orchestrator.scene.getCurrentTheme());
         this.orchestrator.loaded=true;
         let id=1;
         let numberPieces=Math.pow(response.length,2);

@@ -85,7 +85,6 @@
 
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="danger" path="danger.png" />
         <texture id="floorTexture" path="chao4.jpg" />
         <texture id="lightBrown" path="light_brown.jpeg" />
         <texture id="darkBrown" path="dark_brown.jpg" />
@@ -239,7 +238,7 @@
             <!-- next two lines are mandatory -->
             <material id="Porcelain_Grey" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="danger"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="floorTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -277,7 +276,7 @@
         </tiles>
         <pieces>
             <player1>
-                <pieceType  type= "cube"/>
+                <pieceType  type= "cone"/>
                 <material id="White"/>
                 <texture id="null">
                     <amplification afs="1" aft="1" />

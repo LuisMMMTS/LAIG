@@ -9,12 +9,13 @@ class BezierAnimation extends Animation{
     * @param animationID - ID of the animation 
     */
 
-    constructor(scene,animationID){
+    constructor(scene,animationID,player){
         super(scene, animationID);
 
         this.keyframes = [];
-        
-        
+        player == "black"?this.height=1.6:this.height=0.6
+        player == "black"?this.am = 1.0:this.am=0.01
+
         //variables where the current animation is being stored
         this.animationTranslation = vec3.create();
         this.animationRotation = vec3.create();
@@ -110,7 +111,7 @@ class BezierAnimation extends Animation{
         //vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
 
         this.animationTranslation[0]=this.keyframes[this.keyframeEndIndex].translation[0]*interpolationAmount;
-        this.animationTranslation[1]=this.keyframes[this.keyframeEndIndex].translation[1]+(Math.pow(Math.sin(Math.PI*interpolationAmount),1)*0.8);
+        this.animationTranslation[1]=this.keyframes[this.keyframeEndIndex].translation[1]+(Math.pow(Math.sin(Math.PI*interpolationAmount),this.height)*this.am);
         this.animationTranslation[2]=this.keyframes[this.keyframeEndIndex].translation[2]*interpolationAmount;
 
         vec3.lerp(this.animationRotation,this.keyframes[this.keyframeStartIndex].rotation, this.keyframes[this.keyframeEndIndex].rotation,interpolationAmount);

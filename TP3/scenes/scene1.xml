@@ -90,7 +90,7 @@
     <textures>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="lightBrown" path="light_brown.jpeg" />
-        <texture id="darkBrown" path="dark_brown.jpg" />
+        <texture id="darkBrown" path="board2.jpg" />
         <texture id="board" path="board4.jpg" />
         <texture id="floorTexture" path="floor.png" />
         <texture id="Tijolo" path="Tijolo.png"/>
@@ -100,6 +100,7 @@
         <texture id="rightwall" path="rightwall.png"/>
         <texture id="carpet" path="carpet.jpg"/>
         <texture id="wood" path="wood.jpg"/>
+        <texture id="sofa" path="sofa.jpg"/>
     </textures>
 
     <materials>
@@ -839,7 +840,7 @@
 
         <node id="sofa">         
             <material id="bege" />
-            <texture id="null">
+            <texture id="sofa">
                 <amplification afs="1.0" aft="1.0" />
             </texture>            
             <transformations>
@@ -929,7 +930,7 @@
        
         <node id="mesa">       
             <material id="Off_white_emissive" />
-            <texture id="wood">
+            <texture id="board">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
             <transformations>
@@ -1373,14 +1374,14 @@
         </tiles>
         <pieces>
             <player1>
-                <pieceType  type= "cone"/>
+                <pieceType  type= "cylinder"/>
                 <material id="black"/>
                 <texture id="darkBrown">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player1>
             <player2>
-                <pieceType  type= "sphere"/>
+                <pieceType  type= "cylinder"/>
                 <material id="White"/>
                 <texture id="lightBrown">
                     <amplification afs="1" aft="1" />
