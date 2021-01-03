@@ -60,10 +60,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
     if(!error && selected1 && selected2){
         document.querySelector('.mainMenu').style.display = "none";
         document.querySelector('#infoPanel').style.display = "block";
-        console.log(values[0])
-        console.log(values[1])
-        console.log(selected1)
-        console.log(selected2)
+
           // Standard application, scene and interface setup
           var app = new CGFapplication(document.body);
           var myInterface = new MyInterface();

@@ -175,11 +175,11 @@ class XMLscene extends CGFscene {
      */
     updateCamera() {
         this.camera = this.themeGraphs[this.selectedTheme].views[this.cameraID];
-        if (this.cameraID != this.themeGraphs[this.selectedTheme].defaultCameraId) {
-            this.interface.setActiveCamera(this.camera);
-        } else {
-            this.interface.setActiveCamera(null);
-        }
+        // if (this.cameraID != this.themeGraphs[this.selectedTheme].defaultCameraId) {
+        //     this.interface.setActiveCamera(this.camera);
+        // } else {
+        //     this.interface.setActiveCamera(null);
+        // }
     }
 
     changeCamera() {
@@ -356,7 +356,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
 
             //set the active camera, necessary for being able to move the camera around
-            this.interface.setActiveCamera(this.camera);
+            //this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).  
             this.themeGraphs[this.selectedTheme].displayScene();
