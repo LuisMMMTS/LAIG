@@ -1106,7 +1106,7 @@ class MySceneGraph {
                         let type = this.reader.getString(playernodes[j], "type");
                         switch(type){
                             case("cube"):
-                                pieceType = new MyCube(this.scene, 0.6);
+                                pieceType = new MyCube(this.scene, 0.4);
                                 break
                             case("cylinder"):
                                 pieceType = new MyCylinder(this.scene, 0.1, 0.4,0.4, 16, 24);

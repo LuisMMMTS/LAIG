@@ -59,18 +59,32 @@ class GameOrchestrator {
         this.timeLeft = this.playTime
         this.lastTime = 0
 
+        this.boardTranslation = 0
+        if(this.boardSize == 6) this.boardTranslation = 1
+        else if(this.boardSize == 4) this.boardTranslation = 2
+        else if(this.boardSize == 8) this.boardTranslation = -0.5
+
+        this.menuTranslation1 = 0
+        if(this.boardSize != 5) this.menuTranslation1 = 1.5
+        
+        this.menuTranslation2 = 1.6
+        if(this.boardSize == 4) this.menuTranslation2 = 3
+
     }
     init(){
         this.currentPlayer = "black";
         this.updateCurrentPlayer(this.currentPlayer)
+        this.updateScore(1,0)
+        this.updateScore(2,0)
         this.gameSequence = new GameSequence(this.scene)
         this.animator = new GameAnimator(this, this.gameSequence)
-        this.menu = new Menu(this.scene)
+        this.menu = new GameMenu(this.scene)
         this.endMenu = new EndMenu(this.scene)
         this.paused = false
         this.gameOver = false
         this.playingMovie = false
         this.lastTime = 0
+        this.timeLeft = this.playTime
         this.winner = null
         
     }
@@ -119,11 +133,12 @@ class GameOrchestrator {
      */
     update(time) { 
         if(this.loaded){
-        this.state.animationEnd(time)
-        this.gameBoard.update(time);
-        this.checkTimeOut(time)
-        //this.animator.update(time)
-        this.lastTime = time}
+            this.state.animationEnd(time)
+            this.gameBoard.update(time);
+            this.checkTimeOut(time)
+            //this.animator.update(time)
+            this.lastTime = time
+        }
     }
 
     setTheme(theme){
@@ -165,8 +180,9 @@ class GameOrchestrator {
         this.gameBoard.clone()
         this.gameBoard.unpick()
         this.changeTheme(this.scene.getCurrentTheme())
+        let c = (this.currentPlayer == "white") 
         this.init()
-        this.changeState(new ReadyState(this))
+        c?this.changeState(new CameraAnimationState(this)):this.changeState(new ReadyState(this))
     }
 
 
@@ -244,23 +260,31 @@ class GameOrchestrator {
         //this.theme.displayScene()--> tirar do xmlscene
         this.scene.pushMatrix();
         if (this.loaded){
-        this.scene.pushMatrix();
-        this.scene.translate(this.auxiliarBoardOffset[0],this.auxiliarBoardOffset[1],this.auxiliarBoardOffset[2]);
-        this.auxiliarBoard.display();
-        this.scene.popMatrix();
+            this.scene.pushMatrix();
+            this.scene.translate(this.auxiliarBoardOffset[0],this.auxiliarBoardOffset[1],this.auxiliarBoardOffset[2]);
+            this.auxiliarBoard.display();
+            this.scene.popMatrix();
 
-        
-        this.scene.pushMatrix();
-        this.gameBoard.display();
-        this.scene.popMatrix();
-    }
+            
+            this.scene.pushMatrix();
+            this.scene.translate(0,0,this.boardTranslation)
+            this.gameBoard.display();
+            this.scene.popMatrix();
+        }
+
         this.scene.pushMatrix();
         this.scene.translate(-1.80,2.8,2.1)
         this.scene.rotate(Math.PI/2.0,0,1,0)
         this.scene.scale(0.98,1, 0.14)
+        this.scene.pushMatrix()
+        this.scene.translate(-this.menuTranslation1,0,this.menuTranslation2)
         if(this.gameOver) this.endMenu.display()
-        else this.menu.display()
+        else{
+            this.menu.display()
+        } 
         this.scene.popMatrix()
+        this.scene.popMatrix()
+
         this.scene.popMatrix()
     }
 

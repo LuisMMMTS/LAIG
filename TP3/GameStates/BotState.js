@@ -49,6 +49,7 @@
 
     pickButton(obj, customId){
         if(customId == 501){ //undo
+            if(this.orchestrator.mode == 4) return //botvsbot no undo is available
             if(this.orchestrator.paused) return
             obj.pick()
             let move = this.orchestrator.gameSequence.getLastMove()

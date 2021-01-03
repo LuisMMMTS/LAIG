@@ -116,11 +116,11 @@ class ChooseState extends GameState {
         this.orchestrator.timeLeft -= (time - this.orchestrator.lastTime)
         
         if(this.orchestrator.timeLeft < 0){
-            this.orchestrator.updateErrors("You just lost your turn")
+            this.orchestrator.updateErrors("You lost your turn")
             this.orchestrator.previousObj.pick()
             this.orchestrator.updatePlayTime(0)
             this.orchestrator.changePlayer()
-            this.orchestrator.changeState(new ReadyState(this.orchestrator))
+            this.orchestrator.changeState(new CameraAnimationState(this.orchestrator))
         }
         else this.orchestrator.updatePlayTime((this.orchestrator.timeLeft).toFixed(2))
     }

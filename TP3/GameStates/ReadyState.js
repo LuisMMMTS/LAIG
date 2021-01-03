@@ -98,10 +98,10 @@ class ReadyState extends GameState{
         this.orchestrator.timeLeft -= (time - this.orchestrator.lastTime)
         
         if(this.orchestrator.timeLeft < 0){
-            this.orchestrator.updateErrors("You just lost your turn")
+            this.orchestrator.updateErrors("You lost your turn")
             this.orchestrator.updatePlayTime(0)
             this.orchestrator.changePlayer()
-            this.orchestrator.changeState(new ReadyState(this.orchestrator)) //this is necessary to asks for the new choosable pieces
+            this.orchestrator.changeState(new CameraAnimationState(this.orchestrator)) //this is necessary to asks for the new choosable pieces
         }
         else this.orchestrator.updatePlayTime((this.orchestrator.timeLeft).toFixed(2))
     }

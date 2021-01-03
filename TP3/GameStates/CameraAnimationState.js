@@ -5,7 +5,6 @@ class CameraAnimationState extends GameState{
     constructor(orchestrator){
         super(orchestrator)
         this.orchestrator.updateInfo("")
-        this.orchestrator.updateErrors("")
         this.orchestrator.updatePlayTime(0)
         this.orchestrator.scene.animateCamera()
         

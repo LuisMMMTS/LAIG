@@ -1357,7 +1357,7 @@
 
     </nodes>
 
-<gameBoard>
+    <gameBoard>
         <boardMaterial id= "underTexture"/>
         <boardTexture id = "board">
             <amplification afs="20" aft="20" />
@@ -1389,13 +1389,6 @@
             </player2>
         </pieces>
     </gameBoard>
-
-    <suroundingScene>
-        <cubeBox path=""/>
-    </suroundingScene>
-
-    <auxiliarBoard>
-    </auxiliarBoard>
 
 
 </lsf>
