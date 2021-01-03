@@ -26,6 +26,7 @@ class XMLscene extends CGFscene {
         for(let [key, value] of this.filenames.entries()){
             this.themeGraphs[key] = new MySceneGraph(value, this)
         }
+        this.speed = 2.5
 
     }   
 

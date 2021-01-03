@@ -40,7 +40,7 @@ class GameOverState extends GameState{
         else return
     }
 
-    animationEnd(time){
+    update(time){
         return; 
     }
     

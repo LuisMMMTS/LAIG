@@ -748,12 +748,4 @@
             </pieces>
         </gameBoard>
 
-    <suroundingScene>
-        <cubeBox path=""/>
-    </suroundingScene>
-
-    <auxiliarBoard>
-    </auxiliarBoard>
-
-
 </lsf>

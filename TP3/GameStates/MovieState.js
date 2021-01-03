@@ -39,7 +39,7 @@ class MovieState extends GameState{
         else return
     }
 
-    animationEnd(time){
+    update(time){
         if(!this.orchestrator.playingMovie) return
         let move = this.orchestrator.gameSequence.getCurrentMove()
         if(move){

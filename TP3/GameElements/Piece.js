@@ -93,7 +93,7 @@ class Piece {
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
-        let speed = 3.0;
+        let speed = this.scene.speed
         let duration = Math.sqrt(Math.pow(finalTile.x - initialTile.x,2) + Math.pow(finalTile.y - initialTile.y,2))/speed;
         console.log(duration)
         if (duration == 0) duration += 1

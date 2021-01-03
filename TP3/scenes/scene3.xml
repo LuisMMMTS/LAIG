@@ -100,6 +100,9 @@
         <texture id="left" path="left2.png" />
         <texture id="front" path="front2.png" />
         <texture id="back" path="back2.png" />
+        <texture id="lightBrown" path="light_brown.jpeg" />
+        <texture id="darkBrown" path="board2.jpg" />
+        <texture id="floorTexture" path="floor.png" />  
         
     </textures>
 
@@ -589,6 +592,5 @@
             </player2>
         </pieces>
     </gameBoard>
-
 
 </lsf>

@@ -16,7 +16,7 @@ class CameraAnimationState extends GameState{
         else availableButtons(this.orchestrator, [])
     }
 
-    animationEnd(time){
+    update(time){
         if(this.orchestrator.paused) return
         if(this.orchestrator.scene.getCurrentCamera() == "player1"||this.orchestrator.scene.getCurrentCamera() == "player2"){
             let p1=this.orchestrator.scene.themeGraphs[this.orchestrator.scene.selectedTheme].views["player1"];

@@ -91,25 +91,12 @@ class Board extends CGFobject {
         return this.tiles(x * this.size + y)
     }
     
-	movePiece(tile1, tile2, pieceDest, pieceOrig){
-        this.addPieceToTile(pieceDest, tile1);
-        this.addPieceToTile(pieceOrig, tile2);
-        
-    }
     unpick(){
         this.tiles.forEach(element => {
             element.unpick()
         });
     }
-    update(time){
-        /*for(var tile of this.tiles){
-            if(tile.piece != null){
-                if(tile.piece.animation != null){
-                    tile.piece.update(time);
-                }
-            }
-        }*/
-    }
+
     /**
      * Resets the board to its initial state
      */
@@ -143,7 +130,6 @@ class Board extends CGFobject {
             else id++;
             this.tiles[cell].display(); //each tile 
         }
-
         
         this.scene.popMatrix()
         

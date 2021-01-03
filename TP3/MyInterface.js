@@ -57,6 +57,7 @@ class MyInterface extends CGFinterface {
         this.addAxisCheckBox()
         this.addQuit()
         this.addPlayTime()
+        this.addSpeed()
         this.addThemeDropDown(themes)
         this.addLightsFolder(lights)
         this.addCamerasDropDown(views)
@@ -124,6 +125,9 @@ class MyInterface extends CGFinterface {
 
     addPlayTime(){
         this.gui.add(this.scene, 'playTime', 10, 120, 10).name("Play Time").onChange(this.scene.updatePlayTime.bind(this.scene));
+    }
+    addSpeed(){
+        this.gui.add(this.scene, 'speed', 1, 10, 0.5).name("Animation Speed")
     }
 
 }

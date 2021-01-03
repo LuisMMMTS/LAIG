@@ -50,7 +50,7 @@ class AnimationState extends GameState{
 
     }
 
-    animationEnd(time){
+    update(time){
         if(this.orchestrator.previousObj.animation == null  && this.orchestrator.finalObj.animation == null) return //just for precaution
 
         if(this.orchestrator.paused) return

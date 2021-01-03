@@ -77,7 +77,6 @@ class GameOrchestrator {
         this.updateScore(1,0)
         this.updateScore(2,0)
         this.gameSequence = new GameSequence(this.scene)
-        this.animator = new GameAnimator(this, this.gameSequence)
         this.menu = new GameMenu(this.scene)
         this.endMenu = new EndMenu(this.scene)
         this.paused = false
@@ -118,25 +117,14 @@ class GameOrchestrator {
         this.state.handleReply(response)
     }
 
-    sleep(milliseconds) {
-        var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime() - start) > milliseconds) {
-                break;
-            }
-        }
-    }
-
     /**
      * Updates animations
      * @param {*} time 
      */
     update(time) { 
         if(this.loaded){
-            this.state.animationEnd(time)
-            this.gameBoard.update(time);
+            this.state.update(time)
             this.checkTimeOut(time)
-            //this.animator.update(time)
             this.lastTime = time
         }
     }
@@ -190,10 +178,7 @@ class GameOrchestrator {
         this.gameBoard.clone()
         this.playingMovie = true
         this.changeTheme(this.scene.getCurrentTheme())
-        //auxiliarboard.init
         this.gameSequence.moveReplay()
-         
-        //this.orchestrator.animator.start()
     }
 
     updateErrors(error){
@@ -254,10 +239,7 @@ class GameOrchestrator {
         else if(obj instanceof Button) this.state.pickButton(obj, customId)
     }
 
-
-    //displays the board and animator
     display() {
-        //this.theme.displayScene()--> tirar do xmlscene
         this.scene.pushMatrix();
         if (this.loaded){
             this.scene.pushMatrix();
