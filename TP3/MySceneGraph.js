@@ -1170,8 +1170,6 @@ class MySceneGraph {
                 if (TilesNode.children[i].nodeName == "texture1") tile1.push(texture)
                 else tile2.push(texture)
             }
-            else console.log(id)
-
 
         }
         return [tile1, tile2];

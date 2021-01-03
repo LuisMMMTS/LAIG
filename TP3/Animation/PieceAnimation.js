@@ -15,8 +15,6 @@ class PieceAnimation extends Animation{
         this.keyframes = [];
         player == "black"?this.height=1.6:this.height=0.4
         player == "black"?this.am = 1.0:this.am=0.01
-        console.log(player)
-        console.log(this.height)
 
         //variables where the current animation is being stored
         this.animationTranslation = vec3.create();
@@ -65,7 +63,6 @@ class PieceAnimation extends Animation{
             
             if(this.elapsedTime >= this.startTime){ // only becomes visible after first keyframe instant
                 this.active = true;
-                // this.elapsedTime=0;
                 return;
             }
             else 
@@ -110,7 +107,6 @@ class PieceAnimation extends Animation{
         let keyframeEndInstant = this.keyframes[this.keyframeEndIndex].instant;
         let interpolationAmount = Math.min((this.elapsedTime - keyframeStartInstant) / (keyframeEndInstant-keyframeStartInstant),1);
        
-        //vec3.lerp(this.animationTranslation,this.keyframes[this.keyframeStartIndex].translation, this.keyframes[this.keyframeEndIndex].translation,interpolationAmount);
 
         this.animationTranslation[0]=this.keyframes[this.keyframeEndIndex].translation[0]*interpolationAmount;
         this.animationTranslation[1]=this.keyframes[this.keyframeEndIndex].translation[1]*interpolationAmount+(Math.pow(Math.sin(Math.PI*interpolationAmount),this.height)*this.am);

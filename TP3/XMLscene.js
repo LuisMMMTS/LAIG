@@ -51,7 +51,7 @@ class XMLscene extends CGFscene {
         this.lightValues = [];
 
         this.axis = new CGFaxis(this);
-        this.displayAxis = true;
+        this.displayAxis = false;
         this.displayLights = false;
 
         //init shaders
@@ -240,7 +240,7 @@ class XMLscene extends CGFscene {
 
     changeTheme(value) {
         this.selectedTheme = value
-        //this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
+        this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
         this.orchestrator.changeTheme(this.themeGraphs[value]);
         let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
         this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator, defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
