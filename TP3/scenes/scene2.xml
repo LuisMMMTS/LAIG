@@ -98,6 +98,8 @@
         <texture id="roopTexture" path="roop.png" />
         <texture id="lake" path="lake.jpg" />
         <texture id="picnic" path="picnic.jpg" />
+        <texture id="floorTexture" path="floor.png" />
+        <texture id="base" path="base.jpg" />
     </textures>
 
     <materials>
@@ -493,8 +495,6 @@
                 <rotation axis="x" angle="90" />
             </transformations>
 
-            <animationref id="ballAnimation" />
-
             <!-- declaring descendants, at least one node or one leaf must be present
                  descendants may be mixed, nodes and leafs -->
             <descendants>
@@ -653,7 +653,7 @@
 
         <node id="holder">
 
-            <material id="brownMaterial" />
+            <material id="null" />
 
             <texture id="roopTexture">
                 <amplification afs="2.0" aft="2.0" />
