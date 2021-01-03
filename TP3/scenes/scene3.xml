@@ -277,15 +277,15 @@
         <pieces>
             <player1>
                 <pieceType  type= "cone"/>
-                <material id="White"/>
-                <texture id="null">
+                <material id="black"/>
+                <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player1>
             <player2>
-                <pieceType  type= "cube"/>
-                <material id="black"/>
-                <texture id="null">
+                <pieceType  type= "cylinder"/>
+                <material id="navy_blue"/>
+                <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player2>
