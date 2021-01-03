@@ -166,7 +166,7 @@ class XMLscene extends CGFscene {
     initXMLCameras() {
         this.cameraID = this.themeGraphs[this.selectedTheme].defaultCameraId;
         this.camera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId];
-        this.interface.setActiveCamera(this.default);
+        //this.interface.setActiveCamera(this.default);
         this.updateCamera()
     }
 
@@ -234,28 +234,40 @@ class XMLscene extends CGFscene {
 
     changeTheme(value) {
         let i=0;
-        for (let key in this.lightValues){
-            if (i>=8){
-                break;
-            }
-            if (this.lightValues.hasOwnProperty(key))
-                this.lights[i].disable();
-            this.lights[i].update();
-            i++;
+        for(let j of this.lights){
+            console.log(j);
+            j.disable();
         }
+        // for (let key in this.lightValues){
+        //     if (i>=8){
+        //         break;
+        //     }
+        //     if (this.lightValues.hasOwnProperty(key))
+        //         this.lights[i].disable();
+        //     // this.lights[i].update();
+        //     i++;
+        // }
         
         this.selectedTheme = value
         this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
         this.orchestrator.changeTheme(this.themeGraphs[value]);
         let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
         this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator, defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
-        console.log("got to print");
+
         for (let i in this.themeGraphs[this.selectedTheme].views){
             console.log(i);
             let aux=this.themeGraphs[this.selectedTheme].views[i];
             this.themeGraphs[this.selectedTheme].views[i]=new AnimationCamera(this.orchestrator, aux.far,aux.fov,aux.near,aux.position,aux.target)
         }
+        for(let j of this.lights){
+            console.log(j);
+            j.disable();
+        }
         this.initLights()
+        for(let j of this.lights){
+            console.log(j);
+            j.disable();
+        }
         this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
         this.changeCamera();
         this.axis = new CGFaxis(this, this.themeGraphs[this.selectedTheme].referenceLength);
@@ -374,7 +386,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
 
             //set the active camera, necessary for being able to move the camera around
-            this.interface.setActiveCamera(this.camera);
+            //this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).  
             this.themeGraphs[this.selectedTheme].displayScene();
