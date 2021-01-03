@@ -148,13 +148,10 @@ class AuxiliarBoard extends CGFobject {
         
         this.scene.pushMatrix();
         for (let cell = 0; cell < this.tiles.length; cell++){
-            this.scene.registerForPick(id, this.tiles[cell]);
-            if (this.tiles[cell].piece != null) {
-                this.scene.registerForPick(id, this.tiles[cell].piece);
-                id++;
-            }
-            else id++;
+            this.scene.pushMatrix()
+            this.scene.translate(-0.5,0,-0.5);
             this.tiles[cell].display(); //each tile 
+            this.scene.popMatrix();
         }
 
         
