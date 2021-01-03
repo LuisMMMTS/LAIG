@@ -15,8 +15,6 @@ class PieceAnimation extends Animation{
         this.keyframes = [];
         player == "black"?this.height=1.6:this.height=0.4
         player == "black"?this.am = 1.0:this.am=0.01
-        console.log(player)
-        console.log(this.height)
 
         //variables where the current animation is being stored
         this.animationTranslation = vec3.create();

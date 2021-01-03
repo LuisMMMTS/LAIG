@@ -22,7 +22,13 @@ class CheckGameOverState extends GameState {
     checkGameOver(response) {
         if (response == '') { //if response is null goes back to ready state
             this.orchestrator.changePlayer();
-            this.orchestrator.changeState(new CameraAnimationState(this.orchestrator));
+            if(this.orchestrator.currentPlayer==="black"){
+                console.log("player black");
+                this.orchestrator.changeState(new CameraAnimationState(this.orchestrator,"player1"));}
+            else{
+                console.log("player white");
+                this.orchestrator.changeState(new CameraAnimationState(this.orchestrator,"player2"));
+            }
         }
         else {//if there is a winner goes to gameover state
             this.orchestrator.gameOver = true

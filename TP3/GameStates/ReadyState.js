@@ -97,7 +97,10 @@ class ReadyState extends GameState {
             this.orchestrator.updateErrors("You lost your turn")
             this.orchestrator.updatePlayTime(0)
             this.orchestrator.changePlayer()
-            this.orchestrator.changeState(new CameraAnimationState(this.orchestrator)) //this is necessary to asks for the new choosable pieces
+            if(this.orchestrator.currentPlayer=="black")
+                this.orchestrator.changeState(new CameraAnimationState(this.orchestrator,"player1"));
+            else
+                this.orchestrator.changeState(new CameraAnimationState(this.orchestrator,"player2")); //this is necessary to asks for the new choosable pieces
         }
         else this.orchestrator.updatePlayTime((this.orchestrator.timeLeft).toFixed(2))
     }

@@ -170,7 +170,7 @@ class GameOrchestrator {
         this.changeTheme(this.scene.getCurrentTheme())
         let c = (this.currentPlayer == "white")
         this.init()
-        c ? this.changeState(new CameraAnimationState(this)) : this.changeState(new ReadyState(this))
+        c ? this.changeState(new CameraAnimationState(this,"player1")) : this.changeState(new ReadyState(this))
     }
 
 

@@ -118,7 +118,10 @@ class ChooseState extends GameState {
             this.orchestrator.previousObj.pick()
             this.orchestrator.updatePlayTime(0)
             this.orchestrator.changePlayer()
-            this.orchestrator.changeState(new CameraAnimationState(this.orchestrator))
+            if(this.orchestrator.currentPlayer=="black")
+                this.orchestrator.changeState(new CameraAnimationState(this.orchestrator,"player1"));
+            else
+                this.orchestrator.changeState(new CameraAnimationState(this.orchestrator,"player2"));
         }
         else this.orchestrator.updatePlayTime((this.orchestrator.timeLeft).toFixed(2))
     }

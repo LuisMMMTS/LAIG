@@ -52,7 +52,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.displayAxis = true;
-        this.displayLights = false;
+        this.displayLights = true;
 
         //init shaders
         this.shader = new CGFshader(this.gl, "./scenes/shaders/shader.vert", "./scenes/shaders/shader.frag");
@@ -187,40 +187,34 @@ class XMLscene extends CGFscene {
         this.camera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId];
     }
 
-    switchCamera(camera, elapsed) {
-        let animationTime = 10000;
-        let elapsedTime = 0;
-        let initialpos = this.camera.position;
-        let initialtar = this.camera.target;
-        if (this.camera.active) {
-            elapsedTime++;
-            if (elapsedTime >= animationTime) {
-                this.camera.active = false
+    switchCamera(camera,elapsed){
+        let animationTime=5;
+        if (this.camera.active){  
+            if(elapsed >= animationTime){
+                this.orchestrator.state.active = false
             }
 
-            let interpolationAmount = Math.min(elapsedTime / animationTime, 1)
+            let interpolationAmount = Math.min(elapsed/animationTime,1)
             let easingFactor = easeInOutCubic(interpolationAmount)
 
             let i = Math.PI * easingFactor - this.angle
             let finalpos;
             let finaltarget;
-            let translatePos = [0, 0, 0, 0];
-            let translateTarget = [0, 0, 0, 0];
+            let translatePos=[0,0,0,0];
+            let translateTarget=[0,0,0,0];
 
+        
+            finalpos=camera.position;
+            finaltarget=camera.target;
+        
 
-            finalpos = camera.position;
-            finaltarget = camera.target;
-
-
-            vec4.lerp(translatePos, this.camera.position, finalpos, interpolationAmount);
-            vec4.lerp(translateTarget, this.camera.target, finaltarget, interpolationAmount);
+            vec4.lerp(translatePos,this.camera.position,finalpos,interpolationAmount);
+            vec4.lerp(translateTarget, this.camera.target,finaltarget,interpolationAmount);
 
             this.camera.setPosition(translatePos);
             this.camera.setTarget(translateTarget);
             this.angle += i
         }
-        this.camera.setPosition(initialpos);
-        this.camera.setTarget(initialtar);
     }
 
     getCurrentCamera() {
@@ -239,12 +233,29 @@ class XMLscene extends CGFscene {
 
 
     changeTheme(value) {
+        let i=0;
+        for (let key in this.lightValues){
+            if (i>=8){
+                break;
+            }
+            if (this.lightValues.hasOwnProperty(key))
+                this.lights[i].disable();
+            this.lights[i].update();
+            i++;
+        }
+        
         this.selectedTheme = value
-        //this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
         this.orchestrator.changeTheme(this.themeGraphs[value]);
         let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
         this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator, defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
+        console.log("got to print");
+        for (let i in this.themeGraphs[this.selectedTheme].views){
+            console.log(i);
+            let aux=this.themeGraphs[this.selectedTheme].views[i];
+            this.themeGraphs[this.selectedTheme].views[i]=new AnimationCamera(this.orchestrator, aux.far,aux.fov,aux.near,aux.position,aux.target)
+        }
         this.initLights()
+        this.interface.updateInterface(this.themeGraphs[this.selectedTheme].lights, this.themeGraphs[this.selectedTheme].views);
         this.changeCamera();
         this.axis = new CGFaxis(this, this.themeGraphs[this.selectedTheme].referenceLength);
         this.gl.clearColor(...this.themeGraphs[this.selectedTheme].background)
@@ -279,6 +290,12 @@ class XMLscene extends CGFscene {
 
         let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
         this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator, defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
+        console.log("got to print");
+        for (let i in this.themeGraphs[this.selectedTheme].views){
+            console.log(i);
+            let aux=this.themeGraphs[this.selectedTheme].views[i];
+            this.themeGraphs[this.selectedTheme].views[i]=new AnimationCamera(this.orchestrator, aux.far,aux.fov,aux.near,aux.position,aux.target)
+        }
         //lights
         this.initLights();
 
@@ -356,7 +373,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
 
             //set the active camera, necessary for being able to move the camera around
-            //this.interface.setActiveCamera(this.camera);
+            this.interface.setActiveCamera(this.camera);
 
             // Displays the scene (MySceneGraph function).  
             this.themeGraphs[this.selectedTheme].displayScene();

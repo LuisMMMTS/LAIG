@@ -8,7 +8,7 @@
         <themename name="Initial" />
     </initials>
 
-    <views default="perpective">
+    <views default="perspective">
         <!-- at least one of the following type of cameras must be declared -->
         <perspective id="player1" near="0.1" far="500" angle="20">
             <from x="5" y="30" z="30" />
@@ -26,7 +26,7 @@
             <from x="28" y="15" z="1" />
             <to x="0" y="0" z="1" />
         </perspective>
-        <perspective id="perpective" near="0.1" far="500" angle="90">
+        <perspective id="perspective" near="0.1" far="500" angle="90">
             <from x="40" y="25" z="35" />
             <to x="-3" y="0" z="-3" />
         </perspective>
@@ -49,14 +49,6 @@
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
             <specular r="0.8" g="0.8" b="0.8" a="0.8" /> <!-- specular component -->
         </light>
-        <light id="LightTop">
-            <!-- light identifier -->
-            <enable value="0" /> <!-- enable/disable -->
-            <position x="0" y="20" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
-            <diffuse r="0.8" g="0.8" b="0.8" a="1" /> <!-- diffuse component -->
-            <specular r="0.1" g="0.1" b="0.1" a="0.5" /> <!-- specular component -->
-        </light>
         <light id="LightBottom">
             <!-- light identifier -->
             <enable value="0" /> <!-- enable/disable -->
@@ -64,14 +56,6 @@
             <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
             <diffuse r="0.2" g="0.2" b="0.2" a="1" /> <!-- diffuse component -->
             <specular r="0.5" g="0.5" b="0.5" a="0.5" /> <!-- specular component -->
-        </light>
-        <light id="CenteredLight">
-            <!-- light identifier -->
-            <enable value="0" /> <!-- enable/disable -->
-            <position x="0" y="8" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular component -->
         </light>
     </lights>
 
