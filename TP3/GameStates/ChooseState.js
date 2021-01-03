@@ -4,12 +4,12 @@ class ChooseState extends GameState {
 
     }
 
-    init(){
+    init() {
         this.pieceCoords = [Math.floor((this.orchestrator.previousPick - 1) / this.orchestrator.gameBoard.size), (this.orchestrator.previousPick - 1) % this.orchestrator.gameBoard.size];
         this.orchestrator.prolog.getPieceMovesRequest(this.orchestrator.gameBoard, this.orchestrator.currentPlayer, this.pieceCoords);
         this.orchestrator.updateInfo("Choose one of your oponnent pieces")
         this.orchestrator.updateErrors("")
-        availableButtons(this.orchestrator, ["Undo","Reset", "Pause","Play", "Restart"])
+        availableButtons(this.orchestrator, ["Undo", "Reset", "Pause", "Play", "Restart"])
     }
 
     handleReply(response) {
@@ -34,10 +34,10 @@ class ChooseState extends GameState {
             this.orchestrator.changeState(new ReadyState(this.orchestrator))
             return;
         }
-        if (obj.player == this.orchestrator.currentPlayer){ //trying to choose its own piece
+        if (obj.player == this.orchestrator.currentPlayer) { //trying to choose its own piece
             this.orchestrator.updateErrors("Can't choose your own piece, choose one of your oponents")
-            return;     
-        } 
+            return;
+        }
 
         this.x = Math.floor((customId - 1) / this.orchestrator.gameBoard.size);
         this.y = (customId - 1) % this.orchestrator.gameBoard.size;
@@ -45,36 +45,34 @@ class ChooseState extends GameState {
         let comparableArray = [this.x, this.y, ""];
         let comparableArray2 = [this.x, this.y];
 
-        console.log(comparableArray)
-      
         if ((searchForArray(this.pickable, comparableArray) != -1) || (searchForArray(this.pickable, comparableArray2) != -1)) {//se a peça selecionada for válida
             obj.pick()
-            
-            this.orchestrator.gameSequence.addGameMove(new GameMove(this.orchestrator.scene,this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]));
+
+            this.orchestrator.gameSequence.addGameMove(new GameMove(this.orchestrator.scene, this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]));
 
             this.orchestrator.finalPick = customId;
             this.orchestrator.finalObj = obj;
             this.orchestrator.finalTile = obj.tile;
             this.orchestrator.previousObj.createAnimation(this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1], this.orchestrator.gameBoard.tiles[customId - 1]);//creates animation of first piece. custom id is the id of the last picked piece
             this.orchestrator.finalObj.createAnimation(this.orchestrator.gameBoard.tiles[customId - 1], this.orchestrator.gameBoard.tiles[this.orchestrator.previousPick - 1]);
-            
-            
+
+
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
         }
-        else{
+        else {
             this.orchestrator.updateErrors("This piece does not answer to the rule that you need to increase your piece value.")
         }
-        
+
     }
 
-    pickButton(obj, customId){
-        if(customId == 501){ //undo
-            if(this.orchestrator.paused) return
+    pickButton(obj, customId) {
+        if (customId == 501) { //undo
+            if (this.orchestrator.paused) return
             obj.pick()
             this.orchestrator.previousObj.pick()
             let move = this.orchestrator.gameSequence.getLastMove()
 
-            if(move == -1){
+            if (move == -1) {
                 this.orchestrator.updateErrors("No more moves to undo")
                 return
             }
@@ -91,31 +89,31 @@ class ChooseState extends GameState {
             this.orchestrator.undo()
             this.orchestrator.changeState(new AnimationState(this.orchestrator))
 
-        } 
-        else if(customId == 502){ //reset
+        }
+        else if (customId == 502) { //reset
             obj.pick()
             this.orchestrator.reset()
         }
-        else if(customId == 503){ //pause/play
-            if(obj.getText() == "Pause") obj.changeButtonText("Play")
-            else if(obj.getText() == "Play") obj.changeButtonText("Pause")
+        else if (customId == 503) { //pause/play
+            if (obj.getText() == "Pause") obj.changeButtonText("Play")
+            else if (obj.getText() == "Play") obj.changeButtonText("Pause")
             obj.pick()
             this.orchestrator.pause()
-        } 
-        else if(customId == 504){ //restart
+        }
+        else if (customId == 504) { //restart
             obj.pick()
             this.orchestrator.previousObj.pick()
             this.orchestrator.restart()
         }
         else return
     }
-    
-    checkTimeOut(time){
-        if(this.orchestrator.paused) return
-        
+
+    checkTimeOut(time) {
+        if (this.orchestrator.paused) return
+
         this.orchestrator.timeLeft -= (time - this.orchestrator.lastTime)
-        
-        if(this.orchestrator.timeLeft < 0){
+
+        if (this.orchestrator.timeLeft < 0) {
             this.orchestrator.updateErrors("You lost your turn")
             this.orchestrator.previousObj.pick()
             this.orchestrator.updatePlayTime(0)

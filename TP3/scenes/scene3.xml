@@ -5,7 +5,7 @@
 
         <root id="root" /> <!-- identifier of root node of the scene graph; this node -->
         <!-- must be defined in one of the following NODE declarations -->
-        <themename name = "Initial"/>
+        <themename name="Initial" />
     </initials>
 
     <views default="perpective">
@@ -37,9 +37,6 @@
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" /> <!-- global ambient -->
         <background r="0.7" g="0.8" b="1.0" a="1.0" /> <!-- background color -->
     </illumination>
-
-
-    
 
 
     <lights>
@@ -102,8 +99,8 @@
         <texture id="back" path="back2.png" />
         <texture id="lightBrown" path="light_brown.jpeg" />
         <texture id="darkBrown" path="board2.jpg" />
-        <texture id="floorTexture" path="floor.png" />  
-        
+        <texture id="floorTexture" path="floor.png" />
+
     </textures>
 
     <materials>
@@ -127,7 +124,7 @@
             <ambient r="0.97" g="0.97" b="1.0" a="1.0" /> <!-- ambient reflection -->
             <emissive r="0.6" g="0.6" b="0.6" a="1.0" /> <!-- emissive component -->
         </material>
-       <material id="underTexture">
+        <material id="underTexture">
             <shininess value="1" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- specular reflection -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse reflection -->
@@ -165,37 +162,9 @@
             <ambient r="0.1" g="0.20" b="0.2" a="1.0" /> <!-- ambient reflection -->
             <emissive r="0" g="0.1" b="0.2" a="1.0" /> <!-- emissive component -->
         </material>
-        <material id="green">
-            <shininess value="1.0" />
-            <specular r="0" g="0.90" b="0.25" a="1.0" /> <!-- specular reflection -->
-            <diffuse r="0" g="0.90" b="0.25" a="1.0" /> <!-- diffuse reflection -->
-            <ambient r="0" g="0.90" b="0.25" a="1.0" /> <!-- ambient reflection -->
-            <emissive r="0" g="0.90" b="0.25" a="1.0" /> <!-- emissive component -->
-        </material>
-        <material id="red">
-            <shininess value="1.0" />
-            <specular r="1" g="0" b="0" a="1.0" /> <!-- specular reflection -->
-            <diffuse r="1" g="0" b="0" a="1.0" /> <!-- diffuse reflection -->
-            <ambient r="1" g="0" b="0" a="1.0" /> <!-- ambient reflection -->
-            <emissive r="0.5" g="0" b="0" a="1.0" /> <!-- emissive component -->
-        </material>
-        <material id="transparent">
-            <shininess value="1.0" />
-            <specular r="1" g="0" b="0" a="0.0" /> <!-- specular reflection -->
-            <diffuse r="1" g="0" b="0" a="0.0" /> <!-- diffuse reflection -->
-            <ambient r="1" g="0" b="0" a="0.0" /> <!-- ambient reflection -->
-            <emissive r="0.5" g="0" b="0" a="0.0" /> <!-- emissive component -->
-        </material>
-        <material id="bege">
-            <shininess value="1.0" />
-            <specular r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- specular reflection -->
-            <diffuse r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- diffuse reflection -->
-            <ambient r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- ambient reflection -->
-            <emissive r="0.811" g="0.776" b="0.73" a="1.0" /> <!-- emissive component -->
-        </material>
     </materials>
     <animations>
- 
+
         <animation id="caixa">
 
             <keyframe instant="0">
@@ -229,8 +198,7 @@
     <!-- spritesheets -->
     <!-- o bloco "spritesheets" deve ser declarado -->
     <!-- imediatamente após o bloco "textures" -->
-    <spritesheets>
-    </spritesheets>
+    <spritesheets></spritesheets>
 
 
     <nodes>
@@ -254,41 +222,42 @@
 
             <transformations>
                 <scale sx="10" sy="10" sz="10" />
-                <translation x="-1" y="-0.1" z="2"/>
+                <translation x="-1" y="-0.1" z="2" />
             </transformations>
 
 
             <!-- declaring descendants, at least one node or one leaf must be present
             descendants may be mixed, nodes and leafs -->
             <descendants>
-                <noderef id="caixa" /> 
-                <noderef id="cubeMap"/>
+                <noderef id="caixa" />
+                <noderef id="cubeMap" />
             </descendants>
 
         </node>
 
         <node id="cubeMap">
-            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+            <material id="null" /> <!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
-                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+            <texture id="clear">
+                <!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="2.0" aft="2.0" /> <!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
                 <translation x="0" y="3.99" z="0" />
-                <scale sx="0.4" sy="0.4" sz="0.4"/> 
+                <scale sx="0.4" sy="0.4" sz="0.4" />
             </transformations>
 
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <noderef id="sky"/>
-                <noderef id="ground"/>
-                <noderef id="left"/>
-                <noderef id="right"/>
-                <noderef id="front"/>
-                <noderef id="back"/>
+                <noderef id="sky" />
+                <noderef id="ground" />
+                <noderef id="left" />
+                <noderef id="right" />
+                <noderef id="front" />
+                <noderef id="back" />
             </descendants>
         </node>
 
@@ -413,7 +382,7 @@
             </texture>
 
             <transformations>
-                <rotation axis="y" angle="90"/>
+                <rotation axis="y" angle="90" />
                 <scale sx="2" sy="1" sz="4" />
             </transformations>
 
@@ -423,12 +392,12 @@
                 <noderef id="backFace" />
                 <noderef id="topFace" />
                 <noderef id="rightFace" />
-                <noderef id="leftFace" /> 
+                <noderef id="leftFace" />
             </descendants>
 
         </node>
 
-        <node id="frontFace">     
+        <node id="frontFace">
             <material id="null" />
             <texture id="clear">
                 <amplification afs="2" aft="1" />
@@ -443,43 +412,43 @@
             </descendants>
         </node>
 
-        <node id="bottomFace"> 
+        <node id="bottomFace">
             <material id="null" />
             <texture id="clear">
                 <amplification afs="2" aft="1" />
             </texture>
             <transformations>
-                <rotation axis="x" angle="90"/> 
+                <rotation axis="x" angle="90" />
             </transformations>
             <descendants>
                 <leaf type="2rectangle" x1="0" y1="0" x2="2" y2="1" />
             </descendants>
         </node>
 
-        <node id="backFace">   
+        <node id="backFace">
             <material id="null" />
             <texture id="pizzaBack">
                 <amplification afs="2" aft="1" />
             </texture>
             <transformations>
                 <translation x="2.0" y="0.0" z="0.0" />
-                <rotation axis="x" angle="180"/> 
-                <rotation axis="z" angle="180"/> 
+                <rotation axis="x" angle="180" />
+                <rotation axis="z" angle="180" />
             </transformations>
             <descendants>
                 <leaf type="2rectangle" x1="0" y1="0" x2="2" y2="1" />
             </descendants>
         </node>
 
-        <node id="topFace">        
+        <node id="topFace">
             <material id="null" />
             <texture id="pizzaLogo">
                 <amplification afs="2" aft="1" />
             </texture>
             <transformations>
                 <translation x="2.0" y="1.0" z="0.0" />
-                <rotation axis="x" angle="90"/>
-                <rotation axis="y" angle="180"/>
+                <rotation axis="x" angle="90" />
+                <rotation axis="y" angle="180" />
             </transformations>
 
             <animationref id="caixa" />
@@ -489,14 +458,14 @@
             </descendants>
         </node>
 
-        <node id="sideFront">     
+        <node id="sideFront">
             <material id="null" />
             <texture id="clear">
                 <amplification afs="2" aft="1" />
             </texture>
             <transformations>
                 <translation x="0.0" y="1.0" z="0.0" />
-                <rotation axis="x" angle="-90"/>
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -504,7 +473,7 @@
             </descendants>
         </node>
 
-        <node id="sideRight">         
+        <node id="sideRight">
             <material id="null" />
             <texture id="pizzaRight">
                 <amplification afs="1" aft="1" />
@@ -513,18 +482,18 @@
                 <translation x="2.0" y="0.0" z="-1.0" />
             </transformations>
             <descendants>
-                <noderef id="rightFace"/>
+                <noderef id="rightFace" />
             </descendants>
         </node>
 
-        <node id="sideLeft">       
+        <node id="sideLeft">
             <material id="null" />
             <texture id="pizzaLeft">
                 <amplification afs="1" aft="1" />
             </texture>
             <transformations>
                 <translation x="0.0" y="0.0" z="0.0" />
-                <rotation axis="y" angle="90"/>
+                <rotation axis="y" angle="90" />
             </transformations>
             <descendants>
                 <leaf type="2rectangle" x1="0" y1="0" x2="1" y2="1" />
@@ -532,27 +501,27 @@
         </node>
 
 
-        <node id="rightFace">         
+        <node id="rightFace">
             <material id="null" />
             <texture id="pizzaRight">
                 <amplification afs="1" aft="1" />
             </texture>
             <transformations>
-                <rotation axis="y" angle="-90"/>
+                <rotation axis="y" angle="-90" />
             </transformations>
             <descendants>
                 <leaf type="2rectangle" x1="0" y1="0" x2="1" y2="1" />
             </descendants>
         </node>
 
-        <node id="leftFace">       
+        <node id="leftFace">
             <material id="null" />
             <texture id="pizzaLeft">
                 <amplification afs="1" aft="1" />
             </texture>
             <transformations>
                 <translation x="2.0" y="0.0" z="1.0" />
-                <rotation axis="y" angle="90"/>
+                <rotation axis="y" angle="90" />
             </transformations>
             <descendants>
                 <leaf type="2rectangle" x1="0" y1="0" x2="1" y2="1" />
@@ -561,31 +530,31 @@
 
     </nodes>
     <gameBoard>
-        <boardMaterial id= "Porcelain_Grey"/>
-        <boardTexture id = "floorTexture">
+        <boardMaterial id="Porcelain_Grey" />
+        <boardTexture id="floorTexture">
             <amplification afs="1" aft="1" />
         </boardTexture>
         <tiles>
-            <material1 id ="White"/>
+            <material1 id="White" />
             <texture1 id="lightBrown">
                 <amplification afs="1" aft="1" />
             </texture1>
-            <material2 id ="black"/>
+            <material2 id="black" />
             <texture2 id="darkBrown">
                 <amplification afs="1" aft="1" />
             </texture2>
         </tiles>
         <pieces>
             <player1>
-                <pieceType  type= "cone"/>
-                <material id="black"/>
+                <pieceType type="cone" />
+                <material id="black" />
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>
             </player1>
             <player2>
-                <pieceType  type= "cylinder"/>
-                <material id="navy_blue"/>
+                <pieceType type="cylinder" />
+                <material id="navy_blue" />
                 <texture id="floorTexture">
                     <amplification afs="1" aft="1" />
                 </texture>

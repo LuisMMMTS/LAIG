@@ -28,7 +28,7 @@ class MySceneGraph {
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
-        
+
 
         this.nodes = []; //all nodes of the scene
 
@@ -289,13 +289,13 @@ class MySceneGraph {
 
         if (nameIndex == -1)
             return "[INITIALS] No theme name defined for scene ";
-        
+
         var themeNode = children[nameIndex];
         var themeName = this.reader.getString(themeNode, 'name');
-        if(themeName == null){
+        if (themeName == null) {
             return "[INITIALS] No theme name defined for scene ";
         }
-        this.themeName =  themeName;
+        this.themeName = themeName;
 
         this.log("Parsed initials");
 
@@ -1088,7 +1088,7 @@ class MySceneGraph {
             }
 
         }
-        
+
         return [this.textures[textureId], afs, aft];
     }
 
@@ -1104,20 +1104,20 @@ class MySceneGraph {
                 switch (playernodes[j].nodeName) {
                     case ("pieceType"):
                         let type = this.reader.getString(playernodes[j], "type");
-                        switch(type){
-                            case("cube"):
+                        switch (type) {
+                            case ("cube"):
                                 pieceType = new MyCube(this.scene, 0.4);
                                 break
-                            case("cylinder"):
-                                pieceType = new MyCylinder(this.scene, 0.1, 0.4,0.4, 16, 24);
+                            case ("cylinder"):
+                                pieceType = new MyCylinder(this.scene, 0.1, 0.4, 0.4, 16, 24);
                                 break
-                            case("cone"):
-                                pieceType = new MyCylinder(this.scene, 0.6, 0.01,0.4, 16,24 );
+                            case ("cone"):
+                                pieceType = new MyCylinder(this.scene, 0.6, 0.01, 0.4, 16, 24);
                                 break
-                            case("sphere"):
+                            case ("sphere"):
                                 pieceType = new MySphere(this.scene, 0.35, 16, 8);
                                 break
-                            case(null):
+                            case (null):
                                 this.onXMLError("No value or wrong defined for piece type, assuming cube")
                             default:
                                 pieceType = new MyCube(this.scene, 0.5);
@@ -1129,7 +1129,7 @@ class MySceneGraph {
                     case ("material"):
                         let mat = this.reader.getString(playernodes[j], "id");
                         material = this.materials[mat];
-                        if (material == null){
+                        if (material == null) {
                             this.onXMLError("wrong value for material in piece, setting default");
                             material = this.materials['default'];
                         }
@@ -1152,27 +1152,27 @@ class MySceneGraph {
             let material = null;
             let texture = null
             let id = this.reader.getString(TilesNode.children[i], "id");
-            if(TilesNode.children[i].nodeName == "material1" || TilesNode.children[i].nodeName == "material2"){
+            if (TilesNode.children[i].nodeName == "material1" || TilesNode.children[i].nodeName == "material2") {
                 material = this.materials[id];
-                if (material == null){
+                if (material == null) {
                     this.onXMLError("wrong value for material in tile, setting default");
                     material = this.materials['default'];
-                }  
-                if(TilesNode.children[i].nodeName == "material1") tile1.push(material)
+                }
+                if (TilesNode.children[i].nodeName == "material1") tile1.push(material)
                 else tile2.push(material)
             }
-            else if(TilesNode.children[i].nodeName == "texture1" || TilesNode.children[i].nodeName =="texture2"){
+            else if (TilesNode.children[i].nodeName == "texture1" || TilesNode.children[i].nodeName == "texture2") {
                 texture = this.getTextures(TilesNode.children[i]);
-                if(texture == null){
+                if (texture == null) {
                     this.onXMLError("wrong value for texture in tile, setting default");
                     texture = this.textures['default']
                 }
-                if(TilesNode.children[i].nodeName == "texture1") tile1.push(texture)
+                if (TilesNode.children[i].nodeName == "texture1") tile1.push(texture)
                 else tile2.push(texture)
-            }   
+            }
             else console.log(id)
-                     
-                
+
+
         }
         return [tile1, tile2];
     }
@@ -1356,25 +1356,25 @@ class MySceneGraph {
                             rectangle.updateTexCoords([afs, aft]);
                             primitives.push(rectangle);
                             break;
-                        
-                            case "2rectangle":
-                                var x1 = this.reader.getFloat(descendant, "x1");
-                                var y1 = this.reader.getFloat(descendant, "y1");
-                                var x2 = this.reader.getFloat(descendant, "x2");
-                                var y2 = this.reader.getFloat(descendant, "y2");
-                                if (x1 == null || x2 == null || y1 == null || y2 == null) {
-                                    this.onXMLError("[NODE] Missing values for rectangle definition in nodeID: " + nodeID + ", skipping it");
-                                    continue;
-                                }
-                                else if (x1 == x2 || y1 == y2 || isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)) {
-                                    this.onXMLError("[NODE] Invalid values for rectangle definition in nodeID: " + nodeID + ", skipping it");
-                                    continue;
-                                }
-    
-                                let rectangle2 = new My2SideRectangle(this.scene, x1, y1, x2, y2);
-                                rectangle2.updateTexCoords([afs, aft]);
-                                primitives.push(rectangle2);
-                                break;
+
+                        case "2rectangle":
+                            var x1 = this.reader.getFloat(descendant, "x1");
+                            var y1 = this.reader.getFloat(descendant, "y1");
+                            var x2 = this.reader.getFloat(descendant, "x2");
+                            var y2 = this.reader.getFloat(descendant, "y2");
+                            if (x1 == null || x2 == null || y1 == null || y2 == null) {
+                                this.onXMLError("[NODE] Missing values for rectangle definition in nodeID: " + nodeID + ", skipping it");
+                                continue;
+                            }
+                            else if (x1 == x2 || y1 == y2 || isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)) {
+                                this.onXMLError("[NODE] Invalid values for rectangle definition in nodeID: " + nodeID + ", skipping it");
+                                continue;
+                            }
+
+                            let rectangle2 = new My2SideRectangle(this.scene, x1, y1, x2, y2);
+                            rectangle2.updateTexCoords([afs, aft]);
+                            primitives.push(rectangle2);
+                            break;
 
                         case "cylinder":
                             var height = this.reader.getFloat(descendant, "height");
@@ -1649,7 +1649,7 @@ class MySceneGraph {
                 case ("boardMaterial"):
                     let mat = this.reader.getString(children[i], "id")
                     boardMaterial = this.materials[mat];
-                    if (boardMaterial == null){
+                    if (boardMaterial == null) {
                         this.onXMLError("wrong value for material in piece, setting default");
                         boardMaterial = this.materials['default'];
                     }
@@ -1660,16 +1660,16 @@ class MySceneGraph {
                     break;
 
                 case ("pieces"):
-                    [piece1,piece2] = this.parsePieces(children[i]);
+                    [piece1, piece2] = this.parsePieces(children[i]);
                     break;
-                case("tiles"):
-                    [tile1,tile2] = this.parseTiles(children[i]);
+                case ("tiles"):
+                    [tile1, tile2] = this.parseTiles(children[i]);
                     break;
                 default:
                     this.onXMLError("Unknown tag name " + children[i].nodeName + " in Gameboard");
             }
         }
-        this.board = [boardMaterial, boardTexture, piece1, piece2, tile1,tile2];
+        this.board = [boardMaterial, boardTexture, piece1, piece2, tile1, tile2];
 
     }
 
@@ -1783,7 +1783,7 @@ class MySceneGraph {
 
     displayScene() {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
-       var matId = this.nodes[this.idRoot].getMaterial();
+        var matId = this.nodes[this.idRoot].getMaterial();
         var texId = this.nodes[this.idRoot].getTexture();
         this.processNode(this.idRoot, texId, matId);
     }
@@ -1858,8 +1858,8 @@ class MySceneGraph {
             if (node.animation != null) { //it has animation defined
                 this.animations[node.animation].apply();
             }
-            
-        
+
+
             for (var i = 0; i < node.getLeafs().length; i++) { // if primitive, display 
                 if (node.getLeafs()[i] instanceof MySpriteText) {
                     this.scene.pushMatrix(); //because we do a translation inside the display function of the spritetext

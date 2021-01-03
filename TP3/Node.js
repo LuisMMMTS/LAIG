@@ -2,73 +2,73 @@
  * Node - class that stores the node information
  */
 
-class Node{
+class Node {
     /**
     * @constructor
     * @param nodeID - ID of the node 
     */
 
-    constructor(nodeID){
+    constructor(nodeID) {
 
-        this.nodeID= nodeID;
+        this.nodeID = nodeID;
         this.children = []; //are other nodes 
         this.leafs = []; // are primitives 
         this.textureID = null;
         this.materialID = null;
         this.transformation = null;
         this.animation = null;
-        
+
     }
 
-/* Sets and gets are not needed but we did it for readability */
-/*---------- SETS------------------- */
-    setChildren(children){
+    /* Sets and gets are not needed but we did it for readability */
+    /*---------- SETS------------------- */
+    setChildren(children) {
         this.children = children;
     }
 
-    setLeafs(leafs){
+    setLeafs(leafs) {
         this.leafs = leafs;
     }
-    setTexture(textureID){
-        this.textureID=textureID;
+    setTexture(textureID) {
+        this.textureID = textureID;
     }
 
-    setAnimation(animationID){
+    setAnimation(animationID) {
         this.animation = animationID;
     }
-    setMaterial(materialID){
-        this.materialID=materialID;
+    setMaterial(materialID) {
+        this.materialID = materialID;
     }
-    setTransformation(transformation){
-        this.transformation=transformation;
+    setTransformation(transformation) {
+        this.transformation = transformation;
     }
 
-/*---------- GETS------------------- */
-    getId(){
+    /*---------- GETS------------------- */
+    getId() {
         return this.nodeID;
     }
-    
-    getChildren(){
+
+    getChildren() {
         return this.children;
     }
 
-    getLeafs(){
+    getLeafs() {
         return this.leafs;
     }
 
-    getTexture(){
+    getTexture() {
         return this.textureID;
     }
 
-    getMaterial(){
+    getMaterial() {
         return this.materialID;
     }
 
-    getTransformation(){
+    getTransformation() {
         return this.transformation
     }
 
-    getAnimation(){
+    getAnimation() {
         return this.animation;
     }
 

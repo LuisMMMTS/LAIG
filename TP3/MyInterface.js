@@ -31,17 +31,17 @@ class MyInterface extends CGFinterface {
      * initKeys
      */
     initKeys() {
-        this.scene.gui=this;
-        this.processKeyboard=function(){};
-        this.activeKeys={};
+        this.scene.gui = this;
+        this.processKeyboard = function () { };
+        this.activeKeys = {};
     }
 
     processKeyDown(event) {
-        this.activeKeys[event.code]=true;
+        this.activeKeys[event.code] = true;
     };
 
     processKeyUp(event) {
-        this.activeKeys[event.code]=false;
+        this.activeKeys[event.code] = false;
     };
 
     isKeyPressed(keyCode) {
@@ -53,7 +53,7 @@ class MyInterface extends CGFinterface {
      * 
      * @param {*} views - views defined in the scene
      */
-    createInterface(lights, views, themes){
+    createInterface(lights, views, themes) {
         this.addAxisCheckBox()
         this.addQuit()
         this.addPlayTime()
@@ -61,72 +61,72 @@ class MyInterface extends CGFinterface {
         this.addThemeDropDown(themes)
         this.addLightsFolder(lights)
         this.addCamerasDropDown(views)
-        
-        
+
+
     }
 
-    updateInterface(lights, views){
-        if(this.group){
+    updateInterface(lights, views) {
+        if (this.group) {
             this.gui.removeFolder(this.group)
             this.addLightsFolder(lights)
         }
-        if(this.camerasDropDown){
+        if (this.camerasDropDown) {
             this.gui.remove(this.group2)
-            this.addCamerasDropDown(views)  
-        }  
+            this.addCamerasDropDown(views)
+        }
     }
 
-    addLightsFolder(lights){
+    addLightsFolder(lights) {
         this.group = this.gui.addFolder("Lights");
         this.addLightsCheckbox()
         //group.open(), is comment for preference, can be uncommented
-        
-        for(var key in lights){
-            if(lights.hasOwnProperty(key)){
+
+        for (var key in lights) {
+            if (lights.hasOwnProperty(key)) {
                 /*Forming a map this.scene.lightValues that store in the enable value of a given key */
                 this.scene.lightValues[key] = lights[key][0];
                 this.group.add(this.scene.lightValues, key).onChange(this.scene.setLights.bind(this.scene));
             }
-        }   
-        
+        }
+
     }
     /**
      * 
      * @param {*} views - views defined in the scene
      */
-    addCamerasDropDown(views){
+    addCamerasDropDown(views) {
         this.group2 = this.gui.addFolder("Views");
         var viewValues = [];
-        for(var key in views){
-            if(views.hasOwnProperty(key)){
+        for (var key in views) {
+            if (views.hasOwnProperty(key)) {
                 viewValues.push(key)
-            }   
+            }
         }
         //setting the cameras dropdown 
         this.group2.add(this.scene, "cameraID", viewValues).onChange(val => this.scene.updateCamera()).name("Camera")
     }
 
-    addThemeDropDown(themes){
+    addThemeDropDown(themes) {
         this.gui.add(this.scene, "selectedScene", themes).onChange(val => this.scene.changeTheme(val)).name("Selected theme");
     }
-    addAxisCheckBox(){
+    addAxisCheckBox() {
         //setting the displayaxis checkbox
-        this.gui.add(this.scene,'displayAxis').name("Display Axis");
+        this.gui.add(this.scene, 'displayAxis').name("Display Axis");
     }
-    addLightsCheckbox(){
+    addLightsCheckbox() {
         //setting the displaylights checkbox
-        this.group.add(this.scene,'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
+        this.group.add(this.scene, 'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
     }
 
 
-    addQuit(){
+    addQuit() {
         this.gui.add(this.scene.orchestrator, 'quit').name('Quit')
     }
 
-    addPlayTime(){
+    addPlayTime() {
         this.gui.add(this.scene, 'playTime', 10, 120, 10).name("Play Time").onChange(this.scene.updatePlayTime.bind(this.scene));
     }
-    addSpeed(){
+    addSpeed() {
         this.gui.add(this.scene, 'speed', 1, 10, 0.5).name("Animation Speed")
     }
 

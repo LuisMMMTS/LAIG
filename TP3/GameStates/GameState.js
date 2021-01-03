@@ -2,28 +2,28 @@
  * @abstract
  */
 
- class GameState{
-    constructor(orchestrator){
+class GameState {
+    constructor(orchestrator) {
         this.orchestrator = orchestrator;
     }
 
     /**
      * @abstract
      */
-    init(){}
+    init() { }
 
     /**
      * @abstract
      */
-    handleReply(response){}
+    handleReply(response) { }
 
-    
-    pickPiece(obj, customId){}
 
-    pickButton(obj, customId){}
+    pickPiece(obj, customId) { }
 
-    update(time){}
+    pickButton(obj, customId) { }
 
-    checkTimeOut(time){}
+    update(time) { }
 
- }
+    checkTimeOut(time) { }
+
+}

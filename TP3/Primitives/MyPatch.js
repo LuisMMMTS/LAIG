@@ -10,40 +10,40 @@
  */
 
 class MyPatch extends CGFobject {
-	constructor(scene, nPointsU, nPointsV, nPartsU, nPartsV, controlPoints) {
+    constructor(scene, nPointsU, nPointsV, nPartsU, nPartsV, controlPoints) {
         super(scene);
-        
+
         this.nPointsU = nPointsU;
-		this.nPointsV = nPointsV;
-		this.nPartsU = nPartsU;
-		this.nPartsV = nPartsV;
-		this.controlPoints = controlPoints;
+        this.nPointsV = nPointsV;
+        this.nPartsU = nPartsU;
+        this.nPartsV = nPartsV;
+        this.controlPoints = controlPoints;
 
-		this.init();
-	}
-	
-	init() {
+        this.init();
+    }
 
-        let nurbs = new CGFnurbsSurface(this.nPointsU - 1, this.nPointsV -1, this.controlPoints);
+    init() {
+
+        let nurbs = new CGFnurbsSurface(this.nPointsU - 1, this.nPointsV - 1, this.controlPoints);
 
         this.patch = new CGFnurbsObject(this.scene, this.nPartsU, this.nPartsV, nurbs);
-		
+
     }
-    
-    display(){
+
+    display() {
         this.patch.display();
     }
 
     /**
-	 * @method updateTexCoords
-	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
-	 */
+     * @method updateTexCoords
+     * Updates the list of texture coordinates of the rectangle
+     * @param {Array} coords - Array of texture coordinates
+     */
     updateTexCoords(coords) {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
-      }
+    }
 
 
-	
+
 }
