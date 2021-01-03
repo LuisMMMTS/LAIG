@@ -57,7 +57,7 @@ class LoadingState extends GameState{
         
     }
 
-    animationEnd(time){
+    update(time){
         if (!this.orchestrator.loaded){
             return;
         }

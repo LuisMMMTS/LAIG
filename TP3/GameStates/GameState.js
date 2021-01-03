@@ -22,7 +22,7 @@
 
     pickButton(obj, customId){}
 
-    animationEnd(time){}
+    update(time){}
 
     checkTimeOut(time){}
 

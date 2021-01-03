@@ -33,11 +33,6 @@ class GameSequence {
         this.currentMove++
     }
 
-    update(time){
-        if(this.currentMove == this.moves.length || this.moves.length == 0) return
-        this.moves[this.currentMove].update(time)
-    }
-
     undo() {
         if(this.moves.length < 1) return -1
         this.moves.pop()
@@ -55,12 +50,5 @@ class GameSequence {
         });
         this.currentMove = 0
     }
-
-    getMoveByIndex(i){
-        if(i < this.moves.length)
-            return this.moves[i];
-        else return null;
-    }
-
     
 }

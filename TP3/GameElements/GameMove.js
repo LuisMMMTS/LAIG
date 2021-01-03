@@ -21,10 +21,4 @@ class GameMove{
         this.destination.piece.animation = null
     }
 
-    update(time){
-
-    }
-    animate(){
-
-    }
 }

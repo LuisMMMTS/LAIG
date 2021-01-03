@@ -115,6 +115,9 @@
         <texture id="pizzaLeft" path="pizzaLeft.jpg" />
         <texture id="pizzaRight" path="pizzaRight.jpg" />
         <texture id="pizzaBack" path="pizzaBack.jpg" />
+        <texture id="lightBrown" path="light_brown.jpeg" />
+        <texture id="darkBrown" path="board2.jpg" />
+        <texture id="floorTexture" path="floor.png" />  
         
     </textures>
 
@@ -407,12 +410,5 @@
             </player2>
         </pieces>
     </gameBoard>
-
-    <suroundingScene>
-        <cubeBox path=""/>
-    </suroundingScene>
-
-    <auxiliarBoard>
-    </auxiliarBoard>
 
 </lsf>

@@ -8,7 +8,7 @@
  * @param id - tile id
  */
 class BoardTile extends CGFobject {
-    constructor(scene, gameBoard, size, x, y, id, PieceColor,z=0) {
+    constructor(scene, gameBoard, size, x, y, id, pieceColor,z=0) {
         super(scene);
         this.size = size;
         this.x = x;
@@ -17,35 +17,38 @@ class BoardTile extends CGFobject {
         this.id = id;
         this.gameBoard = gameBoard;
         this.plane = new MyPlane(this.scene, size, size);
-        this.PieceColor = PieceColor;
+        this.pieceColor = pieceColor;
 
-        this.piece = null;//new Piece(this.scene, id, this, PieceColor);
-        //this.piece=new Piece(this.scene, id, this, PieceColor);
+        this.piece = null;
         this.removed = null
         this.highlight = false
+        
+        this.pieceMaterials = []
+        this.init()
+    }
+    init(){
         this.pickedMaterial = new CGFappearance(this.scene);
         this.pickedMaterial.setAmbient(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setDiffuse(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setSpecular(1.0, 0.0, 0.0, 1);
         this.pickedMaterial.setShininess(10.0);
-        this.pieceMaterials = []
-    }
 
+    }
     changeTheme(piece1, piece2, tile1, tile2){
         this.pieceMaterials = []
         this.pieceMaterials.push(piece1);
         this.pieceMaterials.push(piece2);
-        if(this.PieceColor == "black" && this.piece != null){
+        if(this.pieceColor == "black" && this.piece != null){
             this.piece.changeTheme(piece1);
         }
-        else if(this.PieceColor == "white" && this.piece != null){
+        else if(this.pieceColor == "white" && this.piece != null){
             this.piece.changeTheme(piece2);
         }
-        if(this.PieceColor == 'black'){
+        if(this.pieceColor == 'black'){
             this.material = tile1[0];
             this.texture = tile1[1][0]
         }
-        else if (this.PieceColor == 'white'){
+        else if (this.pieceColor == 'white'){
             this.material = tile2[0];
             this.texture = tile2[1][0]           
         }
@@ -53,10 +56,10 @@ class BoardTile extends CGFobject {
     }
 
     insertPiece(piece){
-        if(this.PieceColor == 'black'){
+        if(this.pieceColor == 'black'){
             piece.changeTheme(this.pieceMaterials[0]);
         }
-        else if (this.PieceColor == 'white'){
+        else if (this.pieceColor == 'white'){
             piece.changeTheme(this.pieceMaterials[1]);
         }
         this.piece = piece;
