@@ -12,7 +12,6 @@ class MovieState extends GameState {
 
         this.orchestrator.updateInfo("Playing game movie")
         this.orchestrator.updateErrors("")
-        //se calhar mudar para uma top view
         endavailableButtons(this.orchestrator, ["Pause", "Play", "Main Menu", "Restart"])
     }
 

@@ -19,7 +19,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
  
  main=function(){
    let selected1 = 5
-   let selected2 = 60
+   let selected2 = 30
     const size = document.querySelector('#BoardSize');
     size.addEventListener('change', function(e)  {
       selected1 = e.target.value

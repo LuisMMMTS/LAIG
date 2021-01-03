@@ -54,7 +54,7 @@ class MyInterface extends CGFinterface {
      * @param {*} views - views defined in the scene
      */
     createInterface(lights, views, themes) {
-        this.addAxisCheckBox()
+        //this.addAxisCheckBox()
         this.addQuit()
         this.addPlayTime()
         this.addSpeed()
@@ -66,13 +66,13 @@ class MyInterface extends CGFinterface {
     }
 
     updateInterface(lights, views) {
-        if (this.group) {
-            this.gui.removeFolder(this.group)
-            this.addLightsFolder(lights)
-        }
         if (this.camerasDropDown) {
             this.gui.remove(this.group2)
             this.addCamerasDropDown(views)
+        }
+        if (this.group) {
+            this.gui.removeFolder(this.group)
+            this.addLightsFolder(lights)
         }
     }
 
@@ -109,10 +109,10 @@ class MyInterface extends CGFinterface {
     addThemeDropDown(themes) {
         this.gui.add(this.scene, "selectedScene", themes).onChange(val => this.scene.changeTheme(val)).name("Selected theme");
     }
-    addAxisCheckBox() {
+    /*addAxisCheckBox() {
         //setting the displayaxis checkbox
         this.gui.add(this.scene, 'displayAxis').name("Display Axis");
-    }
+    }*/
     addLightsCheckbox() {
         //setting the displaylights checkbox
         this.group.add(this.scene, 'displayLights').name("Display Lights").onChange(val => this.scene.setLights());
