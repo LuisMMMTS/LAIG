@@ -45,7 +45,7 @@ class GameOrchestrator {
         this.finalObj = null
         this.startTile = null
         this.finalTile = null
-        this.auxiliarBoardOffset=[10,0,0];
+        this.auxiliarBoardOffset=[15,0,0];
         this.menu = null
         
         this.currentPlayer = "black";

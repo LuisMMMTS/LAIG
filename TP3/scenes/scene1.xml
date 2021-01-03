@@ -23,7 +23,7 @@
             <to x="5" y="2" z="1" />
         </perspective>
         <perspective id="Menu" near="0.1" far="500" angle="23">
-            <from x="30" y="10" z="1" />
+            <from x="28" y="15" z="1" />
             <to x="0" y="0" z="1" />
         </perspective>
         <perspective id="perpective" near="0.1" far="500" angle="90">
@@ -829,9 +829,9 @@
                 <amplification afs="4.0" aft="4.0" />
             </texture>
             <transformations>
-                <translation x="-7" y="8" z="0.1" />
+                <translation x="-12" y="8" z="0.1" />
                 <rotation axis="x" angle="90" />
-                <scale sx="10" sy="0.05" sz="20"/>        
+                <scale sx="13" sy="0.05" sz="20"/>        
             </transformations>
             <descendants>
                 <noderef id="paralelepipedo" />
@@ -934,9 +934,9 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
             <transformations>
-                <translation x="-7" y="5.0" z="0.1" /> 
+                <translation x="-10" y="5.0" z="0.1" /> 
                 <rotation axis="x" angle="90" />
-                <scale sx="9" sy="5" sz="10" />
+                <scale sx="10" sy="5" sz="10" />
             </transformations>
             <descendants>
                 <noderef id="tampo" />

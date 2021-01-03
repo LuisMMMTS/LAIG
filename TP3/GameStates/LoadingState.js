@@ -35,7 +35,7 @@ class LoadingState extends GameState{
                     }
                      console.log("hhhhh5");
         //auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5 , this.orchestrator.auxiliarBoardOffset[1], id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]));
-                    auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5+i , this.orchestrator.auxiliarBoardOffset[1]-0.5+k, id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]-0.5+j));
+                    auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5+i , this.orchestrator.auxiliarBoardOffset[1]-0.5+j, id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]-0.5+j));
 
                     let p=new Piece(this.orchestrator.scene, id, this.orchestrator.gameBoard.tiles[id-1], response[parseInt((id-1)/response.length)][(id-1)%response.length]);
                      this.orchestrator.auxiliarBoard.tiles[id-1].insertPiece(p);
@@ -92,8 +92,12 @@ class LoadingState extends GameState{
                 }
             }
         }
-        if (!anyActive)
-            this.orchestrator.changeState(new ReadyState(this.orchestrator));
+        if (!anyActive){
+            this.orchestrator.auxiliarBoard.board.open--;
+            console.log(this.orchestrator.auxiliarBoard.board.open);
+            if (this.orchestrator.auxiliarBoard.board.open==0)
+                this.orchestrator.changeState(new ReadyState(this.orchestrator));
+        }
 
     }
         

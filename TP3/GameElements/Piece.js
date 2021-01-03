@@ -89,7 +89,7 @@ class Piece {
         this.float = !this.float
     }
 
-    createAnimation(initialTile, finalTile){
+    createAnimation(initialTile, finalTile,begin=0){
         this.firstInstant = true;
         this.finalTile = finalTile;
         this.initialTile = initialTile;
@@ -102,7 +102,7 @@ class Piece {
         this.animation = new PieceAnimation(this.scene, "pieceAnimation", this.player);
         let start = new KeyFrame()
         start.translation = new vec3.fromValues(0, this.selectHeight, 0)
-        start.instant = 0;
+        start.instant = 0+begin;
         this.animation.addKeyFrame(start); 
 
         
