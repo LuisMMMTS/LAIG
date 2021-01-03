@@ -10,11 +10,11 @@
 
     <views default="player1">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="player1" near="0.1" far="500" angle="30">
+        <perspective id="player1" near="0.1" far="500" angle="50">
             <from x="20" y="10" z="22" />
             <to x="-3" y="0" z="-3" />
         </perspective>
-        <perspective id="player2" near="7" far="500" angle="30">
+        <perspective id="player2" near="7" far="500" angle="50">
             <from x="17" y="7" z="-13" />
             <to x="-3" y="0" z="7" />
         </perspective>
@@ -41,14 +41,6 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="fireplace">
-            <!-- light identifier -->
-            <enable value="0" /> <!-- enable/disable -->
-            <position x="0" y="10" z="0" w="1.0" /> <!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" /> <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" /> <!-- diffuse component -->
-            <specular r="0.8" g="0.8" b="0.8" a="0.8" /> <!-- specular component -->
-        </light>
         <light id="LightLeft">
             <!-- light identifier -->
             <enable value="1" /> <!-- enable/disable -->
