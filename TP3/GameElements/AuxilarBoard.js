@@ -54,15 +54,11 @@ class AuxiliarBoard extends CGFobject {
         let id = 1
         let nTiles = this.size;
         for (let i = 0; i < nTiles; i++) {
-            console.log("hhhhh2");
             for (let j = 0; j < nTiles; j++) {
-                console.log("hhhhh3");
                 for (let k = 0; k < nTiles; k++) {
-                    console.log("hhhhh6");
                     if((id)>Math.pow(array.length,2)){
                         break;
                     }
-                    console.log("hhhhh5");
                     this.tiles.push(new BoardTile(this.scene, this, 2, k-0.5 , j-0.5, id, array[parseInt((id-1)/array.length)][(id-1)%array.length],i));
                     id++;
                 }

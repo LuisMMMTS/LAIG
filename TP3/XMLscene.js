@@ -133,13 +133,17 @@ class XMLscene extends CGFscene {
         // Reads the lights from the lightValues map.
         for (var key in this.lightValues) {
             if (this.lightValues.hasOwnProperty(key)) {
-                this.lights[i].setVisible(this.displayLights);
+                if(this.displayLights){
+                    this.lights[i].setVisible(true);
+                }
+                else
+                    this.lights[i].setVisible(false);
                 if (this.lightValues[key]){
                     this.lights[i].enable();
                 }
                 else{
                     this.lights[i].disable();
-                }		
+                }        
     
                 this.lights[i].update();
     
@@ -169,13 +173,53 @@ class XMLscene extends CGFscene {
      * Update the current camera according to a change in the  cameras dropdown in the interface
      */
     updateCamera() {
-
         this.camera = this.themeGraphs[this.selectedTheme].views[this.cameraID];
         if(this.cameraID != this.themeGraphs[this.selectedTheme].defaultCameraId){
             this.interface.setActiveCamera(this.camera);
         }else{
             this.interface.setActiveCamera(null);
         }
+    }
+
+    changeCamera() {
+
+        this.camera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId];
+    }
+
+    switchCamera(camera,elapsed){
+        let animationTime=10000;
+        let elapsedTime=0;
+        let initialpos=this.camera.position;
+        let initialtar=this.camera.target;
+        if (this.camera.active){  
+            elapsedTime++;
+            if(elapsedTime >= animationTime){
+                this.camera.active = false
+            }
+
+            let interpolationAmount = Math.min(elapsedTime/animationTime,1)
+            let easingFactor = easeInOutCubic(interpolationAmount)
+
+            let i = Math.PI * easingFactor - this.angle
+            let finalpos;
+            let finaltarget;
+            let translatePos=[0,0,0,0];
+            let translateTarget=[0,0,0,0];
+
+        
+            finalpos=camera.position;
+            finaltarget=camera.target;
+        
+
+            vec4.lerp(translatePos,this.camera.position,finalpos,interpolationAmount);
+            vec4.lerp(translateTarget, this.camera.target,finaltarget,interpolationAmount);
+
+            this.camera.setPosition(translatePos);
+            this.camera.setTarget(translateTarget);
+            this.angle += i
+        }
+        this.camera.setPosition(initialpos);
+        this.camera.setTarget(initialtar);
     }
 
     getCurrentCamera(){
@@ -200,7 +244,7 @@ class XMLscene extends CGFscene {
         let defaultCamera = this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId]
         this.themeGraphs[this.selectedTheme].views[this.themeGraphs[this.selectedTheme].defaultCameraId] = new AnimationCamera(this.orchestrator,defaultCamera.far, defaultCamera.fov, defaultCamera.near, defaultCamera.position, defaultCamera.target)
         this.initLights()
-        this.updateCamera()
+        this.changeCamera();
         this.axis = new CGFaxis(this, this.themeGraphs[this.selectedTheme].referenceLength);
         this.gl.clearColor(...this.themeGraphs[this.selectedTheme].background)
         this.setGlobalAmbientLight(...this.themeGraphs[this.selectedTheme].ambient);  

@@ -1356,6 +1356,25 @@ class MySceneGraph {
                             rectangle.updateTexCoords([afs, aft]);
                             primitives.push(rectangle);
                             break;
+                        
+                            case "2rectangle":
+                                var x1 = this.reader.getFloat(descendant, "x1");
+                                var y1 = this.reader.getFloat(descendant, "y1");
+                                var x2 = this.reader.getFloat(descendant, "x2");
+                                var y2 = this.reader.getFloat(descendant, "y2");
+                                if (x1 == null || x2 == null || y1 == null || y2 == null) {
+                                    this.onXMLError("[NODE] Missing values for rectangle definition in nodeID: " + nodeID + ", skipping it");
+                                    continue;
+                                }
+                                else if (x1 == x2 || y1 == y2 || isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)) {
+                                    this.onXMLError("[NODE] Invalid values for rectangle definition in nodeID: " + nodeID + ", skipping it");
+                                    continue;
+                                }
+    
+                                let rectangle2 = new My2SideRectangle(this.scene, x1, y1, x2, y2);
+                                rectangle2.updateTexCoords([afs, aft]);
+                                primitives.push(rectangle2);
+                                break;
 
                         case "cylinder":
                             var height = this.reader.getFloat(descendant, "height");

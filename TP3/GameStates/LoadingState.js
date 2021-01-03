@@ -25,15 +25,11 @@ class LoadingState extends GameState{
          let nTiles = response.length;
          let auxTiles=[];
         for (let i = 0; i < nTiles; i++) {
-            console.log("hhhhh2");
             for (let j = 0; j < nTiles; j++) {
-                console.log("hhhhh3");
                 for (let k = 0; k < nTiles; k++) {
-                    console.log("hhhhh6");
                     if((id)>Math.pow(response.length,2)){
                         break;
                     }
-                     console.log("hhhhh5");
         //auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5 , this.orchestrator.auxiliarBoardOffset[1], id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]));
                     auxTiles.push(new BoardTile(this.orchestrator.scene, this, 2, this.orchestrator.auxiliarBoardOffset[0]-0.5+i , this.orchestrator.auxiliarBoardOffset[1]-0.5+j, id, response[parseInt((id-1)/response.length)][(id-1)%response.length],this.orchestrator.auxiliarBoardOffset[2]-0.5+j));
 
@@ -63,7 +59,6 @@ class LoadingState extends GameState{
         }
         if(!this.boxOpen){
             this.orchestrator.auxiliarBoard.board.open++;
-            console.log(this.orchestrator.auxiliarBoard.board.open);
             if (this.orchestrator.auxiliarBoard.board.open==50){
                 this.boxOpen=true;
             }
@@ -94,7 +89,6 @@ class LoadingState extends GameState{
         }
         if (!anyActive){
             this.orchestrator.auxiliarBoard.board.open--;
-            console.log(this.orchestrator.auxiliarBoard.board.open);
             if (this.orchestrator.auxiliarBoard.board.open==0)
                 this.orchestrator.changeState(new ReadyState(this.orchestrator));
         }
