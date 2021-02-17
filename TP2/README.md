@@ -39,7 +39,7 @@
   - Sprite text font is the default and is hardcoded
   - Sprite animations blend with the scene materials having transparencies in the pixels where they're png hasn't got a color defined
 
-[Enunciado](./Enunciado\ T2.pdf)
+[Enunciado](./EnunciadoT2.pdf)
 
 ## Screenshots
 ![](./Screenshots/image.png)

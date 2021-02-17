@@ -41,17 +41,17 @@
   - Every time something isn't valid, it's ignored and set a default whole element, not only a default component, because, for instance, if the material has an invalid r value for RGB in specular, the output of the parsing won't be what was expected, so to warn the user, we use a default one, something he wasn't expecting to see there
 
 
- [Enunciado](./Enunciado\ T1.pdf)  
-##Initial UML
+ [Enunciado](./EnunciadoT1.pdf)  
+## Initial UML
 ![](./airport_uml.png)  
 
-##Screenshots  
+## Screenshots  
 
-###V01  
+### V01  
 
 ![](./screenshots/v01.png)  
 
-###V02  
+### V02  
 
 ![](./screenshots/Screenshot_20201023_202816.png)
 ![](./screenshots/Screenshot_20201023_202840.png)
