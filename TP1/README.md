@@ -45,10 +45,14 @@
 ##Initial UML
 ![](./airport_uml.png)  
 
-##Screenshots
-###V01
-![](./screenshots/screenshot\ V01.png)
-###V02
+##Screenshots  
+
+###V01  
+
+![](./screenshots/v01.png)  
+
+###V02  
+
 ![](./screenshots/Screenshot_20201023_202816.png)
 ![](./screenshots/Screenshot_20201023_202840.png)
 ![](./screenshots/Screenshot_20201023_202908.png)

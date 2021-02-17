@@ -11,7 +11,8 @@
 ----
 [How to start](UsersManual.pdf)  
 
-## Project information
+## Project information  
+
 The game  developed was Emulsion, a two-player game. 
 In the main menu, the user can choose the players type ( Bot or Player) and in case of choosing Bot, it must also choose the difficulty. In addition it can choose the board size and the playTime. After all this decisions have been made, the user must press play to start the game.
 The game starts with the pieces coming out of a box and being placed in the board with the right setup.
@@ -23,6 +24,7 @@ Each turn has a maximum time, when this time is up, the player loses its turn.
 There is also the possibility to undo the last move.
 At the end of the game, the game movie is available, where all plays from the game are animated in according order to represent the game.
 Cameras switch with an animation from point of view to point of view.
+
 ----
 ## Issues/Problems
 
