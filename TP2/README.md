@@ -38,3 +38,9 @@
   - Every time something isn't valid, it's ignored and set a default whole element, not only a default component, because, for instance, if the material has an invalid r value for RGB in specular, the output of the parsing won't be what was expected, so to warn the user, we use a default one, something he wasn't expecting to see there
   - Sprite text font is the default and is hardcoded
   - Sprite animations blend with the scene materials having transparencies in the pixels where they're png hasn't got a color defined
+
+[Enunciado](./Enunciado\ T2.pdf)
+
+## Screenshots
+![](./Screenshots/image.png)
+![](./Screenshots/image2.png)

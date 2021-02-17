@@ -11,7 +11,8 @@
 
 ## Projects
 
-### [TP1 - Scene Graph](TP1)
+### [TP1 - Scene Graph](TP1) 
+(192/200)
 
 -  Parser with error description
 -  Default cameras, materials and textures applied when none defined to allow scene rendering
@@ -26,7 +27,8 @@
 
 -----
 
-### [TP2 - Keyframe animations, sprites, 2D/3D surfaces](TP2)
+### [TP2 - Keyframe animations, sprites, 2D/3D surfaces](TP2) 
+(196/200)
 - New primitives (plane, patch and defbarrel) and added animation 
 - Integration of keyframe animations, sprites and 2D/3D surfaces
 - Scene
@@ -37,6 +39,7 @@
 ----
 
 ### [TP3 - ...](TP3)
+(195/200)
 - The game  developed was Emulsion, a two-player game. 
 - In the main menu, the user can choose the players type ( Bot or Player) and in case of choosing Bot, it must also choose the difficulty. In addition it can choose the board size and the playTime. After all this decisions have been made, the user must press play to start the game.
 - The game starts with the pieces coming out of a box and being placed in the board with the right setup.

@@ -9,6 +9,8 @@
 
 
 ----
+[How to start](UsersManual.pdf)  
+
 ## Project information
 The game  developed was Emulsion, a two-player game. 
 In the main menu, the user can choose the players type ( Bot or Player) and in case of choosing Bot, it must also choose the difficulty. In addition it can choose the board size and the playTime. After all this decisions have been made, the user must press play to start the game.
@@ -28,3 +30,13 @@ Cameras switch with an animation from point of view to point of view.
 - When switching scenes, lights from last scene don't turn off
 
 ----
+
+[Enunciado](./Enunciado_TP3.pdf)
+
+## Screenshots
+![](./screenshots/LAIG3_T01_G07_1.png)
+![](./screenshots/LAIG3_T01_G07_2.png)
+![](./screenshots/LAIG3_T01_G07_3.png)
+![](./screenshots/LAIG3_T01_G07_4.png)
+![](./screenshots/LAIG3_T01_G07_5.png)
+![](./screenshots/LAIG3_T01_G07_6.png)
